@@ -10,6 +10,24 @@
   const rand = (min, max) => min + Math.random() * (max - min);
   const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
+  // ---------- theme (white terminal / black terminal) ----------
+
+  const toggle = document.getElementById("theme-toggle");
+  const applyTheme = (t) => {
+    document.documentElement.dataset.theme = t;
+    if (toggle) toggle.textContent = t === "dark" ? "[light]" : "[dark]";
+  };
+  let theme = localStorage.getItem("theme") ||
+    (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  applyTheme(theme);
+  if (toggle) {
+    toggle.addEventListener("click", () => {
+      theme = theme === "dark" ? "light" : "dark";
+      localStorage.setItem("theme", theme);
+      applyTheme(theme);
+    });
+  }
+
   // ---------- static background field (like the reference: sparse, calm) ----------
 
   const field = document.getElementById("confetti-field");

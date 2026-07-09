@@ -22,13 +22,19 @@ and tracks mastery per module until you actually own what you shipped.
 
 ## Design language
 
-- Reference approved by Damla: hogwild.uk screenshot — cream/paper background,
-  sparse scattered pastel glyph confetti (`+ ✱ * · ▪`), calm and minimal.
+- Theme (Damla 2026-07-10): WHITE TERMINAL (light, default) + BLACK TERMINAL
+  (dark mode), toggle in header, choice persisted. CREAM IS BANNED — Damla hates
+  cream. The hogwild.uk screenshot was ONLY a confetti-behavior reference, never
+  a color reference.
+- NO COLORED WORDS in headings or copy (Damla: "generik bir hareket") — no pink
+  "learn it", no colored word in the wordmark, no wavy underlines or colored
+  decorations attached to titles. Text is ink-colored, period. Color lives ONLY
+  in confetti, tiny list glyphs, links, and feedback states (correct/wrong).
+- Corners sharp: border-radius 2px everywhere (global rule: 0-3px max).
 - Fonts: Martian Mono (display/headings, 700–800) + IBM Plex Mono (body).
   All-lowercase copy. Never generic AI aesthetics, never purple-gradient-on-white.
-- Palette (CSS vars in `style.css`): paper `#f4f1e8`, ink `#29243c`,
-  purple `#5a4a9f`, lavender `#b5a3ec`, pink `#f77fae`, yellow `#e0af2e`,
-  green `#7fbf85`.
+- Confetti palette (approved): purple `#5a4a9f`, lavender `#b5a3ec`,
+  pink `#f77fae`, yellow `#e0af2e`, green `#7fbf85`.
 - Confetti is the signature: background field everywhere, cursor trail on hover
   over `[data-confetti]` elements, bursts on clicks/correct answers. Keep it in
   the app screens too, not just the landing.
@@ -177,6 +183,11 @@ Goal: numbers survive devices; code still never leaves them.
 
 ## Ideas parking (not scheduled, do not build)
 
+- LEADERBOARD (Damla 2026-07-10, wants this): real ranking across users,
+  useful for HIRING ("this person owns 90% of their codebase" as a signal
+  employers trust). Needs anti-cheat thinking before building.
+- community angle (Damla 2026-07-10): "vibecoderlari birlestirmemiz lazim" —
+  unite vibecoders, social layer around the product.
 - free-text answers with fuzzy matching
 - multiplayer: quiz a friend on THEIR repo
 - "explain this function in your own words" graded by LLM
