@@ -32,6 +32,9 @@ and tracks mastery per module until you actually own what you shipped.
 - Confetti is the signature: background field everywhere, cursor trail on hover
   over `[data-confetti]` elements, bursts on clicks/correct answers. Keep it in
   the app screens too, not just the landing.
+- Damla's density rule (2026-07-09): audience is coders — small type (13px body),
+  tight line-height, minimal vertical whitespace, side-by-side columns on
+  desktop, show a lot fast. Never single narrow column with giant gaps.
 - Respect `prefers-reduced-motion` in every animation we ever add.
 
 ## Architecture (privacy-first, decided with Damla)

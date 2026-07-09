@@ -24,58 +24,20 @@
   <main>
 
     <section class="hero">
-      <h1 data-confetti>you vibecoded it.<br>now actually <span class="hl-pink">learn it</span>.</h1>
-      <p class="lede">leetcode, but every question comes from <span class="hl-purple">your own code</span>.
-      paste a repo. we break it into pieces. you get quizzed on it until you could
-      have written it yourself.</p>
-      <div class="hero-cta">
-        <button class="btn" id="cta-btn" data-confetti>coming soon — press for confetti</button>
-        <span class="cta-note">building in public. no waitlist, no email, no tricks.</span>
-      </div>
-    </section>
+      <div class="hero-grid">
+        <div>
+          <h1 data-confetti>you vibecoded it.<br>now actually <span class="hl-pink">learn it</span>.</h1>
+          <p class="lede">leetcode, but every question comes from <span class="hl-purple">your own code</span>.
+          paste a repo. we break it into pieces. you get quizzed on it until you could
+          have written it yourself.</p>
+          <div class="hero-cta">
+            <button class="btn" id="cta-btn" data-confetti>coming soon — press for confetti</button>
+            <span class="cta-note">building in public. no waitlist, no email, no tricks.</span>
+          </div>
+        </div>
 
-    <div class="divider" aria-hidden="true">+ · ✱ · + · ▪ · ✱ · + · ✱ · ▪ · + · ✱</div>
-
-    <section>
-      <p class="section-label">01 / the problem</p>
-      <h2 data-confetti>you shipped an app you can't edit</h2>
-      <p>ai wrote it. it works. it's live. and you couldn't change a single line
-      of it without breaking three others. that's not owning software —
-      that's renting it from a chatbot.</p>
-      <p class="quote">"i can't touch one line of my own app without claude."<br>
-      <span class="quote-by">— every vibecoder, eventually</span></p>
-    </section>
-
-    <div class="divider" aria-hidden="true">✱ · + · ▪ · + · ✱ · + · ▪ · + · ✱ · +</div>
-
-    <section>
-      <p class="section-label">02 / how it works</p>
-      <h2 data-confetti>your repo becomes your curriculum</h2>
-      <ol class="steps">
-        <li data-confetti><span class="step-glyph hl-purple">+</span>
-          <strong>connect a repo.</strong> your browser fetches it directly from github.
-          the code never touches our servers.</li>
-        <li data-confetti><span class="step-glyph hl-pink">✱</span>
-          <strong>get the map.</strong> files, classes, functions, who calls whom —
-          extracted right on your machine.</li>
-        <li data-confetti><span class="step-glyph hl-yellow">▪</span>
-          <strong>get quizzed.</strong> questions generated from your actual lines.
-          not fizzbuzz. your buzz.</li>
-        <li data-confetti><span class="step-glyph hl-green">+</span>
-          <strong>reach mastery.</strong> module by module, until "i can't touch this file"
-          becomes "i wrote this file, basically."</li>
-      </ol>
-    </section>
-
-    <div class="divider" aria-hidden="true">▪ · ✱ · + · ✱ · ▪ · ✱ · + · ✱ · ▪ · ✱</div>
-
-    <section>
-      <p class="section-label">03 / question types</p>
-      <h2 data-confetti>try one</h2>
-      <p>a taste, on fake code. yours will be generated from <em>your</em> repo:</p>
-
-      <div class="quiz-card" id="quiz">
-        <p class="quiz-file">utils/slugify.js — from someone's flopware</p>
+        <div class="quiz-card" id="quiz">
+          <p class="quiz-file">demo · bug injection · utils/slugify.js</p>
 <pre><code>function slugify(text) {
   return text
     .toLowerCase()
@@ -83,37 +45,77 @@
     .replace(/[^a-z0-9]+/g, "?")
     .replace(/^-+|-+$/g, "");
 }</code></pre>
-        <p class="quiz-q">the <code>"?"</code> is a planted bug. what should it be?</p>
-        <div class="quiz-options">
-          <button class="quiz-opt" data-correct="false">"_"</button>
-          <button class="quiz-opt" data-correct="true">"-"</button>
-          <button class="quiz-opt" data-correct="false">""</button>
+          <p class="quiz-q">the <code>"?"</code> is a planted bug. what should it be?</p>
+          <div class="quiz-options">
+            <button class="quiz-opt" data-correct="false">"_"</button>
+            <button class="quiz-opt" data-correct="true">"-"</button>
+            <button class="quiz-opt" data-correct="false">""</button>
+          </div>
+          <p class="quiz-result" id="quiz-result"></p>
         </div>
-        <p class="quiz-result" id="quiz-result"></p>
       </div>
-
-      <ul class="type-list">
-        <li><span class="hl-purple">+ code reading</span> — "what does this function return for input x?"</li>
-        <li><span class="hl-pink">+ fill the blank</span> — a real line of yours, one piece missing.</li>
-        <li><span class="hl-yellow">+ bug injection</span> — we break one line of your code. find it.</li>
-        <li><span class="hl-green">+ architecture</span> — "to add feature x, which file do you touch?"</li>
-      </ul>
     </section>
 
-    <div class="divider" aria-hidden="true">+ · ▪ · ✱ · + · ✱ · ▪ · + · ✱ · ▪ · +</div>
+    <div class="divider" aria-hidden="true">+ · ✱ · + · ▪ · ✱ · + · ✱ · ▪ · + · ✱</div>
 
-    <section>
-      <p class="section-label">04 / privacy</p>
-      <h2 data-confetti>snapchat, but for tech</h2>
-      <p>your code is <strong>never stored</strong>. not in a database, not in a log,
-      not in a backup. ever.</p>
-      <ul class="privacy-list">
-        <li data-confetti>analysis runs <strong>in your browser</strong> — the map of your code is built on your machine</li>
-        <li data-confetti>your questions live <strong>on your device</strong>, not on our servers</li>
-        <li data-confetti>we only keep <strong>numbers</strong>: mastery %, streaks, questions solved. zero code, zero filenames</li>
-      </ul>
-      <p class="fine">if someone hacked us, they'd steal your high score.</p>
-    </section>
+    <div class="cols">
+      <section>
+        <p class="section-label">01 / the problem</p>
+        <h2 data-confetti>you shipped an app you can't edit</h2>
+        <p>ai wrote it. it works. it's live. and you couldn't change a single line
+        of it without breaking three others. that's not owning software —
+        that's renting it from a chatbot.</p>
+        <p class="quote">"i can't touch one line of my own app without claude."<br>
+        <span class="quote-by">— every vibecoder, eventually</span></p>
+      </section>
+
+      <section>
+        <p class="section-label">02 / how it works</p>
+        <h2 data-confetti>your repo becomes your curriculum</h2>
+        <ol class="steps">
+          <li data-confetti><span class="step-glyph hl-purple">+</span>
+            <strong>connect a repo.</strong> your browser fetches it directly from github.
+            the code never touches our servers.</li>
+          <li data-confetti><span class="step-glyph hl-pink">✱</span>
+            <strong>get the map.</strong> files, classes, functions, who calls whom —
+            extracted right on your machine.</li>
+          <li data-confetti><span class="step-glyph hl-yellow">▪</span>
+            <strong>get quizzed.</strong> questions generated from your actual lines.
+            not fizzbuzz. your buzz.</li>
+          <li data-confetti><span class="step-glyph hl-green">+</span>
+            <strong>reach mastery.</strong> module by module, until "i can't touch this file"
+            becomes "i wrote this file, basically."</li>
+        </ol>
+      </section>
+    </div>
+
+    <div class="divider" aria-hidden="true">▪ · ✱ · + · ✱ · ▪ · ✱ · + · ✱ · ▪ · ✱</div>
+
+    <div class="cols">
+      <section>
+        <p class="section-label">03 / question types</p>
+        <h2 data-confetti>four ways to own your code</h2>
+        <ul class="type-list">
+          <li><span class="hl-purple">+ code reading</span> — "what does this function return for input x?"</li>
+          <li><span class="hl-pink">+ fill the blank</span> — a real line of yours, one piece missing.</li>
+          <li><span class="hl-yellow">+ bug injection</span> — we break one line of your code. find it.</li>
+          <li><span class="hl-green">+ architecture</span> — "to add feature x, which file do you touch?"</li>
+        </ul>
+      </section>
+
+      <section>
+        <p class="section-label">04 / privacy</p>
+        <h2 data-confetti>snapchat, but for tech</h2>
+        <p>your code is <strong>never stored</strong>. not in a database, not in a log,
+        not in a backup. ever.</p>
+        <ul class="privacy-list">
+          <li data-confetti>analysis runs <strong>in your browser</strong>, the map is built on your machine</li>
+          <li data-confetti>your questions live <strong>on your device</strong>, not on our servers</li>
+          <li data-confetti>we only keep <strong>numbers</strong>: mastery %, streaks, solved counts</li>
+        </ul>
+        <p class="fine">if someone hacked us, they'd steal your high score.</p>
+      </section>
+    </div>
 
     <div class="divider" aria-hidden="true">✱ · + · ✱ · ▪ · + · ✱ · ▪ · + · ✱ · +</div>
 
