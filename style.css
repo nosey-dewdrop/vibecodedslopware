@@ -131,7 +131,7 @@ header.top {
 
 .wordmark {
   font-family: var(--mono-display);
-  font-weight: 800;
+  font-weight: 500;
   font-size: 15px;
   letter-spacing: -0.5px;
 }
@@ -178,7 +178,7 @@ section { padding: 32px 0; }
 
 h1 {
   font-family: var(--mono-display);
-  font-weight: 800;
+  font-weight: 500;
   font-size: clamp(20px, 2.4vw, 27px);
   line-height: 1.4;
   letter-spacing: -0.5px;
@@ -198,7 +198,7 @@ h1 {
 
 h2 {
   font-family: var(--mono-display);
-  font-weight: 700;
+  font-weight: 500;
   font-size: 15px;
   letter-spacing: -0.3px;
   line-height: 1.4;
@@ -229,7 +229,7 @@ a:hover { color: var(--pink); }
 
 .btn {
   font-family: var(--mono-body);
-  font-weight: 600;
+  font-weight: 500;
   font-size: 13px;
   color: var(--paper);
   background: var(--ink);
@@ -305,7 +305,7 @@ a:hover { color: var(--pink); }
 .quiz-card code { font-family: var(--mono-body); }
 
 .quiz-q { font-size: 12.5px; }
-.quiz-q code { color: var(--pink); font-weight: 600; }
+.quiz-q code { color: var(--pink); }
 
 .quiz-options { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0 2px; }
 
