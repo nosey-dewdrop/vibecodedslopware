@@ -28,24 +28,34 @@
     });
   }
 
-  // ---------- static background field (like the reference: sparse, calm) ----------
+  // ---------- background field: dense, slowly drifting down ----------
 
   const field = document.getElementById("confetti-field");
 
   function buildField() {
     field.innerHTML = "";
     const area = window.innerWidth * window.innerHeight;
-    const count = Math.min(70, Math.max(30, Math.round(area / 22000)));
+    const count = Math.min(130, Math.max(50, Math.round(area / 12000)));
     for (let i = 0; i < count; i++) {
       const g = document.createElement("span");
       g.className = "glyph";
-      g.textContent = pick(GLYPHS);
+      const inner = document.createElement("span");
+      inner.className = "glyph-inner";
+      inner.textContent = pick(GLYPHS);
+      inner.style.setProperty("--tw", rand(4, 10) + "s");
+      inner.style.setProperty("--td", rand(0, 8) + "s");
+      g.appendChild(inner);
       g.style.left = rand(0, 100) + "vw";
-      g.style.top = rand(0, 100) + "vh";
       g.style.color = pick(COLORS);
       g.style.fontSize = rand(8, 22) + "px";
-      g.style.setProperty("--tw", rand(4, 10) + "s");
-      g.style.setProperty("--td", rand(0, 8) + "s");
+      if (reducedMotion) {
+        g.style.top = rand(0, 100) + "vh";
+      } else {
+        const fall = rand(40, 110);
+        g.style.setProperty("--fall", fall + "s");
+        // negative delay scatters glyphs across the whole screen immediately
+        g.style.setProperty("--fd", -rand(0, fall) + "s");
+      }
       field.appendChild(g);
     }
   }
@@ -57,16 +67,11 @@
     resizeTimer = setTimeout(buildField, 300);
   });
 
-  // ---------- cursor trail while hovering [data-confetti] ----------
+  // ---------- cursor trail, everywhere ----------
 
   const trail = document.getElementById("confetti-trail");
-  const MAX_BITS = 80;
+  const MAX_BITS = 100;
   let lastSpawn = 0;
-  let hovering = false;
-
-  document.addEventListener("mouseover", (e) => {
-    hovering = !!e.target.closest("[data-confetti]");
-  });
 
   function spawnBit(x, y, spread) {
     if (trail.childElementCount >= MAX_BITS) return;
@@ -85,7 +90,7 @@
   }
 
   document.addEventListener("mousemove", (e) => {
-    if (!hovering || reducedMotion) return;
+    if (reducedMotion) return;
     const now = performance.now();
     if (now - lastSpawn < 40) return;
     lastSpawn = now;
@@ -124,6 +129,57 @@
     const t = e.touches[0];
     if (t) burst(t.clientX, t.clientY, 10);
   }, { passive: true });
+
+  // ---------- hero typing effect ----------
+
+  const typed = document.getElementById("typed");
+  if (typed) {
+    const LINES = ["you vibecoded it.", "now actually learn it."];
+    if (reducedMotion) {
+      typed.innerHTML = LINES.join("<br>");
+    } else {
+      let line = 0, ch = 0;
+      const typeNext = () => {
+        if (line >= LINES.length) return;
+        if (ch < LINES[line].length) {
+          typed.appendChild(document.createTextNode(LINES[line][ch]));
+          ch++;
+          setTimeout(typeNext, rand(35, 75));
+        } else {
+          line++; ch = 0;
+          if (line < LINES.length) {
+            typed.appendChild(document.createElement("br"));
+            setTimeout(typeNext, 300);
+          }
+        }
+      };
+      setTimeout(typeNext, 350);
+    }
+  }
+
+  // ---------- scroll reveal ----------
+
+  const revealTargets = document.querySelectorAll(
+    ".cols section, .outro, .steps li, .type-list li, .privacy-list li"
+  );
+  revealTargets.forEach((el) => {
+    el.classList.add("reveal");
+    const i = Array.prototype.indexOf.call(el.parentElement.children, el);
+    el.style.setProperty("--rd", (i % 5) * 80 + "ms");
+  });
+  if (!reducedMotion && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    revealTargets.forEach((el) => io.observe(el));
+  } else {
+    revealTargets.forEach((el) => el.classList.add("visible"));
+  }
 
   // ---------- demo quiz ----------
 

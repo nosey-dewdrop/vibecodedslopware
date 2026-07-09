@@ -58,15 +58,27 @@ body {
 
 .glyph {
   position: absolute;
+  top: -5vh;
   font-family: var(--mono-body);
   user-select: none;
+  animation: drift var(--fall, 60s) linear infinite;
+  animation-delay: var(--fd, 0s);
+}
+
+.glyph-inner {
+  display: inline-block;
   animation: twinkle var(--tw, 6s) ease-in-out infinite;
   animation-delay: var(--td, 0s);
 }
 
+@keyframes drift {
+  from { transform: translateY(0); }
+  to   { transform: translateY(115vh); }
+}
+
 @keyframes twinkle {
-  0%, 100% { opacity: 0.85; transform: translateY(0) rotate(0deg); }
-  50%      { opacity: 0.25; transform: translateY(-6px) rotate(12deg); }
+  0%, 100% { opacity: 0.85; transform: rotate(0deg); }
+  50%      { opacity: 0.25; transform: rotate(14deg); }
 }
 
 .trail-bit {
@@ -82,10 +94,22 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .glyph { animation: none; opacity: 0.6; }
+  .glyph, .glyph-inner { animation: none; opacity: 0.6; }
   .trail-bit { animation-duration: 1ms; }
+  .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .type-cursor { animation: none; }
   html { scroll-behavior: auto; }
 }
+
+/* ---------- scroll reveal ---------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 500ms ease, transform 500ms ease;
+  transition-delay: var(--rd, 0ms);
+}
+.reveal.visible { opacity: 1; transform: none; }
 
 /* ---------- layout ---------- */
 
@@ -159,6 +183,17 @@ h1 {
   line-height: 1.4;
   letter-spacing: -0.5px;
   margin-bottom: 14px;
+  min-height: 2.8em; /* reserve both lines while typing */
+}
+
+.type-cursor {
+  display: inline-block;
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
 }
 
 h2 {
@@ -204,8 +239,13 @@ a:hover { color: var(--pink); }
   border-radius: 2px;
   transition: transform 120ms ease, background 120ms ease;
 }
-.btn:hover { background: var(--purple); transform: translateY(-2px) rotate(-0.5deg); }
-.btn:active { transform: translateY(0) scale(0.98); }
+.btn:hover {
+  background: var(--purple);
+  color: #ffffff;
+  transform: translateY(-2px) rotate(-1deg) scale(1.03);
+  box-shadow: 3px 4px 0 var(--shadow);
+}
+.btn:active { transform: translateY(0) scale(0.97); box-shadow: none; }
 
 .cta-note { color: var(--muted); font-size: 11.5px; }
 
@@ -280,7 +320,7 @@ a:hover { color: var(--pink); }
   cursor: pointer;
   transition: transform 120ms ease, background 120ms ease, border-color 120ms ease, color 120ms ease;
 }
-.quiz-opt:hover { transform: translateY(-2px); background: var(--lavender); }
+.quiz-opt:hover { transform: translateY(-2px) rotate(-1deg); background: var(--lavender); color: #17171c; }
 .quiz-opt.right { background: var(--green); border-color: var(--green); color: var(--paper); }
 .quiz-opt.wrong { background: var(--pink); border-color: var(--pink); color: var(--paper); animation: shake 300ms ease; }
 .quiz-opt:disabled { cursor: default; }

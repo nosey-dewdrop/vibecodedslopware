@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@500;700;800&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
   <script>document.documentElement.dataset.theme = localStorage.getItem("theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");</script>
-  <link rel="stylesheet" href="style.css?v=3">
+  <link rel="stylesheet" href="style.css?v=4">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✱</text></svg>">
 </head>
 <body>
@@ -30,7 +30,7 @@
     <section class="hero">
       <div class="hero-grid">
         <div>
-          <h1 data-confetti>you vibecoded it.<br>now actually learn it.</h1>
+          <h1 data-confetti aria-label="you vibecoded it. now actually learn it."><span id="typed" aria-hidden="true"></span><span class="type-cursor" aria-hidden="true">▌</span></h1>
           <p class="lede">leetcode, but every question comes from your own code.
           paste a repo. we break it into pieces. you get quizzed on it until you could
           have written it yourself.</p>
@@ -78,16 +78,16 @@
         <h2 data-confetti>your repo becomes your curriculum</h2>
         <ol class="steps">
           <li data-confetti><span class="step-glyph hl-purple">+</span>
-            <strong>connect a repo.</strong> your browser fetches it directly from github.
+            connect a repo. your browser fetches it directly from github.
             the code never touches our servers.</li>
           <li data-confetti><span class="step-glyph hl-pink">✱</span>
-            <strong>get the map.</strong> files, classes, functions, who calls whom —
+            get the map. files, classes, functions, who calls whom —
             extracted right on your machine.</li>
           <li data-confetti><span class="step-glyph hl-yellow">▪</span>
-            <strong>get quizzed.</strong> questions generated from your actual lines.
+            get quizzed. questions generated from your actual lines.
             not fizzbuzz. your buzz.</li>
           <li data-confetti><span class="step-glyph hl-green">+</span>
-            <strong>reach mastery.</strong> module by module, until "i can't touch this file"
+            reach mastery. module by module, until "i can't touch this file"
             becomes "i wrote this file, basically."</li>
         </ol>
       </section>
@@ -110,12 +110,12 @@
       <section>
         <p class="section-label">04 / privacy</p>
         <h2 data-confetti>snapchat, but for tech</h2>
-        <p>your code is <strong>never stored</strong>. not in a database, not in a log,
+        <p>your code is never stored. not in a database, not in a log,
         not in a backup. ever.</p>
         <ul class="privacy-list">
-          <li data-confetti>analysis runs <strong>in your browser</strong>, the map is built on your machine</li>
-          <li data-confetti>your questions live <strong>on your device</strong>, not on our servers</li>
-          <li data-confetti>we only keep <strong>numbers</strong>: mastery %, streaks, solved counts</li>
+          <li data-confetti>analysis runs in your browser, the map is built on your machine</li>
+          <li data-confetti>your questions live on your device, not on our servers</li>
+          <li data-confetti>we only keep numbers: mastery %, streaks, solved counts</li>
         </ul>
         <p class="fine">if someone hacked us, they'd steal your high score.</p>
       </section>
@@ -135,6 +135,6 @@
     <span class="footer-glyphs" aria-hidden="true">+ ✱ ▪</span>
   </footer>
 
-  <script src="script.js?v=3"></script>
+  <script src="script.js?v=4"></script>
 </body>
 </html>
