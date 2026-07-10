@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import { initConfetti, refreshColors, buildField, burst } from "./confetti";
-import { fetchRepo, RepoFetchError, type RepoFetchResult } from "./repo";
+import { fetchRepo, RepoFetchError } from "./repo";
+import { analyzeFiles } from "./analyzer";
+import type { RepoMap } from "./analyzer/types";
+import { RepoExplorer } from "./map";
 
 const THEMES = ["white", "black", "plum", "midnight"] as const;
 
@@ -80,26 +83,25 @@ function Home() {
   );
 }
 
-// session cache so navigating back does not refetch (real persistence: stage 1.6)
-const repoCache = new Map<string, RepoFetchResult>();
-
-const fmtKB = (n: number) => (n >= 1024 * 1024 ? (n / 1024 / 1024).toFixed(1) + " MB" : Math.max(1, Math.round(n / 1024)) + " KB");
+// session cache so navigating back does not refetch/reanalyze (persistence: 1.6)
+const mapCache = new Map<string, RepoMap>();
 
 function MapScreen({ owner, repo }: { owner: string; repo: string }) {
   const key = `${owner}/${repo}`;
   const [log, setLog] = useState<string[]>([]);
   const [progress, setProgress] = useState("");
-  const [result, setResult] = useState<RepoFetchResult | null>(repoCache.get(key) ?? null);
+  const [map, setMap] = useState<RepoMap | null>(mapCache.get(key) ?? null);
   const [error, setError] = useState<string>("");
   const started = useRef(false);
 
   const addLog = (line: string) => setLog((l) => [...l, line]);
 
   useEffect(() => {
-    if (result || started.current) return;
+    if (map || started.current) return;
     started.current = true;
     const t0 = performance.now();
-    addLog(`> analyzing ${key}`);
+    addLog(`> ${key}`);
+
     fetchRepo({ owner, repo }, (p) => {
       if (p.phase === "meta") addLog("✱ resolving repo…");
       if (p.phase === "tree") addLog("✱ reading file tree…");
@@ -107,81 +109,49 @@ function MapScreen({ owner, repo }: { owner: string; repo: string }) {
     })
       .then((r) => {
         setProgress("");
-        addLog(`+ ${r.files.length} source files (${fmtKB(r.files.reduce((s, f) => s + f.size, 0))}) · ${r.skipped.length} skipped`);
-        if (r.treeTruncated) addLog("· note: repo tree was truncated by github (very large repo)");
+        const kb = r.files.reduce((s, f) => s + f.size, 0);
+        addLog(`+ ${r.files.length} files (${kb >= 1e6 ? (kb / 1e6).toFixed(1) + "mb" : Math.round(kb / 1024) + "kb"}) · ${r.skipped.length} skipped`);
+        addLog("✱ parsing with tree-sitter, resolving who calls whom…");
+        return analyzeFiles(r.files, (p) => setProgress(`· analyzing ${p.done}/${p.total}`));
+      })
+      .then((m) => {
+        setProgress("");
+        addLog(`+ ${m.symbols.length} symbols · ${m.stats.directCalls} calls resolved · ${m.callEdges.length} edges`);
+        if (m.unsupported.length) addLog(`· ${m.unsupported.length} files in languages we don't read yet`);
         addLog(`done in ${((performance.now() - t0) / 1000).toFixed(1)}s`);
-        repoCache.set(key, r);
-        setResult(r);
-        burst(window.innerWidth / 2, 180, 26);
+        mapCache.set(key, m);
+        setTimeout(() => {
+          setMap(m);
+          burst(window.innerWidth / 2, 160, 30);
+        }, 300);
       })
       .catch((e: unknown) => {
         setProgress("");
-        if (e instanceof RepoFetchError) {
-          if (e.kind === "rate-limit" && e.resetAt) {
-            setError(`github rate limit hit — try again after ${e.resetAt.toLocaleTimeString()}`);
-          } else {
-            setError(e.message);
-          }
+        if (e instanceof RepoFetchError && e.kind === "rate-limit" && e.resetAt) {
+          setError(`github rate limit hit — try again after ${e.resetAt.toLocaleTimeString()}`);
+        } else if (e instanceof Error) {
+          setError(e.message);
         } else {
           setError("something unexpected broke. try again?");
         }
       });
   }, []);
 
-  const skippedByReason = new Map<string, number>();
-  result?.skipped.forEach((s) => skippedByReason.set(s.reason, (skippedByReason.get(s.reason) ?? 0) + 1));
+  if (map) return <RepoExplorer map={map} owner={owner} repo={repo} />;
 
   return (
     <main>
       <h1>{owner}/{repo}</h1>
-
-      {!result && (
-        <div class="log">
-          {log.map((l) => <p class="log-line">{l}</p>)}
-          {progress && <p class="log-line hint">{progress}</p>}
-          {error && (
-            <>
-              <p class="log-line err">✱ {error}</p>
-              <p class="log-line"><a href="#/">← try another repo</a></p>
-            </>
-          )}
-        </div>
-      )}
-
-      {result && (
-        <>
-          <p class="hint">
-            branch {result.branch} · {result.files.length} source files ·{" "}
-            {fmtKB(result.files.reduce((s, f) => s + f.size, 0))} of code, all living in this tab only
-          </p>
-          <div class="result-grid">
-            <div>
-              <p class="label">source files</p>
-              <div class="filelist">
-                {result.files.slice(0, 300).map((f) => (
-                  <div class="filerow">
-                    <span class="filepath">{f.path}</span>
-                    <span class="filesize">{fmtKB(f.size)}</span>
-                  </div>
-                ))}
-                {result.files.length > 300 && <p class="hint">… and {result.files.length - 300} more</p>}
-              </div>
-            </div>
-            <div>
-              <p class="label">skipped ({result.skipped.length}) — nothing vanishes silently</p>
-              {[...skippedByReason.entries()].map(([reason, count]) => (
-                <p class="skiprow"><span class="skipcount">{count}</span> {reason}</p>
-              ))}
-              <div class="stage-card">
-                <p class="label">next — stage 1.4</p>
-                <p>tree-sitter reads these files and resolves who calls whom.
-                the map grows here.</p>
-              </div>
-            </div>
-          </div>
-          <p style="margin-top: 16px"><a href="#/">← try another repo</a></p>
-        </>
-      )}
+      <div class="log">
+        {log.map((l) => <p class="log-line">{l}</p>)}
+        {progress && <p class="log-line hint">{progress}</p>}
+        {error && (
+          <>
+            <p class="log-line err">✱ {error}</p>
+            <p class="log-line"><a href="#/">← try another repo</a></p>
+          </>
+        )}
+      </div>
     </main>
   );
 }
@@ -196,6 +166,10 @@ export function App() {
       <div id="confetti-trail" aria-hidden="true"></div>
       <Header />
       {mapMatch ? <MapScreen owner={mapMatch[1]} repo={mapMatch[2]} /> : <Home />}
+      <footer class="app-footer">
+        <span>your code stays in this tab · <a href="../privacy.html">privacy</a></span>
+        <span class="footer-glyphs" aria-hidden="true">+ ✱ ▪</span>
+      </footer>
     </>
   );
 }

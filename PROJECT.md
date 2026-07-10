@@ -6,10 +6,10 @@ Code is never stored server-side — analyzed in the browser, questions live on
 the device, our DB keeps numbers only.
 
 ## Status
-Current phase: Foundation (Phase 1 — stages 1.1, 1.2, 1.3 done, 1.4 next)
-Last session: 2026-07-10 — landing final + 4 themes; 1.1 parse proof live
-at /lab/ (541 lines / 7ms); 1.2 app scaffold live at /app/ (Vite+TS+Preact,
-hash routing, shared design system).
+Current phase: Foundation (Phase 1 — stages 1.1-1.5 done, 1.6 persistence next)
+Last session: 2026-07-10 — FULL analyzer live: paste repo -> browser fetch ->
+tree-sitter parse (JS/TS/TSX/Python) -> resolved call graph with confidence ->
+explorer with neighborhood graph. Privacy/KVKK page shipped.
 
 ## Roadmap
 
@@ -68,49 +68,48 @@ You learn: **HTTP APIs for real** (headers, rate limits, quotas),
 blocked us and how to design around it), **concurrency budgeting**
 (12-way parallel fetch with a worker-pool loop).
 
-#### 1.4 Multi-file analysis → resolved code graph
+#### 1.4 Multi-file analysis → resolved code graph  ✓ 2026-07-10
 Goal: not just "what's in each file" but RESOLVED relationships — which call
-goes to which function, across files. (Research 2026-07-10: SCIP-shaped
-extraction + dependency-cruiser-shaped import resolution + ACG-style call
-binding; see reports/2026-07-10-vibecodedflopware-understanding-engine.md)
-- [ ] per-file FACTS extraction in a Web Worker (tree-sitter queries):
-      exports, imports, declarations (functions/classes/methods with spans),
-      call sites, class heritage (extends/implements/fields)
-- [ ] drop ASTs after extraction; store fact JSON keyed by content hash
-- [ ] import binding: relative path + extension trial (.ts/.tsx/.js/index.*),
-      tsconfig paths, `export * from` barrel chains expanded to fixpoint,
-      bare specifiers marked external
-- [ ] call binding with CONFIDENCE TAGS: direct (local/imported named call,
-      ~100% sure) / heuristic (obj.method() matched by name) / unresolved
-      (dynamic) — never pretend certainty we don't have
-- [ ] class relations from the same resolver: extends, implements, composition
-      (the "UML understanding" — it's a byproduct of resolution, not a
-      separate engine)
-- [ ] progress bar per file; language detection; lazy grammar loading
-      (JS first, TS/TSX next, Python/Swift later)
-Done when: kisalafinuzunu parses fully and "who calls slugify" answers
-correctly with confidence labels.
+goes to which function, across files.
+- [x] per-file FACTS extraction in a Web Worker (tree-sitter queries):
+      exports, imports, declarations (functions/arrows/classes/methods with
+      spans + params), call sites, class heritage (extends/implements)
+      — `analyzer/extract.ts`, `analyzer/queries.ts`
+- [x] grammars: JS, TS, TSX, Python (vendored wasm in `public/wasm/`,
+      lazy-loaded per language, node-verified compatible with web-tree-sitter)
+- [x] import binding: relative path + extension trial (.ts/.tsx/.js/index.*),
+      ts esm .js→.ts, bare specifiers marked external — `analyzer/resolve.ts`
+- [x] call binding with CONFIDENCE TAGS: direct (local/imported named call) /
+      heuristic (name match, fan-out capped) / unresolved (dynamic/external)
+- [x] class relations from the same resolver (extends/implements)
+- [x] module grouping by directory; external SERVICE detection (supabase/
+      stripe/ai/db surfaced separately from packages)
+- [x] runs in a CLASSIC web worker (emscripten env-detection fix documented)
+- [x] node-proven on the app's own source: cross-file binding correct
+      (fetchRepo→MapScreen direct, burst→2 callers direct, etc.)
+Done when: a repo parses fully and "who calls X" answers with confidence
+labels. ✓
 You learn: **Web Workers**, **program analysis** (symbol tables, scopes,
-call graphs, why dynamic dispatch is hard), **data modeling**.
+call graphs, why dynamic dispatch is hard), **CORS/worker environments**,
+**data modeling**.
 
-#### 1.5 The map screen — C4-lite zoomable city map
-Goal: the "wow" screen. NOT UML (research: <10% usage, wrong metaphor for
-JS/TS), NOT a whole-repo force graph (hairball, anti-pedagogy). Instead:
-zoomable hierarchy, 10-50 nodes per view, plain-language labels.
-- [ ] level 1 — system map: feature modules (grouped from folders) + external
-      services (detected from package.json/imports: supabase, stripe, apis),
-      verb-labeled edges ("saves users to", "calls")
-- [ ] level 2 — click a module: files inside, resolved dependencies between
-      them (elkjs layout in a worker, custom SVG nodes in Preact)
-- [ ] level 3 — click a function: signature, callers, callees (with
-      confidence), size, "quiz me on this" button
-- [ ] fuzzy search over all symbols
-- [ ] every view ends in an ACTION (CodeSee died shipping maps with no next
-      step): "this module talks to stripe — start its quiz"
-- [ ] confetti burst when analysis completes; empty/error states designed
+#### 1.5 The map screen — explorer  ✓ 2026-07-10 (v1)
+Goal: the "wow" screen. NOT UML, NOT a whole-repo hairball. Zoomable
+hierarchy, plain labels, every view ends in an action. `map.tsx`
+- [x] stats + honest confidence bar (% resolved / guessed / dynamic)
+- [x] left: external services + packages ("talks to"), collapsible modules,
+      symbols ranked by inbound callers
+- [x] right: symbol detail — signature, file:line, params, exported badge
+- [x] MINI NEIGHBORHOOD GRAPH (the Obsidian touch): callers ← symbol → callees
+      as an SVG, edge style = confidence (solid/dashed/dotted), nodes clickable
+- [x] callers/callees lists, click to navigate the graph
+- [x] fuzzy search over all symbols/files
+- [x] confetti burst on analysis complete; empty/error states
+- [ ] LATER (polish): elkjs force "galaxy" overview, level-2 module dep graph,
+      verb-labeled system diagram, "quiz me" wired to Phase 3
 Done when: Damla explores one of her own repos and it feels like a product.
-You learn: **information design**, **graph layout** (elk, layered DAGs),
-**fuzzy search**, the C4 model.
+You learn: **information design**, **fuzzy search**, SVG graph drawing,
+state without a library.
 
 #### 1.6 Local persistence
 Goal: close the tab, come back, map is instantly there.

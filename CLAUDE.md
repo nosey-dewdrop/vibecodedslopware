@@ -15,10 +15,16 @@ and tracks mastery per module until you actually own what you shipped.
 
 ## Status
 
-- 2026-07-09: Landing page built (cream paper + monospace + pastel confetti field
-  + cursor-trail confetti + demo bug-injection quiz). Repo created, GitHub Pages live.
-- Next up: Phase 1 (analyzer core) — see roadmap below. Nothing of the app itself
-  exists yet.
+- 2026-07-10: Phase 1 analyzer DONE (stages 1.1-1.5). Live app at /app/:
+  paste a public repo → browser fetches it (never our servers) → tree-sitter
+  parses JS/TS/TSX/Python in a worker → resolved call graph with confidence
+  tags → explorer with modules, symbol detail, and a mini neighborhood graph.
+  Privacy/KVKK page at /privacy.html. Landing frozen. Autonomy mode: Damla said
+  push through phases without stage-by-stage approval, respect her fears
+  (code never stored, quality, design law). Next: 1.6 persistence (Dexie),
+  then Phase 2 understanding engine.
+- 2026-07-09: Landing page built + polished (white/black/plum/midnight themes,
+  confetti, typing hero, no bold, sharp corners). GitHub Pages live.
 
 ## Design language
 

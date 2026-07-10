@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>privacy — vibecodedflopware</title>
+  <meta name="description" content="Your code is never stored. Analysis runs in your browser. We keep numbers, not code.">
+  <script>
+  (function () {
+    var t = localStorage.getItem("theme");
+    if (t === "light") t = "white";
+    if (t === "dark") t = "black";
+    if (["white", "black", "plum", "midnight"].indexOf(t) === -1)
+      t = matchMedia("(prefers-color-scheme: dark)").matches ? "black" : "white";
+    document.documentElement.dataset.theme = t;
+  })();
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@500&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=6">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✱</text></svg>">
+  <style>
+    .doc { max-width: 680px; }
+    .doc h2 { margin-top: 32px; }
+    .doc p, .doc li { margin-bottom: 10px; }
+    .doc ul { padding-left: 20px; }
+    .updated { color: var(--muted); font-size: 12px; }
+    .tldr { border: 1px solid var(--line); border-radius: 2px; padding: 14px 16px; background: var(--card); margin: 18px 0; }
+  </style>
+</head>
+<body>
+  <div id="confetti-field" aria-hidden="true"></div>
+  <div id="confetti-trail" aria-hidden="true"></div>
+
+  <header class="top">
+    <a class="wordmark" href="./" style="text-decoration:none;color:inherit">vibecodedflopware</a>
+    <span class="top-right">
+      <button class="theme-toggle" id="theme-toggle" data-confetti>[theme]</button>
+      <a class="top-link" href="./">← home</a>
+    </span>
+  </header>
+
+  <main class="doc">
+    <h1 data-confetti>privacy &amp; your code</h1>
+    <p class="updated">last updated 10 july 2026</p>
+
+    <div class="tldr">
+      <p><strong>the short version:</strong> your source code is never stored on our
+      servers. it is read inside your own browser, and it leaves your device only
+      as small snippets, in transit, when you ask us to generate questions — never
+      saved, never logged. our database holds numbers (your progress), not code.</p>
+    </div>
+
+    <h2 data-confetti>who we are</h2>
+    <p>vibecodedflopware is a project by damlahelloworld. for privacy questions,
+    reach us through the <a href="https://github.com/damlahelloworld/vibecodedflopware">project repository</a>.
+    this policy is written to meet Turkey's KVKK (Law No. 6698) and the EU GDPR.</p>
+
+    <h2 data-confetti>what happens to your code</h2>
+    <ul>
+      <li><strong>fetched by your browser.</strong> when you connect a public
+      repository, your browser downloads it directly from GitHub. the code does
+      not pass through our servers.</li>
+      <li><strong>analyzed on your device.</strong> we parse your code and build
+      its map entirely in your browser (WebAssembly). the structure of your code
+      never leaves your machine.</li>
+      <li><strong>never stored by us.</strong> your code is not written to any
+      database, log, backup, or cache under our control. ever.</li>
+      <li><strong>snippets in transit only.</strong> to generate questions, small
+      selected snippets are sent to an AI provider through a stateless relay. they
+      are used to produce your questions and are not retained by us. the relay
+      keeps no request bodies.</li>
+      <li><strong>questions stay on your device.</strong> generated questions are
+      stored locally in your browser (IndexedDB), not on our servers.</li>
+    </ul>
+
+    <h2 data-confetti>what we actually store</h2>
+    <p>if you create an account, we store only:</p>
+    <ul>
+      <li>account basics needed to sign you in (e.g. your email or a provider id);</li>
+      <li>progress numbers: mastery percentages, streaks, counts of questions
+      solved, and a one-way hashed identifier for each repository — never the
+      repository's name, file names, or any code.</li>
+    </ul>
+    <p>someone with full access to our database could see your high score. they
+    could not see a single line of your code, or even which project it was.</p>
+
+    <h2 data-confetti>legal basis (KVKK / GDPR)</h2>
+    <p>we process the minimal account and progress data above on the basis of your
+    consent and of our legitimate interest in providing the service you asked for.
+    we do not sell your data, we do not use it for advertising, and we do not
+    profile you.</p>
+
+    <h2 data-confetti>third parties</h2>
+    <ul>
+      <li><strong>GitHub</strong> — your browser talks to GitHub directly to fetch
+      repositories; their terms and privacy policy apply to that connection.</li>
+      <li><strong>AI provider</strong> — receives only the snippets needed to
+      generate questions, in transit, under a zero-retention configuration.</li>
+      <li><strong>hosting</strong> — the site is served as static files over HTTPS;
+      standard access logs (IP, timestamp) may be kept by the host for security.</li>
+    </ul>
+
+    <h2 data-confetti>your rights</h2>
+    <p>under KVKK and GDPR you can access, correct, or delete your data, and
+    withdraw consent at any time. deleting a repository in the app erases all of
+    its local data — questions and cached analysis — from your device. deleting
+    your account removes your stored progress numbers. contact us through the
+    repository to exercise any of these rights.</p>
+
+    <h2 data-confetti>cookies &amp; local storage</h2>
+    <p>we use your browser's local storage for your theme choice, your questions,
+    and cached analysis. we do not use tracking or advertising cookies.</p>
+
+    <h2 data-confetti>changes</h2>
+    <p>if this policy changes, the date at the top changes with it. material changes
+    will be announced in the project repository.</p>
+
+    <p style="margin-top:32px"><a href="./">← back home</a></p>
+  </main>
+
+  <footer>
+    <span>a <a href="https://damlahelloworld.github.io" data-confetti>damlahelloworld</a> thing</span>
+    <span class="footer-glyphs" aria-hidden="true">+ ✱ ▪</span>
+  </footer>
+
+  <script src="script.js?v=6"></script>
+</body>
+</html>

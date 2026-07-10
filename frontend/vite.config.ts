@@ -9,4 +9,7 @@ export default defineConfig({
   // empty inline config stops vite from picking up stray postcss configs
   // in parent directories (there is one in the home dir)
   css: { postcss: {} },
+  // classic worker format so web-tree-sitter's emscripten glue detects the
+  // worker environment correctly (see analyzer/index.ts)
+  worker: { format: "iife" },
 });
