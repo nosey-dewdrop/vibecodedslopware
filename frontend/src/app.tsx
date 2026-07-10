@@ -140,7 +140,7 @@ function MapScreen({ owner, repo }: { owner: string; repo: string }) {
   const run = (fresh: boolean) => {
     const t0 = performance.now();
     setError("");
-    setLog([`> ${key}`]);
+    setLog([`> ${key}`, "✱ checking this device…"]);
 
     (fresh ? Promise.resolve(null) : loadRepo(owner, repo))
       .then((cached) => {
