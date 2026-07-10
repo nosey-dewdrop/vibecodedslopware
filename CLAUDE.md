@@ -22,6 +22,9 @@ and tracks mastery per module until you actually own what you shipped.
 
 ## Design language
 
+UI FROZEN (Damla 2026-07-10: "ui değiştirme kafam karışıyor") — landing visuals
+are final; do NOT touch landing look/layout unless Damla explicitly asks.
+
 - Theme (Damla 2026-07-10): WHITE TERMINAL (light, default) + BLACK TERMINAL
   (dark mode), toggle in header, choice persisted. CREAM IS BANNED — Damla hates
   cream. The hogwild.uk screenshot was ONLY a confetti-behavior reference, never
