@@ -218,12 +218,12 @@ function SymbolDetail({ sel, idx, onPick, map }: { sel: SymbolDef; idx: Idx; onP
         <div>
           <p class="label">called by ({uniqueCallers.length})</p>
           {uniqueCallers.length === 0 && <p class="hint">nothing calls this — an entry point, or dead code.</p>}
-          {uniqueCallers.map((c) => <RelRow ref={c} idx={idx} onPick={onPick} />)}
+          {uniqueCallers.map((c) => <RelRow rel={c} idx={idx} onPick={onPick} />)}
         </div>
         <div>
           <p class="label">calls ({uniqueCallees.length})</p>
           {uniqueCallees.length === 0 && <p class="hint">calls nothing we resolved.</p>}
-          {uniqueCallees.map((c) => <RelRow ref={c} idx={idx} onPick={onPick} />)}
+          {uniqueCallees.map((c) => <RelRow rel={c} idx={idx} onPick={onPick} />)}
         </div>
       </div>
 
@@ -232,12 +232,12 @@ function SymbolDetail({ sel, idx, onPick, map }: { sel: SymbolDef; idx: Idx; onP
   );
 }
 
-function RelRow({ ref, idx, onPick }: { ref: { id: string; conf: string }; idx: Idx; onPick: (id: string) => void }) {
-  const s = idx.byId.get(ref.id);
-  const label = s ? (s.className ? `${s.className}.${s.name}` : s.name) : ref.id.split("::").pop();
+function RelRow({ rel, idx, onPick }: { rel: { id: string; conf: string }; idx: Idx; onPick: (id: string) => void }) {
+  const s = idx.byId.get(rel.id);
+  const label = s ? (s.className ? `${s.className}.${s.name}` : s.name) : rel.id.split("::").pop();
   return (
-    <button class="rel-row" onClick={() => s && onPick(s.id)} disabled={!s} title={CONF_LABEL[ref.conf]}>
-      <span class={"conf-dot " + ref.conf}>{CONF_GLYPH[ref.conf]}</span>
+    <button class="rel-row" onClick={() => s && onPick(s.id)} disabled={!s} title={CONF_LABEL[rel.conf]}>
+      <span class={"conf-dot " + rel.conf}>{CONF_GLYPH[rel.conf]}</span>
       <span class="rel-name">{label}</span>
       {s && <span class="hint rel-file">{moduleOf(s.file)}</span>}
     </button>
