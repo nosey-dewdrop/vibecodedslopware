@@ -16,6 +16,10 @@ export interface SymbolDef {
   className?: string; // set for methods
   exported: boolean;
   signature: string; // first line of the declaration, trimmed
+  // understanding engine (functions/arrows only): full source + what it needs
+  source?: string; // full text of the declaration
+  freeRefs?: string[]; // non-builtin identifiers it references (deps to satisfy)
+  dangerRef?: string | null; // first side-effect global it touches, or null
 }
 
 export type Confidence = "direct" | "heuristic" | "unresolved";

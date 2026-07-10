@@ -1,5 +1,6 @@
 import { useMemo, useState } from "preact/hooks";
 import type { CallEdge, RepoMap, SymbolDef } from "./analyzer/types";
+import { WhatIfPanel } from "./whatif-panel";
 
 const KIND_GLYPH: Record<string, string> = { function: "ƒ", arrow: "λ", method: "▪", class: "◆" };
 const CONF_GLYPH: Record<string, string> = { direct: "●", heuristic: "◐", unresolved: "○" };
@@ -142,7 +143,7 @@ export function RepoExplorer({
 
         <section class="explorer-main">
           {sel ? (
-            <SymbolDetail sel={sel} idx={idx} onPick={setSelId} />
+            <SymbolDetail sel={sel} idx={idx} onPick={setSelId} map={map} />
           ) : (
             <div class="empty-detail">
               <p class="empty-glyph">◆ ƒ λ ▪</p>
@@ -174,7 +175,7 @@ type Idx = {
   inbound: Map<string, number>;
 };
 
-function SymbolDetail({ sel, idx, onPick }: { sel: SymbolDef; idx: Idx; onPick: (id: string) => void }) {
+function SymbolDetail({ sel, idx, onPick, map }: { sel: SymbolDef; idx: Idx; onPick: (id: string) => void; map: RepoMap }) {
   const callers = idx.callers.get(sel.id) ?? [];
   const callees = (idx.callees.get(sel.id) ?? []).filter((e) => e.toId && e.toId !== sel.id);
   const uniqueCallers = dedupe(callers.map((e) => ({ id: e.fromId, conf: e.confidence })));
@@ -202,11 +203,7 @@ function SymbolDetail({ sel, idx, onPick }: { sel: SymbolDef; idx: Idx; onPick: 
         </div>
       </div>
 
-      <div class="stage-card">
-        <p class="label">next — the quiz</p>
-        <p>soon: "what does {sel.name} return for input x", a planted bug in this
-        exact function to find, and "change one line — what breaks".</p>
-      </div>
+      <WhatIfPanel target={sel} map={map} />
     </div>
   );
 }

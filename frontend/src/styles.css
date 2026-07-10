@@ -271,3 +271,29 @@ p { margin-bottom: 10px; }
 .conf-dot.unresolved { color: var(--muted); }
 .rel-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .rel-file { margin-left: auto; flex: none; font-size: 11px; }
+
+/* ---------- what-if panel ---------- */
+
+.whatif { margin-top: 24px; border-top: 1px solid var(--line); padding-top: 18px; }
+.blast-line { margin-bottom: 8px; }
+.blast-list { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.blast-chip { border: 1px solid var(--line); border-radius: 2px; padding: 2px 8px; font-size: 12px; }
+.blast-depth { color: var(--muted); }
+
+.run-btn { margin: 6px 0 4px; }
+
+.whatif-reason { color: var(--muted); margin-top: 12px; font-style: italic; }
+
+.whatif-result { margin-top: 16px; }
+.mut-block { margin-top: 14px; }
+.mut-head { font-size: 12px; letter-spacing: 1px; margin-bottom: 6px; }
+.mut-head.killed { color: var(--pink); }
+.mut-head.survived { color: var(--muted); }
+.mut-row { margin-bottom: 10px; }
+.mut-change code { color: var(--pink); }
+.mut-detail { font-size: 12px; color: var(--muted); padding-left: 12px; }
+.mut-detail code { color: var(--ink); }
+.mut-detail .was { color: var(--muted); }
+.mut-detail .now { color: var(--pink); }
+.survived-row { margin-bottom: 4px; color: var(--muted); }
+.survived-row code { color: var(--ink); }

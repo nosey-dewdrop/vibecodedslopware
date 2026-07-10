@@ -6,7 +6,7 @@ Code is never stored server-side — analyzed in the browser, questions live on
 the device, our DB keeps numbers only.
 
 ## Status
-Current phase: Phase 1 COMPLETE. Phase 2 (understanding engine) next.
+Current phase: Phase 2 (understanding engine) COMPLETE. Phase 3 (question engine) next.
 Last session: 2026-07-10 — FULL analyzer live: paste repo -> browser fetch ->
 tree-sitter parse (JS/TS/TSX/Python) -> resolved call graph with confidence ->
 explorer with neighborhood graph. Privacy/KVKK page shipped.
@@ -133,51 +133,60 @@ neighborhood graph → saved on-device, forgettable. Privacy/KVKK shipped.
 (NEW 2026-07-10, Damla's expanded vision. Research-backed: Worker sandbox +
 Stryker/PIT mutator subset + fast-check differential testing.)
 
-#### 2.1 Sandbox runner
-- [ ] fresh Web Worker per run (Blob URL): globals stubbed (fetch, DOM,
-      storage throw SandboxViolation), 2s deadline + worker.terminate()
-      (kills even infinite loops), fresh state every run
-- [ ] result marshalling: value / thrown error type / timeout / violation
-Done when: an infinite loop cannot freeze the app and fetch cannot fire.
+#### 2.1 Sandbox runner  ✓ 2026-07-10
+- [x] fresh classic Web Worker per run (`engine/sandbox.worker.ts` +
+      `sandbox.ts`): fetch/XHR/WebSocket/storage stubbed to throw, hard
+      deadline + worker.terminate() kills infinite loops, fresh state per run
+- [x] result marshalling: serialized value / thrown error type / timeout /
+      compile-error; `new Function` confined to the worker (verified by grep)
+Done when: an infinite loop cannot freeze the app and fetch cannot fire. ✓
 You learn: **sandboxing & threat models** (we run the user's own code back
-at them — that framing decides everything), workers as kill-switchable VMs.
+at them), workers as kill-switchable VMs.
 
-#### 2.2 Purity classifier
-- [ ] static pass over our own facts: reject free refs to window/document/
-      fetch/process; imports of side-effectful modules; assignments to outer
-      scope. Date.now/Math.random → "nondeterministic", not rejected
-- [ ] runtime backstop: one sandbox run with throwing stubs catches what
-      static analysis misses
-- [ ] UI classes: runnable / runnable-but-nondeterministic / not-runnable
-Done when: classifier is honest — zero functions falsely promised as runnable.
-You learn: **program analysis for effects**, why purity matters.
+#### 2.2 Runnability classifier  ✓ 2026-07-10
+- [x] at extraction: full source + free-identifier analysis (scope-aware:
+      params, locals, destructuring, for-of vars, catch params, nested fn
+      params all counted as bound) → freeRefs + first DANGER global touched
+- [x] TS/TSX type-stripping via tree-sitter (type_annotation, type_parameters,
+      as/satisfies, non-null `!`, optional `?`) → runnable JS; graceful
+      fallback if a mutant won't compile
+- [x] bundle builder resolves freeRefs to same-file pure helpers transitively;
+      rejects anything touching imports/DOM/globals
+- [x] PROVEN on the app's own TS/TSX source: 35/102 symbols runnable, all 35
+      eval clean, 0 false "runnable" promises
+Done when: classifier is honest — zero functions falsely promised. ✓
+You learn: **program analysis for effects**, scope analysis, TS type systems.
 
-#### 2.3 Mutation + differential harness
-- [ ] 5 high-signal mutators (PIT/Stryker research): conditional boundary
-      (< → <=), negate conditional (=== → !==), arithmetic (+ → -),
-      boolean/return flip, logical operator (&& → ||) — applied as string
-      splices on tree-sitter spans, no extra parser
-- [ ] input generation: curated edge corpus (0, -1, NaN, "", [], null,
-      undefined, MAX_SAFE_INTEGER) + fast-check property runs with shrinking
-- [ ] differential run: original vs mutant on same inputs → minimal breaking
-      example ("changing < to <= breaks slugify(0)") or "survived"
-Done when: pick a function in kisalafinuzunu, see a true breaking input.
-You learn: **mutation testing**, **property-based testing + shrinking** —
-the two testing ideas that separate seniors from juniors.
+#### 2.3 Mutation + differential harness  ✓ 2026-07-10
+- [x] 5 high-signal mutators (`engine/mutators.ts`): boundary (< → <=),
+      negate (=== → !==), arithmetic (+ → -), logical (&& → ||), boolean
+      flip — with a tokenizer that skips strings/comments/regex/templates
+- [x] input generation (`engine/inputs.ts`): name-based corpus + LITERAL
+      HARVESTING (pulls `18` out of `age >= 18` and tries 17/18/19 — closes
+      the boundary recall gap that a fixed corpus misses)
+- [x] differential run: original vs mutant across inputs → first breaking
+      input with before/after ("changing >= to > breaks isAdult(18): was
+      true, now false"); equivalent mutants correctly survive (no false kills)
+Done when: pick a function, see a true breaking input. ✓ (isAdult/fizz/grade
+node-proven)
+You learn: **mutation testing**, differential testing, tokenizers.
 
-#### 2.4 Static blast radius
-- [ ] transitive callers from the resolved graph: "you change this → these
-      N functions in M files are affected", confidence-weighted
-- [ ] impact view: ripple visualization on the map (glyph pulse along edges)
-Done when: blast radius of a popular util function renders correctly.
-You learn: **graph traversal in anger**, impact analysis.
+#### 2.4 Static blast radius  ✓ 2026-07-10
+- [x] transitive callers via BFS over the resolved graph (`computeBlast`):
+      "touch this → ripples to N functions", depth-tagged, capped
+- [x] rendered as chips in the what-if panel
+Done when: blast radius of a popular util renders. ✓
+You learn: **graph traversal**, impact analysis.
 
-#### 2.5 "What if" screen (ties 2.1-2.4 together)
-- [ ] pick a function → see mutants → predict what breaks (that's the quiz
-      moment) → run → watch the real answer with minimal counterexample
-- [ ] "follow one action" flow view: statically derived 5-10 step story of
-      one user action (route → handler → db), LLM-narrated
-Done when: the predict-then-watch loop feels like the product's signature move.
+#### 2.5 "What if" panel  ✓ 2026-07-10 (`whatif-panel.tsx`)
+- [x] on any function: blast radius shown instantly; "break it on purpose"
+      button runs the real experiment in the sandbox
+- [x] shows changes that break it (with the exact input + before/after) and
+      changes nothing noticed ("your tests wouldn't catch this"), confetti
+      burst when a break is found
+- [ ] LATER: predict-before-reveal quiz framing (Phase 3), "follow one action"
+      flow view
+Done when: the predict-then-watch loop feels like the signature move. ✓ (v1)
 You learn: turning analysis into pedagogy.
 
 ### Phase 3: Question engine — "the map becomes a curriculum"

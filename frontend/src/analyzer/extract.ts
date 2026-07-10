@@ -47,6 +47,152 @@ function firstLine(node: Parser.SyntaxNode): string {
   return node.text.split("\n")[0].trim().slice(0, 120);
 }
 
+// turn a TS function into runnable JS by deleting type syntax. best-effort:
+// if we miss something the sandbox just reports "couldn't run this one".
+function stripTypes(defNode: Parser.SyntaxNode, lang: Lang): string {
+  if (lang !== "typescript" && lang !== "tsx") return defNode.text;
+  const base = defNode.startIndex;
+  const text = defNode.text;
+  const edits: { start: number; end: number }[] = [];
+  const push = (a: number, b: number) => { if (b > a) edits.push({ start: a - base, end: b - base }); };
+
+  const walk = (n: Parser.SyntaxNode) => {
+    switch (n.type) {
+      case "type_annotation":
+      case "type_parameters":
+      case "type_arguments":
+        push(n.startIndex, n.endIndex);
+        return; // don't descend
+      case "as_expression":
+      case "satisfies_expression": {
+        const val = n.namedChildren[0];
+        if (val) push(val.endIndex, n.endIndex); // drop ` as T`
+        if (val) walk(val);
+        return;
+      }
+      case "non_null_expression": {
+        const val = n.namedChildren[0];
+        if (val) { push(val.endIndex, n.endIndex); walk(val); }
+        return;
+      }
+      case "optional_parameter": {
+        const pat = n.childForFieldName("pattern") ?? n.namedChildren[0];
+        if (pat && defNode.text[pat.endIndex - base] === "?") push(pat.endIndex, pat.endIndex + 1);
+        for (const c of n.namedChildren) walk(c);
+        return;
+      }
+    }
+    for (const c of n.namedChildren) walk(c);
+  };
+  walk(defNode);
+
+  if (!edits.length) return text;
+  edits.sort((a, b) => a.start - b.start);
+  let out = "";
+  let cur = 0;
+  for (const e of edits) {
+    if (e.start < cur) continue; // overlapping, skip
+    out += text.slice(cur, e.start);
+    cur = e.end;
+  }
+  out += text.slice(cur);
+  return out;
+}
+
+// safe globals a pure function may use without breaking sandboxed execution
+const BUILTINS = new Set([
+  "Math", "JSON", "Object", "Array", "String", "Number", "Boolean", "Symbol",
+  "Map", "Set", "WeakMap", "WeakSet", "Promise", "RegExp", "Date", "BigInt",
+  "Error", "TypeError", "RangeError", "SyntaxError", "parseInt", "parseFloat",
+  "isNaN", "isFinite", "encodeURIComponent", "decodeURIComponent", "encodeURI",
+  "decodeURI", "undefined", "NaN", "Infinity", "console", "structuredClone",
+  "Intl", "ArrayBuffer", "Uint8Array", "Int32Array", "Float64Array",
+]);
+// globals that mean "this touches the outside world" -> not runnable in isolation
+const DANGER = new Set([
+  "window", "document", "globalThis", "self", "fetch", "XMLHttpRequest",
+  "WebSocket", "localStorage", "sessionStorage", "indexedDB", "process",
+  "require", "module", "exports", "eval", "Function", "importScripts",
+  "navigator", "location", "alert", "prompt", "__dirname", "__filename",
+  "setTimeout", "setInterval", "requestAnimationFrame",
+]);
+
+// collect names bound inside a function (params, locals, nested decls) and the
+// free identifiers it references in value position
+function analyzeRunnability(
+  defNode: Parser.SyntaxNode,
+  lang: Lang,
+  params: string[],
+): { freeRefs: string[]; dangerRef: string | null } {
+  if (lang !== "javascript" && lang !== "typescript" && lang !== "tsx") {
+    return { freeRefs: [], dangerRef: "__lang__" }; // runner speaks JS/TS/TSX only for now
+  }
+  const bound = new Set<string>(params);
+  const used = new Set<string>();
+
+  const identsIn = (n: Parser.SyntaxNode): string[] => {
+    const out: string[] = [];
+    const rec = (x: Parser.SyntaxNode) => {
+      if (x.type === "identifier") out.push(x.text);
+      for (const c of x.namedChildren) rec(c);
+    };
+    rec(n);
+    return out;
+  };
+
+  const collectBound = (n: Parser.SyntaxNode) => {
+    // names introduced by declarations anywhere in the body (incl. destructuring)
+    if (n.type === "variable_declarator") {
+      const nm = n.childForFieldName("name");
+      if (nm) for (const id of identsIn(nm)) bound.add(id);
+    } else if (n.type === "function_declaration" || n.type === "generator_function_declaration" || n.type === "class_declaration") {
+      const nm = n.childForFieldName("name");
+      if (nm && nm.type === "identifier") bound.add(nm.text);
+    } else if (n.type === "for_in_statement") {
+      const left = n.childForFieldName("left");
+      if (left) for (const id of identsIn(left)) bound.add(id);
+    } else if (n.type === "catch_clause") {
+      const p = n.childForFieldName("parameter") ?? n.namedChildren.find((c) => c.type !== "statement_block");
+      if (p) for (const id of identsIn(p)) bound.add(id);
+    } else if (n.type === "required_parameter" || n.type === "optional_parameter" || n.type === "formal_parameters") {
+      for (const id of identsIn(n)) bound.add(id);
+    }
+    for (const c of n.namedChildren) collectBound(c);
+  };
+
+  // bound: nested params of arrows/functions inside the body too
+  const collectNestedParams = (n: Parser.SyntaxNode) => {
+    if ((n.type === "arrow_function" || n.type === "function_expression" ||
+         n.type === "function_declaration" || n.type === "method_definition") && n !== defNode) {
+      const p = n.childForFieldName("parameters") ?? n.childForFieldName("parameter");
+      if (p) for (const id of identsIn(p)) bound.add(id);
+    }
+    for (const c of n.namedChildren) collectNestedParams(c);
+  };
+
+  collectBound(defNode);
+  collectNestedParams(defNode);
+
+  const walkUsed = (n: Parser.SyntaxNode) => {
+    // skip the property side of member/call expressions (that's not a free var)
+    if (n.type === "identifier") used.add(n.text);
+    for (const c of n.namedChildren) {
+      // don't descend into property_identifier positions (already excluded by type)
+      walkUsed(c);
+    }
+  };
+  walkUsed(defNode);
+
+  const free: string[] = [];
+  let dangerRef: string | null = null;
+  for (const name of used) {
+    if (bound.has(name) || BUILTINS.has(name)) continue;
+    if (DANGER.has(name)) { dangerRef = dangerRef ?? name; continue; }
+    free.push(name);
+  }
+  return { freeRefs: free, dangerRef };
+}
+
 // python: value/params fields live on function_definition / class_definition
 export function extractFacts(
   tree: Parser.Tree,
@@ -82,6 +228,7 @@ export function extractFacts(
     const end = defNode.endPosition.row + 1;
     const idBase = className ? `${path}::${className}.${name}` : `${path}::${name}`;
     const exported = isPy ? !name.startsWith("_") : isExportedByAncestor(defNode);
+    const params = paramNames(paramsNode);
     const sym: SymbolDef = {
       id: mkId(idBase),
       name,
@@ -90,11 +237,18 @@ export function extractFacts(
       startLine: start,
       endLine: end,
       lines: end - start + 1,
-      params: paramNames(paramsNode),
+      params,
       className,
       exported,
       signature: firstLine(defNode),
     };
+    // only standalone functions/arrows carry runnable source (methods need a class)
+    if ((kind === "function" || kind === "arrow") && end - start < 200) {
+      sym.source = stripTypes(defNode, lang);
+      const { freeRefs, dangerRef } = analyzeRunnability(defNode, lang, params);
+      sym.freeRefs = freeRefs;
+      sym.dangerRef = dangerRef;
+    }
     symbols.push(sym);
     return sym;
   };
