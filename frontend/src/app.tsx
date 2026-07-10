@@ -4,6 +4,7 @@ import { fetchRepo, RepoFetchError } from "./repo";
 import { analyzeFiles } from "./analyzer";
 import type { RepoMap } from "./analyzer/types";
 import { RepoExplorer } from "./map";
+import { saveRepo, loadRepo, listRepos, deleteRepo, type StoredRepo } from "./db";
 
 const THEMES = ["white", "black", "plum", "midnight"] as const;
 
@@ -50,6 +51,9 @@ function Home() {
   const [error, setError] = useState("");
   const [bad, setBad] = useState(false);
 
+  const [recents, setRecents] = useState<StoredRepo[]>([]);
+  useEffect(() => { listRepos().then(setRecents).catch(() => {}); }, []);
+
   const go = () => {
     const parsed = parseRepoInput(value);
     if (!parsed) {
@@ -60,6 +64,21 @@ function Home() {
     }
     setError("");
     location.hash = `#/map/${parsed.owner}/${parsed.repo}`;
+  };
+
+  const forget = async (r: StoredRepo) => {
+    await deleteRepo(r.owner, r.repo);
+    mapCache.delete(r.key);
+    setRecents((rs) => rs.filter((x) => x.key !== r.key));
+  };
+
+  const timeAgo = (t: number) => {
+    const m = Math.round((Date.now() - t) / 60000);
+    if (m < 1) return "just now";
+    if (m < 60) return `${m}m ago`;
+    const h = Math.round(m / 60);
+    if (h < 24) return `${h}h ago`;
+    return `${Math.round(h / 24)}d ago`;
   };
 
   return (
@@ -79,6 +98,21 @@ function Home() {
         <button class="btn" onClick={go}>analyze</button>
       </div>
       <p class={"msg" + (error ? " err" : "")}>{error}</p>
+
+      {recents.length > 0 && (
+        <div class="recents">
+          <p class="label">on this device ({recents.length}) — stored only here, never uploaded</p>
+          {recents.map((r) => (
+            <div class="recent-row">
+              <a class="recent-link" href={`#/map/${r.owner}/${r.repo}`}>
+                <span class="recent-name">{r.owner}/{r.repo}</span>
+                <span class="hint">{r.symbolCount} symbols · {timeAgo(r.savedAt)}</span>
+              </a>
+              <button class="forget-btn" title="delete every trace from this device" onClick={() => forget(r)}>forget</button>
+            </div>
+          ))}
+        </div>
+      )}
     </main>
   );
 }
@@ -96,34 +130,43 @@ function MapScreen({ owner, repo }: { owner: string; repo: string }) {
 
   const addLog = (line: string) => setLog((l) => [...l, line]);
 
-  useEffect(() => {
-    if (map || started.current) return;
-    started.current = true;
+  const run = (fresh: boolean) => {
     const t0 = performance.now();
-    addLog(`> ${key}`);
+    setError("");
+    setLog([`> ${key}`]);
 
-    fetchRepo({ owner, repo }, (p) => {
-      if (p.phase === "meta") addLog("✱ resolving repo…");
-      if (p.phase === "tree") addLog("✱ reading file tree…");
-      if (p.phase === "files") setProgress(`· fetching ${p.done}/${p.total} — ${p.path}`);
-    })
-      .then((r) => {
-        setProgress("");
-        const kb = r.files.reduce((s, f) => s + f.size, 0);
-        addLog(`+ ${r.files.length} files (${kb >= 1e6 ? (kb / 1e6).toFixed(1) + "mb" : Math.round(kb / 1024) + "kb"}) · ${r.skipped.length} skipped`);
-        addLog("✱ parsing with tree-sitter, resolving who calls whom…");
-        return analyzeFiles(r.files, (p) => setProgress(`· analyzing ${p.done}/${p.total}`));
-      })
-      .then((m) => {
-        setProgress("");
-        addLog(`+ ${m.symbols.length} symbols · ${m.stats.directCalls} calls resolved · ${m.callEdges.length} edges`);
-        if (m.unsupported.length) addLog(`· ${m.unsupported.length} files in languages we don't read yet`);
-        addLog(`done in ${((performance.now() - t0) / 1000).toFixed(1)}s`);
-        mapCache.set(key, m);
-        setTimeout(() => {
-          setMap(m);
-          burst(window.innerWidth / 2, 160, 30);
-        }, 300);
+    (fresh ? Promise.resolve(null) : loadRepo(owner, repo))
+      .then((cached) => {
+        if (cached) {
+          addLog(`+ loaded from this device · ${cached.symbols.length} symbols`);
+          mapCache.set(key, cached);
+          setMap(cached);
+          return null;
+        }
+        return fetchRepo({ owner, repo }, (p) => {
+          if (p.phase === "meta") addLog("✱ resolving repo…");
+          if (p.phase === "tree") addLog("✱ reading file tree…");
+          if (p.phase === "files") setProgress(`· fetching ${p.done}/${p.total} — ${p.path}`);
+        })
+          .then((r) => {
+            setProgress("");
+            const kb = r.files.reduce((s, f) => s + f.size, 0);
+            addLog(`+ ${r.files.length} files (${kb >= 1e6 ? (kb / 1e6).toFixed(1) + "mb" : Math.round(kb / 1024) + "kb"}) · ${r.skipped.length} skipped`);
+            addLog("✱ parsing with tree-sitter, resolving who calls whom…");
+            return analyzeFiles(r.files, (p) => setProgress(`· analyzing ${p.done}/${p.total}`));
+          })
+          .then((m) => {
+            setProgress("");
+            addLog(`+ ${m.symbols.length} symbols · ${m.stats.directCalls} calls resolved · ${m.callEdges.length} edges`);
+            if (m.unsupported.length) addLog(`· ${m.unsupported.length} files in languages we don't read yet`);
+            addLog(`done in ${((performance.now() - t0) / 1000).toFixed(1)}s`);
+            mapCache.set(key, m);
+            saveRepo(owner, repo, m).catch(() => {});
+            setTimeout(() => {
+              setMap(m);
+              burst(window.innerWidth / 2, 160, 30);
+            }, 300);
+          });
       })
       .catch((e: unknown) => {
         setProgress("");
@@ -135,9 +178,22 @@ function MapScreen({ owner, repo }: { owner: string; repo: string }) {
           setError("something unexpected broke. try again?");
         }
       });
+  };
+
+  useEffect(() => {
+    if (map || started.current) return;
+    started.current = true;
+    run(false);
   }, []);
 
-  if (map) return <RepoExplorer map={map} owner={owner} repo={repo} />;
+  const reanalyze = () => { setMap(null); started.current = true; run(true); };
+  const forget = async () => {
+    await deleteRepo(owner, repo);
+    mapCache.delete(key);
+    location.hash = "#/";
+  };
+
+  if (map) return <RepoExplorer map={map} owner={owner} repo={repo} onReanalyze={reanalyze} onForget={forget} />;
 
   return (
     <main>

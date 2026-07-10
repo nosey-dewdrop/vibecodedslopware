@@ -15,7 +15,15 @@ function moduleOf(path: string): string {
   return dir.split("/").slice(0, 2).join("/");
 }
 
-export function RepoExplorer({ map, owner, repo }: { map: RepoMap; owner: string; repo: string }) {
+export function RepoExplorer({
+  map, owner, repo, onReanalyze, onForget,
+}: {
+  map: RepoMap;
+  owner: string;
+  repo: string;
+  onReanalyze: () => void;
+  onForget: () => void;
+}) {
   const [selId, setSelId] = useState<string | null>(null);
   const [openModule, setOpenModule] = useState<string | null>(null);
   const [query, setQuery] = useState("");
@@ -66,7 +74,11 @@ export function RepoExplorer({ map, owner, repo }: { map: RepoMap; owner: string
             {map.files.length} files · analyzed in your browser, never uploaded
           </p>
         </div>
-        <a class="top-link" href="#/">← another repo</a>
+        <div class="map-actions">
+          <button class="mini-btn" onClick={onReanalyze} title="fetch and analyze again">re-analyze</button>
+          <button class="mini-btn danger" onClick={onForget} title="delete every trace of this repo from this device">forget</button>
+          <a class="top-link" href="#/">← another</a>
+        </div>
       </div>
 
       <div class="conf-bar" title="how confidently we resolved each call">

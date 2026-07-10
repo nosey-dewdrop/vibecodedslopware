@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "dexie": "^4.4.4",
     "preact": "^10.22.0",
     "web-tree-sitter": "^0.20.8"
   },

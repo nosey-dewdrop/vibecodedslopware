@@ -6,7 +6,7 @@ Code is never stored server-side — analyzed in the browser, questions live on
 the device, our DB keeps numbers only.
 
 ## Status
-Current phase: Foundation (Phase 1 — stages 1.1-1.5 done, 1.6 persistence next)
+Current phase: Phase 1 COMPLETE. Phase 2 (understanding engine) next.
 Last session: 2026-07-10 — FULL analyzer live: paste repo -> browser fetch ->
 tree-sitter parse (JS/TS/TSX/Python) -> resolved call graph with confidence ->
 explorer with neighborhood graph. Privacy/KVKK page shipped.
@@ -111,14 +111,23 @@ Done when: Damla explores one of her own repos and it feels like a product.
 You learn: **information design**, **fuzzy search**, SVG graph drawing,
 state without a library.
 
-#### 1.6 Local persistence
+#### 1.6 Local persistence  ✓ 2026-07-10
 Goal: close the tab, come back, map is instantly there.
-- [ ] Dexie (IndexedDB): `repos` + `symbols` tables, versioned schema
-- [ ] "delete repo" wipes every local trace (the Snapchat promise, provable)
-- [ ] re-analyze button (repo changed upstream)
-Done when: reload = instant map; delete = truly gone (verified in devtools).
+- [x] Dexie (IndexedDB) `repos` table, versioned schema — `db.ts`
+- [x] analyzed map saved after analysis; reopening loads from device instantly
+      ("+ loaded from this device" instead of re-fetching)
+- [x] home shows "on this device" recents (symbol count + time ago), click to
+      reopen, each with a "forget" that deletes every trace
+- [x] explorer: "re-analyze" (fresh fetch) + "forget" (wipe + go home)
+- [x] the Snapchat promise made provable: forget = row deleted from IndexedDB
+Done when: reload = instant map; delete = truly gone. ✓
 You learn: **IndexedDB/Dexie** (the browser's real database), schema
-versioning/migrations, what "data at rest" means physically.
+versioning, what "data at rest" means physically.
+
+### Phase 1 COMPLETE 2026-07-10 — the analyzer is a real product.
+Live: paste any public repo → browser-only fetch → tree-sitter parse
+(JS/TS/TSX/Python) → resolved call graph with confidence → explorer with
+neighborhood graph → saved on-device, forgettable. Privacy/KVKK shipped.
 
 ### Phase 2: Understanding engine — "change this method and see what breaks"
 (NEW 2026-07-10, Damla's expanded vision. Research-backed: Worker sandbox +

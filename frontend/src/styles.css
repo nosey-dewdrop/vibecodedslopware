@@ -180,6 +180,18 @@ p { margin-bottom: 10px; }
 /* ---------- explorer / map ---------- */
 
 .map-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; padding-top: 8px; }
+.map-actions { display: flex; gap: 14px; align-items: baseline; flex: none; }
+.mini-btn { font: inherit; font-size: 12px; background: none; border: 1px solid var(--line); border-radius: 2px; padding: 4px 10px; color: var(--ink); cursor: pointer; }
+.mini-btn:hover { border-color: var(--purple); color: var(--purple); }
+.mini-btn.danger:hover { border-color: var(--pink); color: var(--pink); }
+
+.recents { margin-top: 32px; max-width: 640px; }
+.recent-row { display: flex; align-items: center; gap: 10px; padding: 2px 0; }
+.recent-link { display: flex; flex: 1; justify-content: space-between; align-items: baseline; gap: 12px; text-decoration: none; color: var(--ink); padding: 6px 8px; border-radius: 2px; }
+.recent-link:hover { background: var(--card); }
+.recent-name { color: var(--purple); }
+.forget-btn { font: inherit; font-size: 11px; background: none; border: none; color: var(--muted); cursor: pointer; flex: none; }
+.forget-btn:hover { color: var(--pink); }
 
 .conf-bar { display: flex; flex-wrap: wrap; gap: 16px; margin: 6px 0 16px; font-size: 12px; }
 .conf { color: var(--muted); }
