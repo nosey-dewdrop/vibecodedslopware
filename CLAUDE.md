@@ -35,6 +35,14 @@ and tracks mastery per module until you actually own what you shipped.
   All-lowercase copy. Never generic AI aesthetics, never purple-gradient-on-white.
 - Confetti palette (approved): purple `#5a4a9f`, lavender `#b5a3ec`,
   pink `#f77fae`, yellow `#e0af2e`, green `#7fbf85`.
+- APP DESIGN REFERENCE (Damla 2026-07-10: "portfolyomdan ilham al, o muhteşem"):
+  damlahelloworld.github.io whimsy terminal — AoC vibe, mono, star field,
+  ASCII flavor, warm pastels on deep plum. Its tokens: dark bg `#171221` /
+  soft `#1f1930`, ink `#efe8f7`, pink `#ff8fb3`, purple `#c9a6ff`,
+  green `#b8e39a`, yellow `#ffd479`, blue `#8fc7ff` (light variant exists in
+  its index.html:24). For app screens (1.2+): keep our white/black terminal
+  rule but borrow the portfolio's soul — log-line typing, glyph fields,
+  ASCII details, pastel accents on glyphs only (colored-word ban still holds).
 - Confetti is the signature: background field everywhere, cursor trail on hover
   over `[data-confetti]` elements, bursts on clicks/correct answers. Keep it in
   the app screens too, not just the landing.
