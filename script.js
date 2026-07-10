@@ -4,27 +4,38 @@
   "use strict";
 
   const GLYPHS = ["+", "✱", "*", "·", "▪"];
-  const COLORS = ["#5a4a9f", "#b5a3ec", "#f77fae", "#e0af2e", "#7fbf85"];
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const rand = (min, max) => min + Math.random() * (max - min);
   const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-  // ---------- theme (white terminal / black terminal) ----------
+  // ---------- themes: white / black / plum / midnight ----------
 
+  const THEMES = ["white", "black", "plum", "midnight"];
   const toggle = document.getElementById("theme-toggle");
+  let COLORS = [];
+
+  const readColors = () => {
+    const cs = getComputedStyle(document.documentElement);
+    return ["--purple", "--lavender", "--pink", "--yellow", "--green"]
+      .map((v) => cs.getPropertyValue(v).trim());
+  };
+
   const applyTheme = (t) => {
     document.documentElement.dataset.theme = t;
-    if (toggle) toggle.textContent = t === "dark" ? "[light]" : "[dark]";
+    if (toggle) toggle.textContent = "[" + t + "]";
+    COLORS = readColors();
   };
-  let theme = localStorage.getItem("theme") ||
-    (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+
+  // head script already set a valid dataset.theme (with legacy migration)
+  let theme = document.documentElement.dataset.theme;
   applyTheme(theme);
   if (toggle) {
     toggle.addEventListener("click", () => {
-      theme = theme === "dark" ? "light" : "dark";
+      theme = THEMES[(THEMES.indexOf(theme) + 1) % THEMES.length];
       localStorage.setItem("theme", theme);
       applyTheme(theme);
+      buildField();
     });
   }
 

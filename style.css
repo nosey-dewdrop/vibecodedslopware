@@ -19,14 +19,50 @@
   color-scheme: light;
 }
 
-html[data-theme="dark"] {
+html[data-theme="black"] {
   --paper: #0c0c10;
   --ink: #e8e6f0;
   --muted: #8a8894;
+  --purple: #a894e0;
   --card: #14141a;
   --line: #26262e;
   --code-bg: #050507;
   --code-fg: #e8e6f0;
+  --shadow: rgba(0, 0, 0, 0.45);
+  color-scheme: dark;
+}
+
+/* portfolio plum — damlahelloworld.github.io tokens */
+html[data-theme="plum"] {
+  --paper: #171221;
+  --ink: #efe8f7;
+  --muted: #9d92b5;
+  --purple: #c9a6ff;
+  --lavender: #c9a6ff;
+  --pink: #ff8fb3;
+  --yellow: #ffd479;
+  --green: #b8e39a;
+  --card: #1f1930;
+  --line: #2c2440;
+  --code-bg: #0f0b18;
+  --code-fg: #efe8f7;
+  --shadow: rgba(0, 0, 0, 0.45);
+  color-scheme: dark;
+}
+
+html[data-theme="midnight"] {
+  --paper: #101623;
+  --ink: #e6eef6;
+  --muted: #8b98ad;
+  --purple: #b0b6ff;
+  --lavender: #b0b6ff;
+  --pink: #ffa3c2;
+  --yellow: #ffe08a;
+  --green: #9fe8c3;
+  --card: #182032;
+  --line: #243049;
+  --code-bg: #0a0f19;
+  --code-fg: #e6eef6;
   --shadow: rgba(0, 0, 0, 0.45);
   color-scheme: dark;
 }

@@ -5,7 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>lab 1.1 — parse proof · vibecodedflopware</title>
   <meta name="robots" content="noindex">
-  <script>document.documentElement.dataset.theme = localStorage.getItem("theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");</script>
+  <script>
+  (function () {
+    var t = localStorage.getItem("theme");
+    if (t === "light") t = "white";
+    if (t === "dark") t = "black";
+    if (["white", "black", "plum", "midnight"].indexOf(t) === -1)
+      t = matchMedia("(prefers-color-scheme: dark)").matches ? "black" : "white";
+    document.documentElement.dataset.theme = t;
+  })();
+  </script>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -14,9 +23,19 @@
       --card: #f6f6f4; --line: #e4e4e1; --code-bg: #17171c; --code-fg: #f2f2ee;
       color-scheme: light;
     }
-    html[data-theme="dark"] {
+    html[data-theme="black"] {
       --paper: #0c0c10; --ink: #e8e6f0; --muted: #8a8894;
       --card: #14141a; --line: #26262e; --code-bg: #050507; --code-fg: #e8e6f0;
+      color-scheme: dark;
+    }
+    html[data-theme="plum"] {
+      --paper: #171221; --ink: #efe8f7; --muted: #9d92b5; --purple: #c9a6ff;
+      --card: #1f1930; --line: #2c2440; --code-bg: #0f0b18; --code-fg: #efe8f7;
+      color-scheme: dark;
+    }
+    html[data-theme="midnight"] {
+      --paper: #101623; --ink: #e6eef6; --muted: #8b98ad; --purple: #b0b6ff;
+      --card: #182032; --line: #243049; --code-bg: #0a0f19; --code-fg: #e6eef6;
       color-scheme: dark;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
