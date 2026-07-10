@@ -6,7 +6,7 @@ Code is never stored server-side — analyzed in the browser, questions live on
 the device, our DB keeps numbers only.
 
 ## Status
-Current phase: Foundation (Phase 1 — stages 1.1 and 1.2 done, 1.3 next)
+Current phase: Foundation (Phase 1 — stages 1.1, 1.2, 1.3 done, 1.4 next)
 Last session: 2026-07-10 — landing final + 4 themes; 1.1 parse proof live
 at /lab/ (541 lines / 7ms); 1.2 app scaffold live at /app/ (Vite+TS+Preact,
 hash routing, shared design system).
@@ -48,17 +48,25 @@ function of state), **SPA routing on static hosting**.
 
 #### 1.3 Repo fetching in the browser
 Goal: type `owner/repo` → file tree in memory, zero servers.
-- [ ] GitHub REST: fetch tarball of default branch
-- [ ] decompress gzip with `fflate`, read tar format (write the ~40-line
-      tar reader ourselves — it's a beautifully simple binary format)
-- [ ] filters: skip binaries, `node_modules`, lockfiles, generated dirs,
-      files > 200KB; keep a "skipped report" so nothing vanishes silently
-- [ ] edge cases: repo not found, empty repo, rate limit (show remaining
-      quota + reset time), huge repo (cap + warn), no default branch
+- [x] PLAN CHANGE (real-world lesson): the tarball endpoint is CORS-blocked
+      (codeload only allows github's own origin) — verified with curl.
+      New route, actually better: git Trees API (1 call, full file list WITH
+      sizes) → filter BEFORE downloading → bodies from
+      raw.githubusercontent.com (CORS *), 12 parallel fetches
+- [x] filters: node_modules/dist/build/.git/etc, lockfiles, binary
+      extensions, >200KB per file, 15MB repo budget, 2000-file cap;
+      "skipped report" grouped by reason so nothing vanishes silently
+- [x] null-byte sniff for binary content that slipped past extension filter
+- [x] edge cases handled: repo not found/private, empty repo, rate limit
+      (shows reset time), truncated tree, per-file fetch failures, offline
+- [x] analyze screen: terminal-log lines while working, confetti burst on
+      done, file list + skipped summary, session cache (no refetch on back)
 Done when: any public repo becomes a filtered in-memory file list with sizes.
-You learn: **HTTP APIs for real** (headers, rate limits, auth-less quotas),
-**binary formats** (gzip, tar — reading bytes, offsets, padding),
-**streaming/memory thinking** (why we filter before parsing).
+✓ 2026-07-10
+You learn: **HTTP APIs for real** (headers, rate limits, quotas),
+**CORS & the same-origin policy** (the tarball lesson — why the browser
+blocked us and how to design around it), **concurrency budgeting**
+(12-way parallel fetch with a worker-pool loop).
 
 #### 1.4 Multi-file analysis → resolved code graph
 Goal: not just "what's in each file" but RESOLVED relationships — which call

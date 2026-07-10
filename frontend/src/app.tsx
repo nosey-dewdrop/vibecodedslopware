@@ -1,5 +1,6 @@
-import { useEffect, useState } from "preact/hooks";
-import { initConfetti, refreshColors, buildField } from "./confetti";
+import { useEffect, useRef, useState } from "preact/hooks";
+import { initConfetti, refreshColors, buildField, burst } from "./confetti";
+import { fetchRepo, RepoFetchError, type RepoFetchResult } from "./repo";
 
 const THEMES = ["white", "black", "plum", "midnight"] as const;
 
@@ -79,17 +80,108 @@ function Home() {
   );
 }
 
+// session cache so navigating back does not refetch (real persistence: stage 1.6)
+const repoCache = new Map<string, RepoFetchResult>();
+
+const fmtKB = (n: number) => (n >= 1024 * 1024 ? (n / 1024 / 1024).toFixed(1) + " MB" : Math.max(1, Math.round(n / 1024)) + " KB");
+
 function MapScreen({ owner, repo }: { owner: string; repo: string }) {
+  const key = `${owner}/${repo}`;
+  const [log, setLog] = useState<string[]>([]);
+  const [progress, setProgress] = useState("");
+  const [result, setResult] = useState<RepoFetchResult | null>(repoCache.get(key) ?? null);
+  const [error, setError] = useState<string>("");
+  const started = useRef(false);
+
+  const addLog = (line: string) => setLog((l) => [...l, line]);
+
+  useEffect(() => {
+    if (result || started.current) return;
+    started.current = true;
+    const t0 = performance.now();
+    addLog(`> analyzing ${key}`);
+    fetchRepo({ owner, repo }, (p) => {
+      if (p.phase === "meta") addLog("✱ resolving repo…");
+      if (p.phase === "tree") addLog("✱ reading file tree…");
+      if (p.phase === "files") setProgress(`· fetching ${p.done}/${p.total} — ${p.path}`);
+    })
+      .then((r) => {
+        setProgress("");
+        addLog(`+ ${r.files.length} source files (${fmtKB(r.files.reduce((s, f) => s + f.size, 0))}) · ${r.skipped.length} skipped`);
+        if (r.treeTruncated) addLog("· note: repo tree was truncated by github (very large repo)");
+        addLog(`done in ${((performance.now() - t0) / 1000).toFixed(1)}s`);
+        repoCache.set(key, r);
+        setResult(r);
+        burst(window.innerWidth / 2, 180, 26);
+      })
+      .catch((e: unknown) => {
+        setProgress("");
+        if (e instanceof RepoFetchError) {
+          if (e.kind === "rate-limit" && e.resetAt) {
+            setError(`github rate limit hit — try again after ${e.resetAt.toLocaleTimeString()}`);
+          } else {
+            setError(e.message);
+          }
+        } else {
+          setError("something unexpected broke. try again?");
+        }
+      });
+  }, []);
+
+  const skippedByReason = new Map<string, number>();
+  result?.skipped.forEach((s) => skippedByReason.set(s.reason, (skippedByReason.get(s.reason) ?? 0) + 1));
+
   return (
     <main>
       <h1>{owner}/{repo}</h1>
-      <div class="stage-card">
-        <p class="label">stage 1.3 — under construction</p>
-        <p>the analyzer lands here next: this screen will fetch the repo in your
-        browser, parse it with tree-sitter, and draw the map of your code.</p>
-        <p class="hint">the parsing engine is already proven — see <a href="../lab/">lab 1.1</a>.</p>
-      </div>
-      <p style="margin-top: 16px"><a href="#/">← try another repo</a></p>
+
+      {!result && (
+        <div class="log">
+          {log.map((l) => <p class="log-line">{l}</p>)}
+          {progress && <p class="log-line hint">{progress}</p>}
+          {error && (
+            <>
+              <p class="log-line err">✱ {error}</p>
+              <p class="log-line"><a href="#/">← try another repo</a></p>
+            </>
+          )}
+        </div>
+      )}
+
+      {result && (
+        <>
+          <p class="hint">
+            branch {result.branch} · {result.files.length} source files ·{" "}
+            {fmtKB(result.files.reduce((s, f) => s + f.size, 0))} of code, all living in this tab only
+          </p>
+          <div class="result-grid">
+            <div>
+              <p class="label">source files</p>
+              <div class="filelist">
+                {result.files.slice(0, 300).map((f) => (
+                  <div class="filerow">
+                    <span class="filepath">{f.path}</span>
+                    <span class="filesize">{fmtKB(f.size)}</span>
+                  </div>
+                ))}
+                {result.files.length > 300 && <p class="hint">… and {result.files.length - 300} more</p>}
+              </div>
+            </div>
+            <div>
+              <p class="label">skipped ({result.skipped.length}) — nothing vanishes silently</p>
+              {[...skippedByReason.entries()].map(([reason, count]) => (
+                <p class="skiprow"><span class="skipcount">{count}</span> {reason}</p>
+              ))}
+              <div class="stage-card">
+                <p class="label">next — stage 1.4</p>
+                <p>tree-sitter reads these files and resolves who calls whom.
+                the map grows here.</p>
+              </div>
+            </div>
+          </div>
+          <p style="margin-top: 16px"><a href="#/">← try another repo</a></p>
+        </>
+      )}
     </main>
   );
 }

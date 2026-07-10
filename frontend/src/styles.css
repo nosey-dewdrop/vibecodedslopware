@@ -147,4 +147,25 @@ p { margin-bottom: 10px; }
   padding: 16px 18px; margin-top: 24px; max-width: 640px;
   box-shadow: 3px 4px 0 var(--shadow);
 }
-.stage-card .label { color: var(--muted); font-size: 11px; letter-spacing: 2px; margin-bottom: 8px; }
+.stage-card .label, .label { color: var(--muted); font-size: 11px; letter-spacing: 2px; margin-bottom: 8px; }
+
+/* ---------- analyze log + results ---------- */
+
+.log { margin-top: 20px; }
+.log-line { margin-bottom: 4px; animation: appear 300ms ease; }
+@keyframes appear { from { opacity: 0; transform: translateY(4px); } }
+.log-line.err { color: var(--pink); }
+
+.result-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: start; margin-top: 20px; }
+@media (max-width: 860px) { .result-grid { grid-template-columns: 1fr; gap: 20px; } }
+
+.filelist {
+  background: var(--card); border: 1px solid var(--line); border-radius: 2px;
+  padding: 10px 14px; max-height: 60vh; overflow-y: auto;
+}
+.filerow { display: flex; justify-content: space-between; gap: 12px; padding: 1px 0; }
+.filepath { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.filesize { color: var(--muted); flex: none; font-size: 12px; }
+
+.skiprow { margin-bottom: 4px; }
+.skipcount { display: inline-block; min-width: 40px; color: var(--muted); }
