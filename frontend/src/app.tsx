@@ -99,6 +99,13 @@ function Home() {
       </div>
       <p class={"msg" + (error ? " err" : "")}>{error}</p>
 
+      <div class="examples">
+        <span class="hint">no repo handy? try one:</span>
+        <a class="ex-chip" href="#/map/sindresorhus/slugify">sindresorhus/slugify</a>
+        <a class="ex-chip" href="#/map/preactjs/preact">preactjs/preact</a>
+        <a class="ex-chip" href="#/map/damlahelloworld/vibecodedflopware">this site's own code</a>
+      </div>
+
       {recents.length > 0 && (
         <div class="recents">
           <p class="label">on this device ({recents.length}) — stored only here, never uploaded</p>

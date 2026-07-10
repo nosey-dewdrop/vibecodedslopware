@@ -193,11 +193,17 @@ p { margin-bottom: 10px; }
 .forget-btn { font: inherit; font-size: 11px; background: none; border: none; color: var(--muted); cursor: pointer; flex: none; }
 .forget-btn:hover { color: var(--pink); }
 
-.conf-bar { display: flex; flex-wrap: wrap; gap: 16px; margin: 6px 0 16px; font-size: 12px; }
-.conf { color: var(--muted); }
+.conf-bar { margin: 6px 0 16px; font-size: 12px; color: var(--muted); max-width: 70ch; }
 .conf.direct { color: var(--green); }
 .conf.heuristic { color: var(--yellow); }
-.conf.unresolved { color: var(--muted); }
+
+.examples { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; margin-top: 18px; }
+.ex-chip {
+  font-size: 12px; text-decoration: none; color: var(--ink);
+  border: 1px solid var(--line); border-radius: 2px; padding: 4px 10px;
+  transition: border-color 120ms ease, color 120ms ease, transform 120ms ease;
+}
+.ex-chip:hover { border-color: var(--purple); color: var(--purple); transform: translateY(-1px); }
 
 .search { width: 100%; max-width: none; margin-bottom: 18px; }
 

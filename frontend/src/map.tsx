@@ -16,6 +16,24 @@ function moduleOf(path: string): string {
   return dir.split("/").slice(0, 2).join("/");
 }
 
+// pick a good place to land: the most-called function, favouring runnable ones
+// so the what-if experiment works right away. keeps the first screen from being
+// a bare list of collapsed folders.
+function bestStartSymbol(map: RepoMap): SymbolDef | null {
+  const inbound = new Map<string, number>();
+  for (const e of map.callEdges) if (e.toId) inbound.set(e.toId, (inbound.get(e.toId) ?? 0) + 1);
+  const score = (s: SymbolDef) =>
+    (inbound.get(s.id) ?? 0) * 10 +
+    ((s.kind === "function" || s.kind === "arrow") && s.source && !s.dangerRef ? 5 : 0);
+  let best: SymbolDef | null = null;
+  let bestScore = -1;
+  for (const s of map.symbols) {
+    const sc = score(s);
+    if (sc > bestScore) { best = s; bestScore = sc; }
+  }
+  return best;
+}
+
 export function RepoExplorer({
   map, owner, repo, onReanalyze, onForget,
 }: {
@@ -25,8 +43,9 @@ export function RepoExplorer({
   onReanalyze: () => void;
   onForget: () => void;
 }) {
-  const [selId, setSelId] = useState<string | null>(null);
-  const [openModule, setOpenModule] = useState<string | null>(null);
+  const start = useMemo(() => bestStartSymbol(map), [map]);
+  const [selId, setSelId] = useState<string | null>(start?.id ?? null);
+  const [openModule, setOpenModule] = useState<string | null>(start ? moduleOf(start.file) : null);
   const [query, setQuery] = useState("");
 
   const idx = useMemo(() => {
@@ -69,10 +88,6 @@ export function RepoExplorer({
       .slice(0, 40);
   }, [query, map, idx]);
 
-  const pct = (n: number) => {
-    const total = map.stats.directCalls + map.stats.heuristicCalls + map.stats.unresolvedCalls;
-    return total ? Math.round((n / total) * 100) : 0;
-  };
 
   return (
     <main>
@@ -91,11 +106,11 @@ export function RepoExplorer({
         </div>
       </div>
 
-      <div class="conf-bar" title="how confidently we resolved each call">
-        <span class="conf direct">{CONF_GLYPH.direct} {pct(map.stats.directCalls)}% resolved</span>
-        <span class="conf heuristic">{CONF_GLYPH.heuristic} {pct(map.stats.heuristicCalls)}% guessed</span>
-        <span class="conf unresolved">{CONF_GLYPH.unresolved} {pct(map.stats.unresolvedCalls)}% dynamic/external</span>
-      </div>
+      <p class="conf-bar">
+        we traced <span class="conf direct">{CONF_GLYPH.direct} {map.stats.directCalls} calls</span> to the exact
+        function they hit{map.stats.heuristicCalls > 0 ? <> · <span class="conf heuristic">{CONF_GLYPH.heuristic} {map.stats.heuristicCalls} best-guess</span></> : null}.
+        the rest go to libraries or are decided at runtime — normal for most apps.
+      </p>
 
       <input
         class="prompt-input search"
