@@ -6,9 +6,10 @@ Code is never stored server-side — analyzed in the browser, questions live on
 the device, our DB keeps numbers only.
 
 ## Status
-Current phase: Foundation (Phase 1, stage 1.1 done — 1.2 next)
-Last session: 2026-07-10 — landing live + polished; stage 1.1 parse proof
-built and proven (541 lines / 7ms, symbols with correct line numbers).
+Current phase: Foundation (Phase 1 — stages 1.1 and 1.2 done, 1.3 next)
+Last session: 2026-07-10 — landing final + 4 themes; 1.1 parse proof live
+at /lab/ (541 lines / 7ms); 1.2 app scaffold live at /app/ (Vite+TS+Preact,
+hash routing, shared design system).
 
 ## Roadmap
 
@@ -31,11 +32,16 @@ You learn: **WebAssembly** (what WASM is, why it lets C code run in a browser),
 
 #### 1.2 App scaffold
 Goal: real project skeleton the rest builds on.
-- [ ] `app/` folder: Vite + TypeScript + Preact
-- [ ] routing: `/` (enter repo), `/map` (the map), 404
-- [ ] port the landing design tokens (CSS vars, both themes, confetti layer)
-- [ ] deploy `app/` build to GitHub Pages alongside the landing
-Done when: empty app deploys and shares the landing's look.
+- [x] Vite + TypeScript + Preact (source in `frontend/`, build output committed
+      to `app/`, served at /app/)
+- [x] routing: hash-based — `#/` (enter repo, validated input), `#/map/o/r`
+      (map placeholder pointing at 1.3), invalid hash falls back to home
+- [x] landing design tokens ported (4 themes + cycler, confetti field/trail/
+      burst as typed module)
+- [x] deployed to GitHub Pages alongside the landing
+Done when: empty app deploys and shares the landing's look. ✓ 2026-07-10
+Note: stray postcss config in home dir broke the first build — solved with
+inline `css.postcss` in vite.config.ts.
 You learn: **Vite** (modern build tooling, dev server, why bundlers exist),
 **TypeScript** (types as bug prevention), **Preact/components** (UI as a
 function of state), **SPA routing on static hosting**.
