@@ -6,9 +6,9 @@ Code is never stored server-side — analyzed in the browser, questions live on
 the device, our DB keeps numbers only.
 
 ## Status
-Current phase: Foundation (Phase 1 not started)
-Last session: 2026-07-10 — landing live (white/black terminal, confetti,
-typing hero, no bold anywhere), design rules locked, this plan written.
+Current phase: Foundation (Phase 1, stage 1.1 done — 1.2 next)
+Last session: 2026-07-10 — landing live + polished; stage 1.1 parse proof
+built and proven (541 lines / 7ms, symbols with correct line numbers).
 
 ## Roadmap
 
@@ -16,11 +16,15 @@ typing hero, no bold anywhere), design rules locked, this plan written.
 
 #### 1.1 Mini proof (the risk killer — do this FIRST)
 Goal: kill the project's only real unknown in one sitting.
-- [ ] plain HTML page (no framework yet) that loads `web-tree-sitter` WASM
-- [ ] load the JavaScript grammar `.wasm`
-- [ ] paste-a-file textarea → parse → print every function name + line number
-- [ ] measure: parse time for a 500-line file (target: under 100ms)
+- [x] plain HTML page (no framework yet) that loads `web-tree-sitter` WASM
+- [x] load the JavaScript grammar `.wasm` (vendored in `lab/vendor/`,
+      web-tree-sitter 0.20.8 + tree-sitter-javascript 0.20.3)
+- [x] paste-a-file textarea → parse → print every function name + line number
+      (`lab/index.html`, live at /lab/)
+- [x] measure: parse time for a 500-line file — 541 lines in 7ms (node proof,
+      target was <100ms)
 Done when: a pasted JS file shows its function list in the browser, offline.
+Status: built + node-proven 2026-07-10, awaiting Damla's browser check.
 You learn: **WebAssembly** (what WASM is, why it lets C code run in a browser),
 **AST**s (abstract syntax trees — how every IDE and compiler sees code),
 **tree-sitter queries** (pattern matching over syntax trees).

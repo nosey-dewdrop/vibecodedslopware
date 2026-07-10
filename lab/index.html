@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lab 1.1 — parse proof · vibecodedflopware</title>
+  <meta name="robots" content="noindex">
+  <script>document.documentElement.dataset.theme = localStorage.getItem("theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");</script>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #ffffff; --ink: #17171c; --muted: #6f6f78;
+      --purple: #5a4a9f; --pink: #f77fae; --yellow: #e0af2e; --green: #7fbf85;
+      --card: #f6f6f4; --line: #e4e4e1; --code-bg: #17171c; --code-fg: #f2f2ee;
+      color-scheme: light;
+    }
+    html[data-theme="dark"] {
+      --paper: #0c0c10; --ink: #e8e6f0; --muted: #8a8894;
+      --card: #14141a; --line: #26262e; --code-bg: #050507; --code-fg: #e8e6f0;
+      color-scheme: dark;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--paper); color: var(--ink);
+      font-family: "IBM Plex Mono", monospace; font-size: 13px; line-height: 1.55;
+      max-width: 1080px; margin: 0 auto; padding: 20px 28px 48px;
+    }
+    header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 20px; }
+    a { color: var(--purple); }
+    .label { color: var(--muted); font-size: 11px; letter-spacing: 2px; margin-bottom: 6px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+    @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
+    textarea {
+      width: 100%; height: 420px; resize: vertical;
+      background: var(--code-bg); color: var(--code-fg);
+      border: 1px solid var(--line); border-radius: 2px;
+      font: inherit; font-size: 12px; padding: 12px 14px;
+    }
+    button {
+      font: inherit; font-weight: 500; margin-top: 10px;
+      background: var(--ink); color: var(--paper);
+      border: none; border-radius: 2px; padding: 9px 16px; cursor: pointer;
+      transition: transform 120ms ease, background 120ms ease;
+    }
+    button:hover { background: var(--purple); color: #fff; transform: translateY(-2px) rotate(-1deg); }
+    .stats { color: var(--muted); font-size: 12px; margin: 10px 0; min-height: 1.5em; }
+    .out { background: var(--card); border: 1px solid var(--line); border-radius: 2px; padding: 12px 14px; }
+    .sym { display: flex; gap: 10px; padding: 2px 0; }
+    .sym .kind { width: 76px; flex: none; }
+    .kind-fn { color: var(--purple); } .kind-arrowfn { color: var(--pink); }
+    .kind-class { color: var(--yellow); } .kind-method { color: var(--green); }
+    .sym .ln { color: var(--muted); margin-left: auto; }
+    .err { color: var(--pink); }
+    .bit { position: fixed; pointer-events: none; z-index: 50; animation: fall 900ms ease-in forwards; }
+    @keyframes fall { to { opacity: 0; transform: translate(var(--dx), var(--dy)) rotate(180deg) scale(.5); } }
+  </style>
+</head>
+<body>
+  <header>
+    <span>vibecodedflopware / lab 1.1 — parse proof</span>
+    <a href="../">← landing</a>
+  </header>
+
+  <p class="label">paste any javascript, get its structure. parsed 100% in your browser — nothing leaves this page.</p>
+
+  <div class="grid">
+    <div>
+      <textarea id="code" spellcheck="false"></textarea>
+      <button id="parse">parse it</button>
+    </div>
+    <div>
+      <p class="stats" id="stats">loading wasm…</p>
+      <div class="out" id="out"></div>
+    </div>
+  </div>
+
+  <script src="vendor/tree-sitter.js"></script>
+  <script>
+  (function () {
+    "use strict";
+    const $ = (id) => document.getElementById(id);
+    const GLYPHS = ["+", "✱", "*", "·", "▪"];
+    const COLORS = ["#5a4a9f", "#b5a3ec", "#f77fae", "#e0af2e", "#7fbf85"];
+
+    const SAMPLE = `function slugify(text) {
+  return text.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-");
+}
+
+const fetchUser = async (id) => {
+  const res = await fetch("/api/users/" + id);
+  return res.json();
+};
+
+class CartStore {
+  add(item) { this.items.push(item); }
+  total() { return this.items.reduce((s, i) => s + i.price, 0); }
+}`;
+
+    let parser = null, lang = null, query = null;
+
+    async function init() {
+      await TreeSitter.init({ locateFile: (f) => "vendor/" + f });
+      lang = await TreeSitter.Language.load("vendor/tree-sitter-javascript.wasm");
+      parser = new TreeSitter();
+      parser.setLanguage(lang);
+      query = lang.query(`
+        (function_declaration name: (identifier) @fn)
+        (method_definition name: (property_identifier) @method)
+        (class_declaration name: (identifier) @class)
+        (variable_declarator name: (identifier) @arrowfn value: (arrow_function))
+      `);
+      $("stats").textContent = "wasm ready. press parse.";
+      run();
+    }
+
+    function burst(x, y) {
+      for (let i = 0; i < 16; i++) {
+        const b = document.createElement("span");
+        b.className = "bit";
+        b.textContent = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+        b.style.color = COLORS[Math.floor(Math.random() * COLORS.length)];
+        b.style.left = x + "px"; b.style.top = y + "px";
+        const a = Math.random() * Math.PI * 2, d = 40 + Math.random() * 90;
+        b.style.setProperty("--dx", Math.cos(a) * d + "px");
+        b.style.setProperty("--dy", Math.sin(a) * d + "px");
+        document.body.appendChild(b);
+        b.addEventListener("animationend", () => b.remove());
+      }
+    }
+
+    function run() {
+      if (!parser) return;
+      const code = $("code").value;
+      const out = $("out");
+      out.textContent = "";
+      if (!code.trim()) { $("stats").textContent = "paste some code first."; return; }
+
+      const t0 = performance.now();
+      const tree = parser.parse(code);
+      const ms = (performance.now() - t0).toFixed(1);
+      const caps = query.captures(tree.rootNode);
+
+      $("stats").textContent = code.split("\n").length + " lines · parsed in " + ms + "ms · " +
+        caps.length + " symbols" + (tree.rootNode.hasError() ? " · has syntax errors (still parsed)" : "");
+
+      if (!caps.length) {
+        out.textContent = "no functions or classes found.";
+        return;
+      }
+      caps.forEach((c) => {
+        const row = document.createElement("div");
+        row.className = "sym";
+        const kind = document.createElement("span");
+        kind.className = "kind kind-" + c.name;
+        kind.textContent = "[" + c.name + "]";
+        const name = document.createElement("span");
+        name.textContent = c.node.text;
+        const ln = document.createElement("span");
+        ln.className = "ln";
+        ln.textContent = "line " + (c.node.startPosition.row + 1);
+        row.append(kind, name, ln);
+        out.appendChild(row);
+      });
+      const r = $("parse").getBoundingClientRect();
+      burst(r.left + r.width / 2, r.top);
+    }
+
+    $("code").value = SAMPLE;
+    $("parse").addEventListener("click", run);
+    init().catch((e) => { $("stats").innerHTML = ""; $("stats").className = "stats err"; $("stats").textContent = "wasm failed to load: " + e.message; });
+  })();
+  </script>
+</body>
+</html>
