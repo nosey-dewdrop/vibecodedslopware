@@ -111,6 +111,14 @@ regenerate; progress numbers survive (they live in Supabase).
 DETAILED stage-by-stage plan with acceptance criteria and learning outcomes
 lives in PROJECT.md (single source for detail). Summary below.
 
+2026-07-10 RESTRUCTURE: Damla expanded the vision — the app must resolve
+relationships (who calls whom, class relations) and answer "what happens if I
+change this method" by actually mutating + running it in a browser sandbox.
+New Phase 2 "understanding engine" inserted (sandbox, purity classifier,
+5 mutators, differential testing, blast radius); question engine is now
+Phase 3 and uses sandbox-VERIFIED answers. Research synthesis:
+~/damla_projects_2026/reports/2026-07-10-vibecodedflopware-understanding-engine.md
+
 ### Phase 0 — landing (DONE 2026-07-09)
 - [x] landing page: hero, problem, how it works, demo quiz, privacy, outro
 - [x] confetti field + cursor trail + bursts, reduced-motion support
