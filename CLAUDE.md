@@ -97,6 +97,9 @@ regenerate; progress numbers survive (they live in Supabase).
 
 ## Roadmap
 
+DETAILED stage-by-stage plan with acceptance criteria and learning outcomes
+lives in PROJECT.md (single source for detail). Summary below.
+
 ### Phase 0 — landing (DONE 2026-07-09)
 - [x] landing page: hero, problem, how it works, demo quiz, privacy, outro
 - [x] confetti field + cursor trail + bursts, reduced-motion support
