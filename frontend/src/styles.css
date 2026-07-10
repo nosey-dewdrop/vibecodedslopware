@@ -201,10 +201,14 @@ p { margin-bottom: 10px; }
 
 .search { width: 100%; max-width: none; margin-bottom: 18px; }
 
-.explorer { display: grid; grid-template-columns: 300px 1fr; gap: 28px; align-items: start; }
-@media (max-width: 860px) { .explorer { grid-template-columns: 1fr; } }
+.explorer { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 28px; align-items: start; }
+@media (max-width: 860px) {
+  .explorer { grid-template-columns: 1fr; }
+  /* on narrow screens keep the sidebar short so the detail is reachable */
+  .explorer-side { max-height: 320px; }
+}
 
-.explorer-side { max-height: 74vh; overflow-y: auto; padding-right: 6px; }
+.explorer-side { min-width: 0; max-height: 74vh; overflow-y: auto; padding-right: 6px; }
 .explorer-side::-webkit-scrollbar { width: 6px; }
 .explorer-side::-webkit-scrollbar-thumb { background: var(--line); border-radius: 3px; }
 

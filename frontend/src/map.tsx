@@ -1,4 +1,4 @@
-import { useMemo, useState } from "preact/hooks";
+import { useMemo, useState, useRef, useEffect } from "preact/hooks";
 import type { CallEdge, RepoMap, SymbolDef } from "./analyzer/types";
 import { WhatIfPanel } from "./whatif-panel";
 
@@ -50,6 +50,15 @@ export function RepoExplorer({
   }, [map]);
 
   const sel = selId ? idx.byId.get(selId) ?? null : null;
+
+  // when you pick a symbol, bring the detail into view — on narrow screens the
+  // detail sits below a long sidebar and would otherwise open off-screen
+  const mainRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    if (selId && mainRef.current && window.innerWidth <= 860) {
+      mainRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [selId]);
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -141,7 +150,7 @@ export function RepoExplorer({
           )}
         </aside>
 
-        <section class="explorer-main">
+        <section class="explorer-main" ref={mainRef}>
           {sel ? (
             <SymbolDetail sel={sel} idx={idx} onPick={setSelId} map={map} />
           ) : (
