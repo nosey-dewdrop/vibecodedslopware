@@ -247,7 +247,7 @@ gamification psychology done honestly.
 Done when: common-sense check passes on every screen.
 
 ### Phase 5: Accounts — "numbers survive devices, code never leaves them"
-- [ ] shared damlahelloworld Supabase: auth, RLS on from day one, e2e-tested
+- [ ] shared nosey-dewdrop Supabase: auth, RLS on from day one, e2e-tested
       (same discipline as Sıra Sende's 6/6)
 - [ ] tables: `profiles`, `repo_progress` (hashed repo id, mastery, counts),
       `streaks` — no code, no filenames, no repo names

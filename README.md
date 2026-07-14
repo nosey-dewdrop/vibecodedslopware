@@ -2,7 +2,7 @@
 
 *leetcode, but every question comes from your own codebase.*
 
-### live: https://damlahelloworld.github.io/vibecodedflopware/
+### live: https://nosey-dewdrop.github.io/vibecodedflopware/
 
 ## what is this?
 a lot of us shipped an app we can no longer edit by hand. vibecodedflopware turns your own repo into a practice ground: it maps your codebase and quizzes you on it — reading, fill-the-blank, bug injection, architecture — until you actually own what you shipped.

@@ -40,7 +40,7 @@ function Header() {
       <a class="wordmark" href="../">vibecodedflopware</a>
       <span class="top-right">
         <button class="theme-toggle" onClick={cycle}>[{theme}]</button>
-        <a class="top-link" href="https://github.com/damlahelloworld/vibecodedflopware">github ↗</a>
+        <a class="top-link" href="https://github.com/nosey-dewdrop/vibecodedflopware">github ↗</a>
       </span>
     </header>
   );
@@ -103,7 +103,7 @@ function Home() {
         <span class="hint">no repo handy? try one:</span>
         <a class="ex-chip" href="#/map/sindresorhus/slugify">sindresorhus/slugify</a>
         <a class="ex-chip" href="#/map/preactjs/preact">preactjs/preact</a>
-        <a class="ex-chip" href="#/map/damlahelloworld/vibecodedflopware">this site's own code</a>
+        <a class="ex-chip" href="#/map/nosey-dewdrop/vibecodedflopware">this site's own code</a>
       </div>
 
       {recents.length > 0 && (
