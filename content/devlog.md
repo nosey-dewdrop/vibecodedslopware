@@ -103,3 +103,21 @@ Her reel: **hook / akis / gorsel / caption** olarak yazilir.
 **akis:** uretilen README ile elle yazilan README arasindaki mesafe / bu urunun olctugu mesafenin ta kendisi / eger kendi on sayfamda o acigi kapatamazsam, baskasinin kodunda olcmeye hakkim yok / o yuzden en kucuk dosyada bile sesim benim.
 **gorsel:** iki README yan yana: biri makine grisi, biri elle renkli; kamera "en kucuk dosya" olan README'ye zoom yapiyor.
 **caption:** shiplemek bir an, sahiplenmek bir alışkanlık. #buildinpublic #founder #vibecoding
+
+## reel 16 — kimse paylasmadigi araci kullanmiyor
+**hook:** "aracim harikaydi. kimse acmadi. cunku paylasilacak hicbir sey yoktu."
+**akis:** analiz bitiyordu, ekranda guzel bir harita kaliyordu / ama ozel bir ekranda / ne bir sayi ne bir ekran goruntusu / kimse ozel bir seyi post etmez / o yuzden tek durust sayi cikardim: kodunun yuzde kacini gercekten aciklayabilirsin / ve onu paylasilabilir bir karta koydum. koddan tek satir sizmadan, sadece sayi.
+**gorsel (EN text-on-video):** private map screen -> a card slides out: "you can explain 61% of your own repo — certified vibecoder", altinda download / copy.
+**caption:** a tool nobody shares looks dead, even when it works. so i built the share card. #buildinpublic #vibecoding #indiehacker
+
+## reel 17 — ilk 15 saniyede sihir, guven sonra
+**hook:** "insanlardan once repo'sunu istiyordum. yanlisti."
+**akis:** yabanci geliyor, elinde repo yok ya da yapistirmaya cekiniyor / ilk sihir icin once guven istiyordum, tersi olmali / o yuzden tek tikla ornek bir repo'yu, kendiminkini, aninda analiz eden bir buton koydum / sihir 15 saniyede oynuyor, hicbir sey sormadan / hem de tam da kendi flopware'imi roast ederek.
+**gorsel (EN text-on-video):** empty paste box -> "roast a sample repo" tiklaniyor -> log lines akiyor -> map + score 15 saniyede beliriyor.
+**caption:** the wow has to land before the ask. #buildinpublic #onboarding #vibecoding
+
+## reel 18 — bu satiri silsem ne kirilir, artik paylasilabilir
+**hook:** "bahse girerim tahmin edemezsin: bu satiri degistirsem ne kirilir?"
+**akis:** motor bunu zaten tarayicida gercekten calistirip buluyordu / ama sonuc ozel ekranda kaliyordu / simdi tek cumlelik gercegi bir karta koyuyorum: '>=' yi '>' yaparsan isAdult(18) kiriliyor, ustelik testlerin bunu yakalamiyor / vibecoder'in en cok korktugu soru, artik bir meydan okuma / isim sizmasin istersen isimleri bulaniklastir.
+**gorsel (EN text-on-video):** what-if paneli, bir dugum kirmiziya donuyor -> card: "changing >= to > breaks isAdult(18). your tests wouldn't catch it." blur-names toggle gorunur.
+**caption:** the scariest question in your repo, turned into a dare. numbers only, code stays. #buildinpublic #vibecoding #privacy

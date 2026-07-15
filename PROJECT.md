@@ -292,3 +292,105 @@ engine moved to Phase 3 and now consumes sandbox-verified answers.
 
 ## Bugs / Issues
 - (none yet — app not started)
+
+## SLOP-KURTARMA HAMLELERİ (2026-07-15)
+
+Honest diagnosis of why it still reads as "just a tool / landing", and 5
+low-effort/high-impact moves to make it feel viral and alive. Nothing here
+breaks the frozen UI law, the zero-code-storage rule, or the no-money rule.
+Each move produces a SHAREABLE, NUMBERS-ONLY artifact — never leaks code.
+
+### Honest diagnosis — why it feels slop right now
+1. A stranger lands with no repo in hand, or is scared to paste one, and the
+   very first magic (the analyzer) demands input + trust before giving anything.
+   There is no zero-friction "wow" for someone who just wants to look.
+2. The analyzer is genuinely good, but it ends in a private explorer screen.
+   Nothing leaves the tab. No screenshot, no number, no bragging right — so
+   nobody has a reason to post it. A tool nobody shares looks dead even if it
+   is excellent.
+3. The name "vibecodedflopware" is the single strongest asset and it is buried.
+   The self-roast ("my slop-catcher was itself slop") is the exact tone that
+   travels on dev-Twitter (see roast-my-code, "vibe coding without code
+   knowledge" as a named 2026 anxiety). The product currently under-uses its
+   own joke.
+4. The Phase 3 quiz — the actual verb of the product ("get quizzed") — isn't
+   built yet, so today the app can only DESCRIBE your code, not TEST you on it.
+   That gap is fine to defer, but it means the viral hook cannot depend on the
+   quiz; it must live in the analyzer output we already have.
+
+### The moves (low effort, high impact)
+
+**M1 — the ownership score + share card (THE headline move).**
+- What: after any analysis, compute one honest number from data we already
+  have — e.g. `resolved calls / total calls` from the existing confidence bar,
+  reframed as "you can explain __% of your own repo" — and render a share card
+  (repo name optional/toggle-off, otherwise just the number + verdict line like
+  "certified vibecoder" / "you actually own this"). Download-as-PNG + copy-link.
+- Why: this is the GitHub-Wrapped / roast-my-code pattern — dry stats become a
+  personal, postable badge. It converts the analyzer's private ending into a
+  public artifact, giving the first real reason to share. The self-ironic verdict
+  copy carries the flopware joke outward.
+- Difficulty: **M** (card is HTML→canvas; the number already exists in the
+  confidence bar; no backend).
+- Moderation/generation: none — deterministic from the local graph, no LLM.
+- Privacy: numbers only; repo name is opt-IN and defaults off; nothing rendered
+  from source lines. Fully consistent with the zero-storage promise.
+
+**M2 — the 15-second demo repo (kill the empty first screen).**
+- What: a "roast a sample repo" / "see it on someone's flopware" button on the
+  landing + app home that instantly analyzes a tiny bundled demo repo (Damla's
+  own — dogfood the joke) with no paste, no auth. The magic plays in 15s before
+  any trust is asked.
+- Why: removes the cold-start wall (diagnosis #1). Research on shareable tools:
+  the wow must arrive before the ask. Also lets first-timers reach M1's share
+  card without owning a repo — widening who can post.
+- Difficulty: **S** (Phase 6 already lists a demo-repo onboarding; pull it
+  forward as a one-click entry, reuse existing analyzer).
+- Moderation/generation: none.
+- Privacy: demo repo is public + ours; nothing about the user touched.
+
+**M3 — "which line breaks if I delete this?" as a standalone shareable dare.**
+- What: the Phase 2 blast-radius / break-it-on-purpose experiment already runs
+  in-browser. Surface ONE punchy result as a shareable moment: "changing `>=`
+  to `>` breaks `isAdult(18)` — and your tests wouldn't catch it." Card + the
+  same download/copy affordance as M1.
+- Why: this is the product's most visceral, most true fear ("what if I touch
+  this line") turned into content. It shows the engine's depth (not just a map)
+  and it is inherently a "bet you can't guess" hook — high replay/quote value.
+- Difficulty: **S** (the experiment exists in `whatif-panel.tsx`; only the
+  card packaging is new).
+- Moderation/generation: none — sandbox-verified, deterministic.
+- Privacy: the snippet stays on-device; the SHARE card shows only the verdict
+  sentence with the function name, no full source. (If even the function name
+  feels sensitive, offer a "blur names" toggle.)
+
+**M4 — lean the whole entry into the flopware confession (copy-only).**
+- What: a small, honest "why this exists" strip near the top / in the share
+  verdicts using the real origin: "i built a slop-catcher. it was slop. so i
+  rebuilt it to catch mine first." Weaponize the name instead of hiding it.
+- Why: the confession tone is the exact register that spreads among devs right
+  now, and it is TRUE (see devlog reels 1, 11, 13). It costs nothing and makes
+  the product feel human, not another AI-slop dev tool — which is the whole
+  differentiator.
+- Difficulty: **S** (copy only; touches wording, not the frozen layout — get
+  Damla's ok on exact lines since landing visuals are frozen).
+- Moderation/generation: none.
+- Privacy: n/a.
+
+**M5 — "quiz a friend on THEIR repo" as a link, not a feature (deferred-safe).**
+- What: once the quiz exists (Phase 3+), a challenge link: paste your friend's
+  public repo → send them a link that opens straight into a quiz on it →
+  results show a number only. For NOW, ship the lightweight version: a "dare a
+  friend" share text that links them to M2/M3 on a repo you pick.
+- Why: turns a solo tool into a two-player loop — the single biggest multiplier
+  for reach (every share recruits a second player). Matches Damla's own parked
+  "multiplayer / unite vibecoders" idea.
+- Difficulty: **M now (link + prefill), L for the full quiz version**.
+- Moderation/generation: none now; quiz version reuses Phase 3 generation.
+- Privacy: only a public repo id travels in the link; no code, no accounts
+  needed for the light version.
+
+### Sequencing (cheapest first)
+M4 (copy) → M2 (one-click demo) → M1 (share card off existing number) →
+M3 (blast-radius card) → M5 light. M1+M2+M4 together already flip the app from
+"private tool" to "postable moment" with no new engine work.
