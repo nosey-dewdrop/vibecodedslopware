@@ -1,29 +1,24 @@
-# vibecodedflopware 🐣
+# vibecodedflopware 
 
 *leetcode, but every question comes from your own code.*
 
 live: https://nosey-dewdrop.github.io/vibecodedflopware/
 
-## why i built it 💝
+## why i built it?
 
 most of us have shipped an app we can no longer edit by hand. we vibecoded it, it worked, but we do not really know what is going on inside. vibecodedflopware turns your own repo into a practice ground: it maps your codebase and quizzes you on your own code (reading, fill the blank, bug injection, architecture) until you actually own the thing you shipped.
 
 the identity and the marketing hook are one promise: **"snapchat, but for tech"**. your code is never stored. not on a server, not in a log, not in a backup. it exists in transit, never at rest.
 
-## not there yet, but it will be 🚧
-
-honestly, the product is not finished. what actually works today: you paste a public repo url, the browser pulls it straight from github (never touching our servers), tree-sitter parses the code inside a worker, and you get a code map with modules, symbol details and a mini neighborhood graph. so the "see your own code as a map" part is standing.
-
-the real missing piece: the map becoming a question bank, the quiz experience, mastery tracking and accounts. the vision is an "understanding engine" that does not just draw the map but answers "what happens if i change this method?" by actually mutating and running it in an in-browser sandbox, then questions generated from answers that engine has verified.
-
-## question types (v1 plan)
+## not there yet, but it will be :D
+## v1 plan
 
 1. **code reading**. show a real function, ask for the output on a concrete input. distractors are generated from real code paths.
 2. **fill the blank**. one token/expression removed from a real line.
 3. **bug injection**. one line gets mutated (operator flip, wrong variable, swapped arguments, off-by-one). "which line is broken?" then "what should it be?"
 4. **architecture**. "you need to add x, which file do you touch first?" the options come from the real module graph, not from an llm's imagination.
 
-## hard rules (decisions, not up for revisiting) 🔒
+## hard rules (decisions, not up for revisiting) 
 
 1. user code is **never** stored server-side. no db, no logs, no backups, nowhere.
 2. no money model for now. deliberately deferred.
