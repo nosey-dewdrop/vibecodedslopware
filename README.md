@@ -1,67 +1,68 @@
-# vibecodedflopware
+# vibecodedflopware 🐣
 
-*leetcode ama her soru senin kendi kodundan çıkıyor.*
+*leetcode, but every question comes from your own code.*
 
-canlı: https://nosey-dewdrop.github.io/vibecodedflopware/
+live: https://nosey-dewdrop.github.io/vibecodedflopware/
 
-## neden yaptım
+## why i built it ❤️
 
-çoğumuz artık elle düzeltemediğimiz bir uygulama yayınladık. vibe'la kodladık, çalıştı, ama içinde ne döndüğünü tam bilmiyoruz. vibecodedflopware kendi repo'nu bir alıştırma sahasına çeviriyor: kod tabanını haritalıyor ve seni kendi kodun üstünden sınava sokuyor — okuma, boşluk doldurma, bug enjeksiyonu, mimari — ta ki yayınladığın şeye gerçekten sahip olana kadar.
+most of us have shipped an app we can no longer edit by hand. we vibecoded it, it worked, but we do not really know what is going on inside. vibecodedflopware turns your own repo into a practice ground: it maps your codebase and quizzes you on your own code (reading, fill the blank, bug injection, architecture) until you actually own the thing you shipped.
 
-kimlik ve pazarlama kancası tek bir söz: **"tech için snapchat"** — kodun asla saklanmıyor. sunucuda değil, logda değil, yedekte değil. "iletim halinde" var, "duran halde" hiç yok.
+the identity and the marketing hook are one promise: **"snapchat, but for tech"**. your code is never stored. not on a server, not in a log, not in a backup. it exists in transit, never at rest.
 
-## henüz olmadı ama olacak
+## not there yet, but it will be 🚧
 
-dürüst olmak gerekirse ürün daha bitmedi. şu an gerçekten çalışan kısım: bir public repo url'i yapıştırıyorsun, tarayıcı onu doğrudan github'dan çekiyor (bizim sunucuya hiç uğramadan), tree-sitter kodu bir worker içinde ayrıştırıyor ve karşına modüller, sembol detayları ve mini bir komşuluk grafiğiyle bir kod haritası çıkıyor. yani "kendi kodunu harita olarak gör" kısmı ayakta.
+honestly, the product is not finished. what actually works today: you paste a public repo url, the browser pulls it straight from github (never touching our servers), tree-sitter parses the code inside a worker, and you get a code map with modules, symbol details and a mini neighborhood graph. so the "see your own code as a map" part is standing.
 
-eksik olan asıl olay: haritanın soru bankasına dönüşmesi, sınav deneyimi, ustalık takibi ve hesaplar. vizyon şu — haritayı çıkarmakla kalmayıp "bu metodu değiştirirsem ne olur"u tarayıcı içi bir sandbox'ta gerçekten mutasyona uğratıp çalıştırarak cevaplayan bir "anlama motoru", sonra o motorun doğruladığı cevaplarla üretilen sorular.
+the real missing piece: the map becoming a question bank, the quiz experience, mastery tracking and accounts. the vision is an "understanding engine" that does not just draw the map but answers "what happens if i change this method?" by actually mutating and running it in an in-browser sandbox, then questions generated from answers that engine has verified.
 
-## soru tipleri (v1 planı)
+## question types (v1 plan)
 
-1. **kod okuma** — gerçek bir fonksiyon göster, somut bir girdi için çıktıyı sor. çeldiriciler gerçek kod yollarından üretiliyor.
-2. **boşluk doldurma** — gerçek bir satırdan bir token/ifade çıkarılıyor.
-3. **bug enjeksiyonu** — bir satır mutasyona uğratılıyor (operatör ters çevirme, yanlış değişken, argüman değişimi, off-by-one). "hangi satır bozuk?" sonra "ne olmalıydı?"
-4. **mimari** — "x'i eklemen lazım, önce hangi dosyaya dokunursun?" — seçenekler llm'in hayalinden değil, gerçek modül grafiğinden.
+1. **code reading**. show a real function, ask for the output on a concrete input. distractors are generated from real code paths.
+2. **fill the blank**. one token/expression removed from a real line.
+3. **bug injection**. one line gets mutated (operator flip, wrong variable, swapped arguments, off-by-one). "which line is broken?" then "what should it be?"
+4. **architecture**. "you need to add x, which file do you touch first?" the options come from the real module graph, not from an llm's imagination.
 
-## sabit kurallar (kararlar, tekrar açılmıyor)
+## hard rules (decisions, not up for revisiting) 🔒
 
-1. kullanıcı kodu sunucuda **asla** saklanmıyor — db, log, yedek, hiçbir yerde.
-2. şimdilik para modeli yok. bilerek ertelendi.
-3. isim `vibecodedflopware` (slopware değil).
+1. user code is **never** stored server-side. no db, no logs, no backups, nowhere.
+2. no money model for now. deliberately deferred.
+3. the name is `vibecodedflopware` (not slopware).
 
-## mimari (mahremiyet-önce)
+## architecture (privacy-first)
 
-her şey istemci tarafında çalışıyor; sunucu aptal ve kör.
+everything runs client-side. the server is dumb and blind.
 
 ```
-[kullanıcının tarayıcısı]
-  ├─ github oauth (pkce) — token sadece tarayıcı depolamasında
-  ├─ repo çekme — tarball doğrudan github api'den
-  ├─ tree-sitter wasm — kodu ayrıştırıp yapı haritasını cihazda kuruyor
-  ├─ indexeddb — üretilen soru bankası + repo haritası cihazda
-  └─ sınav arayüzü + ustalık motoru
+[user's browser]
+  ├─ github oauth (pkce), token lives only in browser storage
+  ├─ repo fetch, tarball straight from the github api
+  ├─ tree-sitter wasm, parses the code and builds the structure map on-device
+  ├─ indexeddb, generated question bank plus repo map stay on the device
+  └─ quiz ui plus mastery engine
 
-[edge fonksiyonu]  (kodu gören TEK sunucu parçası)
-  └─ durumsuz llm proxy: seçili snippet'leri alıp anthropic api'ye iletiyor,
-     üretilen soruları döndürüyor. kayıt yok, gövde loglaması yok.
+[edge function]  (the ONLY server piece that ever sees code)
+  └─ stateless llm proxy: takes selected snippets, forwards them to the
+     anthropic api, returns the generated questions. no persistence,
+     no body logging.
 
-[ortak damlahelloworld supabase]  (kodu hiç görmüyor)
-  └─ sadece auth + sayısal ilerleme: ustalık %, seri, sayaçlar, hash'lenmiş repo id
+[shared damlahelloworld supabase]  (never sees code)
+  └─ auth plus numeric progress only: mastery %, streak, counts, hashed repo id
 ```
 
-kabul edilen ödünleşim: soru bankası cihaz-başına. yeni cihaz → sorular yeniden üretiliyor; ilerleme sayıları (supabase'de yaşadığı için) hayatta kalıyor.
+accepted trade-off: the question bank is per-device. new device → questions regenerate; progress numbers survive (they live in supabase).
 
 ## stack
 
-- **landing (mevcut)**: statik html/css/js, github pages, build adımı yok.
-- **app**: vite + typescript + preact (küçük bundle), statik spa.
-- **ayrıştırma**: web-tree-sitter (wasm), gramerler dile göre lazy yükleniyor. başlangıç dilleri: javascript/typescript, python, swift (damla'nın kendi repolarında test için).
-- **repo çekme**: github rest api tarball'ı tarayıcıda; fflate (gunzip) + minimal tar reader ile açılıyor.
-- **github auth**: pkce'li oauth (frontend'de client secret yok), token `sessionStorage`'da (sekme kapanınca ölüyor — snapchat sözüne en uygun seçim).
-- **lokal depolama**: indexeddb üstünde dexie.js.
-- **llm proxy**: ortak supabase üstünde edge fonksiyonu (deno), anthropic messages api'ye iletiyor; gövde loglamıyor, kullanıcı başına rate limit.
-- tailwind yok, state kütüphanesi yok — el yazımı css ev stili.
+- **landing (current)**: static html/css/js, github pages, no build step.
+- **app**: vite plus typescript plus preact (small bundle), static spa.
+- **parsing**: web-tree-sitter (wasm), grammars lazy-loaded per language. launch languages: javascript/typescript, python, swift (for dogfooding on my own repos).
+- **repo fetch**: github rest api tarball in the browser, unpacked with fflate (gunzip) plus a minimal tar reader.
+- **github auth**: oauth with pkce (no client secret in the frontend), token in `sessionStorage` (dies with the tab, the most snapchat-consistent choice).
+- **local storage**: dexie.js over indexeddb.
+- **llm proxy**: edge function (deno) on the shared supabase, forwarding to the anthropic messages api. no body logging, per-user rate limits.
+- no tailwind, no state library. hand-written css is the house style.
 
-## nereye gidiyor
+## where it is going
 
-landing canlı, faz 1 analizör (repo haritası) çalışıyor. sırada: kalıcılık (dexie) → anlama motoru (sandbox + mutasyon) → soru motoru → sınav + ustalık → hesaplar. aşama aşama plan ve kabul kriterleri `PROJECT.md` içinde.
+the landing is live, the phase 1 analyzer (repo map) works. next: persistence (dexie) → understanding engine (sandbox plus mutation) → question engine → quiz plus mastery → accounts. the stage-by-stage plan and acceptance criteria are in `PROJECT.md`.
