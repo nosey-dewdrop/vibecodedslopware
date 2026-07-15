@@ -4,7 +4,7 @@
 
 live: https://nosey-dewdrop.github.io/vibecodedflopware/
 
-## why i built it ❤️
+## why i built it 💝
 
 most of us have shipped an app we can no longer edit by hand. we vibecoded it, it worked, but we do not really know what is going on inside. vibecodedflopware turns your own repo into a practice ground: it maps your codebase and quizzes you on your own code (reading, fill the blank, bug injection, architecture) until you actually own the thing you shipped.
 
