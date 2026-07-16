@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /vibecodedflopware/lab/
+
+Sitemap: https://nosey-dewdrop.github.io/vibecodedflopware/sitemap.xml
