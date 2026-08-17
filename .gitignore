@@ -3,3 +3,5 @@ node_modules/
 *.log
 CLAUDE.md
 CLAUDE.context.md
+
+.rabadon/state.json

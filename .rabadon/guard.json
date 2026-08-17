@@ -1,0 +1,41 @@
+{
+  "project": "vibecodedflopware",
+  "bash": [
+    {
+      "id": "no-force-push-main",
+      "deny": "git\\s+push[^&|;]*(--force|\\s-f\\b)[^&|;]*\\b(main|master)\\b",
+      "why": "Standard safety: never force-push to the main branch."
+    },
+    {
+      "id": "no-rm-rf-outside-project",
+      "deny": "rm\\s+(-[a-z]*r[a-z]*f|-[a-z]*f[a-z]*r)\\s+(/[^\\s]|~|\\$HOME)",
+      "why": "Standard safety: no recursive delete on absolute/home paths outside the project."
+    },
+    {
+      "id": "no-hard-reset-shared",
+      "deny": "git\\s+reset\\s+--hard\\s+(origin/)?(main|master)\\b",
+      "why": "Standard safety: no destructive reset on the shared main branch."
+    },
+    {
+      "id": "no-tailwind",
+      "deny": "(npm|pnpm|yarn|bun)\\s+(i|install|add)\\b[^&|;]*\\btailwind",
+      "why": "Tech stack law: 'No Tailwind (hand CSS is the house style)'."
+    },
+    {
+      "id": "no-state-libs",
+      "deny": "(npm|pnpm|yarn|bun)\\s+(i|install|add)\\b[^&|;]*\\b(redux|zustand|mobx|jotai|recoil)\\b",
+      "why": "Tech stack law: 'no state libraries until pain is real'."
+    }
+  ],
+  "protectedPaths": [
+    {
+      "id": "landing-frozen",
+      "match": "^(\\./)?(index\\.html|style\\.css|script\\.js)$",
+      "why": "Design law: 'UI FROZEN (Damla 2026-07-10)' — landing visuals are final, do not touch look/layout unless Damla explicitly asks."
+    }
+  ],
+  "codePaths": [
+    "^app/.*\\.(ts|tsx|mjs|js)$"
+  ],
+  "generatedBy": "rabadon guard (claude code cli)"
+}
