@@ -1,4 +1,4 @@
-// vibecodedflopware — confetti field, cursor trail, bursts, demo quiz
+// vibecodedslopware — confetti field, cursor trail, bursts, demo quiz
 
 (function () {
   "use strict";
