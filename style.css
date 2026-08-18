@@ -538,3 +538,5 @@ footer {
   margin-top: 2px;
 }
 .b-no { font-size: 10px; }
+
+.kaynak-satir { margin-top: 26px; font-size: 11.5px; color: var(--muted); }

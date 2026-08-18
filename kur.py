@@ -333,43 +333,10 @@ def ana_sayfa(veri, duz, yazilan):
         p.append("      </ol>\n    </section>")
     p.append("    </div>")
 
-    p.append(f"""
-    <div class="divider" aria-hidden="true">{AYRAC[0]}</div>
-
-    <div class="cols">
-      <section>
-        <p class="section-label">bu seri neden var?</p>
-        <h2 data-confetti>herkes "ai slop" diyor, kimse ne olduğunu söylemiyor</h2>
-        <p>ve geçip gitmek yetmiyor, çünkü o sözü söyleyen kişi kendi projesinin de
-        aynı çukurda olup olmadığını bilmiyor. slopware yazan insan tembel değil,
-        sadece kendisine kimsenin göstermediği bir şeyi bilmiyor.</p>
-      </section>
-
-      <section>
-        <p class="section-label">her bölüm nasıl ilerliyor?</p>
-        <h2 data-confetti>belirti, sebep, teşhis, düzeltme</h2>
-        <ol class="steps">
-          <li data-confetti><span class="step-glyph hl-purple">+</span>
-            çalışıyor gibi görünen bir şey, ve neden öyle göründüğü</li>
-          <li data-confetti><span class="step-glyph hl-pink">✱</span>
-            nerede çöktüğü, gerçek bir olayla</li>
-          <li data-confetti><span class="step-glyph hl-yellow">▪</span>
-            kendi kodunda nasıl bulacağın, çalıştırabileceğin bir kontrolle</li>
-          <li data-confetti><span class="step-glyph hl-green">+</span>
-            doğrusunun nasıl kurulduğu, ve benim aynı hatayı nerede yaptığım</li>
-        </ol>
-      </section>
-    </div>
-
-    <div class="divider" aria-hidden="true">{AYRAC[2]}</div>
-
-    <section class="outro">
-      <h2 data-confetti>çalışıyor gibi görünmekle ayakta durmak aynı şey değil.</h2>
-      <p><a class="btn" href="bolum/{duz[0]["slug"]}/" data-confetti>ilk bölümü oku →</a></p>
-      <p class="cta-note">metin cc by-nc, kod mit ·
-      <a href="https://github.com/nosey-dewdrop/vibecodedslopware" data-confetti>kaynağı burada</a>,
-      ben düşersem sen fork'la</p>
-    </section>
+    p.append("""
+    <p class="kaynak-satir">metin cc by-nc, kod mit ·
+    <a href="https://github.com/nosey-dewdrop/vibecodedslopware">kaynağı burada</a>,
+    ben düşersem sen fork'la</p>
 
   </main>
 """)
