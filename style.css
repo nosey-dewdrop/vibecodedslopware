@@ -457,3 +457,18 @@ footer {
   .gez { grid-template-columns: 1fr; gap: 8px; }
   .gez-sag { text-align: left; }
 }
+
+/* rehber: yazı sayfası okuma düzeni */
+.yazi { max-width: none; }
+.yazi-govde {
+  display: grid;
+  grid-template-columns: minmax(0, 34ch) minmax(0, 44ch);
+  gap: 48px;
+  align-items: start;
+}
+.yazi-govde > * { grid-column: 2; }
+.yazi-govde > .yazi-ust { grid-column: 1; position: sticky; top: 24px; }
+@media (max-width: 900px) {
+  .yazi-govde { grid-template-columns: 1fr; gap: 18px; }
+  .yazi-govde > *, .yazi-govde > .yazi-ust { grid-column: 1; position: static; }
+}

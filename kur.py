@@ -78,8 +78,12 @@ def markdown(metin):
             cikti.append('<p class="quote">' + satir_ici(" ".join(blok)) + "</p>")
             continue
 
-        if re.match(r"^#{2,4} ", satir):
+        if re.match(r"^#{1,4} ", satir):
+            kademe = len(satir) - len(satir.lstrip("#"))
             baslik = satir.lstrip("#").strip()
+            if kademe == 1:
+                i += 1
+                continue
             cikti.append("<h2>" + satir_ici(baslik) + "</h2>")
             i += 1
             continue
@@ -125,7 +129,7 @@ def markdown(metin):
         while (
             i < len(satirlar)
             and satirlar[i].strip()
-            and not re.match(r"^(#{2,4} |[-*] |\d+\. |> |```|---)", satirlar[i])
+            and not re.match(r"^(#{1,4} |[-*] |\d+\. |> |```|---)", satirlar[i])
         ):
             blok.append(satirlar[i])
             i += 1
@@ -250,12 +254,12 @@ def kur():
         sayfa = kafa(f'{b["baslik"]} · vibecodedslopware', b["neden"], kanonik, yukari)
         sayfa += f"""
   <main>
-    <article class="yazi">
-      <p class="section-label">{b["no"]:02d} / {html.escape(sv["kod"])} {html.escape(sv["ad"])}</p>
-      <h1 class="yazi-baslik" data-confetti>{html.escape(b["baslik"])}</h1>
-      <p class="lede">{html.escape(b["neden"])}</p>
-
-      <div class="divider" aria-hidden="true">{AYRAC[b["no"] % 4]}</div>
+    <article class="yazi yazi-govde">
+      <div class="yazi-ust">
+        <p class="section-label">{b["no"]:02d} / {html.escape(sv["kod"])} {html.escape(sv["ad"])}</p>
+        <h1 class="yazi-baslik" data-confetti>{html.escape(b["baslik"])}</h1>
+        <p class="lede">{html.escape(b["neden"])}</p>
+      </div>
 
       {govde}
     </article>

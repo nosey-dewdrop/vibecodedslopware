@@ -1,5 +1,5 @@
 # rabadon devridaim — vibecodedslopware
-updated: 2026-08-18T13:05:31Z
+updated: 2026-08-18T13:10:53Z
 
 ## goal (as captured from the session)
 kanka durur musun müfredata göre neleri araştırdın mesela
@@ -11,14 +11,14 @@ not run this cycle
 - none
 
 ## last moves
-- Write: mufredat.json
+- bash: cd /Users/damummyphus/damla_projects_2026/00_currently_on_working/vibecodedslopw
+- bash: cd /Users/damummyphus/damla_projects_2026/00_currently_on_working/vibecodedslopw
 - Write: kur.py
-- Write: rehber.css
 - bash: cd /Users/damummyphus/damla_projects_2026/00_currently_on_working/vibecodedslopw
 - bash: cd /Users/damummyphus/damla_projects_2026/00_currently_on_working/vibecodedslopw
-- Write: localhost.md
 - bash: cd /Users/damummyphus/damla_projects_2026/00_currently_on_working/vibecodedslopw
-- bash: (python3 -m http.server 4173 >/dev/null 2>&1 &) && sleep 1 && open "http://local
+- bash: cd /Users/damummyphus/damla_projects_2026/00_currently_on_working/vibecodedslopw
+- bash: git status -sb | head -3 && curl -s -o /dev/null -w "%{http_code}\n" https://nos
 
 ## for the next session
 - if tests are RED above: that is the open front — start there.
