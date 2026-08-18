@@ -458,21 +458,6 @@ footer {
   .gez-sag { text-align: left; }
 }
 
-/* rehber: yazı sayfası okuma düzeni */
-.yazi { max-width: none; }
-.yazi-govde {
-  display: grid;
-  grid-template-columns: minmax(0, 34ch) minmax(0, 44ch);
-  gap: 48px;
-  align-items: start;
-}
-.yazi-govde > * { grid-column: 2; }
-.yazi-govde > .yazi-ust { grid-column: 1; position: sticky; top: 24px; }
-@media (max-width: 900px) {
-  .yazi-govde { grid-template-columns: 1fr; gap: 18px; }
-  .yazi-govde > *, .yazi-govde > .yazi-ust { grid-column: 1; position: static; }
-}
-
 /* ---------- rehber v2: numaralı müfredat, konfetisiz ---------- */
 #confetti-field, #confetti-trail { display: none !important; }
 
@@ -505,3 +490,13 @@ footer {
   .bolum { grid-template-columns: 3.2ch 1fr; gap: 10px; }
   .b-neden { grid-column: 2; }
 }
+
+/* yazı: tek okuma sütunu, sola hizalı */
+.yazi { max-width: 66ch; }
+.yazi-ust { margin-bottom: 22px; }
+.yazi-baslik { min-height: auto; margin-bottom: 8px; }
+.yazi p { font-size: 13.5px; line-height: 1.62; margin-bottom: 13px; }
+.yazi h2 { margin-top: 30px; margin-bottom: 8px; }
+.yazi pre { margin: 16px 0; }
+.yazi .type-list, .yazi .steps { margin: 16px 0; font-size: 13.5px; }
+.yazi .quote { margin: 18px 0; }
