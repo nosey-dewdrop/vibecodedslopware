@@ -12,7 +12,7 @@ mektup**. `localhost`, yani `127.0.0.1`, ikincisi. Oraya gönderdiğin her istek
 bilgisayarından hiç çıkmıyor, ağ kartına bile uğramıyor, aynı makinenin içinde dönüp
 sana geri geliyor. Buna loopback deniyor, ve adı tam olarak yaptığı şey: geri döngü.
 
-Yani `localhost:3000` yazdığında olan şey şu , "bu makinede, 3000 numaralı kapıda
+Yani `localhost:3000` yazdığında olan şey şu: "bu makinede, 3000 numaralı kapıda
 dinleyen program varsa onunla konuş". Arkadaşın aynı adresi yazdığında **kendi**
 makinesinde 3000 numaralı kapıya bakıyor, orada da hiçbir şey olmadığı için hata
 alıyor. Sana kızmıyor, sadece senin makineni göremiyor.
@@ -45,8 +45,8 @@ python3 -m http.server 8000 --bind 0.0.0.0
 ```
 
 `0.0.0.0`, "sadece kendi içimden değil, bütün ağ arayüzlerinden dinle" demek.
-Şimdi bilgisayarının yerel ağdaki adresini bul , Mac'te `ipconfig getifaddr en0`,
-Linux'ta `hostname -I` , ve telefonundan `http://192.168.1.x:8000` gibi bir şey yaz.
+Şimdi bilgisayarının yerel ağdaki adresini bul. Mac'te `ipconfig getifaddr en0`,
+Linux'ta `hostname -I`. Sonra telefonundan `http://192.168.1.x:8000` gibi bir şey yaz.
 Bu sefer açılacak.
 
 Tek fark iki komut arasındaki o küçük ek. Ve az önce demo ile ürün arasındaki ilk
@@ -74,7 +74,7 @@ ve sabah gelen müşteri kapıyı çalınca içeride birileri var.
 
 Bu bölümün konusu teknik değil aslında, algı. İnsanlar localhost'ta çalışan bir şeyi
 görüp "ürünüm var" diyorlar, ve o cümleyi kurduktan sonra ilerlemeyi bırakıyorlar.
-Ekran görüntüsü alıyorlar, demo videosu çekiyorlar, hatta landing sayfası yapıyorlar ,
+Ekran görüntüsü alıyorlar, demo videosu çekiyorlar, hatta landing sayfası yapıyorlar,
 ama arkasında yayında hiçbir şey yok.
 
 Ben bunu kendi projelerimde yaşadım, hem de bir kere değil. Şu anda makinemde iki
@@ -97,7 +97,7 @@ o şey henüz yayında değil, ne kadar iyi görünürse görünsün.
 Wi-Fi kapalıyken aç. Açılmıyorsa yayında değil.
 
 **Üç:** Bugüne kadar senden başka biri o adresi açtı mı? Bir kişi bile? Hayırsa,
-elindeki şey bir ürün değil, bir prototip. Prototip olması kötü bir şey değil , ama
+elindeki şey bir ürün değil, bir prototip. Prototip olması kötü bir şey değil, ama
 adını doğru koymak lazım, çünkü yanlış koyduğunda kendini yanlış yerde sanıyorsun.
 
 Sonraki bölümde bir uygulamanın kaç parçadan oluştuğuna bakacağız, çünkü deploy'u
