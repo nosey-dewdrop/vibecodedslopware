@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/</loc><priority>1.0</priority></url>
-<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/bolum/slopware-nedir/</loc></url>
-<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/bolum/localhost/</loc></url>
+<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/</loc></url>
+<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/slopware/</loc></url>
+<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/slopware/slopware-nedir/</loc></url>
+<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/slopware/localhost/</loc></url>
+<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/systems/</loc></url>
+<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/en/</loc></url>
+<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/</loc></url>
+<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/slopware-nedir/</loc></url>
+<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/localhost/</loc></url>
+<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/en/systems/</loc></url>
 </urlset>

@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""vibecodedslopware — rehberi kurar.
+"""vibecodedslopware — siteyi kurar.
 
-yazilar/<slug>.md  ->  bolum/<slug>/index.html
-mufredat.json      ->  index.html
+  yazilar/<dil>/<mufredat>/<slug>.md  ->  [en/]<mufredat>/<slug>/index.html
+  mufredat.json                       ->  [en/]index.html, [en/]<mufredat>/index.html
 
-Mevcut kabuğu kullanır: style.css, script.js, konfeti, glyph ayraçlar, .cols ritmi.
 Bağımlılık yok. `python3 kur.py`.
 """
 import html
@@ -15,16 +14,53 @@ from pathlib import Path
 
 KOK = Path(__file__).parent
 YAZILAR = KOK / "yazilar"
-CIKTI = KOK / "bolum"
+DILLER = ["tr", "en"]
 
-GLYPH = ["+", "✱", "▪", "+"]
-RENK = ["hl-purple", "hl-pink", "hl-yellow", "hl-green"]
 AYRAC = [
     "+ · ✱ · + · ▪ · ✱ · + · ✱ · ▪ · + · ✱",
     "▪ · ✱ · + · ✱ · ▪ · ✱ · + · ✱ · ▪ · ✱",
     "✱ · + · ✱ · ▪ · + · ✱ · ▪ · + · ✱ · +",
-    "+ · ▪ · ✱ · + · ✱ · ▪ · ✱ · + · ▪ · ✱",
 ]
+
+S = {
+    "tr": {
+        "bolumler": "bölüm",
+        "yayinda": "yayında",
+        "yakinda": "yakında",
+        "haftada": "haftada bir bölüm",
+        "kontrol": "kontrol",
+        "henuz": "bu bölüm henüz yazılmadı.",
+        "lisans": "metin cc by-nc, kod mit",
+        "kaynak": "kaynağı burada",
+        "fork": "ben düşersem sen fork'la",
+        "tum": "bütün müfredatlar",
+        "hazirlaniyor": "bu müfredat hazırlanıyor.",
+    },
+    "en": {
+        "bolumler": "chapters",
+        "yayinda": "published",
+        "yakinda": "soon",
+        "haftada": "one chapter a week",
+        "kontrol": "check",
+        "henuz": "this chapter is not written yet.",
+        "lisans": "text cc by-nc, code mit",
+        "kaynak": "source is here",
+        "fork": "if I go down, fork it",
+        "tum": "all curricula",
+        "hazirlaniyor": "this curriculum is in progress.",
+    },
+}
+
+
+def metin(alan, dil):
+    """Sözlük ya da düz metin olan alanı diline göre çöz."""
+    if isinstance(alan, dict):
+        return alan.get(dil) or alan.get("tr") or ""
+    return alan or ""
+
+
+def bolum_alan(b, ad, dil):
+    return metin(b.get(f"{ad}_{dil}") or b.get(ad), dil)
 
 
 # ---------------------------------------------------------------- markdown
@@ -48,11 +84,25 @@ def satir_ici(s):
     return s
 
 
-def markdown(metin):
+def markdown(kaynak, dil):
+    """Küçük bir markdown alt kümesi. `::kontrol` bloğu kontrol kutusuna dönüşür."""
     cikti, i = [], 0
-    satirlar = metin.split("\n")
+    satirlar = kaynak.split("\n")
     while i < len(satirlar):
         satir = satirlar[i]
+
+        if satir.strip() == "::kontrol":
+            i += 1
+            blok = []
+            while i < len(satirlar) and satirlar[i].strip() != "::":
+                blok.append(satirlar[i])
+                i += 1
+            i += 1
+            ic = markdown("\n".join(blok), dil)
+            cikti.append(
+                f'<div class="kontrol"><p class="kontrol-ad">{S[dil]["kontrol"]}</p>{ic}</div>'
+            )
+            continue
 
         if satir.startswith("```"):
             i += 1
@@ -75,49 +125,32 @@ def markdown(metin):
             while i < len(satirlar) and satirlar[i].startswith("> "):
                 blok.append(satirlar[i][2:])
                 i += 1
-            cikti.append('<p class="quote">' + satir_ici(" ".join(blok)) + "</p>")
+            cikti.append('<p class="alinti">' + satir_ici(" ".join(blok)) + "</p>")
             continue
 
         if re.match(r"^#{1,4} ", satir):
             kademe = len(satir) - len(satir.lstrip("#"))
             baslik = satir.lstrip("#").strip()
+            i += 1
             if kademe == 1:
-                i += 1
                 continue
             cikti.append("<h2>" + satir_ici(baslik) + "</h2>")
-            i += 1
             continue
 
         if re.match(r"^[-*] ", satir):
             blok = []
-            n = 0
             while i < len(satirlar) and re.match(r"^[-*] ", satirlar[i]):
-                g = GLYPH[n % 4]
-                r = RENK[n % 4]
-                blok.append(
-                    f'<li><span class="{r}">{g}</span> '
-                    + satir_ici(satirlar[i][2:])
-                    + "</li>"
-                )
+                blok.append("<li>" + satir_ici(satirlar[i][2:]) + "</li>")
                 i += 1
-                n += 1
-            cikti.append('<ul class="type-list">' + "".join(blok) + "</ul>")
+            cikti.append("<ul>" + "".join(blok) + "</ul>")
             continue
 
         if re.match(r"^\d+\. ", satir):
             blok = []
-            n = 0
             while i < len(satirlar) and re.match(r"^\d+\. ", satirlar[i]):
-                g = GLYPH[n % 4]
-                r = RENK[n % 4]
-                blok.append(
-                    f'<li><span class="step-glyph {r}">{g}</span> '
-                    + satir_ici(re.sub(r"^\d+\. ", "", satirlar[i]))
-                    + "</li>"
-                )
+                blok.append("<li>" + satir_ici(re.sub(r"^\d+\. ", "", satirlar[i])) + "</li>")
                 i += 1
-                n += 1
-            cikti.append('<ol class="steps">' + "".join(blok) + "</ol>")
+            cikti.append("<ol>" + "".join(blok) + "</ol>")
             continue
 
         if satir.startswith("---"):
@@ -129,7 +162,7 @@ def markdown(metin):
         while (
             i < len(satirlar)
             and satirlar[i].strip()
-            and not re.match(r"^(#{1,4} |[-*] |\d+\. |> |```|---)", satirlar[i])
+            and not re.match(r"^(#{1,4} |[-*] |\d+\. |> |```|---|::)", satirlar[i])
         ):
             blok.append(satirlar[i])
             i += 1
@@ -139,81 +172,85 @@ def markdown(metin):
 
 
 # ---------------------------------------------------------------- iskelet
-def kafa(baslik, aciklama, kanonik, yukari):
+def kafa(veri, baslik, aciklama, kanonik, yukari, dil, aktif_kod, karsi_url):
+    nav = []
+    for m in veri["mufredatlar"]:
+        sinif = ' class="aktif"' if m["kod"] == aktif_kod else ""
+        nav.append(f'<a{sinif} href="{yukari}{m["kod"]}/">{m["ad"]}</a>')
+    obur = "en" if dil == "tr" else "tr"
     return f"""<!DOCTYPE html>
-<html lang="tr">
+<html lang="{dil}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{html.escape(baslik)}</title>
   <meta name="description" content="{html.escape(aciklama)}">
   <link rel="canonical" href="{kanonik}">
+  <link rel="alternate" hreflang="{dil}" href="{kanonik}">
+  <link rel="alternate" hreflang="{obur}" href="{karsi_url}">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="vibecodedslopware">
   <meta property="og:title" content="{html.escape(baslik)}">
   <meta property="og:description" content="{html.escape(aciklama)}">
   <meta property="og:url" content="{kanonik}">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="{html.escape(baslik)}">
-  <meta name="twitter:description" content="{html.escape(aciklama)}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@500&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
   <script>
   (function () {{
     var t = localStorage.getItem("theme");
-    if (t === "light") t = "white";
-    if (t === "dark") t = "black";
-    if (["white", "black", "plum", "midnight"].indexOf(t) === -1)
-      t = matchMedia("(prefers-color-scheme: dark)").matches ? "black" : "white";
+    if (t !== "light" && t !== "dark")
+      t = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
     document.documentElement.dataset.theme = t;
   }})();
   </script>
-  <link rel="stylesheet" href="{yukari}style.css?v=8">
+  <link rel="stylesheet" href="{yukari}style.css?v=10">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✱</text></svg>">
 </head>
 <body>
 
   <header class="top">
-    <a class="wordmark" href="{yukari}" data-confetti>vibecodedslopware</a>
+    <a class="wordmark" href="{yukari}">vibecodedslopware</a>
+    <nav class="top-nav">{"".join(nav)}</nav>
     <span class="top-right">
-      <button class="theme-toggle" id="theme-toggle" data-confetti>[tema]</button>
-      <a class="top-link" href="https://github.com/nosey-dewdrop/vibecodedslopware" data-confetti>github ↗</a>
+      <a href="{karsi_url}">{obur}</a>
+      <button class="tema" id="tema">tema</button>
+      <a href="https://github.com/nosey-dewdrop/vibecodedslopware">github ↗</a>
     </span>
   </header>
 """
 
 
-def ayak(yukari):
+def ayak(yukari, dil):
+    t = S[dil]
     return f"""
   <footer>
-    <span>bir <a href="https://nosey-dewdrop.github.io" data-confetti>nosey-dewdrop</a> işi ·
-    metin cc by-nc, kod mit · <a href="{yukari}">bütün bölümler</a></span>
-    <span class="footer-glyphs" aria-hidden="true">+ ✱ ▪</span>
+    <span>{t["lisans"]} ·
+    <a href="https://github.com/nosey-dewdrop/vibecodedslopware">{t["kaynak"]}</a>,
+    {t["fork"]}</span>
+    <span><a href="{yukari}">{t["tum"]}</a></span>
   </footer>
 
-  <script src="{yukari}script.js?v=8"></script>
+  <script src="{yukari}script.js?v=10"></script>
 </body>
 </html>
 """
 
 
-def gezinme(onceki, sonraki, yukari):
-    p = ['<nav class="gez">']
-    if onceki:
-        p.append(
-            f'<a href="{yukari}bolum/{onceki["slug"]}/" data-confetti>'
-            f'← {html.escape(onceki["baslik"])}</a>'
-        )
-    else:
-        p.append("<span></span>")
-    if sonraki:
-        p.append(
-            f'<a class="gez-sag" href="{yukari}bolum/{sonraki["slug"]}/" data-confetti>'
-            f'{html.escape(sonraki["baslik"])} →</a>'
-        )
-    else:
-        p.append("<span></span>")
+def kenar_cubugu(m, aktif_slug, yukari, dil):
+    p = ['<nav class="kenar" aria-label="icindekiler">']
+    for sv in m["seviyeler"]:
+        p.append(f'<p class="kenar-seviye">{sv["kod"]} / {html.escape(metin(sv["ad"], dil))}</p>')
+        p.append('<ol class="kenar-liste">')
+        for b in sv["bolumler"]:
+            aktif = ' class="aktif"' if b["slug"] == aktif_slug else ""
+            p.append(
+                f'<li{aktif}><span class="k-no">{b["no"]:02d}</span>'
+                f'<a href="{yukari}{m["kod"]}/{b["slug"]}/">'
+                f'{html.escape(bolum_alan(b, "baslik", dil))}</a></li>'
+            )
+        p.append("</ol>")
     p.append("</nav>")
     return "\n".join(p)
 
@@ -221,158 +258,185 @@ def gezinme(onceki, sonraki, yukari):
 # ---------------------------------------------------------------- kurulum
 def kur():
     veri = json.loads((KOK / "mufredat.json").read_text(encoding="utf-8"))
-    site = veri["site"]
-    duz = [b for sv in veri["seviyeler"] for b in sv["bolumler"]]
-    seviye_of = {b["slug"]: sv for sv in veri["seviyeler"] for b in sv["bolumler"]}
 
-    if CIKTI.exists():
-        shutil.rmtree(CIKTI)
-    CIKTI.mkdir()
+    for m in veri["mufredatlar"]:
+        if (KOK / m["kod"]).exists():
+            shutil.rmtree(KOK / m["kod"])
+    if (KOK / "en").exists():
+        shutil.rmtree(KOK / "en")
+    if (KOK / "bolum").exists():
+        shutil.rmtree(KOK / "bolum")
 
-    yazilan = 0
+    toplam = 0
+    for dil in DILLER:
+        onek = "" if dil == "tr" else "en/"
+        for m in veri["mufredatlar"]:
+            toplam += mufredat_kur(veri, m, dil, onek)
+        okul_sayfasi(veri, dil, onek)
+        toplam += 1
+
+    site_haritasi(veri)
+    print(f"{toplam} sayfa kuruldu ({len(veri['mufredatlar'])} müfredat × {len(DILLER)} dil).")
+
+
+def mufredat_kur(veri, m, dil, onek):
+    site, t = veri["site"], S[dil]
+    duz = [b for sv in m["seviyeler"] for b in sv["bolumler"]]
+    seviye_of = {b["slug"]: sv for sv in m["seviyeler"] for b in sv["bolumler"]}
+    yukari = "../../" if dil == "tr" else "../../../"
+    sayac = 0
+
     for idx, b in enumerate(duz):
         sv = seviye_of[b["slug"]]
-        kaynak = YAZILAR / f"{b['slug']}.md"
+        kaynak = YAZILAR / dil / m["kod"] / f"{b['slug']}.md"
         if kaynak.exists():
-            govde = markdown(kaynak.read_text(encoding="utf-8"))
+            govde = markdown(kaynak.read_text(encoding="utf-8"), dil)
             b["durum"] = "yazildi"
-            yazilan += 1
         else:
-            govde = (
-                '<p class="cta-note">bu bölüm henüz yazılmadı. '
-                "seri haftada bir bölüm ilerliyor.</p>"
-            )
+            govde = f'<p class="henuz">{t["henuz"]} {t["haftada"]}.</p>'
+
+        baslik = bolum_alan(b, "baslik", dil)
+        neden = bolum_alan(b, "neden", dil)
+        kanonik = f'{site["url"]}{onek}{m["kod"]}/{b["slug"]}/'
+        karsi = f'{site["url"]}{"en/" if dil == "tr" else ""}{m["kod"]}/{b["slug"]}/'
 
         onceki = duz[idx - 1] if idx > 0 else None
         sonraki = duz[idx + 1] if idx < len(duz) - 1 else None
-        yukari = "../../"
-        kanonik = f'{site["url"]}bolum/{b["slug"]}/'
+        gez = ['<nav class="gez">']
+        if onceki:
+            ob = html.escape(bolum_alan(onceki, "baslik", dil))
+            gez.append(f'<a href="{yukari}{m["kod"]}/{onceki["slug"]}/">← {ob}</a>')
+        else:
+            gez.append("<span></span>")
+        if sonraki:
+            sb = html.escape(bolum_alan(sonraki, "baslik", dil))
+            gez.append(f'<a class="gez-sag" href="{yukari}{m["kod"]}/{sonraki["slug"]}/">{sb} →</a>')
+        else:
+            gez.append("<span></span>")
+        gez.append("</nav>")
 
-        sayfa = kafa(f'{b["baslik"]} · vibecodedslopware', b["neden"], kanonik, yukari)
+        sayfa = kafa(veri, f"{baslik} · vibecodedslopware", neden, kanonik,
+                     yukari, dil, m["kod"], karsi)
         sayfa += f"""
   <main>
-    <article class="yazi yazi-govde">
-      <div class="yazi-ust">
-        <p class="section-label">{b["no"]:02d} / {html.escape(sv["kod"])} {html.escape(sv["ad"])}</p>
-        <h1 class="yazi-baslik" data-confetti>{html.escape(b["baslik"])}</h1>
-        <p class="lede">{html.escape(b["neden"])}</p>
-      </div>
+    <div class="duzen">
+      {kenar_cubugu(m, b["slug"], yukari, dil)}
+      <article class="yazi">
+        <p class="etiket">{b["no"]:02d} / {sv["kod"]} {html.escape(metin(sv["ad"], dil))}</p>
+        <h1>{html.escape(baslik)}</h1>
+        <p class="lede">{html.escape(neden)}</p>
 
-      {govde}
-    </article>
+        <div class="divider" aria-hidden="true">{AYRAC[b["no"] % 3]}</div>
 
-    <div class="divider" aria-hidden="true">{AYRAC[(b["no"] + 2) % 4]}</div>
+        {govde}
 
-    {gezinme(onceki, sonraki, yukari)}
+        {"".join(gez)}
+      </article>
+    </div>
   </main>
 """
-        sayfa += ayak(yukari)
-        klasor = CIKTI / b["slug"]
-        klasor.mkdir(parents=True)
+        sayfa += ayak(yukari, dil)
+        klasor = KOK / onek.rstrip("/") / m["kod"] / b["slug"] if onek else KOK / m["kod"] / b["slug"]
+        klasor.mkdir(parents=True, exist_ok=True)
         (klasor / "index.html").write_text(sayfa, encoding="utf-8")
+        sayac += 1
 
-    ana_sayfa(veri, duz, yazilan)
-    site_haritasi(veri, duz)
-    print(f"{len(duz)} bölüm kuruldu, {yazilan} tanesi dolu.")
+    return sayac + mufredat_ana(veri, m, dil, onek)
 
 
-def ana_sayfa(veri, duz, yazilan):
-    site = veri["site"]
-    ilk_bos = next((b for b in duz if b["durum"] != "yazildi"), duz[-1])
-    p = [kafa(f'vibecodedslopware · {site["aciklama"]}', site["aciklama"], site["url"], "")]
+def mufredat_ana(veri, m, dil, onek):
+    site, t = veri["site"], S[dil]
+    duz = [b for sv in m["seviyeler"] for b in sv["bolumler"]]
+    yazilan = sum(1 for b in duz if b["durum"] == "yazildi")
+    yukari = "../" if dil == "tr" else "../../"
+    kanonik = f'{site["url"]}{onek}{m["kod"]}/'
+    karsi = f'{site["url"]}{"en/" if dil == "tr" else ""}{m["kod"]}/'
 
+    p = [kafa(veri, f'{metin(m["baslik"], dil)} · vibecodedslopware',
+              metin(m["ozet"], dil), kanonik, yukari, dil, m["kod"], karsi)]
     p.append(f"""
   <main>
+    <section class="mufredat">
+      <p class="etiket">{m["ad"]}</p>
+      <h1>{html.escape(metin(m["baslik"], dil))}</h1>
+      <p class="lede">{html.escape(metin(m["ozet"], dil))}</p>""")
 
-    <section class="hero">
-      <div class="hero-grid">
-        <div>
-          <h1 data-confetti>slopware nedir, nasıl fark edilir, ne yapmalı?</h1>
-          <p class="lede">bir şeyi ekrana getirmek hiç bu kadar ucuz olmamıştı. ama
-          çalışıyor gibi görünen bir şeyle gerçekten ayakta duran bir şey arasındaki
-          mesafeyi artık kimse ölçmüyor. bu seri o mesafeyi ölçmeyi öğretiyor,
-          sıfırdan başlayıp kurucu seviyesine kadar.</p>
-          <div class="hero-cta">
-            <a class="btn" href="bolum/{duz[0]["slug"]}/" data-confetti>baştan başla →</a>
-            <span class="cta-note">{len(duz)} bölüm · {yazilan} tanesi yayında · haftada bir bölüm
-            · burada kimseyi aşağılamıyoruz</span>
-          </div>
-        </div>
+    if not duz:
+        p.append(f'      <p class="lede">{t["hazirlaniyor"]}</p>')
+    else:
+        p.append(f'      <p class="lede">{len(duz)} {t["bolumler"]} · '
+                 f'{yazilan} {t["yayinda"]} · {t["haftada"]}</p>')
+        p.append('      <div class="seviyeler">')
+        for sv in m["seviyeler"]:
+            p.append(f"""        <section>
+          <p class="seviye-ad">{sv["kod"]} / {html.escape(metin(sv["ad"], dil))}</p>
+          <p class="seviye-ozet">{html.escape(metin(sv["ozet"], dil))}</p>
+          <ol class="bolumler">""")
+            for b in sv["bolumler"]:
+                bos = "" if b["durum"] == "yazildi" else " bos"
+                p.append(
+                    f'            <li class="bolum{bos}">'
+                    f'<span class="b-no">{b["no"]:02d}</span>'
+                    f'<a class="b-baslik" href="{yukari}{m["kod"]}/{b["slug"]}/">'
+                    f'{html.escape(bolum_alan(b, "baslik", dil))}</a>'
+                    f'<span class="b-neden">{html.escape(bolum_alan(b, "neden", dil))}</span></li>'
+                )
+            p.append("          </ol>\n        </section>")
+        p.append("      </div>")
 
-        <div class="quiz-card">
-          <p class="quiz-file">kendi projende dene · 20 saniye</p>
-<pre><code>git log -p | grep -i "api_key"</code></pre>
-          <p class="quiz-q">sildiğini sandığın anahtar <code>git</code> geçmişinde
-          duruyor mu?</p>
-          <ul class="type-list">
-            <li><span class="hl-purple">+</span> çıktı boşsa, temizsin</li>
-            <li><span class="hl-pink">✱</span> bir şey döndüyse, o anahtar hâlâ canlı</li>
-          </ul>
-          <p class="cta-note">bu, yedinci bölümün ilk testi.</p>
-        </div>
-      </div>
-    </section>
-""")
+    p.append("    </section>\n  </main>")
+    p.append(ayak(yukari, dil))
+    klasor = KOK / onek.rstrip("/") / m["kod"] if onek else KOK / m["kod"]
+    klasor.mkdir(parents=True, exist_ok=True)
+    (klasor / "index.html").write_text("\n".join(p), encoding="utf-8")
+    return 1
 
-    p.append('    <div class="seviyeler">')
-    for si, sv in enumerate(veri["seviyeler"]):
-        p.append(f"""
-    <section class="seviye">
-      <p class="section-label">{sv["kod"]} / {html.escape(sv["ad"])}</p>
-      <p class="lede">{html.escape(sv["ozet"])}</p>
-      <ol class="bolumler">""")
-        for b in sv["bolumler"]:
-            bos = "" if b["durum"] == "yazildi" else " bos"
-            p.append(
-                f'        <li class="bolum{bos}">'
-                f'<span class="b-no">{b["no"]:02d}</span>'
-                f'<a class="b-baslik" href="bolum/{b["slug"]}/">'
-                f'{html.escape(b["baslik"])}</a>'
-                f'<span class="b-neden">{html.escape(b["neden"])}</span></li>'
-            )
-        p.append("      </ol>\n    </section>")
-    p.append("    </div>")
 
+def okul_sayfasi(veri, dil, onek):
+    site, t = veri["site"], S[dil]
+    yukari = "" if dil == "tr" else "../"
+    kanonik = f'{site["url"]}{onek}'
+    karsi = f'{site["url"]}{"en/" if dil == "tr" else ""}'
+
+    p = [kafa(veri, f'vibecodedslopware · {metin(site["aciklama"], dil)}',
+              metin(site["aciklama"], dil), kanonik, yukari, dil, None, karsi)]
     p.append(f"""
-    <div class="divider" aria-hidden="true">{AYRAC[1]}</div>
+  <main>
+    <section class="okul">
+      <h1 class="blink">{html.escape(metin(site["aciklama"], dil))}</h1>""")
 
-    <section class="son">
-      <div class="son-grid">
-        <div>
-          <p class="section-label">bu müfredat neden var?</p>
-          <p>herkes "ai slop" diyor, kimse ne olduğunu söylemiyor. ve geçip gitmek
-          yetmiyor, çünkü o sözü söyleyen kişi kendi projesinin de aynı çukurda olup
-          olmadığını bilmiyor. slopware yazan insan tembel değil, sadece kendisine
-          kimsenin göstermediği bir şeyi bilmiyor.</p>
-        </div>
-        <div>
-          <p class="section-label">her bölüm neyle bitiyor?</p>
-          <p>kendi projende çalıştıracağın bir kontrolle. yedinci bölüm
-          <code>git log -p | grep -i api_key</code> ile bitiyor, on dokuzuncu bölüm
-          yedeğini temiz bir veritabanına geri yükletip satır saydırıyor. kırk bölüm,
-          kırk kontrol.</p>
-        </div>
-      </div>
-    </section>
+    for m in veri["mufredatlar"]:
+        duz = [b for sv in m["seviyeler"] for b in sv["bolumler"]]
+        yazilan = sum(1 for b in duz if b["durum"] == "yazildi")
+        if m["durum"] == "yakinda":
+            sag = f'<span class="rozet-yakinda">{t["yakinda"]}</span>'
+        else:
+            sag = (f'<span class="ders-sayi">{len(duz)} {t["bolumler"]} · '
+                   f'{yazilan} {t["yayinda"]}</span>')
+        p.append(f"""      <a class="ders" href="{yukari}{m["kod"]}/">
+        <span class="ders-ust"><span class="ders-ad">{m["ad"]}</span>{sag}</span>
+        <span class="ders-ozet">{html.escape(metin(m["ozet"], dil))}</span>
+      </a>""")
 
-    <div class="divider" aria-hidden="true">{AYRAC[2]}</div>
-
-  </main>
-""")
-    p.append(ayak(""))
-    (KOK / "index.html").write_text("\n".join(p), encoding="utf-8")
+    p.append("    </section>\n  </main>")
+    p.append(ayak(yukari, dil))
+    hedef = KOK / onek.rstrip("/") if onek else KOK
+    hedef.mkdir(parents=True, exist_ok=True)
+    (hedef / "index.html").write_text("\n".join(p), encoding="utf-8")
 
 
-def site_haritasi(veri, duz):
+def site_haritasi(veri):
     u = veri["site"]["url"]
-    p = [
-        '<?xml version="1.0" encoding="UTF-8"?>',
-        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-        f"<url><loc>{u}</loc><priority>1.0</priority></url>",
-    ]
-    for b in duz:
-        if b["durum"] == "yazildi":
-            p.append(f'<url><loc>{u}bolum/{b["slug"]}/</loc></url>')
+    p = ['<?xml version="1.0" encoding="UTF-8"?>',
+         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+    for onek in ["", "en/"]:
+        p.append(f"<url><loc>{u}{onek}</loc></url>")
+        for m in veri["mufredatlar"]:
+            p.append(f'<url><loc>{u}{onek}{m["kod"]}/</loc></url>')
+            for sv in m["seviyeler"]:
+                for b in sv["bolumler"]:
+                    if b["durum"] == "yazildi":
+                        p.append(f'<url><loc>{u}{onek}{m["kod"]}/{b["slug"]}/</loc></url>')
     p.append("</urlset>")
     (KOK / "sitemap.xml").write_text("\n".join(p), encoding="utf-8")
 
