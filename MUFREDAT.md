@@ -484,13 +484,210 @@ adların **%43'ü her seferinde tekrar çıkıyor** → saldırgan o adı önced
 ---
 
 # SLOPWARE 301 — gerçek kullanıcı ve saldırgan
-**⚠ Araştırma limitte kesildi (oturum limiti, 07:00'de sıfırlanıyor). Aşağısı mevcut malzeme.**
 
 22. Auth · 23. Yetkilendirme ve RLS (EN KRİTİK) · 24. Girdi güvenilmezdir ·
 25. Bağımlılık zinciri · 26. LLM'li ürünün güvenliği · 27. Rate limit ·
 28. Ölçek (N+1, bağlantı havuzu, önbellek) · 29. Log ve alarm · 30. İzleme · 31. Maliyet kontrolü
 
-**Eldeki doğrulanmış malzeme:**
+---
+
+## ✅ BÖLÜM 23 — YETKİLENDİRME VE RLS (kurtarılan araştırmadan doldu)
+Kaynak: `KURTARILAN-ARASTIRMA.md` Rapor 40. Hepsi Supabase'in kendi dokümanından.
+
+**Bölümün tek cümlesi (Supabase'in kendi ifadesi):**
+> *"A table in an exposed schema without RLS is readable and writable by anyone with your
+> publishable key."* — ve `public` şeması **varsayılan olarak açık.**
+
+⭐ **AI kod üretiminin tam olarak düştüğü boşluk, ve bunu Supabase kendisi belgeliyor:**
+**Table Editor RLS'i otomatik açıyor. Raw SQL / SQL Editor AÇMIYOR.**
+Model migration'a `create table ...` yazıyor ve `alter table ... enable row level security;`
+satırını **hiç üretmiyor.** Bölüm 23'ün kalbi bu tek gözlem.
+
+**⭐ GRANTS ≠ POLICIES — neredeyse kimsenin bilmediği, "RLS'i aç"tan çok daha keskin nokta:**
+İki bağımsız kontrol var. **Grants** o rolün işlemi yapıp yapamayacağına karar verir;
+**policies** hangi satırları göreceğine. **Mükemmel RLS politikası yazılmış bir tablo,
+`anon`'a verilmiş `GRANT` hiç geri alınmadıysa hâlâ açıktır.**
+AI kod üretimi grants'a hiç dokunmuyor. İkisini birden kurman gerekiyor.
+
+**Anahtarların gerçeği (isim değişti, 2025):**
+| Tip | Format | Yetki |
+|---|---|---|
+| Publishable | `sb_publishable_...` | Düşük — *"Safe to expose online"* |
+| Secret | `sb_secret_...` | **RLS'i tamamen atlar** (`BYPASSRLS`) |
+| `anon` (eski) | JWT | publishable'ın eski hali |
+| `service_role` (eski) | JWT | secret'ın eski hali |
+
+**Yeni anahtarlar JWT DEĞİL** — opak token. Enforcement hâlâ Postgres rolleri + RLS üzerinden.
+⚠ **Sessizce kıran üç şey** (migration kılavuzundan, birebir): (1) *"You can't send a
+publishable or secret key in the `Authorization: Bearer ...` header. Send it on the `apikey`
+header instead."* (2) Edge Functions yeni anahtarlarda `apikey` header'ını **doğrulamıyor** —
+`verify_jwt = false` ve yetkilendirmeyi kodda yap. (3) Public Realtime bağlantıları 24 saatle
+sınırlı. → **Yarım migration, bir isim değişikliğini yetki açığına çevirir.**
+
+**Splinter linter — Supabase'in kendi denetleyicisi. ERROR seviyesindeki 6 kural:**
+`0002 auth_users_exposed` · `0010 security_definer_view` (view RLS'i atlıyor, düzeltme:
+`with (security_invoker=on)`) · **`0013 rls_disabled_in_public`** — birebir metni:
+*"Anyone with your project URL can read, edit, and delete all data in this table because
+Row-Level Security is not enabled."* · `0015 rls_references_user_metadata` ·
+`0019 insecure_queue_exposed_in_api` · `0021 fkey_to_auth_unique` · `0023 sensitive_columns_exposed`
+⚠ **`0025 public_bucket_allows_listing`** — **public Storage bucket'ları tablo kadar sızdırıyor
+ve bu konuşmada kimse bahsetmedi.** Bölüme mutlaka girsin.
+
+**Supabase'in yanıt olarak yaptıkları (2025 Security Retro):** Dashboard'da yaratılan tablolarda
+RLS varsayılan açık · RLS'siz tablolara **uyarı etiketi** · korumasız tablo yaratılınca
+**proje sahibine e-posta** · GitHub Secret Scanning entegrasyonu (public repo'da bulunan secret
+key **anında iptal ediliyor**) · HackerOne: 96 araştırmacıdan 139 rapor çözüldü, medyan ilk
+yanıt 8 saat.
+⚠ Supabase **kaç public projenin RLS'i kapalı ölçen bir çalışma YAYINLAMADI.** Retro bir
+duruş yazısı, ölçüm değil. **DOĞRULANMADI.**
+
+**⭐ Bölüm 27 için hazır tablo — Supabase auth rate limitleri (birebir dokümandan):**
+| İşlem | Sınır | Değiştirilebilir? |
+|---|---|---|
+| E-posta gönderen uçlar | **saatte 2 e-posta** (yerleşik sağlayıcı) | Sadece custom SMTP ile |
+| OTP gönderimi | saatte 30 | Evet |
+| OTP/magic link, kullanıcı başına | 60 saniye penceresi | Evet |
+| `/auth/v1/verify` | **saatte 360 (IP başına)** | **HAYIR** |
+| `/auth/v1/token` | **saatte 1800 (IP başına)** | **HAYIR** |
+| MFA challenge | saatte 15 | **HAYIR** |
+| Anonim giriş | saatte 30 | **HAYIR** |
+⚠ **DÜZELTME: 4/saat değil, dokümanda bugün 2/saat yazıyor.** Dışarıda **2** de.
+⚠ `/auth/v1/token` = 1800/saat/IP, **ortak NAT arkasındaki ya da server-side render katmanı
+olan uygulamayı vurur** — herkes tek çıkış IP'sini paylaşır.
+
+**JWT imzalama anahtarları (Tem 2025'ten beri asimetrik):** ES256 önerilen; HS256
+*"Not recommended for production."* JWKS edge'de **10 dakika** cache'leniyor →
+⚠ **bir anahtarı iptal etmeden önce en az 20 dakika bekle**, yoksa geçerli kullanıcıları
+oturumdan atarsın. Rotasyon 4 durumlu ve **geri alınabilir.**
+⚠ **Kıran şey:** elle `jwt.verify(token, SUPABASE_JWT_SECRET)` yazan her backend — ki bu
+vibecoded backend'lerde son derece yaygın.
+Zaman çizelgesi: 1 May 2025 sonrası projeler RSA · **1 Eki 2025'ten sonra tüm yeni projeler
+asimetrik varsayılan.** Eski `anon`/`service_role` **2026 sonunda siliniyor** (kesin gün
+**TBC**, dolaşan "31 Aralık 2026" bir çıkarım — **DOĞRULANMADI**).
+
+**⭐ VAKA — Lovable'ın İKİNCİSİ, Nisan 2026. Elimdeki en taze ve en alıntılanabilir şey:**
+BOLA (Broken Object Level Authorization). Aynı araştırmacı, Matt Palmer. HackerOne'a
+3 Mart 2026'da bildirildi, **48 gün** beklendikten sonra 21 Nisan'da açıklandı.
+Araştırmacının birebir sözü: *"I made a Lovable account today and was able to access another
+user's source code, database credentials, AI chat histories, and customer data"* —
+**ücretsiz bir hesaptan beş API çağrısıyla.**
+Lovable Mart'ta yamaladı ama **sadece Kasım 2025'ten SONRA yaratılan projeler için** —
+öncesi açık kaldı. Kök sebep Şubat 2026: *"accidentally re-enabled access to chats on public
+projects during backend permissions unification."*
+⚠ **HackerOne takip raporunu "duplicate" diye kapattı.** Lovable'ın kendi ifadesi: raporlar
+*"were closed without escalation because our HackerOne partners thought that seeing public
+projects' chats was the intended behaviour."*
+Lovable'ın yanıt yayı: *"We did not suffer a data breach"* → dokümantasyonu suçladı →
+*"intentional behaviour"* dedi → sonunda *"We understand that pointing to documentation
+issues alone was not enough here. We'll do better."*
+Platformdaki müşteriler: **Uber, Zendesk, Deutsche Telekom.**
+https://www.theregister.com/2026/04/20/lovable_denies_data_leak/
+⚠ Kaynakta tarih çelişkisi var (3 Mart 2025 mi 2026 mı) — **alıntılamadan önce doğrula.**
+
+**CVE-2025-48757 — NVD'den kesinleşen ayrıntılar:** *"An insufficient database Row-Level
+Security policy in Lovable through 2025-04-15 allows remote unauthenticated attackers to read
+or write to arbitrary database tables."* **CVSS 9.3 CRITICAL**, CWE-863. Puan **MITRE'den
+CNA olarak** geldi — **NVD kendi değerlendirmesini yapmadı.** "Disputed" etiketli; satıcı
+sorumluluğun müşteride olduğunu savunuyor. **Yama: "None available."**
+⚠ **"303 endpoint / 170 proje" rakamı ikincil özetlerden** — Palmer'ın kendi yazısı örneklem
+büyüklüğü yayınlamıyor, "all versions" diyor. **DOĞRULANMADI.**
+⚠ **"%70'inde RLS kapalı" ve "%91,5" ve "380.000 uygulama" — hepsi kaynaksız. KULLANMA.**
+⚠ Wiz'in "%20" rakamı **Lovable ile İŞBİRLİĞİ içinde** yapılmış vendor araştırması, paydası
+Wiz'in kendi telemetrisi — rastgele örneklem değil. Taksonomisi kullanışlı, sayısı değil.
+
+**Guardio VibeScamming Benchmark (Nis 2025)** — yüksek = daha dirençli:
+**ChatGPT 8/10 · Claude 4.3/10 · Lovable 1.8/10.** Lovable *"stood out in all the wrong ways"* —
+prompt'la piksel mükemmel dolandırıcılık sayfası, canlı hosting, kaçınma teknikleri ve
+çalınan kimlik bilgilerini takip eden admin paneli. Claude *"started with solid pushback but
+proved easily persuadable"* ("güvenlik araştırması" çerçevesiyle).
+
+---
+
+## ✅ BÖLÜM 31 — MALİYET KONTROLÜ (kurtarılan araştırmadan doldu)
+Kaynak: `KURTARILAN-ARASTIRMA.md` Rapor 2 ve 5. Hepsi canlı resmi dokümandan.
+
+### ⭐⭐ BÖLÜMÜN AÇILIŞI: DAMLA'NIN KENDİ VAKASI, 18 AĞUSTOS 2026
+**4 ajan saldım. 497 ajan koştu. 423'ü limitte sıfır çıktıyla öldü. Haftalık limitin %20'si gitti.**
+Sebebi bu bölümün konusu ve **birincil kaynakla belgeli:**
+
+> **Claude Agent SDK varsayılan olarak tur limiti OLMADAN geliyor.**
+> `maxTurns` / `max_turns` → tip `number`, **varsayılan `undefined` / `None` = sınırsız.**
+> https://code.claude.com/docs/en/agent-sdk/typescript
+
+**Karşılaştır:** OpenAI Agents SDK'da `DEFAULT_MAX_TURNS = 10` — **varsayılan olarak sınırlı**
+(kaynak: `openai-agents-python/src/agents/run_config.py`). Aşılınca `MaxTurnsExceeded` fırlatıyor.
+→ **Biri varsayılan güvenli, diğeri varsayılan sınırsız. Fark bir konfigürasyon satırı,
+bedeli senin haftalık limitin.**
+
+⭐ **Ve daha iyi bir kontrol var, kimse bilmiyor:** `maxBudgetUsd` / `max_budget_usd` —
+*"Stop the query when the client-side cost estimate reaches this USD value."*
+**Tur sayısı değil, DOLAR cinsinden tavan.** OpenAI'da karşılığı yok.
+Sonlanma gözlemlenebilir: `terminal_reason` ∈ `completed` / **`max_turns`** /
+**`max_budget_usd`** / `api_error` / `aborted_tools`.
+
+**Anthropic'in kendi mühendislik yazısının tek ilgili cümlesi (birebir):**
+> *"it's also common to include stopping conditions (such as a maximum number of iterations)
+> to maintain control"* — ve *"The autonomous nature of agents means higher costs, and the
+> potential for compounding errors."* **Hiçbir yerde sayı verilmiyor.**
+https://www.anthropic.com/engineering/building-effective-agents
+
+⚠ **İkinci dereceden tuzak:** `stop_reason: pause_turn` = *"A server-tool loop reached its
+iteration limit. Send the assistant content back to continue."* → **kendi sayacın olmadan
+`pause_turn`'de körlemesine devam etmek, sınırsız döngü riskinin ta kendisi.**
+
+### Sessizce parayı yiyen 6 şey (hiçbir rehberde yok)
+1. **Data residency çarpanı:** `inference_geo: "us"` = **her şeyde 1.1x** (girdi, çıktı,
+   cache yazma, cache okuma). **Sessiz %10 zam.**
+2. **Fast mode:** Opus 5 / 4.8 → `$10 in / $50 out` (**2x standart**). Batch API'de yok.
+   Opus 4.7'de hata veriyor; ⚠ **Opus 4.6'da sessizce standart hızda ve standart fiyatta
+   çalışıyor** — para ödeyip hiçbir şey almıyorsun.
+3. **Araç bağlamanın gizli maliyeti, modele göre değişiyor:** Opus 4.7'de sadece araçların
+   bağlı olması **675 token** (`auto`/`none`) ya da **804** (`any`/`tool`); Opus 5'te 286/406.
+   **İki Opus kuşağı arasında ~2.4x gizli istek başı fark.** Bash +325, text editor +700,
+   computer use +735 artı 466–499 sistem token'ı.
+4. **Sunucu araçlarının fiyatı:** web search **1.000 arama başına $10** · web fetch token
+   dışında ücretsiz · code execution ayda 1.550 ücretsiz konteyner-saat, sonra
+   **$0.05/saat**, 5 dakika minimum faturalama, ⚠ **dosya ekliyse araç çağrılmasa bile
+   faturalanıyor.**
+5. **Claude Managed Agents** token'ın üstüne ayrıca **oturum-saati başına $0.08.**
+   Batch indirimi ona uygulanmıyor.
+6. ⭐ **Sonnet 5 kalıcı olarak $2/$10** — 1 Eyl 2026'ya planlanan $3/$15 zammı iptal edildi.
+   **Sonnet 5 artık Sonnet 4.6'dan ($3/$15) ucuz ve max çıktısı daha büyük.
+   Hâlâ Sonnet 4.6'da olan %50 fazla ödüyor.**
+
+### Faturayı gerçekten kesen tek mekanizma: AWS Budget Actions
+AWS'in üç kademeli reçetesi — ve **ikinci kademe, "sadece bildirir"i "keser"e çeviren yer:**
+1. **Bildir** — AWS Budgets, hesap/servis/tag/AZ bazında.
+2. ⭐ **Otomatik uygulama** — *"AWS Budget Actions ... can enforce specific IAM or SCP
+   policies, or **stop target Amazon EC2 or Amazon RDS instances**, and Budget Actions can be
+   started automatically or require workflow approval."* **Eşik aşılınca gerçekten kapatan
+   kanonik desen bu.**
+3. **Anomali tespiti** — ML tabanlı AWS Cost Anomaly Detection.
+→ **Karşılaştırma cümlesi:** Firebase *"budget alerts do NOT turn off services"*, Cloudflare'de
+Durable Objects için limit yok, ama **AWS Budget Actions gerçekten kapatıyor.**
+**Rehberin "keser mi, bildirir mi" tablosunun omurgası bu.**
+
+### Ucuzlatan üç kaldıraç (doğru kullanılırsa)
+- **Prompt caching:** cache okuma **0.1x** (hem Anthropic hem OpenAI'da aynı çarpan).
+  Anthropic'te yazma bedeli var (5dk **1.25x**, 1saat **2x**), OpenAI'da **yazma bedeli yok**,
+  otomatik. Anthropic'in kendi başabaş cümlesi: *"caching pays off after one cache read for
+  the 5-minute duration, or after two cache reads for the 1-hour duration."*
+  ⚠ **Minimum uzunluğun altındaki prompt sessizce cache'lenmiyor:** *"Any requests to cache
+  fewer than this number of tokens will be processed without caching, **and no error is
+  returned**."* — 512 token (Opus 5/Fable 5), 1.024 (Sonnet 5, Haiku 4.5), 4.096 (Opus 4.6/4.5).
+  ⚠ **TTL saati isteğin BAŞINDAN işliyor**, yanıtın sonundan değil.
+- **Batch API: %50 indirim**, ikisinde de. Anthropic 100k istek/256MB, ~1 saatte biter,
+  24 saatte bitmezse **faturalanmıyor.** OpenAI 50k istek, sadece 24h penceresi.
+  ⚠ Batch'te cache isabeti **en iyi çaba**: *"cache hit rates ranging from 30% to 98%."*
+  Batch için 1 saatlik TTL öneriliyor.
+- **Token sayma ÜCRETSİZ:** `POST /v1/messages/count_tokens`, *"free to use"*, ayrı rate limit
+  (Start 2.000 RPM). ⚠ **Tahmindir**, cache mantığını kullanmaz. ⚠ **Claude 4.7+ yeni
+  tokenizer kullanıyor: aynı metin ~%30 daha fazla token.** Kuşaklar arası sayı taşıma.
+  **OpenAI'da token sayma endpoint'i YOK** — `tiktoken` var, o da araç/sistem yükünü saymıyor.
+
+---
+
+**Eldeki diğer doğrulanmış malzeme:**
 - **OWASP Top 10:2025 tam liste** — A01 Broken Access Control (yine #1, SSRF buraya alındı) ·
   A02 Security Misconfiguration (2021'de #5 → 2025'te **#2**) · **A03 Software Supply Chain
   Failures (YENİ)** · A04 Cryptographic · A05 Injection · A06 Insecure Design ·
@@ -785,6 +982,52 @@ doğrulanmış 7 Türkçe kaynağın hiçbirinde token/API/infra bütçesi yok.
 - **Para toplamak PMF kanıtı değil** — Seibel'in "fake PMF" listesinin ilk iki maddesi:
   etkileyici kişilerden para almak ve PMF'siz Series A.
 - Dilution: %10 harika, çoğu tur %20'ye kadar, **%25'i geçme.**
+
+---
+
+# KURTARILAN 43 RAPORUN BÖLÜM HARİTASI
+Dosya: `KURTARILAN-ARASTIRMA.md`. 18 Ağu'daki kaçak turdan sağ çıkanlar.
+İşlenmiş olanlar ✅, sırada bekleyenler ⏳.
+
+| Rapor | Konu | Bölüm |
+|---|---|---|
+| R40 | Supabase + vibecoder güvenlik (RLS, grants, linter, Base44, Lovable BOLA) | **23, 27** ✅ |
+| R5 | LLM API maliyet kontrolü (maxTurns, maxBudgetUsd, caching, batch) | **31** ✅ |
+| R2, R42 | AWS Budget Actions — gerçekten kesen kill switch | **31** ✅ |
+| R8 | **Sızan LLM/AI anahtarı sayıları, birincil kaynak** — "vaka bulunamadı" dediğim boşluk | **7, 31** ⏳ |
+| R12, R16, R29 | npm/PyPI tedarik zinciri olayları; `eslint-config-prettier` phishing; Josh Junon'un kendi ağzından `qix` olayı | **25** ⏳ |
+| R25 | Caching temelleri | **28** ⏳ |
+| R19 | Fowler, Feature Toggles | **201 eksik #4** ⏳ |
+| R28 | **Facebook/Meta 2019 — iç loglarda düz metin parola** | **29, 36** ⏳ (log'a ne YAZILMAZ) |
+| R31, R11, R34, R41 | Stripe Atlas fiyat/kapsam/ülke · GİB özelgeleri · bölgesel fiyatlama · TR abonelik | **38** ⏳ |
+| R30 | PG "Ramen Profitable" | **40** ⏳ (bootstrap karşılığı — boşluk doluyor) |
+| R3, R14 | AI vs SaaS brüt marj · NDR/NRR kıyası | **39** ⏳ |
+| R7, R17, R26, R4 | PH oy satın alma ekonomisi · launch başına sayılar · HN spike · LinkedIn Ads | **35** ⏳ |
+| R1, R24, R33, R36, R22, R35 | Wrapper tartışması birincil kaynaklar · **kuşkucu dosya/karşı-dava** · Sequoia savunulabilirlik · Ben Evans · ChatPDF | **32** ⏳ |
+| R32 | OpenEvidence dosyası | **32** ✅ (özeti işlendi) |
+| R9, R15 | Bolt.new/StackBlitz · Replit | **23, 32** ⏳ |
+| R21 | **Stack Overflow Developer Survey — AI kullanımı ve GÜVEN, 2023-2026** | **0, 9** ⏳ (algı uçurumu) |
+| R6, R10, R23, R37, R38, R39, R43 | çeşitli bulgu setleri, AI tarayıcılar | tasnif ⏳ |
+| **R13, R18** | **İşten çıkarmalar · Cognition/Devin due diligence** | **→ SLOPWARE 501** ⏳ |
+
+---
+
+# SLOPWARE 501 — LLM SİSTEM TASARIMI *(Damla'nın tezi, 18 Ağu 2026)*
+
+> **"İnşaat mühendisi tuğla taşımıyor. CS'çi de kod yazmamalı, sistem tasarlamalı."**
+
+**Tez: CS bitmedi, yeni bir dönem başlıyor.** Herkesin aksine. Rehberin 40 bölümü
+"slop yazma"yı öğretiyor; 501 **"kod yazan kişiden sistem tasarlayan kişiye"** geçişi
+öğretiyor. Bu, rehberin vaadini tamamlayan kat — 401 seni founder yapıyor, 501 seni
+**mimar** yapıyor.
+
+**Eldeki malzeme:** R13 (işten çıkarmalar — "CS öldü" iddiasının gerçek verisi),
+R18 (Cognition/Devin due diligence — "ajan mühendisin yerini alıyor" iddiasının test edilmesi),
+R21 (Stack Overflow anketi: geliştiriciler AI'ı kullanıyor ama **güvenmiyor** — 2023-2026 eğrisi).
+Ve bu oturumun kendisi: **4 ajan → 497 ajan.** Ajan orkestrasyonu bir sistem tasarımı
+problemi; tur limiti, bütçe tavanı, dallanma kontrolü. Bölüm 31'in malzemesi 501'in de girişi.
+
+**Bölümler henüz kurulmadı** — 40 bölüm bitince, ayrı bir tasarım turuyla.
 
 ---
 

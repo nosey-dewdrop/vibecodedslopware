@@ -1,10 +1,8 @@
-# rabadon devridaim — vibecodedflopware
-updated: 2026-08-17T19:23:14Z
+# rabadon devridaim — vibecodedslopware
+updated: 2026-08-18T12:13:38Z
 
 ## goal (as captured from the session)
-ya kes sesini örnek attım ya sanapus-5 (from .claude/settings.json) · /model
-
-❯ kanka selam vibecodedflopware projesini vibecodedslopware olraak değiştirelim. amaç pivot ediyor. artık o bir eğitim bloğu kanka.  çok detaylı anlatacağız. herkes ai slop diyo slopware diyo ama slopware nedir nasıl fark edilir ve ne yapmalı gibi bir seri yapacağız. Intro — slopware nedir, seri ne 
+kanka durur musun müfredata göre neleri araştırdın mesela
 
 ## tests
 not run this cycle
@@ -13,11 +11,14 @@ not run this cycle
 - none
 
 ## last moves
-- bash: cd 00_currently_on_working/vibecodedflopware && rm -f CLAUDE.md && git add -A &&
-- bash: rm -f CLAUDE.md && git add -A && git commit -q -m "kill the app: engine, lab, co
-- Write: project_vibecodedslopware.md
-- Write: 01-slopware-nedir.md
-- bash: git add -A && git commit -q -m "first chapter: what slopware is and why now" && 
+- bash: S=/Users/damummyphus/.claude/projects/-Users-damummyphus/3d887bbc-3861-4ec6-9ea1
+- bash: S=/Users/damummyphus/.claude/projects/-Users-damummyphus/3d887bbc-3861-4ec6-9ea1
+- bash: S=/Users/damummyphus/.claude/projects/-Users-damummyphus/3d887bbc-3861-4ec6-9ea1
+- bash: S=/Users/damummyphus/.claude/projects/-Users-damummyphus/3d887bbc-3861-4ec6-9ea1
+- Write: feedback_ajan_token_yakma.md
+- bash: cd /Users/damummyphus && ps aux | grep -i "claude" | grep -v grep | wc -l; echo 
+- bash: grep -c "^## Rapor" KURTARILAN-ARASTIRMA.md && echo "=== rapor başlıkları (il
+- bash: git add KURTARILAN-ARASTIRMA.md && git commit -q -m "salvage: 43 surviving repor
 
 ## for the next session
 - if tests are RED above: that is the open front — start there.
