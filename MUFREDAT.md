@@ -1008,26 +1008,7 @@ Dosya: `KURTARILAN-ARASTIRMA.md`. 18 Ağu'daki kaçak turdan sağ çıkanlar.
 | R9, R15 | Bolt.new/StackBlitz · Replit | **23, 32** ⏳ |
 | R21 | **Stack Overflow Developer Survey — AI kullanımı ve GÜVEN, 2023-2026** | **0, 9** ⏳ (algı uçurumu) |
 | R6, R10, R23, R37, R38, R39, R43 | çeşitli bulgu setleri, AI tarayıcılar | tasnif ⏳ |
-| **R13, R18** | **İşten çıkarmalar · Cognition/Devin due diligence** | **→ SLOPWARE 501** ⏳ |
-
----
-
-# SLOPWARE 501 — LLM SİSTEM TASARIMI *(Damla'nın tezi, 18 Ağu 2026)*
-
-> **"İnşaat mühendisi tuğla taşımıyor. CS'çi de kod yazmamalı, sistem tasarlamalı."**
-
-**Tez: CS bitmedi, yeni bir dönem başlıyor.** Herkesin aksine. Rehberin 40 bölümü
-"slop yazma"yı öğretiyor; 501 **"kod yazan kişiden sistem tasarlayan kişiye"** geçişi
-öğretiyor. Bu, rehberin vaadini tamamlayan kat — 401 seni founder yapıyor, 501 seni
-**mimar** yapıyor.
-
-**Eldeki malzeme:** R13 (işten çıkarmalar — "CS öldü" iddiasının gerçek verisi),
-R18 (Cognition/Devin due diligence — "ajan mühendisin yerini alıyor" iddiasının test edilmesi),
-R21 (Stack Overflow anketi: geliştiriciler AI'ı kullanıyor ama **güvenmiyor** — 2023-2026 eğrisi).
-Ve bu oturumun kendisi: **4 ajan → 497 ajan.** Ajan orkestrasyonu bir sistem tasarımı
-problemi; tur limiti, bütçe tavanı, dallanma kontrolü. Bölüm 31'in malzemesi 501'in de girişi.
-
-**Bölümler henüz kurulmadı** — 40 bölüm bitince, ayrı bir tasarım turuyla.
+| **R13, R18** | İşten çıkarmalar · Cognition/Devin due diligence | **bu seriye AİT DEĞİL** → `~/damla_projects_2026/SISTEM-TASARIMI-SERISI.md` |
 
 ---
 
