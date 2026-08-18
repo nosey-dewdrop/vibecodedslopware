@@ -458,55 +458,54 @@ footer {
   .gez-sag { text-align: left; }
 }
 
-/* ---------- müfredat: dört sütun, hepsi tek ekranda ---------- */
-#confetti-field, #confetti-trail { display: none !important; }
-
-.giris { margin-bottom: 26px; }
-.giris h1 { font-size: clamp(18px, 2vw, 22px); margin-bottom: 8px; min-height: auto; }
-.giris .lede { font-size: 12.5px; max-width: 64ch; margin-bottom: 4px; }
-
-.mufredat {
+/* rehber: yazı sayfası okuma düzeni */
+.yazi { max-width: none; }
+.yazi-govde {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 26px;
+  grid-template-columns: minmax(0, 34ch) minmax(0, 44ch);
+  gap: 48px;
   align-items: start;
 }
+.yazi-govde > * { grid-column: 2; }
+.yazi-govde > .yazi-ust { grid-column: 1; position: sticky; top: 24px; }
+@media (max-width: 900px) {
+  .yazi-govde { grid-template-columns: 1fr; gap: 18px; }
+  .yazi-govde > *, .yazi-govde > .yazi-ust { grid-column: 1; position: static; }
+}
 
-.sutun .section-label { margin-bottom: 6px; }
-.bolumler { list-style: none; border-top: 1px solid var(--line); }
+/* ---------- rehber v2: numaralı müfredat, konfetisiz ---------- */
+#confetti-field, #confetti-trail { display: none !important; }
+
+.seviye { margin-top: 6px; }
+.bolumler { list-style: none; margin-top: 12px; border-top: 1px solid var(--line); }
 
 .bolum {
   display: grid;
-  grid-template-columns: 2.6ch minmax(0, 1fr);
-  gap: 7px;
-  padding: 3px 0;
+  grid-template-columns: 3.2ch minmax(0, 30ch) minmax(0, 1fr);
+  gap: 18px;
+  align-items: baseline;
+  padding: 7px 0;
   border-bottom: 1px solid var(--line);
-  font-size: 11.5px;
-  line-height: 1.35;
+  font-size: 12.5px;
 }
 .bolum:hover { background: var(--card); }
 
 .b-no {
   font-family: var(--mono-display);
-  font-size: 10px;
+  font-size: 11px;
   color: var(--muted);
   font-variant-numeric: tabular-nums;
 }
 .b-baslik { text-decoration: none; color: var(--ink); }
 .b-baslik:hover { color: var(--pink); }
-.bolum.bos .b-no, .bolum.bos .b-baslik { opacity: 0.45; }
+.b-neden { color: var(--muted); }
+.bolum.bos .b-no, .bolum.bos .b-baslik, .bolum.bos .b-neden { opacity: 0.5; }
 
-.kaide { margin-top: 34px; max-width: 62ch; }
-.kaide p { font-size: 12.5px; margin-bottom: 10px; }
+@media (max-width: 760px) {
+  .bolum { grid-template-columns: 3.2ch 1fr; gap: 10px; }
+  .b-neden { grid-column: 2; }
+}
 
-/* yazı sayfası */
-.yazi { max-width: 66ch; }
-.yazi-ust { margin-bottom: 20px; }
-.yazi-baslik { min-height: auto; margin-bottom: 8px; }
-.yazi p { font-size: 13px; line-height: 1.6; margin-bottom: 12px; }
-.yazi h2 { margin-top: 26px; margin-bottom: 7px; }
-.yazi pre { margin: 14px 0; }
-.yazi .type-list, .yazi .steps { margin: 14px 0; font-size: 13px; }
-
-@media (max-width: 1000px) { .mufredat { grid-template-columns: repeat(2, 1fr); gap: 22px; } }
-@media (max-width: 620px) { .mufredat { grid-template-columns: 1fr; } }
+/* seviyeler 2x2 grid */
+.seviyeler { display: grid; grid-template-columns: 1fr 1fr; gap: 30px 44px; align-items: start; }
+@media (max-width: 820px) { .seviyeler { grid-template-columns: 1fr; } }

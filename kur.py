@@ -284,44 +284,90 @@ def ana_sayfa(veri, duz, yazilan):
     p.append(f"""
   <main>
 
-    <section class="giris">
-      <h1>slopware nedir, nasıl fark edilir, ne yapmalı?</h1>
-      <p class="lede">çalışıyor gibi görünen bir şeyle gerçekten ayakta duran bir şey
-      arasındaki mesafeyi ölçmeyi öğreten bir müfredat. sıfırdan kurucu seviyesine,
-      {len(duz)} bölüm, haftada bir.</p>
-      <p class="cta-note">{yazilan} bölüm yayında · burada kimseyi aşağılamıyoruz</p>
-    </section>
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <h1 data-confetti>slopware nedir, nasıl fark edilir, ne yapmalı?</h1>
+          <p class="lede">bir şeyi ekrana getirmek hiç bu kadar ucuz olmamıştı. ama
+          çalışıyor gibi görünen bir şeyle gerçekten ayakta duran bir şey arasındaki
+          mesafeyi artık kimse ölçmüyor. bu seri o mesafeyi ölçmeyi öğretiyor,
+          sıfırdan başlayıp kurucu seviyesine kadar.</p>
+          <div class="hero-cta">
+            <a class="btn" href="bolum/{duz[0]["slug"]}/" data-confetti>baştan başla →</a>
+            <span class="cta-note">{len(duz)} bölüm · {yazilan} tanesi yayında · haftada bir bölüm
+            · burada kimseyi aşağılamıyoruz</span>
+          </div>
+        </div>
 
-    <div class="mufredat">
+        <div class="quiz-card">
+          <p class="quiz-file">kendi projende dene · 20 saniye</p>
+<pre><code>git log -p | grep -i "api_key"</code></pre>
+          <p class="quiz-q">sildiğini sandığın anahtar <code>git</code> geçmişinde
+          duruyor mu?</p>
+          <ul class="type-list">
+            <li><span class="hl-purple">+</span> çıktı boşsa, temizsin</li>
+            <li><span class="hl-pink">✱</span> bir şey döndüyse, o anahtar hâlâ canlı</li>
+          </ul>
+          <p class="cta-note">bu, yedinci bölümün ilk testi.</p>
+        </div>
+      </div>
+    </section>
 """)
 
+    p.append('    <div class="seviyeler">')
     for si, sv in enumerate(veri["seviyeler"]):
-        p.append(f"""      <section class="sutun">
-        <p class="section-label">{sv["kod"]} / {html.escape(sv["ad"])}</p>
-        <ol class="bolumler">""")
+        p.append(f"""
+    <section class="seviye">
+      <p class="section-label">{sv["kod"]} / {html.escape(sv["ad"])}</p>
+      <p class="lede">{html.escape(sv["ozet"])}</p>
+      <ol class="bolumler">""")
         for b in sv["bolumler"]:
             bos = "" if b["durum"] == "yazildi" else " bos"
             p.append(
-                f'          <li class="bolum{bos}">'
+                f'        <li class="bolum{bos}">'
                 f'<span class="b-no">{b["no"]:02d}</span>'
                 f'<a class="b-baslik" href="bolum/{b["slug"]}/">'
-                f'{html.escape(b["baslik"])}</a></li>'
+                f'{html.escape(b["baslik"])}</a>'
+                f'<span class="b-neden">{html.escape(b["neden"])}</span></li>'
             )
-        p.append("        </ol>\n      </section>")
+        p.append("      </ol>\n    </section>")
+    p.append("    </div>")
 
-    p.append(f"""    </div>
+    p.append(f"""
+    <div class="divider" aria-hidden="true">{AYRAC[0]}</div>
 
-    <section class="kaide">
-      <p class="section-label">bu müfredat neden var?</p>
-      <p>herkes "ai slop" diyor, kimse ne olduğunu söylemiyor. ve geçip gitmek yetmiyor,
-      çünkü o sözü söyleyen kişi kendi projesinin de aynı çukurda olup olmadığını bilmiyor.
-      slopware yazan insan tembel değil, sadece kendisine kimsenin göstermediği bir şeyi
-      bilmiyor.</p>
-      <p>her bölüm aynı yolu izliyor: çalışıyor gibi görünen bir şey, nerede çöktüğü,
-      kendi kodunda nasıl bulacağın, doğrusunun nasıl kurulduğu. ve her bölümde kendi
-      projelerimden gerçek bir vaka var.</p>
+    <div class="cols">
+      <section>
+        <p class="section-label">bu seri neden var?</p>
+        <h2 data-confetti>herkes "ai slop" diyor, kimse ne olduğunu söylemiyor</h2>
+        <p>ve geçip gitmek yetmiyor, çünkü o sözü söyleyen kişi kendi projesinin de
+        aynı çukurda olup olmadığını bilmiyor. slopware yazan insan tembel değil,
+        sadece kendisine kimsenin göstermediği bir şeyi bilmiyor.</p>
+      </section>
+
+      <section>
+        <p class="section-label">her bölüm nasıl ilerliyor?</p>
+        <h2 data-confetti>belirti, sebep, teşhis, düzeltme</h2>
+        <ol class="steps">
+          <li data-confetti><span class="step-glyph hl-purple">+</span>
+            çalışıyor gibi görünen bir şey, ve neden öyle göründüğü</li>
+          <li data-confetti><span class="step-glyph hl-pink">✱</span>
+            nerede çöktüğü, gerçek bir olayla</li>
+          <li data-confetti><span class="step-glyph hl-yellow">▪</span>
+            kendi kodunda nasıl bulacağın, çalıştırabileceğin bir kontrolle</li>
+          <li data-confetti><span class="step-glyph hl-green">+</span>
+            doğrusunun nasıl kurulduğu, ve benim aynı hatayı nerede yaptığım</li>
+        </ol>
+      </section>
+    </div>
+
+    <div class="divider" aria-hidden="true">{AYRAC[2]}</div>
+
+    <section class="outro">
+      <h2 data-confetti>çalışıyor gibi görünmekle ayakta durmak aynı şey değil.</h2>
+      <p><a class="btn" href="bolum/{duz[0]["slug"]}/" data-confetti>ilk bölümü oku →</a></p>
       <p class="cta-note">metin cc by-nc, kod mit ·
-      <a href="https://github.com/nosey-dewdrop/vibecodedslopware">kaynağı burada</a>,
+      <a href="https://github.com/nosey-dewdrop/vibecodedslopware" data-confetti>kaynağı burada</a>,
       ben düşersem sen fork'la</p>
     </section>
 
