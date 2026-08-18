@@ -1,5 +1,5 @@
 # rabadon devridaim — vibecodedslopware
-updated: 2026-08-18T13:22:20Z
+updated: 2026-08-18T13:23:10Z
 
 ## goal (as captured from the session)
 kanka durur musun müfredata göre neleri araştırdın mesela
@@ -11,7 +11,7 @@ not run this cycle
 - none
 
 ## last moves
-- bash: grep -rni "görünmem" kur.py index.html MUFREDAT.md 2>/dev/null | cut -c1-130; 
+- bash: cd /Users/damummyphus/damla_projects_2026/00_currently_on_working/vibecodedslopw
 - bash: cd /Users/damummyphus/damla_projects_2026/00_currently_on_working/vibecodedslopw
 - bash: cd /Users/damummyphus/damla_projects_2026/00_currently_on_working/vibecodedslopw
 - bash: cd /Users/damummyphus/damla_projects_2026/00_currently_on_working/vibecodedslopw
