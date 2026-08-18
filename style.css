@@ -557,3 +557,31 @@ footer {
 .kaynak-satir { margin-top: 22px; font-size: 11.5px; color: var(--muted); }
 footer { justify-content: flex-start; gap: 18px; }
 .footer-glyphs { display: none; }
+
+/* açıklama: kayan kutu değil, üstte duran balon */
+.bolum { position: relative; padding: 1px 0; line-height: 1.25; font-size: 11.5px; }
+.bolumler { margin-top: 6px; }
+.seviye .lede { font-size: 11.5px; line-height: 1.45; }
+.seviye { grid-template-rows: auto 3.1em auto; }
+.seviyeler { gap: 16px 40px; }
+
+.b-neden {
+  position: absolute;
+  left: 2.6ch;
+  top: calc(100% + 2px);
+  z-index: 5;
+  width: max(20ch, 88%);
+  max-height: none;
+  margin: 0;
+  padding: 6px 9px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.4;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 120ms ease;
+  pointer-events: none;
+}
+.bolum:hover .b-neden, .bolum:focus-within .b-neden { opacity: 1; visibility: visible; }
