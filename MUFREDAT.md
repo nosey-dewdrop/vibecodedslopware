@@ -1135,7 +1135,6 @@ inandı; imzalama görevinde güvenli çözüm AI'lı %3 vs kontrol %21), METR (
 hızlandıklarını sandılar), Veracode (Mart 2026 — %45, bir yıl sonra hâlâ %45).
 **Geliştirici, AI kodunun kalitesi hakkında sistematik olarak yanılıyor ve yanıldığını fark
 etmiyor. Bu bir "daha çok tara" problemi değil, bir GERİ BİLDİRİM problemi.**
-⭐ **Slopware'in tanımı burada: sorun kodun kötü olması değil, KÖTÜ OLDUĞUNUN GÖRÜNMEMESİ.**
 
 **Site yapısı kararları (Yazbel + Rust Book + Missing Semester + Teach Yourself CS'ten):**
 - Sol sidebar (tam TOC) + üstte VE altta önceki/sonraki. Alttaki, bitirme oranının motoru.
