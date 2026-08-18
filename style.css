@@ -590,3 +590,11 @@ footer { justify-content: flex-start; gap: 18px; }
 .footer-glyphs { display: inline; letter-spacing: 4px; color: var(--lavender); }
 footer { justify-content: space-between; }
 .divider { margin: 26px 0; }
+
+/* devasa boşluklar: satırlar içeriği kadar olsun */
+.seviyeler { align-items: start; gap: 14px 40px; }
+.seviye { grid-template-rows: auto 2.6em auto; }
+.seviye .lede { font-size: 11px; line-height: 1.4; }
+.mufredat { margin-bottom: 0; }
+.divider { margin: 18px 0; }
+.son { margin-top: 0; }
