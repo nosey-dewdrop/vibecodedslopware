@@ -985,6 +985,97 @@ doğrulanmış 7 Türkçe kaynağın hiçbirinde token/API/infra bütçesi yok.
 
 ---
 
+## ✅ BÖLÜM 7 + 31 EKİ — SIZAN ANAHTAR, KAPANMAYAN BOŞLUK KAPANDI
+Kaynak: Rapor 8. **"İsimli, birincil kaynaklı, dolar tutarlı sızan-anahtar vakası yok"
+demiştim. Var, ve adı LLMjacking.**
+
+**Sysdig, 6 May 2024 — ölçülmüş, hesabı gösterilmiş:**
+Çalınan bulut kimlik bilgileriyle AWS Bedrock üzerinden Claude çalıştırdılar.
+**Kurbana günlük maliyeti: $46.080.** Hesap birebir yayınlanmış:
+`(500K token/1000 × $0.016) × 60 dakika × 24 saat × 4 bölge = $46.080/gün`
+Giriş yolu: **CVE-2021-3129'lu bir Laravel sunucusu.** Script kimlik bilgilerini
+**on ayrı serviste** deniyordu: AI21, Anthropic, Bedrock, Azure, ElevenLabs, MakerSuite,
+Mistral, OpenAI, OpenRouter, Vertex AI.
+⚠ Dolaşan **"$100.000/gün" ölçüm DEĞİL**, daha yeni modeller üzerinden yapılmış tahmin.
+**$46.080 rakamını kullan.**
+
+⭐⭐ **Ve asıl cümle, Sysdig'in DeepSeek takibinden (7 Şub 2025):**
+Çalınan anahtarlar **"OpenAI Reverse Proxy"** havuzlarında toplanıp **satılıyor.**
+Tek bir proxy: **2,213 milyar token, 4,5 günde ~$49.595.** Bir havuzda **55 DeepSeek
+anahtarı**, başkasında **13 organizasyondan 32 OpenAI anahtarı.**
+**Satış fiyatı: 30 günlük erişim $30.**
+→ **Senin 4,5 günde 50 bin dolarına mal olan anahtar havuzu, ayda 30 dolara satılıyor.**
+Bölüm 7'nin kapanış cümlesi bu. Dağıtım: 4chan, Discord, Rentry.co.
+
+**Ölçek — GitGuardian, hangi rakam hangi yıla ait (üçü karıştırılırsa yanlış olur):**
+| Rakam | Veri yılı | Rapor |
+|---|---|---|
+| **1212x OpenAI anahtar sızıntısı artışı** | 2023 | 2024 raporu — **iki yıl eski, "bu yılın" deme** |
+| 23,8 milyon sızan secret | 2024 | 2025 raporu · AI kırılımı **YOK** |
+| **28,65 milyon** yeni hardcoded secret (+%34) | 2025 | 2026 raporu (PR'da "29M" diye yuvarlıyorlar) |
+| **AI servis secret'ları 1.275.105, +%81** | 2025 | 2026 raporu |
+
+**2026 raporundan, rehber için değerli olanlar:** *"Eight of the ten fastest-growing detectors
+were tied to AI services"* · **113.000 sızan DeepSeek anahtarı** · LLM altyapısı (orkestrasyon,
+RAG, vektör depo) **çekirdek model sağlayıcılarından 5 kat hızlı sızıyor** · MCP config
+dosyalarında **24.008 secret, 2.117'si geçerli** · **AI destekli kod %3,2 oranında sızdırıyor,
+GitHub genel tabanının 2 katı.**
+
+⭐ **Ürün argümanı için en güçlü yapısal bulgu sızıntı sayısı değil, KALICILIK:**
+**2022'de geçerli doğrulanan secret'ların %64'ü Ocak 2026'da hâlâ çalışıyordu**, ve
+**kritik secret'ların ~%46'sının satıcı tarafında doğrulama mekanizması yok.**
+→ **Darboğaz tespit değil, iptal ve doğrulanabilirlik.**
+
+⚠ **Kimse sızan OpenAI ya da Anthropic anahtarının MUTLAK sayısını yayınlamıyor.**
+Var olan tek büyük mutlak sayılar: Hugging Face **130.000** (2025, ve **düz, artmıyor**),
+DeepSeek 113.000, xAI 6.273. **"Kaç OpenAI anahtarı sızıyor" sorusunun kamuya açık cevabı
+YOK — ve bu boşluğu sahiplenmek başlı başına bir değer.**
+⚠ Yüzde artışların çoğu taban etkisi: OpenRouter +%4.661 sıfıra yakın bir tabandan.
+
+---
+
+## ✅ BÖLÜM 29 + 36 — LOG'A NE YAZILMAZ (Rapor 28)
+**Rehberin en sert vakası, ve bir logging hatasına konmuş gerçek fiyat etiketi.**
+
+**Facebook, 2019.** İç sistemlerde parolalar **düz metin** olarak loglanmış.
+Meta'nın kendi cümlesi: *"some user passwords were being stored in a readable format within
+our internal data storage systems."* Bildirilecek kitle: *"hundreds of millions of Facebook
+Lite users, tens of millions of other Facebook users, and tens of thousands of Instagram users."*
+
+⭐ **Dosyadaki en alıntılanabilir ayrıntı:** dört hafta sonra güncelleme geldi ve Instagram
+tarafı **on binlerden milyonlara** çıktı. **Logları kendisine ait olan şirket, ilk açıklamada
+kendi maruziyetini iki büyüklük mertebesi yanlış ölçtü.**
+
+**Fiyatı — İrlanda DPC, 27 Eylül 2024: €91.000.000.** İhlal edilen dört madde:
+GDPR **m.33(1)** (ihlali bildirmemek), **m.33(5)** (belgelememek), **m.5(1)(f)** (bütünlük ve
+gizlilik), **m.32(1)** (işleme güvenliği).
+Doyle'un cümlesi: *"It is widely accepted that user passwords should not be stored in
+plaintext... they would enable access to users' social media accounts."*
+→ **Eşleme birebir ve taşıyıcı: log'da düz metin kimlik bilgisi → m.32(1) + m.5(1)(f) → €91M.**
+
+**Aynı hata, iki şirket daha:** Twitter (May 2018, bcrypt hash **tamamlanmadan önce** log'a
+yazılmış) ve GitHub (May 2018, *"a small number of users"*, sayı hiç verilmedi — ve tetikleyici
+**parola sıfırlama yolunun kendisiydi**).
+
+⭐⭐ **Bölümün tezi, üç vakanın ortak paydası:**
+**Üçü de ihlal DEĞİLDİ. Üçü de iç log'du. Üçünde de production'da hash'leme DOĞRU çalışıyordu.
+Hata kriptografide değil, LOG SATIRINDAYDI.**
+
+⚠ **Düzeltme — dışarıda söylersen vurulursun:** *"Twitter'ın 330 milyon parolası sızdı"*
+**YANLIŞ.** 336 milyon Twitter'ın **toplam kullanıcı sayısı**; şirket kaç kişinin etkilendiğini
+**hiç açıklamadı**, herkesten önlem olarak parola değiştirmesini istedi.
+Doğru cümle: *"Twitter 336 milyon kullanıcısının hepsinden parola sıfırlamasını istedi ve kaç
+kişinin gerçekten açığa çıktığını hiç açıklamadı."*
+⚠ Krebs'in 200-600 milyon / 20.000 çalışan / 9 milyon sorgu rakamları **Meta'nın beyanı
+DEĞİL**, isimsiz bir kaynağa dayanıyor. Meta'ya atfetme.
+
+**CWE-117 — Improper Output Neutralization for Logs:** kullanıcı girdisi doğrulanmadan log'a
+yazılırsa saldırgan **sahte log satırı üretebiliyor**, istatistiği bozabiliyor, **izini
+örtebiliyor ya da başkasını suçlu gösterebiliyor.** Örnek: `twenty-one%0a%0aINFO:+User+logged+out%3dbadguy`
+→ satır sonu karakteri log'a uydurma bir kayıt ekliyor. https://cwe.mitre.org/data/definitions/117.html
+
+---
+
 # KURTARILAN 43 RAPORUN BÖLÜM HARİTASI
 Dosya: `KURTARILAN-ARASTIRMA.md`. 18 Ağu'daki kaçak turdan sağ çıkanlar.
 İşlenmiş olanlar ✅, sırada bekleyenler ⏳.
@@ -994,11 +1085,11 @@ Dosya: `KURTARILAN-ARASTIRMA.md`. 18 Ağu'daki kaçak turdan sağ çıkanlar.
 | R40 | Supabase + vibecoder güvenlik (RLS, grants, linter, Base44, Lovable BOLA) | **23, 27** ✅ |
 | R5 | LLM API maliyet kontrolü (maxTurns, maxBudgetUsd, caching, batch) | **31** ✅ |
 | R2, R42 | AWS Budget Actions — gerçekten kesen kill switch | **31** ✅ |
-| R8 | **Sızan LLM/AI anahtarı sayıları, birincil kaynak** — "vaka bulunamadı" dediğim boşluk | **7, 31** ⏳ |
+| R8 | Sızan LLM anahtarı, LLMjacking, GitGuardian yıl-yıl | **7, 31** ✅ |
 | R12, R16, R29 | npm/PyPI tedarik zinciri olayları; `eslint-config-prettier` phishing; Josh Junon'un kendi ağzından `qix` olayı | **25** ⏳ |
 | R25 | Caching temelleri | **28** ⏳ |
 | R19 | Fowler, Feature Toggles | **201 eksik #4** ⏳ |
-| R28 | **Facebook/Meta 2019 — iç loglarda düz metin parola** | **29, 36** ⏳ (log'a ne YAZILMAZ) |
+| R28 | Facebook €91M, Twitter, GitHub — iç loglarda düz metin parola | **29, 36** ✅ |
 | R31, R11, R34, R41 | Stripe Atlas fiyat/kapsam/ülke · GİB özelgeleri · bölgesel fiyatlama · TR abonelik | **38** ⏳ |
 | R30 | PG "Ramen Profitable" | **40** ⏳ (bootstrap karşılığı — boşluk doluyor) |
 | R3, R14 | AI vs SaaS brüt marj · NDR/NRR kıyası | **39** ⏳ |

@@ -1,5 +1,5 @@
 # rabadon devridaim — vibecodedslopware
-updated: 2026-08-18T12:21:09Z
+updated: 2026-08-18T12:40:38Z
 
 ## goal (as captured from the session)
 kanka durur musun müfredata göre neleri araştırdın mesela
@@ -11,14 +11,14 @@ not run this cycle
 - none
 
 ## last moves
-- bash: git add KURTARILAN-ARASTIRMA.md && git commit -q -m "salvage: 43 surviving repor
-- bash: grep -n "^## Rapor\|AWS Budget Actions\|LLM API Cost Control\|SUPABASE + VIBECOD
-- Read: KURTARILAN-ARASTIRMA.md
 - Read: KURTARILAN-ARASTIRMA.md
 - Edit: MUFREDAT.md
 - bash: cd /Users/damummyphus/damla_projects_2026/00_currently_on_working/vibecodedslopw
 - Edit: MUFREDAT.md
 - bash: git add -A && git commit -q -m "curriculum: chapters 23 and 31 filled from salva
+- Edit: MUFREDAT.md
+- Write: SISTEM-TASARIMI-SERISI.md
+- bash: git add -A && git commit -q -m "curriculum: system design is its own series, par
 
 ## for the next session
 - if tests are RED above: that is the open front — start there.
