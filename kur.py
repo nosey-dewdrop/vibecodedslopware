@@ -175,64 +175,59 @@ def markdown(kaynak, dil):
 def kafa(veri, baslik, aciklama, kanonik, yukari, dil, aktif_kod, karsi_url):
     nav = []
     for m in veri["mufredatlar"]:
-        sinif = ' class="aktif"' if m["kod"] == aktif_kod else ""
+        sinif = ' class="here"' if m["kod"] == aktif_kod else ""
         nav.append(f'<a{sinif} href="{yukari}{m["kod"]}/">{m["ad"]}</a>')
     obur = "en" if dil == "tr" else "tr"
+    nav.append(f'<a href="{karsi_url}">{obur}</a>')
+    nav.append('<a href="https://github.com/nosey-dewdrop/vibecodedslopware">github</a>')
     return f"""<!DOCTYPE html>
 <html lang="{dil}">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{html.escape(baslik)}</title>
-  <meta name="description" content="{html.escape(aciklama)}">
-  <link rel="canonical" href="{kanonik}">
-  <link rel="alternate" hreflang="{dil}" href="{kanonik}">
-  <link rel="alternate" hreflang="{obur}" href="{karsi_url}">
-  <meta property="og:type" content="article">
-  <meta property="og:site_name" content="vibecodedslopware">
-  <meta property="og:title" content="{html.escape(baslik)}">
-  <meta property="og:description" content="{html.escape(aciklama)}">
-  <meta property="og:url" content="{kanonik}">
-  <meta name="twitter:card" content="summary">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
-  <script>
-  (function () {{
-    var t = localStorage.getItem("theme");
-    if (t !== "light" && t !== "dark")
-      t = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
-    document.documentElement.dataset.theme = t;
-  }})();
-  </script>
-  <link rel="stylesheet" href="{yukari}style.css?v=10">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✱</text></svg>">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{html.escape(baslik)}</title>
+<meta name="description" content="{html.escape(aciklama)}">
+<meta name="author" content="Damla Su Bilge">
+<link rel="canonical" href="{kanonik}">
+<link rel="alternate" hreflang="{dil}" href="{kanonik}">
+<link rel="alternate" hreflang="{obur}" href="{karsi_url}">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="vibecodedslopware">
+<meta property="og:title" content="{html.escape(baslik)}">
+<meta property="og:description" content="{html.escape(aciklama)}">
+<meta property="og:url" content="{kanonik}">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#171221">
+<meta name="robots" content="index,follow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23171221'/%3E%3Crect x='6' y='6' width='6' height='20' fill='%23ff8fb3'/%3E%3Crect x='20' y='6' width='6' height='20' fill='%23ff8fb3'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{yukari}style.css?v=11">
 </head>
 <body>
 
-  <header class="top">
-    <a class="wordmark" href="{yukari}">vibecodedslopware</a>
-    <nav class="top-nav">{"".join(nav)}</nav>
-    <span class="top-right">
-      <a href="{karsi_url}">{obur}</a>
-      <button class="tema" id="tema">tema</button>
-      <a href="https://github.com/nosey-dewdrop/vibecodedslopware">github ↗</a>
-    </span>
-  </header>
+<div id="stars" aria-hidden="true"></div>
+
+<div class="wrap">
+
+<header class="site">
+  <span class="mark"><i>[</i>&#124;<i>]</i> vibecodedslopware</span>
+  <nav>{"".join(nav)}</nav>
+</header>
 """
 
 
 def ayak(yukari, dil):
     t = S[dil]
     return f"""
-  <footer>
-    <span>{t["lisans"]} ·
-    <a href="https://github.com/nosey-dewdrop/vibecodedslopware">{t["kaynak"]}</a>,
-    {t["fork"]}</span>
-    <span><a href="{yukari}">{t["tum"]}</a></span>
-  </footer>
+<footer>
+  <span>{t["lisans"]} · <a href="https://github.com/nosey-dewdrop/vibecodedslopware">{t["kaynak"]}</a>, {t["fork"]}</span>
+  <span class="sp"><a href="{yukari}">{t["tum"]}</a></span>
+</footer>
 
-  <script src="{yukari}script.js?v=10"></script>
+</div>
+<script src="{yukari}effects.js"></script>
 </body>
 </html>
 """
@@ -318,8 +313,8 @@ def mufredat_kur(veri, m, dil, onek):
         sayfa = kafa(veri, f"{baslik} · vibecodedslopware", neden, kanonik,
                      yukari, dil, m["kod"], karsi)
         sayfa += f"""
-  <main>
-    <div class="duzen">
+<section>
+  <div class="duzen">
       {kenar_cubugu(m, b["slug"], yukari, dil)}
       <article class="yazi">
         <p class="etiket">{b["no"]:02d} / {sv["kod"]} {html.escape(metin(sv["ad"], dil))}</p>
@@ -332,8 +327,8 @@ def mufredat_kur(veri, m, dil, onek):
 
         {"".join(gez)}
       </article>
-    </div>
-  </main>
+  </div>
+</section>
 """
         sayfa += ayak(yukari, dil)
         klasor = KOK / onek.rstrip("/") / m["kod"] / b["slug"] if onek else KOK / m["kod"] / b["slug"]
@@ -355,8 +350,7 @@ def mufredat_ana(veri, m, dil, onek):
     p = [kafa(veri, f'{metin(m["baslik"], dil)} · vibecodedslopware',
               metin(m["ozet"], dil), kanonik, yukari, dil, m["kod"], karsi)]
     p.append(f"""
-  <main>
-    <section class="mufredat">
+<section class="mufredat">
       <p class="etiket">{m["ad"]}</p>
       <h1>{html.escape(metin(m["baslik"], dil))}</h1>
       <p class="lede">{html.escape(metin(m["ozet"], dil))}</p>""")
@@ -384,7 +378,7 @@ def mufredat_ana(veri, m, dil, onek):
             p.append("          </ol>\n        </section>")
         p.append("      </div>")
 
-    p.append("    </section>\n  </main>")
+    p.append("</section>")
     p.append(ayak(yukari, dil))
     klasor = KOK / onek.rstrip("/") / m["kod"] if onek else KOK / m["kod"]
     klasor.mkdir(parents=True, exist_ok=True)
@@ -401,15 +395,14 @@ def okul_sayfasi(veri, dil, onek):
     p = [kafa(veri, f'vibecodedslopware · {metin(site["aciklama"], dil)}',
               metin(site["aciklama"], dil), kanonik, yukari, dil, None, karsi)]
     p.append(f"""
-  <main>
-    <section class="okul">
+<section class="okul">
       <h1 class="blink">{html.escape(metin(site["aciklama"], dil))}</h1>""")
 
     for m in veri["mufredatlar"]:
         duz = [b for sv in m["seviyeler"] for b in sv["bolumler"]]
         yazilan = sum(1 for b in duz if b["durum"] == "yazildi")
         if m["durum"] == "yakinda":
-            sag = f'<span class="rozet-yakinda">{t["yakinda"]}</span>'
+            sag = f'<span class="ders-yakinda">{t["yakinda"]}</span>'
         else:
             sag = (f'<span class="ders-sayi">{len(duz)} {t["bolumler"]} · '
                    f'{yazilan} {t["yayinda"]}</span>')
@@ -418,7 +411,7 @@ def okul_sayfasi(veri, dil, onek):
         <span class="ders-ozet">{html.escape(metin(m["ozet"], dil))}</span>
       </a>""")
 
-    p.append("    </section>\n  </main>")
+    p.append("</section>")
     p.append(ayak(yukari, dil))
     hedef = KOK / onek.rstrip("/") if onek else KOK
     hedef.mkdir(parents=True, exist_ok=True)

@@ -1,47 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>veritabanı bağlamak · vibecodedslopware</title>
-  <meta name="description" content="Veritabanını bağlamak ile yayına açmak arasındaki fark tam olarak RLS.">
-  <link rel="canonical" href="https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/veritabani-baglamak/">
-  <link rel="alternate" hreflang="en" href="https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/veritabani-baglamak/">
-  <link rel="alternate" hreflang="tr" href="https://nosey-dewdrop.github.io/vibecodedslopware/slopware/veritabani-baglamak/">
-  <meta property="og:type" content="article">
-  <meta property="og:site_name" content="vibecodedslopware">
-  <meta property="og:title" content="veritabanı bağlamak · vibecodedslopware">
-  <meta property="og:description" content="Veritabanını bağlamak ile yayına açmak arasındaki fark tam olarak RLS.">
-  <meta property="og:url" content="https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/veritabani-baglamak/">
-  <meta name="twitter:card" content="summary">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
-  <script>
-  (function () {
-    var t = localStorage.getItem("theme");
-    if (t !== "light" && t !== "dark")
-      t = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
-    document.documentElement.dataset.theme = t;
-  })();
-  </script>
-  <link rel="stylesheet" href="../../../style.css?v=10">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✱</text></svg>">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>veritabanı bağlamak · vibecodedslopware</title>
+<meta name="description" content="Veritabanını bağlamak ile yayına açmak arasındaki fark tam olarak RLS.">
+<meta name="author" content="Damla Su Bilge">
+<link rel="canonical" href="https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/veritabani-baglamak/">
+<link rel="alternate" hreflang="en" href="https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/veritabani-baglamak/">
+<link rel="alternate" hreflang="tr" href="https://nosey-dewdrop.github.io/vibecodedslopware/slopware/veritabani-baglamak/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="vibecodedslopware">
+<meta property="og:title" content="veritabanı bağlamak · vibecodedslopware">
+<meta property="og:description" content="Veritabanını bağlamak ile yayına açmak arasındaki fark tam olarak RLS.">
+<meta property="og:url" content="https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/veritabani-baglamak/">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#171221">
+<meta name="robots" content="index,follow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23171221'/%3E%3Crect x='6' y='6' width='6' height='20' fill='%23ff8fb3'/%3E%3Crect x='20' y='6' width='6' height='20' fill='%23ff8fb3'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../style.css?v=11">
 </head>
 <body>
 
-  <header class="top">
-    <a class="wordmark" href="../../../">vibecodedslopware</a>
-    <nav class="top-nav"><a class="aktif" href="../../../slopware/">slopware</a><a href="../../../systems/">systems engineering</a></nav>
-    <span class="top-right">
-      <a href="https://nosey-dewdrop.github.io/vibecodedslopware/slopware/veritabani-baglamak/">tr</a>
-      <button class="tema" id="tema">tema</button>
-      <a href="https://github.com/nosey-dewdrop/vibecodedslopware">github ↗</a>
-    </span>
-  </header>
+<div id="stars" aria-hidden="true"></div>
 
-  <main>
-    <div class="duzen">
+<div class="wrap">
+
+<header class="site">
+  <span class="mark"><i>[</i>&#124;<i>]</i> vibecodedslopware</span>
+  <nav><a class="here" href="../../../slopware/">slopware</a><a href="../../../systems/">systems engineering</a><a href="https://nosey-dewdrop.github.io/vibecodedslopware/slopware/veritabani-baglamak/">tr</a><a href="https://github.com/nosey-dewdrop/vibecodedslopware">github</a></nav>
+</header>
+
+<section>
+  <div class="duzen">
       <nav class="kenar" aria-label="icindekiler">
 <p class="kenar-seviye">101 / bu şey nasıl çalışıyor?</p>
 <ol class="kenar-liste">
@@ -108,16 +102,15 @@
 
         <nav class="gez"><a href="../../../slopware/domain-dns-https/">← domain, DNS ve HTTPS</a><a class="gez-sag" href="../../../slopware/sema-ve-indeks/">şema ve indeks →</a></nav>
       </article>
-    </div>
-  </main>
+  </div>
+</section>
 
-  <footer>
-    <span>text cc by-nc, code mit ·
-    <a href="https://github.com/nosey-dewdrop/vibecodedslopware">source is here</a>,
-    if I go down, fork it</span>
-    <span><a href="../../../">all curricula</a></span>
-  </footer>
+<footer>
+  <span>text cc by-nc, code mit · <a href="https://github.com/nosey-dewdrop/vibecodedslopware">source is here</a>, if I go down, fork it</span>
+  <span class="sp"><a href="../../../">all curricula</a></span>
+</footer>
 
-  <script src="../../../script.js?v=10"></script>
+</div>
+<script src="../../../effects.js"></script>
 </body>
 </html>
