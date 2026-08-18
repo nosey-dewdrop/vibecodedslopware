@@ -585,3 +585,8 @@ footer { justify-content: flex-start; gap: 18px; }
   pointer-events: none;
 }
 .bolum:hover .b-neden, .bolum:focus-within .b-neden { opacity: 1; visibility: visible; }
+
+/* süslemeler geri: glyph ayraçlar ve footer işaretleri */
+.footer-glyphs { display: inline; letter-spacing: 4px; color: var(--lavender); }
+footer { justify-content: space-between; }
+.divider { margin: 26px 0; }

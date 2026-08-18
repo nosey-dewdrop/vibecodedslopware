@@ -333,7 +333,9 @@ def ana_sayfa(veri, duz, yazilan):
         p.append("      </ol>\n    </section>")
     p.append("    </div>")
 
-    p.append("""
+    p.append(f"""
+    <div class="divider" aria-hidden="true">{AYRAC[1]}</div>
+
     <section class="son">
       <div class="son-grid">
         <div>
@@ -351,10 +353,9 @@ def ana_sayfa(veri, duz, yazilan):
           kırk kontrol.</p>
         </div>
       </div>
-      <p class="kaynak-satir">metin cc by-nc, kod mit ·
-      <a href="https://github.com/nosey-dewdrop/vibecodedslopware">kaynağı burada</a>,
-      ben düşersem sen fork'la</p>
     </section>
+
+    <div class="divider" aria-hidden="true">{AYRAC[2]}</div>
 
   </main>
 """)

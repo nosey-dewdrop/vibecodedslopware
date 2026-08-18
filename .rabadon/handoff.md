@@ -1,5 +1,5 @@
 # rabadon devridaim — vibecodedslopware
-updated: 2026-08-18T13:24:20Z
+updated: 2026-08-18T13:24:55Z
 
 ## goal (as captured from the session)
 kanka durur musun müfredata göre neleri araştırdın mesela
