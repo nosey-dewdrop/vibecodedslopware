@@ -1,0 +1,78 @@
+{
+  "site": {
+    "ad": "vibecodedslopware",
+    "url": "https://nosey-dewdrop.github.io/vibecodedslopware/",
+    "aciklama": "slopware nedir, nasıl fark edilir, ne yapmalı. sıfırdan founder seviyesine, 40 bölüm."
+  },
+  "seviyeler": [
+    {
+      "kod": "101",
+      "ad": "bu şey nasıl çalışıyor?",
+      "ozet": "Hiçbir şey bilmediğini varsayıyoruz. Kod yazdıran ama ne olduğunu bilmeyen insan. Burada tek bir CVE numarası geçmez.",
+      "bolumler": [
+        {"no": 0, "slug": "slopware-nedir", "baslik": "slopware nedir, ve neden tam da şimdi konuşuyoruz?", "belirti": "—", "neden": "Herkes bu kelimeyi söylüyor ama kimse tanımını bilmiyor.", "durum": "yazildi"},
+        {"no": 1, "slug": "ekrandaki-sey-ne", "baslik": "ekranındaki şey ne?", "belirti": "AI'ın çıktısı sana sihir gibi görünüyor", "neden": "Kafanda bir makine modeli yoksa, kodun ne yaptığını hiçbir zaman bilemezsin.", "durum": "bos"},
+        {"no": 2, "slug": "terminal-ve-klasor", "baslik": "terminal ve klasör", "belirti": "Dosyanın nerede durduğunu bilmiyorsun", "neden": "Projeni bulamıyorsan, projene sahip değilsin.", "durum": "bos"},
+        {"no": 3, "slug": "localhost", "baslik": "localhost nedir, neden sadece sende çalışıyor?", "belirti": "Linki arkadaşına atıyorsun, açılmıyor", "neden": "Bu, demo ile ürün arasındaki ilk ve en keskin çizgi.", "durum": "bos"},
+        {"no": 4, "slug": "kac-parca", "baslik": "bir uygulama kaç parçadan oluşur?", "belirti": "Kodun nerede çalıştığını bilmiyorsun", "neden": "AI sana hem istemci hem sunucu kodu verir ve ikisinin farklı makinelerde koştuğunu söylemez.", "durum": "bos"},
+        {"no": 5, "slug": "internette-nasil-acilir", "baslik": "internette bir şey nasıl açılır?", "belirti": "\"Domain aldım, site yayında\"", "neden": "Domain, hosting ve deploy üç ayrı şey. Üçünü de yapmadan kimse siteni göremez.", "durum": "bos"},
+        {"no": 6, "slug": "veri-nerede-duruyor", "baslik": "veri nerede duruyor?", "belirti": "Her yenilemede uygulaman seni unutuyor", "neden": "Bir yere yazılmayan şey var olmuyor.", "durum": "bos"},
+        {"no": 7, "slug": "sir-nedir", "baslik": "sır nedir?", "belirti": "Anahtarın tarayıcıda görünüyor", "neden": "Sızan bir anahtar, senin faturanla başkasının çalıştırdığı bir sunucuya dönüşüyor.", "durum": "bos"},
+        {"no": 8, "slug": "hata-mesajini-okumak", "baslik": "hata mesajını okumak", "belirti": "Kırmızı yazıyı görünce kapatıyorsun", "neden": "Hata mesajı elindeki tek dürüst geri bildirim.", "durum": "bos"},
+        {"no": 9, "slug": "kabul-kriteri", "baslik": "AI'a iş yaptırmak: prompt değil, kabul kriteri", "belirti": "Model \"yaptım\" diyor, sen inanıyorsun", "neden": "Modelin \"oldu\" demesine itiraz etmiyorsan, slopware tam olarak burada doğuyor.", "durum": "bos"},
+        {"no": 10, "slug": "calisiyor-ne-demek", "baslik": "\"çalışıyor\" ne demek?", "belirti": "Bir kez çalıştı, bitti sanıyorsun", "neden": "Bir kez çalışmak ile hep çalışmak aynı şey değil.", "durum": "bos"},
+        {"no": 11, "slug": "kendi-projeni-teshis-et", "baslik": "kendi projeni teşhis et", "belirti": "—", "neden": "101'i bitirdiysen, elindeki şeye bakıp adını koyabiliyorsun.", "durum": "bos"}
+      ]
+    },
+    {
+      "kod": "201",
+      "ad": "ayağa kaldır",
+      "ozet": "Kavramları biliyorsun. Şimdi kendi projende kuruyorsun, ve ilk kez komut çalıştırıyoruz.",
+      "bolumler": [
+        {"no": 12, "slug": "git-ve-ortamlar", "baslik": "git ve ortamlar", "belirti": "Tek klasör, tek ortam, prod'da düzeltme", "neden": "\"Bende çalışıyordu\" cümlesinin resmi tanımı burada.", "durum": "bos"},
+        {"no": 13, "slug": "ortam-degiskeni", "baslik": "ortam değişkeni ve .env", "belirti": "Anahtar kodun içinde", "neden": "Tek soru: kodun bu an açık kaynak olsa, kimlik bilgisi sızar mıydı?", "durum": "bos"},
+        {"no": 14, "slug": "ilk-deploy", "baslik": "ilk gerçek deploy", "belirti": "Bitmiş proje makinende duruyor", "neden": "Makinenden çıkmayan şey ürün değil.", "durum": "bos"},
+        {"no": 15, "slug": "domain-dns-https", "baslik": "domain, DNS ve HTTPS", "belirti": "\"DNS değiştirdim ama site hâlâ eski\"", "neden": "Kilit simgesi bir görsel değil, kurduğun bir şey. Ve 90 günde bitiyor.", "durum": "bos"},
+        {"no": 16, "slug": "veritabani-baglamak", "baslik": "veritabanı bağlamak", "belirti": "Tablo herkese açık", "neden": "Veritabanını bağlamak ile yayına açmak arasındaki fark tam olarak RLS.", "durum": "bos"},
+        {"no": 17, "slug": "sema-ve-indeks", "baslik": "şema ve indeks", "belirti": "200 kullanıcıda çöküyor", "neden": "İndeks tasarımı DBA işi değil, senin işin.", "durum": "bos"},
+        {"no": 18, "slug": "migration", "baslik": "migration: tabloyu silmeden değiştirmek", "belirti": "Tabloyu silip yeniden yaratıyorsun", "neden": "Şemayı ve ona bağımlı kodu aynı adımda değiştirirsen, canlı veri gider.", "durum": "bos"},
+        {"no": 19, "slug": "yedek-ve-geri-yukleme", "baslik": "yedek ve geri yükleme", "belirti": "\"Yedeğim var\"", "neden": "Kimse yedek istemiyor, herkes geri yükleme istiyor.", "durum": "bos"},
+        {"no": 20, "slug": "hata-yonetimi", "baslik": "hata yönetimi ve sessiz catch", "belirti": "catch bloğun boş", "neden": "Sessiz catch, hangisini seçtiğini bilmeden hem açık hem kapalı kalmandır.", "durum": "bos"},
+        {"no": 21, "slug": "test-ve-ci", "baslik": "test ve CI", "belirti": "\"Bende çalışıyor\"", "neden": "Senin makinende çalışması delil değil.", "durum": "bos"}
+      ]
+    },
+    {
+      "kod": "301",
+      "ad": "gerçek kullanıcı ve saldırgan",
+      "ozet": "Artık dışarıdan biri var. Kötü niyetli olabilir, ya da sadece kalabalık.",
+      "bolumler": [
+        {"no": 22, "slug": "auth", "baslik": "auth: kim olduğunu iddia etmek", "belirti": "Parola düz metin, session localStorage'da", "neden": "Giriş ekranı güvenlik değildir.", "durum": "bos"},
+        {"no": 23, "slug": "yetkilendirme-ve-rls", "baslik": "yetkilendirme ve RLS", "belirti": "A kullanıcısı B'nin verisini görüyor", "neden": "Vibe-coded uygulamaların bir numaralı ölüm sebebi bu, ve oran tabanın yirmi katı.", "durum": "bos"},
+        {"no": 24, "slug": "girdi-guvenilmezdir", "baslik": "girdi güvenilmezdir", "belirti": "Sorguyu string birleştirmeyle kuruyorsun", "neden": "Kullanıcının yazdığı her şey, kanıtlanana kadar saldırıdır.", "durum": "bos"},
+        {"no": 25, "slug": "bagimlilik-zinciri", "baslik": "bağımlılık zinciri", "belirti": "AI'ın önerdiği paketi sorgusuz kuruyorsun", "neden": "Modelin uydurduğu paket adını saldırgan senden önce kaydediyor.", "durum": "bos"},
+        {"no": 26, "slug": "llm-guvenligi", "baslik": "LLM'li ürünün kendi güvenliği", "belirti": "Prompt'u konfigürasyon sanıyorsun", "neden": "Prompt bir ayar dosyası değil, çalıştırılabilir kod.", "durum": "bos"},
+        {"no": 27, "slug": "rate-limit", "baslik": "rate limit", "belirti": "Endpoint'in sınırsız", "neden": "Bir bot bir gecede hem faturanı hem veritabanını götürür.", "durum": "bos"},
+        {"no": 28, "slug": "olcek", "baslik": "ölçek: ilk kalabalık geldiğinde", "belirti": "Lokalde hızlı, canlıda ölü", "neden": "N+1 ve bağlantı havuzu lokalde asla görünmez, ilk trafikte görünür.", "durum": "bos"},
+        {"no": 29, "slug": "log-ve-alarm", "baslik": "log ve alarm", "belirti": "console.log ve sessizlik", "neden": "Alarm etmeyen log sayılmıyor, ve yanlış log €91 milyon ediyor.", "durum": "bos"},
+        {"no": 30, "slug": "izleme", "baslik": "izleme", "belirti": "Bozulduğunu kullanıcı sana yazınca öğreniyorsun", "neden": "Ölçmediğin şeyin bozulduğunu göremezsin.", "durum": "bos"},
+        {"no": 31, "slug": "maliyet-kontrolu", "baslik": "maliyet kontrolü", "belirti": "\"Limit koydum\"", "neden": "Limit koymak bir kontrol değil, bir bildirim. Fatura kullanıcıyla değil, döngüyle büyüyor.", "durum": "bos"}
+      ]
+    },
+    {
+      "kod": "401",
+      "ad": "founder",
+      "ozet": "Ürün ayakta. Şimdi asıl soru: bu bir iş mi?",
+      "bolumler": [
+        {"no": 32, "slug": "wrapper-anatomisi", "baslik": "wrapper anatomisi", "belirti": "\"Bu sadece bir wrapper\"", "neden": "Kör olan mühendis değil, mühendisin \"değerli\" tanımı.", "durum": "bos"},
+        {"no": 33, "slug": "kimsenin-istemedigi-sey", "baslik": "kimsenin istemediği şeyi yapmak", "belirti": "AI ile 1 günde yapılabilen şeyi seçtin", "neden": "Tam da o yüzden herkes yapabiliyor.", "durum": "bos"},
+        {"no": 34, "slug": "kullaniciyla-konusmak", "baslik": "kullanıcıyla konuşmak", "belirti": "Görüşmeye fikrini anlatarak başlıyorsun", "neden": "Buradaki rolün dinlemek, konuşmak değil.", "durum": "bos"},
+        {"no": 35, "slug": "mvp-ve-launch", "baslik": "MVP ve launch", "belirti": "Launch'u tek seferlik bir olay sanıyorsun", "neden": "Bir şey çıkaracaksın, kimse umursamayacak. Oraya varman altı ay sürdüyse ikinci şansın olmayacak.", "durum": "bos"},
+        {"no": 36, "slug": "kvkk-gelistirici-gozuyle", "baslik": "KVKK'yı geliştirici gözüyle okumak", "belirti": "Aydınlatma metnini kopyaladın", "neden": "Envanter çıkarmadan yazılan metin, iki maddeyi doğuştan ihlal ediyor.", "durum": "bos"},
+        {"no": 37, "slug": "yurtdisina-aktarim", "baslik": "yurtdışına aktarım ve çerez", "belirti": "\"AB için yeterlilik kararı var\"", "neden": "Yok. Ve bölge seçmek bile aktarım sayılıyor.", "durum": "bos"},
+        {"no": 38, "slug": "para-almak", "baslik": "para almak", "belirti": "Stripe hesabı açmaya çalışıyorsun", "neden": "Türkiye Stripe'ta yok, ve en büyük ceza riski site metninde değil.", "durum": "bos"},
+        {"no": 39, "slug": "fiyatlama-ve-metrik", "baslik": "fiyatlama ve gerçek metrik", "belirti": "Fiyatı maliyetten türettin", "neden": "16 milyon indirme ve top 5 sıralama, PMF olmadığı anlamına gelebiliyor.", "durum": "bos"},
+        {"no": 40, "slug": "default-alive", "baslik": "default alive mı, default dead mi?", "belirti": "Bilmiyorsun", "neden": "Kurucuların yarısı bilmiyor, ve bilmemek cevabın \"dead\" olması demek.", "durum": "bos"}
+      ]
+    }
+  ]
+}
