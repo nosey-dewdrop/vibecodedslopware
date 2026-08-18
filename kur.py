@@ -174,9 +174,6 @@ def kafa(baslik, aciklama, kanonik, yukari):
 </head>
 <body>
 
-  <div id="confetti-field" aria-hidden="true"></div>
-  <div id="confetti-trail" aria-hidden="true"></div>
-
   <header class="top">
     <a class="wordmark" href="{yukari}" data-confetti>vibecodedslopware</a>
     <span class="top-right">
@@ -325,13 +322,11 @@ def ana_sayfa(veri, duz, yazilan):
       <p class="lede">{html.escape(sv["ozet"])}</p>
       <ol class="bolumler">""")
         for b in sv["bolumler"]:
-            g = GLYPH[b["no"] % 4]
-            r = RENK[b["no"] % 4]
             bos = "" if b["durum"] == "yazildi" else " bos"
             p.append(
                 f'        <li class="bolum{bos}">'
-                f'<span class="b-glyph {r}">{g}</span>'
-                f'<a class="b-baslik" href="bolum/{b["slug"]}/" data-confetti>'
+                f'<span class="b-no">{b["no"]:02d}</span>'
+                f'<a class="b-baslik" href="bolum/{b["slug"]}/">'
                 f'{html.escape(b["baslik"])}</a>'
                 f'<span class="b-neden">{html.escape(b["neden"])}</span></li>'
             )
