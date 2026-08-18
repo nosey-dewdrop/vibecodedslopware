@@ -410,3 +410,50 @@ footer {
   .hero { padding: 28px 0 20px; }
   section { padding: 24px 0; }
 }
+
+/* ---------- rehber: bölüm listesi + yazı sayfası ---------- */
+
+.seviye { margin-top: 4px; }
+
+.bolumler { list-style: none; margin-top: 14px; }
+
+.bolum {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 20ch) minmax(0, 1fr);
+  gap: 10px;
+  align-items: baseline;
+  padding: 5px 0;
+  font-size: 12.5px;
+}
+
+.b-glyph { font-size: 13px; }
+.b-baslik { text-decoration: none; color: var(--ink); }
+.b-baslik:hover { color: var(--pink); }
+.b-neden { color: var(--muted); }
+.bolum.bos .b-baslik, .bolum.bos .b-neden { opacity: 0.55; }
+
+.yazi { max-width: 62ch; }
+.yazi-baslik {
+  min-height: auto;
+  margin-bottom: 10px;
+}
+.yazi h2 { margin-top: 26px; }
+.yazi p { font-size: 13px; }
+.yazi pre { margin: 14px 0; }
+.yazi .type-list, .yazi .steps { margin: 14px 0; font-size: 13px; }
+
+.gez {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  font-size: 12px;
+}
+.gez a { text-decoration: none; }
+.gez-sag { text-align: right; }
+
+@media (max-width: 720px) {
+  .bolum { grid-template-columns: 18px 1fr; }
+  .b-neden { grid-column: 2; color: var(--muted); }
+  .gez { grid-template-columns: 1fr; gap: 8px; }
+  .gez-sag { text-align: left; }
+}

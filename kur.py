@@ -2,9 +2,10 @@
 """vibecodedslopware — rehberi kurar.
 
 yazilar/<slug>.md  ->  bolum/<slug>/index.html
-mufredat.json      ->  index.html (özet tablo + tam içindekiler)
+mufredat.json      ->  index.html
 
-Bağımlılık yok. `python3 kur.py` ile çalışır.
+Mevcut kabuğu kullanır: style.css, script.js, konfeti, glyph ayraçlar, .cols ritmi.
+Bağımlılık yok. `python3 kur.py`.
 """
 import html
 import json
@@ -16,10 +17,18 @@ KOK = Path(__file__).parent
 YAZILAR = KOK / "yazilar"
 CIKTI = KOK / "bolum"
 
+GLYPH = ["+", "✱", "▪", "+"]
+RENK = ["hl-purple", "hl-pink", "hl-yellow", "hl-green"]
+AYRAC = [
+    "+ · ✱ · + · ▪ · ✱ · + · ✱ · ▪ · + · ✱",
+    "▪ · ✱ · + · ✱ · ▪ · ✱ · + · ✱ · ▪ · ✱",
+    "✱ · + · ✱ · ▪ · + · ✱ · ▪ · + · ✱ · +",
+    "+ · ▪ · ✱ · + · ✱ · ▪ · ✱ · + · ▪ · ✱",
+]
+
 
 # ---------------------------------------------------------------- markdown
 def satir_ici(s):
-    """Satır içi markdown. Kod önce çıkarılır, sonra geri konur."""
     kutu = []
 
     def sakla(m):
@@ -46,18 +55,14 @@ def markdown(metin):
         satir = satirlar[i]
 
         if satir.startswith("```"):
-            dil = satir[3:].strip()
             i += 1
             blok = []
             while i < len(satirlar) and not satirlar[i].startswith("```"):
                 blok.append(satirlar[i])
                 i += 1
             i += 1
-            sinif = f' class="dil-{dil}"' if dil else ""
             cikti.append(
-                f"<pre><code{sinif}>"
-                + html.escape("\n".join(blok), quote=False)
-                + "</code></pre>"
+                "<pre><code>" + html.escape("\n".join(blok), quote=False) + "</code></pre>"
             )
             continue
 
@@ -70,45 +75,57 @@ def markdown(metin):
             while i < len(satirlar) and satirlar[i].startswith("> "):
                 blok.append(satirlar[i][2:])
                 i += 1
-            cikti.append("<blockquote>" + satir_ici(" ".join(blok)) + "</blockquote>")
+            cikti.append('<p class="quote">' + satir_ici(" ".join(blok)) + "</p>")
             continue
 
-        if re.match(r"^#{1,4} ", satir):
-            kademe = len(satir) - len(satir.lstrip("#"))
-            baslik = satir[kademe:].strip()
-            kimlik = re.sub(r"[^a-z0-9]+", "-", baslik.lower()).strip("-")
-            cikti.append(
-                f'<h{kademe} id="{kimlik}">{satir_ici(baslik)}</h{kademe}>'
-            )
+        if re.match(r"^#{2,4} ", satir):
+            baslik = satir.lstrip("#").strip()
+            cikti.append("<h2>" + satir_ici(baslik) + "</h2>")
             i += 1
             continue
 
         if re.match(r"^[-*] ", satir):
             blok = []
+            n = 0
             while i < len(satirlar) and re.match(r"^[-*] ", satirlar[i]):
-                blok.append("<li>" + satir_ici(satirlar[i][2:]) + "</li>")
+                g = GLYPH[n % 4]
+                r = RENK[n % 4]
+                blok.append(
+                    f'<li><span class="{r}">{g}</span> '
+                    + satir_ici(satirlar[i][2:])
+                    + "</li>"
+                )
                 i += 1
-            cikti.append("<ul>" + "".join(blok) + "</ul>")
+                n += 1
+            cikti.append('<ul class="type-list">' + "".join(blok) + "</ul>")
             continue
 
         if re.match(r"^\d+\. ", satir):
             blok = []
+            n = 0
             while i < len(satirlar) and re.match(r"^\d+\. ", satirlar[i]):
+                g = GLYPH[n % 4]
+                r = RENK[n % 4]
                 blok.append(
-                    "<li>" + satir_ici(re.sub(r"^\d+\. ", "", satirlar[i])) + "</li>"
+                    f'<li><span class="step-glyph {r}">{g}</span> '
+                    + satir_ici(re.sub(r"^\d+\. ", "", satirlar[i]))
+                    + "</li>"
                 )
                 i += 1
-            cikti.append("<ol>" + "".join(blok) + "</ol>")
+                n += 1
+            cikti.append('<ol class="steps">' + "".join(blok) + "</ol>")
             continue
 
         if satir.startswith("---"):
-            cikti.append("<hr>")
+            cikti.append(f'<div class="divider" aria-hidden="true">{AYRAC[0]}</div>')
             i += 1
             continue
 
         blok = []
-        while i < len(satirlar) and satirlar[i].strip() and not re.match(
-            r"^(#{1,4} |[-*] |\d+\. |> |```|---)", satirlar[i]
+        while (
+            i < len(satirlar)
+            and satirlar[i].strip()
+            and not re.match(r"^(#{2,4} |[-*] |\d+\. |> |```|---)", satirlar[i])
         ):
             blok.append(satirlar[i])
             i += 1
@@ -118,91 +135,81 @@ def markdown(metin):
 
 
 # ---------------------------------------------------------------- iskelet
-def kafa(baslik, aciklama, kanonik, derinlik):
-    yukari = "../" * derinlik
+def kafa(baslik, aciklama, kanonik, yukari):
     return f"""<!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{html.escape(baslik)}</title>
-<meta name="description" content="{html.escape(aciklama)}">
-<link rel="canonical" href="{kanonik}">
-<meta property="og:type" content="article">
-<meta property="og:site_name" content="vibecodedslopware">
-<meta property="og:title" content="{html.escape(baslik)}">
-<meta property="og:description" content="{html.escape(aciklama)}">
-<meta property="og:url" content="{kanonik}">
-<meta name="twitter:card" content="summary">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@500&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
-<script>
-(function () {{
-  var t = localStorage.getItem("theme");
-  if (t === "light") t = "white";
-  if (t === "dark") t = "black";
-  if (["white","black","plum","midnight"].indexOf(t) === -1)
-    t = matchMedia("(prefers-color-scheme: dark)").matches ? "black" : "white";
-  document.documentElement.dataset.theme = t;
-}})();
-</script>
-<link rel="stylesheet" href="{yukari}style.css?v=7">
-<link rel="stylesheet" href="{yukari}rehber.css?v=7">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✱</text></svg>">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{html.escape(baslik)}</title>
+  <meta name="description" content="{html.escape(aciklama)}">
+  <link rel="canonical" href="{kanonik}">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="vibecodedslopware">
+  <meta property="og:title" content="{html.escape(baslik)}">
+  <meta property="og:description" content="{html.escape(aciklama)}">
+  <meta property="og:url" content="{kanonik}">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{html.escape(baslik)}">
+  <meta name="twitter:description" content="{html.escape(aciklama)}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@500&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <script>
+  (function () {{
+    var t = localStorage.getItem("theme");
+    if (t === "light") t = "white";
+    if (t === "dark") t = "black";
+    if (["white", "black", "plum", "midnight"].indexOf(t) === -1)
+      t = matchMedia("(prefers-color-scheme: dark)").matches ? "black" : "white";
+    document.documentElement.dataset.theme = t;
+  }})();
+  </script>
+  <link rel="stylesheet" href="{yukari}style.css?v=8">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✱</text></svg>">
 </head>
-<body class="rehber">
-<header class="top">
-  <a class="wordmark" href="{yukari}">vibecodedslopware</a>
-  <span class="top-right">
-    <button class="theme-toggle" id="theme-toggle">[tema]</button>
-    <a class="top-link" href="https://github.com/nosey-dewdrop/vibecodedslopware">github ↗</a>
-  </span>
-</header>
+<body>
+
+  <div id="confetti-field" aria-hidden="true"></div>
+  <div id="confetti-trail" aria-hidden="true"></div>
+
+  <header class="top">
+    <a class="wordmark" href="{yukari}" data-confetti>vibecodedslopware</a>
+    <span class="top-right">
+      <button class="theme-toggle" id="theme-toggle" data-confetti>[tema]</button>
+      <a class="top-link" href="https://github.com/nosey-dewdrop/vibecodedslopware" data-confetti>github ↗</a>
+    </span>
+  </header>
 """
 
 
-AYAK = """<script src="%sthemes.js"></script>
+def ayak(yukari):
+    return f"""
+  <footer>
+    <span>bir <a href="https://nosey-dewdrop.github.io" data-confetti>nosey-dewdrop</a> işi ·
+    metin cc by-nc, kod mit · <a href="{yukari}">bütün bölümler</a></span>
+    <span class="footer-glyphs" aria-hidden="true">+ ✱ ▪</span>
+  </footer>
+
+  <script src="{yukari}script.js?v=8"></script>
 </body>
 </html>
 """
 
 
-def kenar(veri, aktif_slug, yukari):
-    p = ['<nav class="kenar" aria-label="içindekiler"><ol class="kenar-liste">']
-    for sv in veri["seviyeler"]:
-        p.append(
-            f'<li class="kenar-seviye"><span class="kenar-kod">{sv["kod"]}</span>'
-            f'<span class="kenar-ad">{html.escape(sv["ad"])}</span></li>'
-        )
-        for b in sv["bolumler"]:
-            aktif = " aktif" if b["slug"] == aktif_slug else ""
-            bos = "" if b["durum"] == "yazildi" else " bos"
-            p.append(
-                f'<li class="kenar-bolum{aktif}{bos}">'
-                f'<a href="{yukari}bolum/{b["slug"]}/">'
-                f'<span class="kenar-no">{b["no"]}</span>'
-                f'{html.escape(b["baslik"])}</a></li>'
-            )
-    p.append("</ol></nav>")
-    return "\n".join(p)
-
-
-def gezinme(onceki, sonraki, yukari, konum):
-    p = [f'<nav class="gezinme {konum}">']
+def gezinme(onceki, sonraki, yukari):
+    p = ['<nav class="gez">']
     if onceki:
         p.append(
-            f'<a class="gez-onceki" href="{yukari}bolum/{onceki["slug"]}/">'
-            f'<span class="gez-etiket">← önceki</span>'
-            f'<span class="gez-baslik">{html.escape(onceki["baslik"])}</span></a>'
+            f'<a href="{yukari}bolum/{onceki["slug"]}/" data-confetti>'
+            f'← {html.escape(onceki["baslik"])}</a>'
         )
     else:
         p.append("<span></span>")
     if sonraki:
         p.append(
-            f'<a class="gez-sonraki" href="{yukari}bolum/{sonraki["slug"]}/">'
-            f'<span class="gez-etiket">sonraki →</span>'
-            f'<span class="gez-baslik">{html.escape(sonraki["baslik"])}</span></a>'
+            f'<a class="gez-sag" href="{yukari}bolum/{sonraki["slug"]}/" data-confetti>'
+            f'{html.escape(sonraki["baslik"])} →</a>'
         )
     else:
         p.append("<span></span>")
@@ -215,9 +222,7 @@ def kur():
     veri = json.loads((KOK / "mufredat.json").read_text(encoding="utf-8"))
     site = veri["site"]
     duz = [b for sv in veri["seviyeler"] for b in sv["bolumler"]]
-    seviye_of = {
-        b["slug"]: sv for sv in veri["seviyeler"] for b in sv["bolumler"]
-    }
+    seviye_of = {b["slug"]: sv for sv in veri["seviyeler"] for b in sv["bolumler"]}
 
     if CIKTI.exists():
         shutil.rmtree(CIKTI)
@@ -233,8 +238,8 @@ def kur():
             yazilan += 1
         else:
             govde = (
-                '<p class="henuz">Bu bölüm henüz yazılmadı. '
-                "Seri haftada bir bölüm ilerliyor.</p>"
+                '<p class="cta-note">bu bölüm henüz yazılmadı. '
+                "seri haftada bir bölüm ilerliyor.</p>"
             )
 
         onceki = duz[idx - 1] if idx > 0 else None
@@ -242,32 +247,25 @@ def kur():
         yukari = "../../"
         kanonik = f'{site["url"]}bolum/{b["slug"]}/'
 
-        sayfa = kafa(
-            f'{b["baslik"]} — vibecodedslopware',
-            b["neden"],
-            kanonik,
-            2,
-        )
+        sayfa = kafa(f'{b["baslik"]} · vibecodedslopware', b["neden"], kanonik, yukari)
         sayfa += f"""
-<div class="duzen">
-{kenar(veri, b["slug"], yukari)}
-<main class="govde">
-  <div class="ust-cizgi">
-    <span class="rozet">{sv["kod"]}</span>
-    <span class="ust-ad">{html.escape(sv["ad"])}</span>
-  </div>
-  {gezinme(onceki, sonraki, yukari, "ust")}
-  <article>
-    <p class="bolum-no">bölüm {b["no"]}</p>
-    <h1>{html.escape(b["baslik"])}</h1>
-    <p class="neden">{html.escape(b["neden"])}</p>
-    {govde}
-  </article>
-  {gezinme(onceki, sonraki, yukari, "alt")}
-</main>
-</div>
+  <main>
+    <article class="yazi">
+      <p class="section-label">{b["no"]:02d} / {html.escape(sv["kod"])} {html.escape(sv["ad"])}</p>
+      <h1 class="yazi-baslik" data-confetti>{html.escape(b["baslik"])}</h1>
+      <p class="lede">{html.escape(b["neden"])}</p>
+
+      <div class="divider" aria-hidden="true">{AYRAC[b["no"] % 4]}</div>
+
+      {govde}
+    </article>
+
+    <div class="divider" aria-hidden="true">{AYRAC[(b["no"] + 2) % 4]}</div>
+
+    {gezinme(onceki, sonraki, yukari)}
+  </main>
 """
-        sayfa += AYAK % yukari
+        sayfa += ayak(yukari)
         klasor = CIKTI / b["slug"]
         klasor.mkdir(parents=True)
         (klasor / "index.html").write_text(sayfa, encoding="utf-8")
@@ -279,81 +277,118 @@ def kur():
 
 def ana_sayfa(veri, duz, yazilan):
     site = veri["site"]
-    p = [kafa(f'{site["ad"]} — {site["aciklama"]}', site["aciklama"], site["url"], 0)]
+    ilk_bos = next((b for b in duz if b["durum"] != "yazildi"), duz[-1])
+    p = [kafa(f'vibecodedslopware · {site["aciklama"]}', site["aciklama"], site["url"], "")]
+
     p.append(f"""
-<main class="ana">
-  <section class="giris">
-    <h1>slopware nedir, nasıl fark edilir, ne yapmalı?</h1>
-    <p class="alt-baslik">
-      Bir şeyi ekrana getirmek hiç bu kadar ucuz olmamıştı. Ama çalışıyor gibi
-      görünen bir şeyle gerçekten ayakta duran bir şey arasındaki mesafeyi artık
-      kimse ölçmüyor. Bu rehber o mesafeyi ölçmeyi öğretiyor.
-    </p>
-    <p class="ilerleme">{len(duz)} bölüm · {yazilan} tanesi yayında · haftada bir bölüm</p>
-    <a class="basla" href="bolum/{duz[0]["slug"]}/">baştan başla →</a>
-  </section>
+  <main>
 
-  <section class="harita">
-    <h2>haritanın tamamı</h2>
-    <p class="harita-not">
-      Her satır bir belirti, bir sebep ve bir düzeltme. Kendi projende hangisini
-      görüyorsan oradan da başlayabilirsin.
-    </p>
-    <table class="ozet">
-      <thead><tr><th>#</th><th>bölüm</th><th>belirti</th><th>neden umursayasın?</th></tr></thead>
-      <tbody>""")
-    for sv in veri["seviyeler"]:
-        p.append(
-            f'<tr class="seviye-satir"><td colspan="4">'
-            f'<span class="rozet">{sv["kod"]}</span> {html.escape(sv["ad"])} '
-            f'<span class="seviye-ozet">{html.escape(sv["ozet"])}</span></td></tr>'
-        )
-        for b in sv["bolumler"]:
-            durum = "" if b["durum"] == "yazildi" else " bos"
-            p.append(
-                f'<tr class="bolum-satir{durum}">'
-                f'<td class="s-no">{b["no"]}</td>'
-                f'<td class="s-baslik"><a href="bolum/{b["slug"]}/">{html.escape(b["baslik"])}</a></td>'
-                f'<td class="s-belirti">{html.escape(b["belirti"])}</td>'
-                f'<td class="s-neden">{html.escape(b["neden"])}</td></tr>'
-            )
-    p.append("""</tbody>
-    </table>
-  </section>
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <h1 data-confetti>slopware nedir, nasıl fark edilir, ne yapmalı?</h1>
+          <p class="lede">bir şeyi ekrana getirmek hiç bu kadar ucuz olmamıştı. ama
+          çalışıyor gibi görünen bir şeyle gerçekten ayakta duran bir şey arasındaki
+          mesafeyi artık kimse ölçmüyor. bu seri o mesafeyi ölçmeyi öğretiyor,
+          sıfırdan başlayıp kurucu seviyesine kadar.</p>
+          <div class="hero-cta">
+            <a class="btn" href="bolum/{duz[0]["slug"]}/" data-confetti>baştan başla →</a>
+            <span class="cta-note">{len(duz)} bölüm · {yazilan} tanesi yayında · haftada bir bölüm
+            · burada kimseyi aşağılamıyoruz</span>
+          </div>
+        </div>
 
-  <section class="kaide">
-    <h2>bu rehber neden var?</h2>
-    <p>
-      Herkes "ai slop" deyip geçiyor, ama geçmek yetmiyor, çünkü o sözü söyleyen
-      kişi kendi projesinin de aynı çukurda olup olmadığını bilmiyor. Burada
-      kimseyi aşağılamıyoruz. Slopware yazan insan tembel değil, sadece kendisine
-      kimsenin göstermediği bir şeyi bilmiyor.
-    </p>
-    <p>
-      Her bölüm aynı şekilde ilerliyor: çalışıyor gibi görünen bir şey, sonra
-      nerede çöktüğü, sonra kendi kodunda nasıl bulacağın, sonra doğrusunun nasıl
-      kurulduğu. Ve her bölümde kendi projelerimden gerçek bir vaka var, çünkü bu
-      hataların hepsini ben de yaptım.
-    </p>
-    <p class="kaynak-not">
-      Metin CC BY-NC, kod MIT. Kaynağı
-      <a href="https://github.com/nosey-dewdrop/vibecodedslopware">GitHub'da</a>
-      duruyor, ben düşersem sen fork'la.
-    </p>
-  </section>
-</main>
+        <div class="quiz-card">
+          <p class="quiz-file">kendi projende dene · 20 saniye</p>
+<pre><code>git log -p | grep -i "api_key"</code></pre>
+          <p class="quiz-q">sildiğini sandığın anahtar <code>git</code> geçmişinde
+          duruyor mu?</p>
+          <ul class="type-list">
+            <li><span class="hl-purple">+</span> çıktı boşsa, temizsin</li>
+            <li><span class="hl-pink">✱</span> bir şey döndüyse, o anahtar hâlâ canlı</li>
+          </ul>
+          <p class="cta-note">bu, yedinci bölümün ilk testi.</p>
+        </div>
+      </div>
+    </section>
 """)
-    p.append(AYAK % "")
+
+    for si, sv in enumerate(veri["seviyeler"]):
+        p.append(f'    <div class="divider" aria-hidden="true">{AYRAC[si % 4]}</div>')
+        p.append(f"""
+    <section class="seviye">
+      <p class="section-label">{sv["kod"]} / {html.escape(sv["ad"])}</p>
+      <p class="lede">{html.escape(sv["ozet"])}</p>
+      <ol class="bolumler">""")
+        for b in sv["bolumler"]:
+            g = GLYPH[b["no"] % 4]
+            r = RENK[b["no"] % 4]
+            bos = "" if b["durum"] == "yazildi" else " bos"
+            p.append(
+                f'        <li class="bolum{bos}">'
+                f'<span class="b-glyph {r}">{g}</span>'
+                f'<a class="b-baslik" href="bolum/{b["slug"]}/" data-confetti>'
+                f'{html.escape(b["baslik"])}</a>'
+                f'<span class="b-neden">{html.escape(b["neden"])}</span></li>'
+            )
+        p.append("      </ol>\n    </section>")
+
+    p.append(f"""
+    <div class="divider" aria-hidden="true">{AYRAC[0]}</div>
+
+    <div class="cols">
+      <section>
+        <p class="section-label">bu seri neden var?</p>
+        <h2 data-confetti>herkes "ai slop" diyor, kimse ne olduğunu söylemiyor</h2>
+        <p>ve geçip gitmek yetmiyor, çünkü o sözü söyleyen kişi kendi projesinin de
+        aynı çukurda olup olmadığını bilmiyor. slopware yazan insan tembel değil,
+        sadece kendisine kimsenin göstermediği bir şeyi bilmiyor.</p>
+        <p class="quote">sorun kodun kötü olması değil, kötü olduğunun görünmemesi.<br>
+        <span class="quote-by">serinin tek cümlelik özeti</span></p>
+      </section>
+
+      <section>
+        <p class="section-label">her bölüm nasıl ilerliyor?</p>
+        <h2 data-confetti>belirti, sebep, teşhis, düzeltme</h2>
+        <ol class="steps">
+          <li data-confetti><span class="step-glyph hl-purple">+</span>
+            çalışıyor gibi görünen bir şey, ve neden öyle göründüğü</li>
+          <li data-confetti><span class="step-glyph hl-pink">✱</span>
+            nerede çöktüğü, gerçek bir olayla</li>
+          <li data-confetti><span class="step-glyph hl-yellow">▪</span>
+            kendi kodunda nasıl bulacağın, çalıştırabileceğin bir kontrolle</li>
+          <li data-confetti><span class="step-glyph hl-green">+</span>
+            doğrusunun nasıl kurulduğu, ve benim aynı hatayı nerede yaptığım</li>
+        </ol>
+      </section>
+    </div>
+
+    <div class="divider" aria-hidden="true">{AYRAC[2]}</div>
+
+    <section class="outro">
+      <h2 data-confetti>çalışıyor gibi görünmekle ayakta durmak aynı şey değil.</h2>
+      <p><a class="btn" href="bolum/{duz[0]["slug"]}/" data-confetti>ilk bölümü oku →</a></p>
+      <p class="cta-note">metin cc by-nc, kod mit ·
+      <a href="https://github.com/nosey-dewdrop/vibecodedslopware" data-confetti>kaynağı burada</a>,
+      ben düşersem sen fork'la</p>
+    </section>
+
+  </main>
+""")
+    p.append(ayak(""))
     (KOK / "index.html").write_text("\n".join(p), encoding="utf-8")
 
 
 def site_haritasi(veri, duz):
     u = veri["site"]["url"]
-    p = ['<?xml version="1.0" encoding="UTF-8"?>',
-         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-         f"<url><loc>{u}</loc><priority>1.0</priority></url>"]
+    p = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+        f"<url><loc>{u}</loc><priority>1.0</priority></url>",
+    ]
     for b in duz:
-        p.append(f'<url><loc>{u}bolum/{b["slug"]}/</loc></url>')
+        if b["durum"] == "yazildi":
+            p.append(f'<url><loc>{u}bolum/{b["slug"]}/</loc></url>')
     p.append("</urlset>")
     (KOK / "sitemap.xml").write_text("\n".join(p), encoding="utf-8")
 

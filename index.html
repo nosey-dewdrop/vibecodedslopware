@@ -1,136 +1,202 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>vibecodedslopware — slopware nedir, nasıl fark edilir, ne yapmalı. sıfırdan founder seviyesine, 40 bölüm.</title>
-<meta name="description" content="slopware nedir, nasıl fark edilir, ne yapmalı. sıfırdan founder seviyesine, 40 bölüm.">
-<link rel="canonical" href="https://nosey-dewdrop.github.io/vibecodedslopware/">
-<meta property="og:type" content="article">
-<meta property="og:site_name" content="vibecodedslopware">
-<meta property="og:title" content="vibecodedslopware — slopware nedir, nasıl fark edilir, ne yapmalı. sıfırdan founder seviyesine, 40 bölüm.">
-<meta property="og:description" content="slopware nedir, nasıl fark edilir, ne yapmalı. sıfırdan founder seviyesine, 40 bölüm.">
-<meta property="og:url" content="https://nosey-dewdrop.github.io/vibecodedslopware/">
-<meta name="twitter:card" content="summary">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@500&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
-<script>
-(function () {
-  var t = localStorage.getItem("theme");
-  if (t === "light") t = "white";
-  if (t === "dark") t = "black";
-  if (["white","black","plum","midnight"].indexOf(t) === -1)
-    t = matchMedia("(prefers-color-scheme: dark)").matches ? "black" : "white";
-  document.documentElement.dataset.theme = t;
-})();
-</script>
-<link rel="stylesheet" href="style.css?v=7">
-<link rel="stylesheet" href="rehber.css?v=7">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✱</text></svg>">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vibecodedslopware · slopware nedir, nasıl fark edilir, ne yapmalı. sıfırdan founder seviyesine, 40 bölüm.</title>
+  <meta name="description" content="slopware nedir, nasıl fark edilir, ne yapmalı. sıfırdan founder seviyesine, 40 bölüm.">
+  <link rel="canonical" href="https://nosey-dewdrop.github.io/vibecodedslopware/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="vibecodedslopware">
+  <meta property="og:title" content="vibecodedslopware · slopware nedir, nasıl fark edilir, ne yapmalı. sıfırdan founder seviyesine, 40 bölüm.">
+  <meta property="og:description" content="slopware nedir, nasıl fark edilir, ne yapmalı. sıfırdan founder seviyesine, 40 bölüm.">
+  <meta property="og:url" content="https://nosey-dewdrop.github.io/vibecodedslopware/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="vibecodedslopware · slopware nedir, nasıl fark edilir, ne yapmalı. sıfırdan founder seviyesine, 40 bölüm.">
+  <meta name="twitter:description" content="slopware nedir, nasıl fark edilir, ne yapmalı. sıfırdan founder seviyesine, 40 bölüm.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@500&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <script>
+  (function () {
+    var t = localStorage.getItem("theme");
+    if (t === "light") t = "white";
+    if (t === "dark") t = "black";
+    if (["white", "black", "plum", "midnight"].indexOf(t) === -1)
+      t = matchMedia("(prefers-color-scheme: dark)").matches ? "black" : "white";
+    document.documentElement.dataset.theme = t;
+  })();
+  </script>
+  <link rel="stylesheet" href="style.css?v=8">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✱</text></svg>">
 </head>
-<body class="rehber">
-<header class="top">
-  <a class="wordmark" href="">vibecodedslopware</a>
-  <span class="top-right">
-    <button class="theme-toggle" id="theme-toggle">[tema]</button>
-    <a class="top-link" href="https://github.com/nosey-dewdrop/vibecodedslopware">github ↗</a>
-  </span>
-</header>
+<body>
+
+  <div id="confetti-field" aria-hidden="true"></div>
+  <div id="confetti-trail" aria-hidden="true"></div>
+
+  <header class="top">
+    <a class="wordmark" href="" data-confetti>vibecodedslopware</a>
+    <span class="top-right">
+      <button class="theme-toggle" id="theme-toggle" data-confetti>[tema]</button>
+      <a class="top-link" href="https://github.com/nosey-dewdrop/vibecodedslopware" data-confetti>github ↗</a>
+    </span>
+  </header>
 
 
-<main class="ana">
-  <section class="giris">
-    <h1>slopware nedir, nasıl fark edilir, ne yapmalı?</h1>
-    <p class="alt-baslik">
-      Bir şeyi ekrana getirmek hiç bu kadar ucuz olmamıştı. Ama çalışıyor gibi
-      görünen bir şeyle gerçekten ayakta duran bir şey arasındaki mesafeyi artık
-      kimse ölçmüyor. Bu rehber o mesafeyi ölçmeyi öğretiyor.
-    </p>
-    <p class="ilerleme">41 bölüm · 2 tanesi yayında · haftada bir bölüm</p>
-    <a class="basla" href="bolum/slopware-nedir/">baştan başla →</a>
-  </section>
+  <main>
 
-  <section class="harita">
-    <h2>haritanın tamamı</h2>
-    <p class="harita-not">
-      Her satır bir belirti, bir sebep ve bir düzeltme. Kendi projende hangisini
-      görüyorsan oradan da başlayabilirsin.
-    </p>
-    <table class="ozet">
-      <thead><tr><th>#</th><th>bölüm</th><th>belirti</th><th>neden umursayasın?</th></tr></thead>
-      <tbody>
-<tr class="seviye-satir"><td colspan="4"><span class="rozet">101</span> bu şey nasıl çalışıyor? <span class="seviye-ozet">Hiçbir şey bilmediğini varsayıyoruz. Kod yazdıran ama ne olduğunu bilmeyen insan. Burada tek bir CVE numarası geçmez.</span></td></tr>
-<tr class="bolum-satir"><td class="s-no">0</td><td class="s-baslik"><a href="bolum/slopware-nedir/">slopware nedir, ve neden tam da şimdi konuşuyoruz?</a></td><td class="s-belirti">—</td><td class="s-neden">Herkes bu kelimeyi söylüyor ama kimse tanımını bilmiyor.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">1</td><td class="s-baslik"><a href="bolum/ekrandaki-sey-ne/">ekranındaki şey ne?</a></td><td class="s-belirti">AI&#x27;ın çıktısı sana sihir gibi görünüyor</td><td class="s-neden">Kafanda bir makine modeli yoksa, kodun ne yaptığını hiçbir zaman bilemezsin.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">2</td><td class="s-baslik"><a href="bolum/terminal-ve-klasor/">terminal ve klasör</a></td><td class="s-belirti">Dosyanın nerede durduğunu bilmiyorsun</td><td class="s-neden">Projeni bulamıyorsan, projene sahip değilsin.</td></tr>
-<tr class="bolum-satir"><td class="s-no">3</td><td class="s-baslik"><a href="bolum/localhost/">localhost nedir, neden sadece sende çalışıyor?</a></td><td class="s-belirti">Linki arkadaşına atıyorsun, açılmıyor</td><td class="s-neden">Bu, demo ile ürün arasındaki ilk ve en keskin çizgi.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">4</td><td class="s-baslik"><a href="bolum/kac-parca/">bir uygulama kaç parçadan oluşur?</a></td><td class="s-belirti">Kodun nerede çalıştığını bilmiyorsun</td><td class="s-neden">AI sana hem istemci hem sunucu kodu verir ve ikisinin farklı makinelerde koştuğunu söylemez.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">5</td><td class="s-baslik"><a href="bolum/internette-nasil-acilir/">internette bir şey nasıl açılır?</a></td><td class="s-belirti">&quot;Domain aldım, site yayında&quot;</td><td class="s-neden">Domain, hosting ve deploy üç ayrı şey. Üçünü de yapmadan kimse siteni göremez.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">6</td><td class="s-baslik"><a href="bolum/veri-nerede-duruyor/">veri nerede duruyor?</a></td><td class="s-belirti">Her yenilemede uygulaman seni unutuyor</td><td class="s-neden">Bir yere yazılmayan şey var olmuyor.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">7</td><td class="s-baslik"><a href="bolum/sir-nedir/">sır nedir?</a></td><td class="s-belirti">Anahtarın tarayıcıda görünüyor</td><td class="s-neden">Sızan bir anahtar, senin faturanla başkasının çalıştırdığı bir sunucuya dönüşüyor.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">8</td><td class="s-baslik"><a href="bolum/hata-mesajini-okumak/">hata mesajını okumak</a></td><td class="s-belirti">Kırmızı yazıyı görünce kapatıyorsun</td><td class="s-neden">Hata mesajı elindeki tek dürüst geri bildirim.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">9</td><td class="s-baslik"><a href="bolum/kabul-kriteri/">AI&#x27;a iş yaptırmak: prompt değil, kabul kriteri</a></td><td class="s-belirti">Model &quot;yaptım&quot; diyor, sen inanıyorsun</td><td class="s-neden">Modelin &quot;oldu&quot; demesine itiraz etmiyorsan, slopware tam olarak burada doğuyor.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">10</td><td class="s-baslik"><a href="bolum/calisiyor-ne-demek/">&quot;çalışıyor&quot; ne demek?</a></td><td class="s-belirti">Bir kez çalıştı, bitti sanıyorsun</td><td class="s-neden">Bir kez çalışmak ile hep çalışmak aynı şey değil.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">11</td><td class="s-baslik"><a href="bolum/kendi-projeni-teshis-et/">kendi projeni teşhis et</a></td><td class="s-belirti">—</td><td class="s-neden">101&#x27;i bitirdiysen, elindeki şeye bakıp adını koyabiliyorsun.</td></tr>
-<tr class="seviye-satir"><td colspan="4"><span class="rozet">201</span> ayağa kaldır <span class="seviye-ozet">Kavramları biliyorsun. Şimdi kendi projende kuruyorsun, ve ilk kez komut çalıştırıyoruz.</span></td></tr>
-<tr class="bolum-satir bos"><td class="s-no">12</td><td class="s-baslik"><a href="bolum/git-ve-ortamlar/">git ve ortamlar</a></td><td class="s-belirti">Tek klasör, tek ortam, prod&#x27;da düzeltme</td><td class="s-neden">&quot;Bende çalışıyordu&quot; cümlesinin resmi tanımı burada.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">13</td><td class="s-baslik"><a href="bolum/ortam-degiskeni/">ortam değişkeni ve .env</a></td><td class="s-belirti">Anahtar kodun içinde</td><td class="s-neden">Tek soru: kodun bu an açık kaynak olsa, kimlik bilgisi sızar mıydı?</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">14</td><td class="s-baslik"><a href="bolum/ilk-deploy/">ilk gerçek deploy</a></td><td class="s-belirti">Bitmiş proje makinende duruyor</td><td class="s-neden">Makinenden çıkmayan şey ürün değil.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">15</td><td class="s-baslik"><a href="bolum/domain-dns-https/">domain, DNS ve HTTPS</a></td><td class="s-belirti">&quot;DNS değiştirdim ama site hâlâ eski&quot;</td><td class="s-neden">Kilit simgesi bir görsel değil, kurduğun bir şey. Ve 90 günde bitiyor.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">16</td><td class="s-baslik"><a href="bolum/veritabani-baglamak/">veritabanı bağlamak</a></td><td class="s-belirti">Tablo herkese açık</td><td class="s-neden">Veritabanını bağlamak ile yayına açmak arasındaki fark tam olarak RLS.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">17</td><td class="s-baslik"><a href="bolum/sema-ve-indeks/">şema ve indeks</a></td><td class="s-belirti">200 kullanıcıda çöküyor</td><td class="s-neden">İndeks tasarımı DBA işi değil, senin işin.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">18</td><td class="s-baslik"><a href="bolum/migration/">migration: tabloyu silmeden değiştirmek</a></td><td class="s-belirti">Tabloyu silip yeniden yaratıyorsun</td><td class="s-neden">Şemayı ve ona bağımlı kodu aynı adımda değiştirirsen, canlı veri gider.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">19</td><td class="s-baslik"><a href="bolum/yedek-ve-geri-yukleme/">yedek ve geri yükleme</a></td><td class="s-belirti">&quot;Yedeğim var&quot;</td><td class="s-neden">Kimse yedek istemiyor, herkes geri yükleme istiyor.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">20</td><td class="s-baslik"><a href="bolum/hata-yonetimi/">hata yönetimi ve sessiz catch</a></td><td class="s-belirti">catch bloğun boş</td><td class="s-neden">Sessiz catch, hangisini seçtiğini bilmeden hem açık hem kapalı kalmandır.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">21</td><td class="s-baslik"><a href="bolum/test-ve-ci/">test ve CI</a></td><td class="s-belirti">&quot;Bende çalışıyor&quot;</td><td class="s-neden">Senin makinende çalışması delil değil.</td></tr>
-<tr class="seviye-satir"><td colspan="4"><span class="rozet">301</span> gerçek kullanıcı ve saldırgan <span class="seviye-ozet">Artık dışarıdan biri var. Kötü niyetli olabilir, ya da sadece kalabalık.</span></td></tr>
-<tr class="bolum-satir bos"><td class="s-no">22</td><td class="s-baslik"><a href="bolum/auth/">auth: kim olduğunu iddia etmek</a></td><td class="s-belirti">Parola düz metin, session localStorage&#x27;da</td><td class="s-neden">Giriş ekranı güvenlik değildir.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">23</td><td class="s-baslik"><a href="bolum/yetkilendirme-ve-rls/">yetkilendirme ve RLS</a></td><td class="s-belirti">A kullanıcısı B&#x27;nin verisini görüyor</td><td class="s-neden">Vibe-coded uygulamaların bir numaralı ölüm sebebi bu, ve oran tabanın yirmi katı.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">24</td><td class="s-baslik"><a href="bolum/girdi-guvenilmezdir/">girdi güvenilmezdir</a></td><td class="s-belirti">Sorguyu string birleştirmeyle kuruyorsun</td><td class="s-neden">Kullanıcının yazdığı her şey, kanıtlanana kadar saldırıdır.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">25</td><td class="s-baslik"><a href="bolum/bagimlilik-zinciri/">bağımlılık zinciri</a></td><td class="s-belirti">AI&#x27;ın önerdiği paketi sorgusuz kuruyorsun</td><td class="s-neden">Modelin uydurduğu paket adını saldırgan senden önce kaydediyor.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">26</td><td class="s-baslik"><a href="bolum/llm-guvenligi/">LLM&#x27;li ürünün kendi güvenliği</a></td><td class="s-belirti">Prompt&#x27;u konfigürasyon sanıyorsun</td><td class="s-neden">Prompt bir ayar dosyası değil, çalıştırılabilir kod.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">27</td><td class="s-baslik"><a href="bolum/rate-limit/">rate limit</a></td><td class="s-belirti">Endpoint&#x27;in sınırsız</td><td class="s-neden">Bir bot bir gecede hem faturanı hem veritabanını götürür.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">28</td><td class="s-baslik"><a href="bolum/olcek/">ölçek: ilk kalabalık geldiğinde</a></td><td class="s-belirti">Lokalde hızlı, canlıda ölü</td><td class="s-neden">N+1 ve bağlantı havuzu lokalde asla görünmez, ilk trafikte görünür.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">29</td><td class="s-baslik"><a href="bolum/log-ve-alarm/">log ve alarm</a></td><td class="s-belirti">console.log ve sessizlik</td><td class="s-neden">Alarm etmeyen log sayılmıyor, ve yanlış log €91 milyon ediyor.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">30</td><td class="s-baslik"><a href="bolum/izleme/">izleme</a></td><td class="s-belirti">Bozulduğunu kullanıcı sana yazınca öğreniyorsun</td><td class="s-neden">Ölçmediğin şeyin bozulduğunu göremezsin.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">31</td><td class="s-baslik"><a href="bolum/maliyet-kontrolu/">maliyet kontrolü</a></td><td class="s-belirti">&quot;Limit koydum&quot;</td><td class="s-neden">Limit koymak bir kontrol değil, bir bildirim. Fatura kullanıcıyla değil, döngüyle büyüyor.</td></tr>
-<tr class="seviye-satir"><td colspan="4"><span class="rozet">401</span> founder <span class="seviye-ozet">Ürün ayakta. Şimdi asıl soru: bu bir iş mi?</span></td></tr>
-<tr class="bolum-satir bos"><td class="s-no">32</td><td class="s-baslik"><a href="bolum/wrapper-anatomisi/">wrapper anatomisi</a></td><td class="s-belirti">&quot;Bu sadece bir wrapper&quot;</td><td class="s-neden">Kör olan mühendis değil, mühendisin &quot;değerli&quot; tanımı.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">33</td><td class="s-baslik"><a href="bolum/kimsenin-istemedigi-sey/">kimsenin istemediği şeyi yapmak</a></td><td class="s-belirti">AI ile 1 günde yapılabilen şeyi seçtin</td><td class="s-neden">Tam da o yüzden herkes yapabiliyor.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">34</td><td class="s-baslik"><a href="bolum/kullaniciyla-konusmak/">kullanıcıyla konuşmak</a></td><td class="s-belirti">Görüşmeye fikrini anlatarak başlıyorsun</td><td class="s-neden">Buradaki rolün dinlemek, konuşmak değil.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">35</td><td class="s-baslik"><a href="bolum/mvp-ve-launch/">MVP ve launch</a></td><td class="s-belirti">Launch&#x27;u tek seferlik bir olay sanıyorsun</td><td class="s-neden">Bir şey çıkaracaksın, kimse umursamayacak. Oraya varman altı ay sürdüyse ikinci şansın olmayacak.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">36</td><td class="s-baslik"><a href="bolum/kvkk-gelistirici-gozuyle/">KVKK&#x27;yı geliştirici gözüyle okumak</a></td><td class="s-belirti">Aydınlatma metnini kopyaladın</td><td class="s-neden">Envanter çıkarmadan yazılan metin, iki maddeyi doğuştan ihlal ediyor.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">37</td><td class="s-baslik"><a href="bolum/yurtdisina-aktarim/">yurtdışına aktarım ve çerez</a></td><td class="s-belirti">&quot;AB için yeterlilik kararı var&quot;</td><td class="s-neden">Yok. Ve bölge seçmek bile aktarım sayılıyor.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">38</td><td class="s-baslik"><a href="bolum/para-almak/">para almak</a></td><td class="s-belirti">Stripe hesabı açmaya çalışıyorsun</td><td class="s-neden">Türkiye Stripe&#x27;ta yok, ve en büyük ceza riski site metninde değil.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">39</td><td class="s-baslik"><a href="bolum/fiyatlama-ve-metrik/">fiyatlama ve gerçek metrik</a></td><td class="s-belirti">Fiyatı maliyetten türettin</td><td class="s-neden">16 milyon indirme ve top 5 sıralama, PMF olmadığı anlamına gelebiliyor.</td></tr>
-<tr class="bolum-satir bos"><td class="s-no">40</td><td class="s-baslik"><a href="bolum/default-alive/">default alive mı, default dead mi?</a></td><td class="s-belirti">Bilmiyorsun</td><td class="s-neden">Kurucuların yarısı bilmiyor, ve bilmemek cevabın &quot;dead&quot; olması demek.</td></tr>
-</tbody>
-    </table>
-  </section>
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <h1 data-confetti>slopware nedir, nasıl fark edilir, ne yapmalı?</h1>
+          <p class="lede">bir şeyi ekrana getirmek hiç bu kadar ucuz olmamıştı. ama
+          çalışıyor gibi görünen bir şeyle gerçekten ayakta duran bir şey arasındaki
+          mesafeyi artık kimse ölçmüyor. bu seri o mesafeyi ölçmeyi öğretiyor,
+          sıfırdan başlayıp kurucu seviyesine kadar.</p>
+          <div class="hero-cta">
+            <a class="btn" href="bolum/slopware-nedir/" data-confetti>baştan başla →</a>
+            <span class="cta-note">41 bölüm · 2 tanesi yayında · haftada bir bölüm
+            · burada kimseyi aşağılamıyoruz</span>
+          </div>
+        </div>
 
-  <section class="kaide">
-    <h2>bu rehber neden var?</h2>
-    <p>
-      Herkes "ai slop" deyip geçiyor, ama geçmek yetmiyor, çünkü o sözü söyleyen
-      kişi kendi projesinin de aynı çukurda olup olmadığını bilmiyor. Burada
-      kimseyi aşağılamıyoruz. Slopware yazan insan tembel değil, sadece kendisine
-      kimsenin göstermediği bir şeyi bilmiyor.
-    </p>
-    <p>
-      Her bölüm aynı şekilde ilerliyor: çalışıyor gibi görünen bir şey, sonra
-      nerede çöktüğü, sonra kendi kodunda nasıl bulacağın, sonra doğrusunun nasıl
-      kurulduğu. Ve her bölümde kendi projelerimden gerçek bir vaka var, çünkü bu
-      hataların hepsini ben de yaptım.
-    </p>
-    <p class="kaynak-not">
-      Metin CC BY-NC, kod MIT. Kaynağı
-      <a href="https://github.com/nosey-dewdrop/vibecodedslopware">GitHub'da</a>
-      duruyor, ben düşersem sen fork'la.
-    </p>
-  </section>
-</main>
+        <div class="quiz-card">
+          <p class="quiz-file">kendi projende dene · 20 saniye</p>
+<pre><code>git log -p | grep -i "api_key"</code></pre>
+          <p class="quiz-q">sildiğini sandığın anahtar <code>git</code> geçmişinde
+          duruyor mu?</p>
+          <ul class="type-list">
+            <li><span class="hl-purple">+</span> çıktı boşsa, temizsin</li>
+            <li><span class="hl-pink">✱</span> bir şey döndüyse, o anahtar hâlâ canlı</li>
+          </ul>
+          <p class="cta-note">bu, yedinci bölümün ilk testi.</p>
+        </div>
+      </div>
+    </section>
 
-<script src="themes.js"></script>
+    <div class="divider" aria-hidden="true">+ · ✱ · + · ▪ · ✱ · + · ✱ · ▪ · + · ✱</div>
+
+    <section class="seviye">
+      <p class="section-label">101 / bu şey nasıl çalışıyor?</p>
+      <p class="lede">Hiçbir şey bilmediğini varsayıyoruz. Kod yazdıran ama ne olduğunu bilmeyen insan. Burada tek bir CVE numarası geçmez.</p>
+      <ol class="bolumler">
+        <li class="bolum"><span class="b-glyph hl-purple">+</span><a class="b-baslik" href="bolum/slopware-nedir/" data-confetti>slopware nedir, ve neden tam da şimdi konuşuyoruz?</a><span class="b-neden">Herkes bu kelimeyi söylüyor ama kimse tanımını bilmiyor.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-pink">✱</span><a class="b-baslik" href="bolum/ekrandaki-sey-ne/" data-confetti>ekranındaki şey ne?</a><span class="b-neden">Kafanda bir makine modeli yoksa, kodun ne yaptığını hiçbir zaman bilemezsin.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-yellow">▪</span><a class="b-baslik" href="bolum/terminal-ve-klasor/" data-confetti>terminal ve klasör</a><span class="b-neden">Projeni bulamıyorsan, projene sahip değilsin.</span></li>
+        <li class="bolum"><span class="b-glyph hl-green">+</span><a class="b-baslik" href="bolum/localhost/" data-confetti>localhost nedir, neden sadece sende çalışıyor?</a><span class="b-neden">Bu, demo ile ürün arasındaki ilk ve en keskin çizgi.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-purple">+</span><a class="b-baslik" href="bolum/kac-parca/" data-confetti>bir uygulama kaç parçadan oluşur?</a><span class="b-neden">AI sana hem istemci hem sunucu kodu verir ve ikisinin farklı makinelerde koştuğunu söylemez.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-pink">✱</span><a class="b-baslik" href="bolum/internette-nasil-acilir/" data-confetti>internette bir şey nasıl açılır?</a><span class="b-neden">Domain, hosting ve deploy üç ayrı şey. Üçünü de yapmadan kimse siteni göremez.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-yellow">▪</span><a class="b-baslik" href="bolum/veri-nerede-duruyor/" data-confetti>veri nerede duruyor?</a><span class="b-neden">Bir yere yazılmayan şey var olmuyor.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-green">+</span><a class="b-baslik" href="bolum/sir-nedir/" data-confetti>sır nedir?</a><span class="b-neden">Sızan bir anahtar, senin faturanla başkasının çalıştırdığı bir sunucuya dönüşüyor.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-purple">+</span><a class="b-baslik" href="bolum/hata-mesajini-okumak/" data-confetti>hata mesajını okumak</a><span class="b-neden">Hata mesajı elindeki tek dürüst geri bildirim.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-pink">✱</span><a class="b-baslik" href="bolum/kabul-kriteri/" data-confetti>AI&#x27;a iş yaptırmak: prompt değil, kabul kriteri</a><span class="b-neden">Modelin &quot;oldu&quot; demesine itiraz etmiyorsan, slopware tam olarak burada doğuyor.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-yellow">▪</span><a class="b-baslik" href="bolum/calisiyor-ne-demek/" data-confetti>&quot;çalışıyor&quot; ne demek?</a><span class="b-neden">Bir kez çalışmak ile hep çalışmak aynı şey değil.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-green">+</span><a class="b-baslik" href="bolum/kendi-projeni-teshis-et/" data-confetti>kendi projeni teşhis et</a><span class="b-neden">101&#x27;i bitirdiysen, elindeki şeye bakıp adını koyabiliyorsun.</span></li>
+      </ol>
+    </section>
+    <div class="divider" aria-hidden="true">▪ · ✱ · + · ✱ · ▪ · ✱ · + · ✱ · ▪ · ✱</div>
+
+    <section class="seviye">
+      <p class="section-label">201 / ayağa kaldır</p>
+      <p class="lede">Kavramları biliyorsun. Şimdi kendi projende kuruyorsun, ve ilk kez komut çalıştırıyoruz.</p>
+      <ol class="bolumler">
+        <li class="bolum bos"><span class="b-glyph hl-purple">+</span><a class="b-baslik" href="bolum/git-ve-ortamlar/" data-confetti>git ve ortamlar</a><span class="b-neden">&quot;Bende çalışıyordu&quot; cümlesinin resmi tanımı burada.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-pink">✱</span><a class="b-baslik" href="bolum/ortam-degiskeni/" data-confetti>ortam değişkeni ve .env</a><span class="b-neden">Tek soru: kodun bu an açık kaynak olsa, kimlik bilgisi sızar mıydı?</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-yellow">▪</span><a class="b-baslik" href="bolum/ilk-deploy/" data-confetti>ilk gerçek deploy</a><span class="b-neden">Makinenden çıkmayan şey ürün değil.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-green">+</span><a class="b-baslik" href="bolum/domain-dns-https/" data-confetti>domain, DNS ve HTTPS</a><span class="b-neden">Kilit simgesi bir görsel değil, kurduğun bir şey. Ve 90 günde bitiyor.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-purple">+</span><a class="b-baslik" href="bolum/veritabani-baglamak/" data-confetti>veritabanı bağlamak</a><span class="b-neden">Veritabanını bağlamak ile yayına açmak arasındaki fark tam olarak RLS.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-pink">✱</span><a class="b-baslik" href="bolum/sema-ve-indeks/" data-confetti>şema ve indeks</a><span class="b-neden">İndeks tasarımı DBA işi değil, senin işin.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-yellow">▪</span><a class="b-baslik" href="bolum/migration/" data-confetti>migration: tabloyu silmeden değiştirmek</a><span class="b-neden">Şemayı ve ona bağımlı kodu aynı adımda değiştirirsen, canlı veri gider.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-green">+</span><a class="b-baslik" href="bolum/yedek-ve-geri-yukleme/" data-confetti>yedek ve geri yükleme</a><span class="b-neden">Kimse yedek istemiyor, herkes geri yükleme istiyor.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-purple">+</span><a class="b-baslik" href="bolum/hata-yonetimi/" data-confetti>hata yönetimi ve sessiz catch</a><span class="b-neden">Sessiz catch, hangisini seçtiğini bilmeden hem açık hem kapalı kalmandır.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-pink">✱</span><a class="b-baslik" href="bolum/test-ve-ci/" data-confetti>test ve CI</a><span class="b-neden">Senin makinende çalışması delil değil.</span></li>
+      </ol>
+    </section>
+    <div class="divider" aria-hidden="true">✱ · + · ✱ · ▪ · + · ✱ · ▪ · + · ✱ · +</div>
+
+    <section class="seviye">
+      <p class="section-label">301 / gerçek kullanıcı ve saldırgan</p>
+      <p class="lede">Artık dışarıdan biri var. Kötü niyetli olabilir, ya da sadece kalabalık.</p>
+      <ol class="bolumler">
+        <li class="bolum bos"><span class="b-glyph hl-yellow">▪</span><a class="b-baslik" href="bolum/auth/" data-confetti>auth: kim olduğunu iddia etmek</a><span class="b-neden">Giriş ekranı güvenlik değildir.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-green">+</span><a class="b-baslik" href="bolum/yetkilendirme-ve-rls/" data-confetti>yetkilendirme ve RLS</a><span class="b-neden">Vibe-coded uygulamaların bir numaralı ölüm sebebi bu, ve oran tabanın yirmi katı.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-purple">+</span><a class="b-baslik" href="bolum/girdi-guvenilmezdir/" data-confetti>girdi güvenilmezdir</a><span class="b-neden">Kullanıcının yazdığı her şey, kanıtlanana kadar saldırıdır.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-pink">✱</span><a class="b-baslik" href="bolum/bagimlilik-zinciri/" data-confetti>bağımlılık zinciri</a><span class="b-neden">Modelin uydurduğu paket adını saldırgan senden önce kaydediyor.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-yellow">▪</span><a class="b-baslik" href="bolum/llm-guvenligi/" data-confetti>LLM&#x27;li ürünün kendi güvenliği</a><span class="b-neden">Prompt bir ayar dosyası değil, çalıştırılabilir kod.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-green">+</span><a class="b-baslik" href="bolum/rate-limit/" data-confetti>rate limit</a><span class="b-neden">Bir bot bir gecede hem faturanı hem veritabanını götürür.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-purple">+</span><a class="b-baslik" href="bolum/olcek/" data-confetti>ölçek: ilk kalabalık geldiğinde</a><span class="b-neden">N+1 ve bağlantı havuzu lokalde asla görünmez, ilk trafikte görünür.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-pink">✱</span><a class="b-baslik" href="bolum/log-ve-alarm/" data-confetti>log ve alarm</a><span class="b-neden">Alarm etmeyen log sayılmıyor, ve yanlış log €91 milyon ediyor.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-yellow">▪</span><a class="b-baslik" href="bolum/izleme/" data-confetti>izleme</a><span class="b-neden">Ölçmediğin şeyin bozulduğunu göremezsin.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-green">+</span><a class="b-baslik" href="bolum/maliyet-kontrolu/" data-confetti>maliyet kontrolü</a><span class="b-neden">Limit koymak bir kontrol değil, bir bildirim. Fatura kullanıcıyla değil, döngüyle büyüyor.</span></li>
+      </ol>
+    </section>
+    <div class="divider" aria-hidden="true">+ · ▪ · ✱ · + · ✱ · ▪ · ✱ · + · ▪ · ✱</div>
+
+    <section class="seviye">
+      <p class="section-label">401 / founder</p>
+      <p class="lede">Ürün ayakta. Şimdi asıl soru: bu bir iş mi?</p>
+      <ol class="bolumler">
+        <li class="bolum bos"><span class="b-glyph hl-purple">+</span><a class="b-baslik" href="bolum/wrapper-anatomisi/" data-confetti>wrapper anatomisi</a><span class="b-neden">Kör olan mühendis değil, mühendisin &quot;değerli&quot; tanımı.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-pink">✱</span><a class="b-baslik" href="bolum/kimsenin-istemedigi-sey/" data-confetti>kimsenin istemediği şeyi yapmak</a><span class="b-neden">Tam da o yüzden herkes yapabiliyor.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-yellow">▪</span><a class="b-baslik" href="bolum/kullaniciyla-konusmak/" data-confetti>kullanıcıyla konuşmak</a><span class="b-neden">Buradaki rolün dinlemek, konuşmak değil.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-green">+</span><a class="b-baslik" href="bolum/mvp-ve-launch/" data-confetti>MVP ve launch</a><span class="b-neden">Bir şey çıkaracaksın, kimse umursamayacak. Oraya varman altı ay sürdüyse ikinci şansın olmayacak.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-purple">+</span><a class="b-baslik" href="bolum/kvkk-gelistirici-gozuyle/" data-confetti>KVKK&#x27;yı geliştirici gözüyle okumak</a><span class="b-neden">Envanter çıkarmadan yazılan metin, iki maddeyi doğuştan ihlal ediyor.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-pink">✱</span><a class="b-baslik" href="bolum/yurtdisina-aktarim/" data-confetti>yurtdışına aktarım ve çerez</a><span class="b-neden">Yok. Ve bölge seçmek bile aktarım sayılıyor.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-yellow">▪</span><a class="b-baslik" href="bolum/para-almak/" data-confetti>para almak</a><span class="b-neden">Türkiye Stripe&#x27;ta yok, ve en büyük ceza riski site metninde değil.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-green">+</span><a class="b-baslik" href="bolum/fiyatlama-ve-metrik/" data-confetti>fiyatlama ve gerçek metrik</a><span class="b-neden">16 milyon indirme ve top 5 sıralama, PMF olmadığı anlamına gelebiliyor.</span></li>
+        <li class="bolum bos"><span class="b-glyph hl-purple">+</span><a class="b-baslik" href="bolum/default-alive/" data-confetti>default alive mı, default dead mi?</a><span class="b-neden">Kurucuların yarısı bilmiyor, ve bilmemek cevabın &quot;dead&quot; olması demek.</span></li>
+      </ol>
+    </section>
+
+    <div class="divider" aria-hidden="true">+ · ✱ · + · ▪ · ✱ · + · ✱ · ▪ · + · ✱</div>
+
+    <div class="cols">
+      <section>
+        <p class="section-label">bu seri neden var?</p>
+        <h2 data-confetti>herkes "ai slop" diyor, kimse ne olduğunu söylemiyor</h2>
+        <p>ve geçip gitmek yetmiyor, çünkü o sözü söyleyen kişi kendi projesinin de
+        aynı çukurda olup olmadığını bilmiyor. slopware yazan insan tembel değil,
+        sadece kendisine kimsenin göstermediği bir şeyi bilmiyor.</p>
+        <p class="quote">sorun kodun kötü olması değil, kötü olduğunun görünmemesi.<br>
+        <span class="quote-by">serinin tek cümlelik özeti</span></p>
+      </section>
+
+      <section>
+        <p class="section-label">her bölüm nasıl ilerliyor?</p>
+        <h2 data-confetti>belirti, sebep, teşhis, düzeltme</h2>
+        <ol class="steps">
+          <li data-confetti><span class="step-glyph hl-purple">+</span>
+            çalışıyor gibi görünen bir şey, ve neden öyle göründüğü</li>
+          <li data-confetti><span class="step-glyph hl-pink">✱</span>
+            nerede çöktüğü, gerçek bir olayla</li>
+          <li data-confetti><span class="step-glyph hl-yellow">▪</span>
+            kendi kodunda nasıl bulacağın, çalıştırabileceğin bir kontrolle</li>
+          <li data-confetti><span class="step-glyph hl-green">+</span>
+            doğrusunun nasıl kurulduğu, ve benim aynı hatayı nerede yaptığım</li>
+        </ol>
+      </section>
+    </div>
+
+    <div class="divider" aria-hidden="true">✱ · + · ✱ · ▪ · + · ✱ · ▪ · + · ✱ · +</div>
+
+    <section class="outro">
+      <h2 data-confetti>çalışıyor gibi görünmekle ayakta durmak aynı şey değil.</h2>
+      <p><a class="btn" href="bolum/slopware-nedir/" data-confetti>ilk bölümü oku →</a></p>
+      <p class="cta-note">metin cc by-nc, kod mit ·
+      <a href="https://github.com/nosey-dewdrop/vibecodedslopware" data-confetti>kaynağı burada</a>,
+      ben düşersem sen fork'la</p>
+    </section>
+
+  </main>
+
+
+  <footer>
+    <span>bir <a href="https://nosey-dewdrop.github.io" data-confetti>nosey-dewdrop</a> işi ·
+    metin cc by-nc, kod mit · <a href="">bütün bölümler</a></span>
+    <span class="footer-glyphs" aria-hidden="true">+ ✱ ▪</span>
+  </footer>
+
+  <script src="script.js?v=8"></script>
 </body>
 </html>

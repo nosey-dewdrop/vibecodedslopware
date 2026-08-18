@@ -1,112 +1,73 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>yurtdışına aktarım ve çerez — vibecodedslopware</title>
-<meta name="description" content="Yok. Ve bölge seçmek bile aktarım sayılıyor.">
-<link rel="canonical" href="https://nosey-dewdrop.github.io/vibecodedslopware/bolum/yurtdisina-aktarim/">
-<meta property="og:type" content="article">
-<meta property="og:site_name" content="vibecodedslopware">
-<meta property="og:title" content="yurtdışına aktarım ve çerez — vibecodedslopware">
-<meta property="og:description" content="Yok. Ve bölge seçmek bile aktarım sayılıyor.">
-<meta property="og:url" content="https://nosey-dewdrop.github.io/vibecodedslopware/bolum/yurtdisina-aktarim/">
-<meta name="twitter:card" content="summary">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@500&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
-<script>
-(function () {
-  var t = localStorage.getItem("theme");
-  if (t === "light") t = "white";
-  if (t === "dark") t = "black";
-  if (["white","black","plum","midnight"].indexOf(t) === -1)
-    t = matchMedia("(prefers-color-scheme: dark)").matches ? "black" : "white";
-  document.documentElement.dataset.theme = t;
-})();
-</script>
-<link rel="stylesheet" href="../../style.css?v=7">
-<link rel="stylesheet" href="../../rehber.css?v=7">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✱</text></svg>">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>yurtdışına aktarım ve çerez · vibecodedslopware</title>
+  <meta name="description" content="Yok. Ve bölge seçmek bile aktarım sayılıyor.">
+  <link rel="canonical" href="https://nosey-dewdrop.github.io/vibecodedslopware/bolum/yurtdisina-aktarim/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="vibecodedslopware">
+  <meta property="og:title" content="yurtdışına aktarım ve çerez · vibecodedslopware">
+  <meta property="og:description" content="Yok. Ve bölge seçmek bile aktarım sayılıyor.">
+  <meta property="og:url" content="https://nosey-dewdrop.github.io/vibecodedslopware/bolum/yurtdisina-aktarim/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="yurtdışına aktarım ve çerez · vibecodedslopware">
+  <meta name="twitter:description" content="Yok. Ve bölge seçmek bile aktarım sayılıyor.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@500&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <script>
+  (function () {
+    var t = localStorage.getItem("theme");
+    if (t === "light") t = "white";
+    if (t === "dark") t = "black";
+    if (["white", "black", "plum", "midnight"].indexOf(t) === -1)
+      t = matchMedia("(prefers-color-scheme: dark)").matches ? "black" : "white";
+    document.documentElement.dataset.theme = t;
+  })();
+  </script>
+  <link rel="stylesheet" href="../../style.css?v=8">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✱</text></svg>">
 </head>
-<body class="rehber">
-<header class="top">
-  <a class="wordmark" href="../../">vibecodedslopware</a>
-  <span class="top-right">
-    <button class="theme-toggle" id="theme-toggle">[tema]</button>
-    <a class="top-link" href="https://github.com/nosey-dewdrop/vibecodedslopware">github ↗</a>
-  </span>
-</header>
+<body>
 
-<div class="duzen">
-<nav class="kenar" aria-label="içindekiler"><ol class="kenar-liste">
-<li class="kenar-seviye"><span class="kenar-kod">101</span><span class="kenar-ad">bu şey nasıl çalışıyor?</span></li>
-<li class="kenar-bolum"><a href="../../bolum/slopware-nedir/"><span class="kenar-no">0</span>slopware nedir, ve neden tam da şimdi konuşuyoruz?</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/ekrandaki-sey-ne/"><span class="kenar-no">1</span>ekranındaki şey ne?</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/terminal-ve-klasor/"><span class="kenar-no">2</span>terminal ve klasör</a></li>
-<li class="kenar-bolum"><a href="../../bolum/localhost/"><span class="kenar-no">3</span>localhost nedir, neden sadece sende çalışıyor?</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/kac-parca/"><span class="kenar-no">4</span>bir uygulama kaç parçadan oluşur?</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/internette-nasil-acilir/"><span class="kenar-no">5</span>internette bir şey nasıl açılır?</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/veri-nerede-duruyor/"><span class="kenar-no">6</span>veri nerede duruyor?</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/sir-nedir/"><span class="kenar-no">7</span>sır nedir?</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/hata-mesajini-okumak/"><span class="kenar-no">8</span>hata mesajını okumak</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/kabul-kriteri/"><span class="kenar-no">9</span>AI&#x27;a iş yaptırmak: prompt değil, kabul kriteri</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/calisiyor-ne-demek/"><span class="kenar-no">10</span>&quot;çalışıyor&quot; ne demek?</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/kendi-projeni-teshis-et/"><span class="kenar-no">11</span>kendi projeni teşhis et</a></li>
-<li class="kenar-seviye"><span class="kenar-kod">201</span><span class="kenar-ad">ayağa kaldır</span></li>
-<li class="kenar-bolum bos"><a href="../../bolum/git-ve-ortamlar/"><span class="kenar-no">12</span>git ve ortamlar</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/ortam-degiskeni/"><span class="kenar-no">13</span>ortam değişkeni ve .env</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/ilk-deploy/"><span class="kenar-no">14</span>ilk gerçek deploy</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/domain-dns-https/"><span class="kenar-no">15</span>domain, DNS ve HTTPS</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/veritabani-baglamak/"><span class="kenar-no">16</span>veritabanı bağlamak</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/sema-ve-indeks/"><span class="kenar-no">17</span>şema ve indeks</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/migration/"><span class="kenar-no">18</span>migration: tabloyu silmeden değiştirmek</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/yedek-ve-geri-yukleme/"><span class="kenar-no">19</span>yedek ve geri yükleme</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/hata-yonetimi/"><span class="kenar-no">20</span>hata yönetimi ve sessiz catch</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/test-ve-ci/"><span class="kenar-no">21</span>test ve CI</a></li>
-<li class="kenar-seviye"><span class="kenar-kod">301</span><span class="kenar-ad">gerçek kullanıcı ve saldırgan</span></li>
-<li class="kenar-bolum bos"><a href="../../bolum/auth/"><span class="kenar-no">22</span>auth: kim olduğunu iddia etmek</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/yetkilendirme-ve-rls/"><span class="kenar-no">23</span>yetkilendirme ve RLS</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/girdi-guvenilmezdir/"><span class="kenar-no">24</span>girdi güvenilmezdir</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/bagimlilik-zinciri/"><span class="kenar-no">25</span>bağımlılık zinciri</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/llm-guvenligi/"><span class="kenar-no">26</span>LLM&#x27;li ürünün kendi güvenliği</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/rate-limit/"><span class="kenar-no">27</span>rate limit</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/olcek/"><span class="kenar-no">28</span>ölçek: ilk kalabalık geldiğinde</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/log-ve-alarm/"><span class="kenar-no">29</span>log ve alarm</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/izleme/"><span class="kenar-no">30</span>izleme</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/maliyet-kontrolu/"><span class="kenar-no">31</span>maliyet kontrolü</a></li>
-<li class="kenar-seviye"><span class="kenar-kod">401</span><span class="kenar-ad">founder</span></li>
-<li class="kenar-bolum bos"><a href="../../bolum/wrapper-anatomisi/"><span class="kenar-no">32</span>wrapper anatomisi</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/kimsenin-istemedigi-sey/"><span class="kenar-no">33</span>kimsenin istemediği şeyi yapmak</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/kullaniciyla-konusmak/"><span class="kenar-no">34</span>kullanıcıyla konuşmak</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/mvp-ve-launch/"><span class="kenar-no">35</span>MVP ve launch</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/kvkk-gelistirici-gozuyle/"><span class="kenar-no">36</span>KVKK&#x27;yı geliştirici gözüyle okumak</a></li>
-<li class="kenar-bolum aktif bos"><a href="../../bolum/yurtdisina-aktarim/"><span class="kenar-no">37</span>yurtdışına aktarım ve çerez</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/para-almak/"><span class="kenar-no">38</span>para almak</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/fiyatlama-ve-metrik/"><span class="kenar-no">39</span>fiyatlama ve gerçek metrik</a></li>
-<li class="kenar-bolum bos"><a href="../../bolum/default-alive/"><span class="kenar-no">40</span>default alive mı, default dead mi?</a></li>
-</ol></nav>
-<main class="govde">
-  <div class="ust-cizgi">
-    <span class="rozet">401</span>
-    <span class="ust-ad">founder</span>
-  </div>
-  <nav class="gezinme ust">
-<a class="gez-onceki" href="../../bolum/kvkk-gelistirici-gozuyle/"><span class="gez-etiket">← önceki</span><span class="gez-baslik">KVKK&#x27;yı geliştirici gözüyle okumak</span></a>
-<a class="gez-sonraki" href="../../bolum/para-almak/"><span class="gez-etiket">sonraki →</span><span class="gez-baslik">para almak</span></a>
+  <div id="confetti-field" aria-hidden="true"></div>
+  <div id="confetti-trail" aria-hidden="true"></div>
+
+  <header class="top">
+    <a class="wordmark" href="../../" data-confetti>vibecodedslopware</a>
+    <span class="top-right">
+      <button class="theme-toggle" id="theme-toggle" data-confetti>[tema]</button>
+      <a class="top-link" href="https://github.com/nosey-dewdrop/vibecodedslopware" data-confetti>github ↗</a>
+    </span>
+  </header>
+
+  <main>
+    <article class="yazi">
+      <p class="section-label">37 / 401 founder</p>
+      <h1 class="yazi-baslik" data-confetti>yurtdışına aktarım ve çerez</h1>
+      <p class="lede">Yok. Ve bölge seçmek bile aktarım sayılıyor.</p>
+
+      <div class="divider" aria-hidden="true">▪ · ✱ · + · ✱ · ▪ · ✱ · + · ✱ · ▪ · ✱</div>
+
+      <p class="cta-note">bu bölüm henüz yazılmadı. seri haftada bir bölüm ilerliyor.</p>
+    </article>
+
+    <div class="divider" aria-hidden="true">+ · ▪ · ✱ · + · ✱ · ▪ · ✱ · + · ▪ · ✱</div>
+
+    <nav class="gez">
+<a href="../../bolum/kvkk-gelistirici-gozuyle/" data-confetti>← KVKK&#x27;yı geliştirici gözüyle okumak</a>
+<a class="gez-sag" href="../../bolum/para-almak/" data-confetti>para almak →</a>
 </nav>
-  <article>
-    <p class="bolum-no">bölüm 37</p>
-    <h1>yurtdışına aktarım ve çerez</h1>
-    <p class="neden">Yok. Ve bölge seçmek bile aktarım sayılıyor.</p>
-    <p class="henuz">Bu bölüm henüz yazılmadı. Seri haftada bir bölüm ilerliyor.</p>
-  </article>
-  <nav class="gezinme alt">
-<a class="gez-onceki" href="../../bolum/kvkk-gelistirici-gozuyle/"><span class="gez-etiket">← önceki</span><span class="gez-baslik">KVKK&#x27;yı geliştirici gözüyle okumak</span></a>
-<a class="gez-sonraki" href="../../bolum/para-almak/"><span class="gez-etiket">sonraki →</span><span class="gez-baslik">para almak</span></a>
-</nav>
-</main>
-</div>
-<script src="../../themes.js"></script>
+  </main>
+
+  <footer>
+    <span>bir <a href="https://nosey-dewdrop.github.io" data-confetti>nosey-dewdrop</a> işi ·
+    metin cc by-nc, kod mit · <a href="../../">bütün bölümler</a></span>
+    <span class="footer-glyphs" aria-hidden="true">+ ✱ ▪</span>
+  </footer>
+
+  <script src="../../script.js?v=8"></script>
 </body>
 </html>
