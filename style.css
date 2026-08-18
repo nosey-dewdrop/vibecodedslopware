@@ -521,5 +521,20 @@ footer {
   font-size: 11.5px;
   line-height: 1.3;
 }
-.b-neden { display: none; }
+.b-neden {
+  grid-column: 2;
+  display: block;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.4;
+  transition: max-height 160ms ease, opacity 160ms ease, margin 160ms ease;
+}
+.bolum:hover .b-neden, .bolum:focus-within .b-neden {
+  max-height: 5em;
+  opacity: 1;
+  margin-top: 2px;
+}
 .b-no { font-size: 10px; }
