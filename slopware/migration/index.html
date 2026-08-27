@@ -1,116 +1,100 @@
 <!DOCTYPE html>
 <html lang="tr">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>migration: tabloyu silmeden değiştirmek · vibecodedslopware</title>
-<meta name="description" content="Şemayı ve ona bağımlı kodu aynı adımda değiştirirsen, canlı veri gider.">
-<meta name="author" content="Damla Su Bilge">
-<link rel="canonical" href="https://nosey-dewdrop.github.io/vibecodedslopware/slopware/migration/">
-<link rel="alternate" hreflang="tr" href="https://nosey-dewdrop.github.io/vibecodedslopware/slopware/migration/">
-<link rel="alternate" hreflang="en" href="https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/migration/">
-<meta property="og:type" content="article">
-<meta property="og:site_name" content="vibecodedslopware">
-<meta property="og:title" content="migration: tabloyu silmeden değiştirmek · vibecodedslopware">
-<meta property="og:description" content="Şemayı ve ona bağımlı kodu aynı adımda değiştirirsen, canlı veri gider.">
-<meta property="og:url" content="https://nosey-dewdrop.github.io/vibecodedslopware/slopware/migration/">
-<meta name="twitter:card" content="summary">
-<meta name="theme-color" content="#171221">
-<meta name="robots" content="index,follow">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23171221'/%3E%3Crect x='6' y='6' width='6' height='20' fill='%23ff8fb3'/%3E%3Crect x='20' y='6' width='6' height='20' fill='%23ff8fb3'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../style.css?v=11">
-</head>
-<body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Şemayı ve ona bağımlı kodu aynı adımda değiştirirsen, canlı veri gider." />
+    <meta name="author" content="Damla Su Bilge" />
+    <meta name="robots" content="index,follow" />
 
-<div id="stars" aria-hidden="true"></div>
+    <title>migration: tabloyu silmeden değiştirmek &#8212; vibecodedslopware</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400&family=Roboto+Slab:wght@400;700&family=Special+Elite&display=swap" />
+    <link rel="stylesheet" type="text/css" href="../../tema/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../tema/pyramid.css" />
+    <link rel="canonical" href="https://nosey-dewdrop.github.io/vibecodedslopware/slopware/migration/" />
+    <link rel="alternate" hreflang="tr" href="https://nosey-dewdrop.github.io/vibecodedslopware/slopware/migration/" />
+    <link rel="alternate" hreflang="en" href="https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/migration/" />
+    <link rel="search" title="ara" href="../../ara/" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='white'/%3E%3Crect x='6' y='6' width='6' height='20' fill='%23808080'/%3E%3Crect x='20' y='6' width='6' height='20' fill='%23808080'/%3E%3C/svg%3E" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="vibecodedslopware" />
+    <meta property="og:title" content="migration: tabloyu silmeden değiştirmek" />
+    <meta property="og:description" content="Şemayı ve ona bağımlı kodu aynı adımda değiştirirsen, canlı veri gider." />
+    <meta property="og:url" content="https://nosey-dewdrop.github.io/vibecodedslopware/slopware/migration/" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="theme-color" content="#ffffff" />
+    <script>window.KOK = "../../"; window.DIL = "tr";</script>
+  </head><body>
+<div class='header'><a href='../../'>vibecodedslopware</a></div>
 
-<div class="wrap">
+<ul class='navbar'>
+    <li><a href="../../slopware/">slopware</a></li>
+    <li><a href="../../systems/">systems engineering</a></li>
+    <li><a href="https://github.com/nosey-dewdrop/vibecodedslopware">github</a></li>
+    <li><a href="https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/migration/">en</a></li>
+    <li class="ara"><form action="../../ara/" method="get" role="search">
+      <input type="text" name="q" placeholder="ara…" aria-label="ara"
+             autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+    </form></li>
+</ul>
 
-<header class="site">
-  <span class="mark"><i>[</i>&#124;<i>]</i> vibecodedslopware</span>
-  <nav><a class="here" href="../../slopware/">slopware</a><a href="../../systems/">systems engineering</a><a href="https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/migration/">en</a><a href="https://github.com/nosey-dewdrop/vibecodedslopware">github</a></nav>
-</header>
+    <div class="related" role="navigation" aria-label="Gezinti">
+      <h3>Gezinti</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../ara/" title="Arama" accesskey="I">ara</a></li>
+        <li class="right" >
+          <a href="../../slopware/yedek-ve-geri-yukleme/" title="yedek ve geri yükleme" accesskey="N">sonraki</a> |</li>
+        <li class="right" >
+          <a href="../../slopware/sema-ve-indeks/" title="şema ve indeks" accesskey="P">önceki</a> |</li>
+<li class="nav-item nav-item-0"><a href="../../" title="ana sayfa">&#x2302;</a></li>
+          <li class="nav-item nav-item-1"><a href="../../slopware/" >slopware</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">migration: tabloyu silmeden değiştirmek</a></li>
+      </ul>
+    </div>
 
-<section>
-  <div class="duzen">
-      <nav class="kenar" aria-label="icindekiler">
-<p class="kenar-seviye">101 / bu şey nasıl çalışıyor?</p>
-<ol class="kenar-liste">
-<li><span class="k-no">00</span><a href="../../slopware/slopware-nedir/">slopware nedir, ve neden tam da şimdi konuşuyoruz?</a></li>
-<li><span class="k-no">01</span><a href="../../slopware/ekrandaki-sey-ne/">ekranındaki şey ne?</a></li>
-<li><span class="k-no">02</span><a href="../../slopware/terminal-ve-klasor/">terminal ve klasör</a></li>
-<li><span class="k-no">03</span><a href="../../slopware/localhost/">localhost nedir, neden sadece sende çalışıyor?</a></li>
-<li><span class="k-no">04</span><a href="../../slopware/kac-parca/">bir uygulama kaç parçadan oluşur?</a></li>
-<li><span class="k-no">05</span><a href="../../slopware/internette-nasil-acilir/">internette bir şey nasıl açılır?</a></li>
-<li><span class="k-no">06</span><a href="../../slopware/veri-nerede-duruyor/">veri nerede duruyor?</a></li>
-<li><span class="k-no">07</span><a href="../../slopware/sir-nedir/">sır nedir?</a></li>
-<li><span class="k-no">08</span><a href="../../slopware/hata-mesajini-okumak/">hata mesajını okumak</a></li>
-<li><span class="k-no">09</span><a href="../../slopware/kabul-kriteri/">AI&#x27;a iş yaptırmak: prompt değil, kabul kriteri</a></li>
-<li><span class="k-no">10</span><a href="../../slopware/calisiyor-ne-demek/">&quot;çalışıyor&quot; ne demek?</a></li>
-<li><span class="k-no">11</span><a href="../../slopware/kendi-projeni-teshis-et/">kendi projeni teşhis et</a></li>
-</ol>
-<p class="kenar-seviye">201 / ayağa kaldır</p>
-<ol class="kenar-liste">
-<li><span class="k-no">12</span><a href="../../slopware/git-ve-ortamlar/">git ve ortamlar</a></li>
-<li><span class="k-no">13</span><a href="../../slopware/ortam-degiskeni/">ortam değişkeni ve .env</a></li>
-<li><span class="k-no">14</span><a href="../../slopware/ilk-deploy/">ilk gerçek deploy</a></li>
-<li><span class="k-no">15</span><a href="../../slopware/domain-dns-https/">domain, DNS ve HTTPS</a></li>
-<li><span class="k-no">16</span><a href="../../slopware/veritabani-baglamak/">veritabanı bağlamak</a></li>
-<li><span class="k-no">17</span><a href="../../slopware/sema-ve-indeks/">şema ve indeks</a></li>
-<li class="aktif"><span class="k-no">18</span><a href="../../slopware/migration/">migration: tabloyu silmeden değiştirmek</a></li>
-<li><span class="k-no">19</span><a href="../../slopware/yedek-ve-geri-yukleme/">yedek ve geri yükleme</a></li>
-<li><span class="k-no">20</span><a href="../../slopware/hata-yonetimi/">hata yönetimi ve sessiz catch</a></li>
-<li><span class="k-no">21</span><a href="../../slopware/test-ve-ci/">test ve CI</a></li>
-</ol>
-<p class="kenar-seviye">301 / gerçek kullanıcı ve saldırgan</p>
-<ol class="kenar-liste">
-<li><span class="k-no">22</span><a href="../../slopware/auth/">auth: kim olduğunu iddia etmek</a></li>
-<li><span class="k-no">23</span><a href="../../slopware/yetkilendirme-ve-rls/">yetkilendirme ve RLS</a></li>
-<li><span class="k-no">24</span><a href="../../slopware/girdi-guvenilmezdir/">girdi güvenilmezdir</a></li>
-<li><span class="k-no">25</span><a href="../../slopware/bagimlilik-zinciri/">bağımlılık zinciri</a></li>
-<li><span class="k-no">26</span><a href="../../slopware/llm-guvenligi/">LLM&#x27;li ürünün kendi güvenliği</a></li>
-<li><span class="k-no">27</span><a href="../../slopware/rate-limit/">rate limit</a></li>
-<li><span class="k-no">28</span><a href="../../slopware/olcek/">ölçek: ilk kalabalık geldiğinde</a></li>
-<li><span class="k-no">29</span><a href="../../slopware/log-ve-alarm/">log ve alarm</a></li>
-<li><span class="k-no">30</span><a href="../../slopware/izleme/">izleme</a></li>
-<li><span class="k-no">31</span><a href="../../slopware/maliyet-kontrolu/">maliyet kontrolü</a></li>
-</ol>
-<p class="kenar-seviye">401 / founder</p>
-<ol class="kenar-liste">
-<li><span class="k-no">32</span><a href="../../slopware/wrapper-anatomisi/">wrapper anatomisi</a></li>
-<li><span class="k-no">33</span><a href="../../slopware/kimsenin-istemedigi-sey/">kimsenin istemediği şeyi yapmak</a></li>
-<li><span class="k-no">34</span><a href="../../slopware/kullaniciyla-konusmak/">kullanıcıyla konuşmak</a></li>
-<li><span class="k-no">35</span><a href="../../slopware/mvp-ve-launch/">MVP ve launch</a></li>
-<li><span class="k-no">36</span><a href="../../slopware/kvkk-gelistirici-gozuyle/">KVKK&#x27;yı geliştirici gözüyle okumak</a></li>
-<li><span class="k-no">37</span><a href="../../slopware/yurtdisina-aktarim/">yurtdışına aktarım ve çerez</a></li>
-<li><span class="k-no">38</span><a href="../../slopware/para-almak/">para almak</a></li>
-<li><span class="k-no">39</span><a href="../../slopware/fiyatlama-ve-metrik/">fiyatlama ve gerçek metrik</a></li>
-<li><span class="k-no">40</span><a href="../../slopware/default-alive/">default alive mı, default dead mi?</a></li>
-</ol>
-</nav>
-      <article class="yazi">
-        <p class="etiket">18 / 201 ayağa kaldır</p>
-        <h1>migration: tabloyu silmeden değiştirmek</h1>
-        <p class="lede">Şemayı ve ona bağımlı kodu aynı adımda değiştirirsen, canlı veri gider.</p>
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body" role="main">
 
-        <div class="divider" aria-hidden="true">+ · ✱ · + · ▪ · ✱ · + · ✱ · ▪ · + · ✱</div>
-
-        <p class="henuz">bu bölüm henüz yazılmadı. haftada bir bölüm.</p>
-
-        <nav class="gez"><a href="../../slopware/sema-ve-indeks/">← şema ve indeks</a><a class="gez-sag" href="../../slopware/yedek-ve-geri-yukleme/">yedek ve geri yükleme →</a></nav>
-      </article>
-  </div>
+  <section id="migration">
+<h1>migration: tabloyu silmeden değiştirmek<a class="headerlink" href="#migration" title="Bu başlığa bağlantı">¶</a></h1>
+<div class="description yazi-ozet">Şemayı ve ona bağımlı kodu aynı adımda değiştirirsen, canlı veri gider.</div>
+<p class="henuz">bu bölüm henüz yazılmadı. haftada bir bölüm.</p>
 </section>
 
-<footer>
-  <span>metin cc by-nc, kod mit · <a href="https://github.com/nosey-dewdrop/vibecodedslopware">kaynağı burada</a>, ben düşersem sen fork'la</span>
-  <span class="sp"><a href="../../">bütün müfredatlar</a></span>
-</footer>
+            <div class="clearer"></div>
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
 
+    <div class="related" role="navigation" aria-label="Gezinti">
+      <h3>Gezinti</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../ara/" title="Arama">ara</a></li>
+        <li class="right" >
+          <a href="../../slopware/yedek-ve-geri-yukleme/" title="yedek ve geri yükleme">sonraki</a> |</li>
+        <li class="right" >
+          <a href="../../slopware/sema-ve-indeks/" title="şema ve indeks">önceki</a> |</li>
+<li class="nav-item nav-item-0"><a href="../../" title="ana sayfa">&#x2302;</a></li>
+          <li class="nav-item nav-item-1"><a href="../../slopware/" >slopware</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">migration: tabloyu silmeden değiştirmek</a></li>
+      </ul>
+    </div>
+
+<div class="footer">
+	&copy; 2026, Damla Su Bilge | <a href="https://github.com/nosey-dewdrop/vibecodedslopware">kaynağı burada</a>, ben düşersem sen fork'la.
+	metin cc by-nc, kod mit.
+<br>
+elde yazılmış bir jeneratörle kuruldu &#183; görünüm yazbel'in pyramid temasından
+<br>
+<br>
 </div>
-<script src="../../effects.js"></script>
-</body>
+<script src="../../tema/stem.js"></script>
+<script src="../../tema/site.js"></script>
+  </body>
 </html>
