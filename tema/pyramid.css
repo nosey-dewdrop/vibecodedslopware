@@ -919,3 +919,111 @@ ul.navbar li.ara form
         padding-right: 0;
     }
 }
+
+/* --- bülten kutusu ------------------------------------------------------- */
+/* Yazbel'in dip şeridiyle aynı sözlük: noktalı gümüş çizgi, Roboto Slab
+   başlık, gri italik açıklama, arama kutusuyla aynı alt çizgili alan. */
+
+div.liste
+{
+    margin-top: 3em;
+    padding-top: 1.5em;
+    border-top: 1px dotted silver;
+    text-align: left;
+}
+
+p.liste-baslik
+{
+    font-family: "Roboto Slab";
+    font-size: 120%;
+    color: #373839;
+    margin: 0 0 .3em 0;
+}
+
+p.liste-ozet
+{
+    color: gray;
+    font-size: 11pt;
+    font-style: italic;
+    margin: 0 0 1em 0;
+}
+
+form.liste-form
+{
+    margin-bottom: .6em;
+}
+
+form.liste-form input[type=email]
+{
+    font-family: "Noto Sans", sans-serif;
+    font-size: 12pt;
+    width: 18em;
+    max-width: 100%;
+    padding: 4px 8px;
+    border: none;
+    border-bottom: 1px solid silver;
+    background: transparent;
+    outline: none;
+}
+
+form.liste-form input[type=email]:focus
+{
+    border-bottom: 1px solid steelblue;
+}
+
+form.liste-form input[type=email]::placeholder
+{
+    color: silver;
+}
+
+form.liste-form input[type=submit]
+{
+    font-family: "Noto Sans", sans-serif;
+    font-size: 11pt;
+    color: gray;
+    background-color: white;
+    border: 1px dotted silver;
+    border-radius: 3px;
+    padding: 5px 16px;
+    margin-left: .6em;
+    cursor: pointer;
+}
+
+form.liste-form input[type=submit]:hover
+{
+    color: firebrick;
+    border-color: firebrick;
+}
+
+p.liste-not
+{
+    color: silver;
+    font-size: 10pt;
+    font-style: italic;
+    margin: 0;
+}
+
+/* bot tuzağı: insan görmesin, ekran okuyucu okumasın, bot doldursun */
+input.tuzak
+{
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
+
+@media screen and (max-width: 500px)
+{
+    form.liste-form input[type=email]
+    {
+        display: block;
+        width: 100%;
+    }
+
+    form.liste-form input[type=submit]
+    {
+        margin-left: 0;
+        margin-top: .8em;
+    }
+}

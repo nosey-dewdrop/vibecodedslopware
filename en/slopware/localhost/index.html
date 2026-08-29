@@ -3,11 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Bu, demo ile ürün arasındaki ilk ve en keskin çizgi." />
+    <meta name="description" content="That address is the name your machine gives itself; anyone else reads their own." />
     <meta name="author" content="Damla Su Bilge" />
     <meta name="robots" content="index,follow" />
 
-    <title>localhost nedir, neden sadece sende çalışıyor? &#8212; vibecodedslopware</title>
+    <title>localhost:3000 &#8212; vibecodedslopware</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400&family=Roboto+Slab:wght@400;700&family=Special+Elite&display=swap" />
@@ -20,8 +20,8 @@
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='white'/%3E%3Crect x='6' y='6' width='6' height='20' fill='%23808080'/%3E%3Crect x='20' y='6' width='6' height='20' fill='%23808080'/%3E%3C/svg%3E" />
     <meta property="og:type" content="article" />
     <meta property="og:site_name" content="vibecodedslopware" />
-    <meta property="og:title" content="localhost nedir, neden sadece sende çalışıyor?" />
-    <meta property="og:description" content="Bu, demo ile ürün arasındaki ilk ve en keskin çizgi." />
+    <meta property="og:title" content="localhost:3000" />
+    <meta property="og:description" content="That address is the name your machine gives itself; anyone else reads their own." />
     <meta property="og:url" content="https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/localhost/" />
     <meta name="twitter:card" content="summary" />
     <meta name="theme-color" content="#ffffff" />
@@ -46,12 +46,12 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../ara/" title="Search" accesskey="I">search</a></li>
         <li class="right" >
-          <a href="../../../slopware/kac-parca/" title="bir uygulama kaç parçadan oluşur?" accesskey="N">next</a> |</li>
+          <a href="../../../slopware/backend-nedir/" title="what a backend is" accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../../../slopware/terminal-ve-klasor/" title="terminal ve klasör" accesskey="P">previous</a> |</li>
+          <a href="../../../slopware/slopware-nedir/" title="slopware 101: what this series is and why I am writing it" accesskey="P">previous</a> |</li>
 <li class="nav-item nav-item-0"><a href="../../../" title="home">&#x2302;</a></li>
           <li class="nav-item nav-item-1"><a href="../../../slopware/" >slopware</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">localhost nedir, neden sadece sende çalışıyor?</a></li>
+        <li class="nav-item nav-item-this"><a href="">localhost:3000</a></li>
       </ul>
     </div>
 
@@ -60,10 +60,19 @@
           <div class="body" role="main">
 
   <section id="localhost">
-<h1>localhost nedir, neden sadece sende çalışıyor?<a class="headerlink" href="#localhost" title="Link to this heading">¶</a></h1>
-<div class="description yazi-ozet">Bu, demo ile ürün arasındaki ilk ve en keskin çizgi.</div>
-<p class="henuz">this chapter is not written yet. one chapter a week.</p>
+<h1>localhost:3000<a class="headerlink" href="#localhost" title="Link to this heading">¶</a></h1>
+<div class="description yazi-ozet">That address is the name your machine gives itself; anyone else reads their own.</div>
+
+<p>In this post we are talking about <code class="docutils literal notranslate"><span class="pre">localhost:3000</span></code>. This joke has been going around the internet for a long time. So what is <code class="docutils literal notranslate"><span class="pre">localhost:3000</span></code>, why do people think it finishes a developer off, and why does none of that help? Today I am answering the four sentences the joke is aimed at.</p>
+<p><strong>"I built a site and sent the link to my friend and she cannot open it."</strong> You think the address on your screen is the address of your site. <code class="docutils literal notranslate"><span class="pre">localhost</span></code> is the name a machine gives to itself, and every machine has its own. RFC 6761 defines that name, it resolves to <code class="docutils literal notranslate"><span class="pre">127.0.0.1</span></code>, and RFC 1122 reserves the whole <code class="docutils literal notranslate"><span class="pre">127.0.0.0/8</span></code> block for the same job, more than 16 million addresses that all mean "me". Whatever you send there turns around inside the machine before it reaches the network card, so her phone read its own <code class="docutils literal notranslate"><span class="pre">localhost</span></code> and found nothing. Try it yourself, open <code class="docutils literal notranslate"><span class="pre">localhost:3000</span></code> on your laptop and type the same thing on your phone. Same address, different kitchen.</p>
+<p><strong>"I published it, so why does the site look different and incomplete?"</strong> You think the folder you worked in is the folder that went up. <code class="docutils literal notranslate"><span class="pre">npm run dev</span></code> keeps a copy of your project in memory and patches it while you type, which is why your changes show up before you save anything. <code class="docutils literal notranslate"><span class="pre">npm run build</span></code> is the one that writes the finished files into a <code class="docutils literal notranslate"><span class="pre">dist</span></code> or a <code class="docutils literal notranslate"><span class="pre">.next</span></code> folder, and that folder is the only thing a server ever hands to strangers. Run <code class="docutils literal notranslate"><span class="pre">npm run build</span></code> once and open what it made, because those files are your whole site.</p>
+<p><strong>"I did everything in the video and I still cannot get in."</strong> You think deploying is a long setup. Push the repo to GitHub, open Vercel or Cloudflare Pages and pick it, and the build command and the output folder come filled in. This is what those platforms are for, they run your build, serve the output and renew the certificate. Copy every value from your <code class="docutils literal notranslate"><span class="pre">.env</span></code> into the environment variables panel, because that file is gitignored and the machine has never seen it. A working URL comes in about a minute.</p>
+<p><strong>"My domain and my hosting are both ready, so why does the site still not run?"</strong> You think a domain plus hosting equals a site. The domain is only a name, DNS is the phone book that turns it into an address, and hosting is an empty plot until a program is running on it. <code class="docutils literal notranslate"><span class="pre">Connection refused</span></code> means nothing is answering there yet. If the page loads but comes up empty, search your code for <code class="docutils literal notranslate"><span class="pre">localhost</span></code>, because a line like <code class="docutils literal notranslate"><span class="pre">fetch("http://localhost:3000/api/items")</span></code> runs in the visitor's browser and sends them to their own machine. Call <code class="docutils literal notranslate"><span class="pre">/api/items</span></code> instead.</p>
+<p>I run ir-globe on a machine like that. It reads 198 countries in 13 layers on 0 dollars of infrastructure and it kept reading them for months while I never opened the laptop it was written on.</p>
+<p>Long story short, this is the first room of the house and everybody starts here. The only question is whose machine is awake when somebody opens your link. Post 2 is what a backend is, because once your site is on a machine other people can reach, the next question is which parts of it they are allowed to touch.</p>
+<p>Take care on your building journey, you can subscribe to my blog from the box below.</p>
 </section>
+
 
             <div class="clearer"></div>
           </div>
@@ -77,12 +86,12 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../ara/" title="Search">search</a></li>
         <li class="right" >
-          <a href="../../../slopware/kac-parca/" title="bir uygulama kaç parçadan oluşur?">next</a> |</li>
+          <a href="../../../slopware/backend-nedir/" title="what a backend is">next</a> |</li>
         <li class="right" >
-          <a href="../../../slopware/terminal-ve-klasor/" title="terminal ve klasör">previous</a> |</li>
+          <a href="../../../slopware/slopware-nedir/" title="slopware 101: what this series is and why I am writing it">previous</a> |</li>
 <li class="nav-item nav-item-0"><a href="../../../" title="home">&#x2302;</a></li>
           <li class="nav-item nav-item-1"><a href="../../../slopware/" >slopware</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">localhost nedir, neden sadece sende çalışıyor?</a></li>
+        <li class="nav-item nav-item-this"><a href="">localhost:3000</a></li>
       </ul>
     </div>
 

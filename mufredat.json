@@ -5,6 +5,19 @@
     "aciklama": {
       "tr": "yazılım müfredatları. slopware nedir, nasıl fark edilir, ne yapmalı.",
       "en": "software curricula. what slopware is, how to spot it, what to do."
+    },
+    "liste": {
+      "eylem": "",
+      "alan": "email",
+      "gizli": {},
+      "baslik": {
+        "tr": "yeni bölüm çıkınca haberin olsun",
+        "en": "get the next chapter in your inbox"
+      },
+      "ozet": {
+        "tr": "haftada bir bölüm. başka bir şey yollamıyorum, istediğin an tek tıkla çıkarsın.",
+        "en": "one chapter a week. nothing else, and one click to leave."
+      }
     }
   },
   "mufredatlar": [
@@ -13,367 +26,302 @@
       "ad": "slopware",
       "durum": "yayinda",
       "baslik": {
-        "tr": "slopware nedir, nasıl fark edilir, ne yapmalı?",
-        "en": "what is slopware, how do you spot it, what do you do?"
+        "tr": "slopware 101: nasıl fark edilir, ne yapmalı?",
+        "en": "slopware 101: how to spot it, what to do"
       },
       "ozet": {
-        "tr": "çalışıyor gibi görünen bir şeyle gerçekten ayakta duran bir şey arasındaki mesafeyi ölçmeyi öğreten bir müfredat. sıfırdan kurucu seviyesine.",
-        "en": "a curriculum that teaches you to measure the distance between something that looks like it works and something that actually holds up. from zero to founder."
+        "tr": "her bölüm gerçek bir olayla açılıyor, yarın yapabileceğin şeyle kapanıyor. kendi hatalarımdan, kendi projelerimden.",
+        "en": "every post opens with a real incident and closes with the thing you can do tomorrow. from my own mistakes, on my own projects."
       },
       "seviyeler": [
         {
-          "kod": "101",
-          "ad": "bu şey nasıl çalışıyor?",
-          "ozet": "Hiçbir şey bilmediğini varsayıyoruz. Kod yazdıran ama ne olduğunu bilmeyen insan. Burada tek bir CVE numarası geçmez.",
+          "kod": "00",
+          "ad": {
+            "tr": "açılış",
+            "en": "the opening"
+          },
+          "ozet": {
+            "tr": "seri neden var, kime yazılıyor, ne vaat ediyor.",
+            "en": "why the series exists, who it is for, what it promises."
+          },
           "bolumler": [
             {
               "no": 0,
               "slug": "slopware-nedir",
-              "baslik": "slopware nedir, ve neden tam da şimdi konuşuyoruz?",
-              "belirti": "—",
+              "baslik": "slopware 101: bu seri ne, neden yazıyorum?",
+              "baslik_en": "slopware 101: what this series is and why I am writing it",
               "neden": "Herkes bu kelimeyi söylüyor ama kimse tanımını bilmiyor.",
-              "durum": "yazildi"
-            },
+              "neden_en": "Everyone says the word, nobody defines it."
+            }
+          ]
+        },
+        {
+          "kod": "01",
+          "ad": {
+            "tr": "altyapı",
+            "en": "infrastructure"
+          },
+          "ozet": {
+            "tr": "makine, süreç, sır. bir şeyin senden bağımsız ayakta durması için gereken en alt kat.",
+            "en": "machine, process, secret. the lowest floor something needs to stand without you."
+          },
+          "bolumler": [
             {
               "no": 1,
-              "slug": "ekrandaki-sey-ne",
-              "baslik": "ekranındaki şey ne?",
-              "belirti": "AI'ın çıktısı sana sihir gibi görünüyor",
-              "neden": "Kafanda bir makine modeli yoksa, kodun ne yaptığını hiçbir zaman bilemezsin.",
-              "durum": "bos"
+              "slug": "localhost",
+              "baslik": "localhost:3000",
+              "baslik_en": "localhost:3000",
+              "neden": "O adres senin makinenin kendine verdiği ad; başkası açtığında kendi makinesine bakıyor.",
+              "neden_en": "That address is the name your machine gives itself; anyone else reads their own."
             },
             {
               "no": 2,
-              "slug": "terminal-ve-klasor",
-              "baslik": "terminal ve klasör",
-              "belirti": "Dosyanın nerede durduğunu bilmiyorsun",
-              "neden": "Projeni bulamıyorsan, projene sahip değilsin.",
-              "durum": "bos"
+              "slug": "backend-nedir",
+              "baslik": "backend dediğimiz şey ne?",
+              "baslik_en": "what a backend is",
+              "neden": "Ekranda gördüğün şeyle kararı veren şey aynı yerde durmuyor.",
+              "neden_en": "The thing on screen and the thing that decides are not in the same place."
             },
             {
               "no": 3,
-              "slug": "localhost",
-              "baslik": "localhost nedir, neden sadece sende çalışıyor?",
-              "belirti": "Linki arkadaşına atıyorsun, açılmıyor",
-              "neden": "Bu, demo ile ürün arasındaki ilk ve en keskin çizgi.",
-              "durum": "bos"
+              "slug": "dev-prod-env",
+              "baslik": "dev, prod ve .env",
+              "baslik_en": "dev, prod and .env",
+              "neden": "Senin makinendeki ayarla sunucudaki ayar aynı değil, ve fark tam da orada patlıyor.",
+              "neden_en": "Your machine's settings and the server's are not the same, and that gap is where it breaks."
             },
             {
               "no": 4,
-              "slug": "kac-parca",
-              "baslik": "bir uygulama kaç parçadan oluşur?",
-              "belirti": "Kodun nerede çalıştığını bilmiyorsun",
-              "neden": "AI sana hem istemci hem sunucu kodu verir ve ikisinin farklı makinelerde koştuğunu söylemez.",
-              "durum": "bos"
-            },
+              "slug": "anahtar-ve-acik-kapi",
+              "baslik": "anahtarını verdin, kapıyı açık bıraktın",
+              "baslik_en": "you gave out your key and left the door open",
+              "neden": "Tarayıcıya gömülen anahtar herkesin anahtarıdır, faturayı sen ödersin.",
+              "neden_en": "A key shipped to the browser is everyone's key, and you pay the bill."
+            }
+          ]
+        },
+        {
+          "kod": "02",
+          "ad": {
+            "tr": "veri ve izin",
+            "en": "data and permission"
+          },
+          "ozet": {
+            "tr": "veri nerede duruyor, kim okuyabiliyor, kim yazabiliyor.",
+            "en": "where the data sits, who can read it, who can write it."
+          },
+          "bolumler": [
             {
               "no": 5,
-              "slug": "internette-nasil-acilir",
-              "baslik": "internette bir şey nasıl açılır?",
-              "belirti": "\"Domain aldım, site yayında\"",
-              "neden": "Domain, hosting ve deploy üç ayrı şey. Üçünü de yapmadan kimse siteni göremez.",
-              "durum": "bos"
+              "slug": "veritabani-ve-veri",
+              "baslik": "veritabanı ve veriyi korumak",
+              "baslik_en": "databases and protecting data",
+              "neden": "Bir yere yazılmayan şey yok demektir; yanlış yere yazılan şey de öyle.",
+              "neden_en": "What is not written down does not exist, and neither does what is written in the wrong place."
             },
             {
               "no": 6,
-              "slug": "veri-nerede-duruyor",
-              "baslik": "veri nerede duruyor?",
-              "belirti": "Her yenilemede uygulaman seni unutuyor",
-              "neden": "Bir yere yazılmayan şey var olmuyor.",
-              "durum": "bos"
+              "slug": "auth-ve-yetki",
+              "baslik": "auth ≠ authorization",
+              "baslik_en": "auth ≠ authorization",
+              "neden": "Kim olduğunu bilmek, neye izni olduğunu bilmek değil.",
+              "neden_en": "Knowing who someone is is not knowing what they are allowed to do."
             },
             {
               "no": 7,
-              "slug": "sir-nedir",
-              "baslik": "sır nedir?",
-              "belirti": "Anahtarın tarayıcıda görünüyor",
-              "neden": "Sızan bir anahtar, senin faturanla başkasının çalıştırdığı bir sunucuya dönüşüyor.",
-              "durum": "bos"
+              "slug": "tarayicidaki-kontrol",
+              "baslik": "kontrol tarayıcıdaysa kontrol yok",
+              "baslik_en": "if the check is in the browser there is no check",
+              "neden": "Kullanıcının makinesinde koşan hiçbir kural kural değildir.",
+              "neden_en": "No rule that runs on the user's machine is a rule."
             },
             {
               "no": 8,
-              "slug": "hata-mesajini-okumak",
-              "baslik": "hata mesajını okumak",
-              "belirti": "Kırmızı yazıyı görünce kapatıyorsun",
-              "neden": "Hata mesajı elindeki tek dürüst geri bildirim.",
-              "durum": "bos"
+              "slug": "rls",
+              "baslik": "satır seviyesinde güvenlik",
+              "baslik_en": "row level security",
+              "neden": "Tek satırlık SQL ile kapanan bir açık, 170 uygulamada açık duruyordu.",
+              "neden_en": "A hole that one line of SQL closes was standing open in 170 apps."
             },
             {
               "no": 9,
-              "slug": "kabul-kriteri",
-              "baslik": "AI'a iş yaptırmak: prompt değil, kabul kriteri",
-              "belirti": "Model \"yaptım\" diyor, sen inanıyorsun",
-              "neden": "Modelin \"oldu\" demesine itiraz etmiyorsan, slopware tam olarak burada doğuyor.",
-              "durum": "bos"
-            },
+              "slug": "dosya-yukleme",
+              "baslik": "dosya yükleme ve depolama",
+              "baslik_en": "file upload and storage",
+              "neden": "Yüklenen her dosya bir yabancının makinenden istediği yer demek.",
+              "neden_en": "Every uploaded file is a stranger asking for space on your machine."
+            }
+          ]
+        },
+        {
+          "kod": "03",
+          "ad": {
+            "tr": "dayanıklılık",
+            "en": "resilience"
+          },
+          "ozet": {
+            "tr": "ilk kalabalık, ilk çakışma, ilk para, ilk çöküş.",
+            "en": "the first crowd, the first collision, the first payment, the first crash."
+          },
+          "bolumler": [
             {
               "no": 10,
-              "slug": "calisiyor-ne-demek",
-              "baslik": "\"çalışıyor\" ne demek?",
-              "belirti": "Bir kez çalıştı, bitti sanıyorsun",
-              "neden": "Bir kez çalışmak ile hep çalışmak aynı şey değil.",
-              "durum": "bos"
+              "slug": "100-satir-10000-satir",
+              "baslik": "100 satırda hızlı, 10.000'de ölü",
+              "baslik_en": "fast at 100 rows, dead at 10.000",
+              "neden": "Kendi test verinle hızlı olmak hiçbir şey kanıtlamıyor.",
+              "neden_en": "Being fast on your own test data proves nothing."
             },
             {
               "no": 11,
-              "slug": "kendi-projeni-teshis-et",
-              "baslik": "kendi projeni teşhis et",
-              "belirti": "—",
-              "neden": "101'i bitirdiysen, elindeki şeye bakıp adını koyabiliyorsun.",
-              "durum": "bos"
-            }
-          ]
-        },
-        {
-          "kod": "201",
-          "ad": "ayağa kaldır",
-          "ozet": "Kavramları biliyorsun. Şimdi kendi projende kuruyorsun, ve ilk kez komut çalıştırıyoruz.",
-          "bolumler": [
+              "slug": "race-ve-idempotency",
+              "baslik": "race condition ve idempotency",
+              "baslik_en": "race conditions and idempotency",
+              "neden": "Aynı anda iki kişi tıkladığında ne oluyor, ve aynı istek iki kez gelirse?",
+              "neden_en": "What happens when two people click at once, and when the same request arrives twice?"
+            },
             {
               "no": 12,
-              "slug": "git-ve-ortamlar",
-              "baslik": "git ve ortamlar",
-              "belirti": "Tek klasör, tek ortam, prod'da düzeltme",
-              "neden": "\"Bende çalışıyordu\" cümlesinin resmi tanımı burada.",
-              "durum": "bos"
+              "slug": "odeme",
+              "baslik": "para almak",
+              "baslik_en": "payments",
+              "neden": "Para işin içine girdiğinde hata artık bir hata değil, bir borç.",
+              "neden_en": "Once money is involved a bug is not a bug, it is a debt."
             },
             {
               "no": 13,
-              "slug": "ortam-degiskeni",
-              "baslik": "ortam değişkeni ve .env",
-              "belirti": "Anahtar kodun içinde",
-              "neden": "Tek soru: kodun bu an açık kaynak olsa, kimlik bilgisi sızar mıydı?",
-              "durum": "bos"
+              "slug": "dis-dunya-coktugunde",
+              "baslik": "dış dünya çöktüğünde",
+              "baslik_en": "when the outside world fails",
+              "neden": "Bağlı olduğun her servis bir gün cevap vermeyecek; o gün ne oluyor?",
+              "neden_en": "Every service you depend on will one day not answer. What happens that day?"
             },
             {
               "no": 14,
-              "slug": "ilk-deploy",
-              "baslik": "ilk gerçek deploy",
-              "belirti": "Bitmiş proje makinende duruyor",
-              "neden": "Makinenden çıkmayan şey ürün değil.",
-              "durum": "bos"
-            },
+              "slug": "neden-coktu",
+              "baslik": "çöktü ve nedenini söyleyemiyorsun",
+              "baslik_en": "it crashed and you cannot tell why",
+              "neden": "Log yoksa olay da yok; elinde sadece bir şikâyet kalıyor.",
+              "neden_en": "With no logs there is no event, only a complaint."
+            }
+          ]
+        },
+        {
+          "kod": "04",
+          "ad": {
+            "tr": "ajanlar ve maliyet",
+            "en": "agents and cost"
+          },
+          "ozet": {
+            "tr": "modele verdiğin yetki, ödediğin fatura, kurduğun ama okumadığın kod.",
+            "en": "the power you hand the model, the bill you pay, the code you install but never read."
+          },
+          "bolumler": [
             {
               "no": 15,
-              "slug": "domain-dns-https",
-              "baslik": "domain, DNS ve HTTPS",
-              "belirti": "\"DNS değiştirdim ama site hâlâ eski\"",
-              "neden": "Kilit simgesi bir görsel değil, kurduğun bir şey. Ve 90 günde bitiyor.",
-              "durum": "bos"
+              "slug": "prompt-injection",
+              "baslik": "prompt injection ve ajana verdiğin yetki",
+              "baslik_en": "prompt injection and the power you handed the agent",
+              "neden": "Modelin okuduğu her metin bir komut olabilir; ajanın eli nereye uzanıyor?",
+              "neden_en": "Any text the model reads can be an instruction. How far does the agent's hand reach?"
             },
             {
               "no": 16,
-              "slug": "veritabani-baglamak",
-              "baslik": "veritabanı bağlamak",
-              "belirti": "Tablo herkese açık",
-              "neden": "Veritabanını bağlamak ile yayına açmak arasındaki fark tam olarak RLS.",
-              "durum": "bos"
+              "slug": "fatura",
+              "baslik": "fatura",
+              "baslik_en": "the bill",
+              "neden": "Token ucuz, ama limitsiz bir döngü ucuz değil.",
+              "neden_en": "Tokens are cheap. An unbounded loop is not."
             },
             {
               "no": 17,
-              "slug": "sema-ve-indeks",
-              "baslik": "şema ve indeks",
-              "belirti": "200 kullanıcıda çöküyor",
-              "neden": "İndeks tasarımı DBA işi değil, senin işin.",
-              "durum": "bos"
+              "slug": "npm-install",
+              "baslik": "npm install aslında ne kuruyor?",
+              "baslik_en": "what npm install really installs",
+              "neden": "Tek satırlık komut, adını bile duymadığın yüzlerce paketi makinene alıyor.",
+              "neden_en": "One line pulls in hundreds of packages you have never heard of."
             },
             {
               "no": 18,
-              "slug": "migration",
-              "baslik": "migration: tabloyu silmeden değiştirmek",
-              "belirti": "Tabloyu silip yeniden yaratıyorsun",
-              "neden": "Şemayı ve ona bağımlı kodu aynı adımda değiştirirsen, canlı veri gider.",
-              "durum": "bos"
-            },
+              "slug": "yazmadigin-kod",
+              "baslik": "yazmadığın kodu ayıklayamazsın",
+              "baslik_en": "you cannot debug code you did not write",
+              "neden": "Okumadan kabul ettiğin her satır, bir gün önüne hata olarak geliyor.",
+              "neden_en": "Every line you accept without reading comes back as a bug."
+            }
+          ]
+        },
+        {
+          "kod": "05",
+          "ad": {
+            "tr": "ürünün yüzü",
+            "en": "the face of the product"
+          },
+          "ozet": {
+            "tr": "hepsi birbirine benziyorsa, sorun renkte değil.",
+            "en": "if they all look alike, the problem is not the color."
+          },
+          "bolumler": [
             {
               "no": 19,
-              "slug": "yedek-ve-geri-yukleme",
-              "baslik": "yedek ve geri yükleme",
-              "belirti": "\"Yedeğim var\"",
-              "neden": "Kimse yedek istemiyor, herkes geri yükleme istiyor.",
-              "durum": "bos"
+              "slug": "ayni-cipler",
+              "baslik": "aynı çipler, aynı metinler",
+              "baslik_en": "same chips, same texts",
+              "neden": "Aynı modelden çıkan aynı arayüz, aynı cümlelerle geliyor.",
+              "neden_en": "The same model gives the same interface with the same sentences."
             },
             {
               "no": 20,
-              "slug": "hata-yonetimi",
-              "baslik": "hata yönetimi ve sessiz catch",
-              "belirti": "catch bloğun boş",
-              "neden": "Sessiz catch, hangisini seçtiğini bilmeden hem açık hem kapalı kalmandır.",
-              "durum": "bos"
+              "slug": "ayni-sey-duz-yazida",
+              "baslik": "düz yazıda da aynı şey",
+              "baslik_en": "the same thing in prose",
+              "neden": "Metin de arayüz kadar kalıplaşıyor, ve okur bunu ilk cümlede anlıyor.",
+              "neden_en": "Prose falls into the same molds, and the reader sees it in the first line."
             },
             {
               "no": 21,
-              "slug": "test-ve-ci",
-              "baslik": "test ve CI",
-              "belirti": "\"Bende çalışıyor\"",
-              "neden": "Senin makinende çalışması delil değil.",
-              "durum": "bos"
+              "slug": "kullanilabilirlik",
+              "baslik": "çalışıyor ama kimse kullanamıyor",
+              "baslik_en": "it works but nobody can use it",
+              "neden": "Doğru çalışan bir şey, anlaşılmıyorsa çalışmıyor demektir.",
+              "neden_en": "Something that works but cannot be understood does not work."
+            },
+            {
+              "no": 22,
+              "slug": "kullanici-icerigi",
+              "baslik": "kullanıcı içeriği ve moderasyon",
+              "baslik_en": "user content and moderation",
+              "neden": "Kullanıcıya yazma izni verdiğin an bir yayıncı oldun.",
+              "neden_en": "The moment you let users write, you became a publisher."
             }
           ]
         },
         {
-          "kod": "301",
-          "ad": "gerçek kullanıcı ve saldırgan",
-          "ozet": "Artık dışarıdan biri var. Kötü niyetli olabilir, ya da sadece kalabalık.",
+          "kod": "06",
+          "ad": {
+            "tr": "ekosistem",
+            "en": "ecosystem"
+          },
+          "ozet": {
+            "tr": "bu işin geri kalanı ne olacak, ve sen nerede duruyorsun.",
+            "en": "what happens to the rest of this, and where you stand in it."
+          },
           "bolumler": [
             {
-              "no": 22,
-              "slug": "auth",
-              "baslik": "auth: kim olduğunu iddia etmek",
-              "belirti": "Parola düz metin, session localStorage'da",
-              "neden": "Giriş ekranı güvenlik değildir.",
-              "durum": "bos"
-            },
-            {
               "no": 23,
-              "slug": "yetkilendirme-ve-rls",
-              "baslik": "yetkilendirme ve RLS",
-              "belirti": "A kullanıcısı B'nin verisini görüyor",
-              "neden": "Vibe-coded uygulamaların bir numaralı ölüm sebebi bu, ve oran tabanın yirmi katı.",
-              "durum": "bos"
+              "slug": "cs-oldu-mu",
+              "baslik": "CS öldü mü?",
+              "baslik_en": "is CS dead?",
+              "neden": "Mühendislik kod yazmak değildi zaten; farkı hep düşünmek yapıyordu.",
+              "neden_en": "Engineering was never about typing code. The difference was always the thinking."
             },
             {
               "no": 24,
-              "slug": "girdi-guvenilmezdir",
-              "baslik": "girdi güvenilmezdir",
-              "belirti": "Sorguyu string birleştirmeyle kuruyorsun",
-              "neden": "Kullanıcının yazdığı her şey, kanıtlanana kadar saldırıdır.",
-              "durum": "bos"
-            },
-            {
-              "no": 25,
-              "slug": "bagimlilik-zinciri",
-              "baslik": "bağımlılık zinciri",
-              "belirti": "AI'ın önerdiği paketi sorgusuz kuruyorsun",
-              "neden": "Modelin uydurduğu paket adını saldırgan senden önce kaydediyor.",
-              "durum": "bos"
-            },
-            {
-              "no": 26,
-              "slug": "llm-guvenligi",
-              "baslik": "LLM'li ürünün kendi güvenliği",
-              "belirti": "Prompt'u konfigürasyon sanıyorsun",
-              "neden": "Prompt bir ayar dosyası değil, çalıştırılabilir kod.",
-              "durum": "bos"
-            },
-            {
-              "no": 27,
-              "slug": "rate-limit",
-              "baslik": "rate limit",
-              "belirti": "Endpoint'in sınırsız",
-              "neden": "Bir bot bir gecede hem faturanı hem veritabanını götürür.",
-              "durum": "bos"
-            },
-            {
-              "no": 28,
-              "slug": "olcek",
-              "baslik": "ölçek: ilk kalabalık geldiğinde",
-              "belirti": "Lokalde hızlı, canlıda ölü",
-              "neden": "N+1 ve bağlantı havuzu lokalde asla görünmez, ilk trafikte görünür.",
-              "durum": "bos"
-            },
-            {
-              "no": 29,
-              "slug": "log-ve-alarm",
-              "baslik": "log ve alarm",
-              "belirti": "console.log ve sessizlik",
-              "neden": "Alarm etmeyen log sayılmıyor, ve yanlış log €91 milyon ediyor.",
-              "durum": "bos"
-            },
-            {
-              "no": 30,
-              "slug": "izleme",
-              "baslik": "izleme",
-              "belirti": "Bozulduğunu kullanıcı sana yazınca öğreniyorsun",
-              "neden": "Ölçmediğin şeyin bozulduğunu göremezsin.",
-              "durum": "bos"
-            },
-            {
-              "no": 31,
-              "slug": "maliyet-kontrolu",
-              "baslik": "maliyet kontrolü",
-              "belirti": "\"Limit koydum\"",
-              "neden": "Limit koymak bir kontrol değil, bir bildirim. Fatura kullanıcıyla değil, döngüyle büyüyor.",
-              "durum": "bos"
-            }
-          ]
-        },
-        {
-          "kod": "401",
-          "ad": "founder",
-          "ozet": "Ürün ayakta. Şimdi asıl soru: bu bir iş mi?",
-          "bolumler": [
-            {
-              "no": 32,
-              "slug": "wrapper-anatomisi",
-              "baslik": "wrapper anatomisi",
-              "belirti": "\"Bu sadece bir wrapper\"",
-              "neden": "Kör olan mühendis değil, mühendisin \"değerli\" tanımı.",
-              "durum": "bos"
-            },
-            {
-              "no": 33,
-              "slug": "kimsenin-istemedigi-sey",
-              "baslik": "kimsenin istemediği şeyi yapmak",
-              "belirti": "AI ile 1 günde yapılabilen şeyi seçtin",
-              "neden": "Tam da o yüzden herkes yapabiliyor.",
-              "durum": "bos"
-            },
-            {
-              "no": 34,
-              "slug": "kullaniciyla-konusmak",
-              "baslik": "kullanıcıyla konuşmak",
-              "belirti": "Görüşmeye fikrini anlatarak başlıyorsun",
-              "neden": "Buradaki rolün dinlemek, konuşmak değil.",
-              "durum": "bos"
-            },
-            {
-              "no": 35,
-              "slug": "mvp-ve-launch",
-              "baslik": "MVP ve launch",
-              "belirti": "Launch'u tek seferlik bir olay sanıyorsun",
-              "neden": "Bir şey çıkaracaksın, kimse umursamayacak. Oraya varman altı ay sürdüyse ikinci şansın olmayacak.",
-              "durum": "bos"
-            },
-            {
-              "no": 36,
-              "slug": "kvkk-gelistirici-gozuyle",
-              "baslik": "KVKK'yı geliştirici gözüyle okumak",
-              "belirti": "Aydınlatma metnini kopyaladın",
-              "neden": "Envanter çıkarmadan yazılan metin, iki maddeyi doğuştan ihlal ediyor.",
-              "durum": "bos"
-            },
-            {
-              "no": 37,
-              "slug": "yurtdisina-aktarim",
-              "baslik": "yurtdışına aktarım ve çerez",
-              "belirti": "\"AB için yeterlilik kararı var\"",
-              "neden": "Yok. Ve bölge seçmek bile aktarım sayılıyor.",
-              "durum": "bos"
-            },
-            {
-              "no": 38,
-              "slug": "para-almak",
-              "baslik": "para almak",
-              "belirti": "Stripe hesabı açmaya çalışıyorsun",
-              "neden": "Türkiye Stripe'ta yok, ve en büyük ceza riski site metninde değil.",
-              "durum": "bos"
-            },
-            {
-              "no": 39,
-              "slug": "fiyatlama-ve-metrik",
-              "baslik": "fiyatlama ve gerçek metrik",
-              "belirti": "Fiyatı maliyetten türettin",
-              "neden": "16 milyon indirme ve top 5 sıralama, PMF olmadığı anlamına gelebiliyor.",
-              "durum": "bos"
-            },
-            {
-              "no": 40,
-              "slug": "default-alive",
-              "baslik": "default alive mı, default dead mi?",
-              "belirti": "Bilmiyorsun",
-              "neden": "Kurucuların yarısı bilmiyor, ve bilmemek cevabın \"dead\" olması demek.",
-              "durum": "bos"
+              "slug": "ozgecmis-seli-ve-slop-pr",
+              "baslik": "AI özgeçmiş seli ve slop PR'lar",
+              "baslik_en": "the AI resume flood and slop pull requests",
+              "neden": "Üretim ucuzlayınca eleme pahalılaştı, ve yükü karşı taraf çekiyor.",
+              "neden_en": "When producing got cheap, filtering got expensive, and the other side carries it."
             }
           ]
         }

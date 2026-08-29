@@ -50,6 +50,10 @@ S = {
         "arama_ipucu": "Birden fazla kelime yazarsan hepsini birden içeren "
                        "bölümler listelenir.",
         "hazirlaniyor": "bu müfredat hazırlanıyor.",
+        "liste_dugme": "abone ol",
+        "liste_yer": "e-posta adresin",
+        "liste_not": "adresini kimseye vermiyorum, satmıyorum, "
+                     "başka bir şey için kullanmıyorum.",
         "olusturuldu": "elde yazılmış bir jeneratörle kuruldu",
         "gorunum": "görünüm yazbel'in pyramid temasından",
     },
@@ -78,6 +82,10 @@ S = {
         "arama_ipucu": "Searching for multiple words only shows chapters that "
                        "contain all of them.",
         "hazirlaniyor": "this curriculum is in progress.",
+        "liste_dugme": "subscribe",
+        "liste_yer": "your email address",
+        "liste_not": "I do not share your address, sell it, or use it "
+                     "for anything else.",
         "olusturuldu": "built with a hand-written generator",
         "gorunum": "look borrowed from yazbel's pyramid theme",
     },
@@ -609,6 +617,42 @@ def gezinti(yukari, dil, kirinti, onceki=None, sonraki=None, kisayol=False):
     return "\n".join(p)
 
 
+def liste_formu(veri, dil):
+    """Bülten kutusu. mufredat.json'daki site.liste'den besleniyor.
+
+    Sağlayıcıdan bağımsız: adres ve alan adı ayarda durduğu için Buttondown,
+    Mailchimp, Formspree, hepsi aynı işaretlemeyle çalışıyor. Adres boşsa
+    kutu hiç basılmıyor — yarım bir form yayına çıkmasın.
+
+    Düz form POST'u; JS yok. target="_blank" çünkü sağlayıcıların çoğu
+    tarayıcıdan doğrudan POST'a CORS açmıyor, onay sayfasını kendi
+    sekmesinde gösteriyor.
+    """
+    liste = veri["site"].get("liste") or {}
+    eylem = (liste.get("eylem") or "").strip()
+    if not eylem:
+        return ""
+    t = S[dil]
+    alan = liste.get("alan") or "email"
+    gizli = "".join(
+        f'<input type="hidden" name="{html.escape(k)}" value="{html.escape(v)}" />'
+        for k, v in (liste.get("gizli") or {}).items())
+    return f"""<div class="liste">
+  <p class="liste-baslik">{kac(metin(liste.get("baslik"), dil))}</p>
+  <p class="liste-ozet">{kac(metin(liste.get("ozet"), dil))}</p>
+  <form class="liste-form" action="{eylem}" method="post" target="_blank">
+    <input type="email" name="{html.escape(alan)}" required
+           placeholder="{t["liste_yer"]}" aria-label="{t["liste_yer"]}"
+           autocomplete="email" autocorrect="off" autocapitalize="off"
+           spellcheck="false" />
+    <input type="submit" value="{t["liste_dugme"]}" />{gizli}
+    <input class="tuzak" type="text" name="website" tabindex="-1"
+           autocomplete="off" aria-hidden="true" />
+  </form>
+  <p class="liste-not">{t["liste_not"]}</p>
+</div>"""
+
+
 GOVDE_AC = """
     <div class="document">
       <div class="documentwrapper">
@@ -717,6 +761,7 @@ def mufredat_kur(veri, m, dil, onek, indeks):
                  f'<div class="description yazi-ozet">{kac(neden)}</div>',
                  icerik,
                  "</section>",
+                 liste_formu(veri, dil),
                  GOVDE_KAPA,
                  gezinti(yukari, dil, kirinti, onc, son),
                  ayak(yukari, dil)]
@@ -796,6 +841,7 @@ def mufredat_ana(veri, m, dil, onek):
             p.append("</section>")
 
     p.append("</section>")
+    p.append(liste_formu(veri, dil))
     p.append(GOVDE_KAPA)
     p.append(gezinti(yukari, dil, kirinti, None, son))
     p.append(ayak(yukari, dil))
@@ -841,6 +887,7 @@ def okul_sayfasi(veri, dil, onek):
   </div>""")
 
     p.append("</div>\n</section>")
+    p.append(liste_formu(veri, dil))
     p.append(GOVDE_KAPA)
     p.append(gezinti(yukari, dil, kirinti, None, (f'{yukari}{ilk["kod"]}/', ilk["ad"])))
     p.append(ayak(yukari, dil))
