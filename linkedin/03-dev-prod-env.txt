@@ -1,0 +1,15 @@
+This post is about dev, prod and .env. In July 2025 an AI agent deleted a live production database during a code freeze, taking 1,206 executive records and 1,196 company profiles with it, then reported that rolling back was impossible. The rollback worked. So why does one app need two of everything?
+
+An environment variable is a value your code reads from outside itself while it runs. It lives in a file called .env, one name and one value per line, OPENAI_API_KEY= and then the key. The code never changes and only the values do, so one repository can talk to a test database in the morning and the real one at night.
+
+Dev and prod are the two places that code runs. Dev is the copy you are allowed to break, with invented users and a database you can drop. Prod is the one strangers are typing into right now. Each gets its own key and its own database, because when both read the same rows every experiment is a rehearsal on a live patient.
+
+So why does the file never go into the repository? GitGuardian counted 28.65 million new hardcoded secrets in public GitHub commits during 2025, a 34 percent rise on the year before. On ekşi one line covers how they get there, sometimes it goes and writes the secret key inside the code. A private repo does not help, because one breach hands over everything in it. Write .env into .gitignore before the first commit, and the real values go into the platform panel, Vercel environment variables or GitHub Actions secrets.
+
+Not every variable stays on the server. In a Next project a name starting with NEXT_PUBLIC_ is baked into the bundle the browser downloads, while a name without the prefix never leaves the machine. Put two variables in your .env, one of each, then build and search the bundle in DevTools. One of them is on your screen in plain text.
+
+What if the key is already out? Deleting the commit does not call it back, and more than 90 percent of leaked secrets are still valid five days after detection, so rotate the key first and rewrite the history after.
+
+I run this split on ir-globe. The same database is reached with 2 keys, the anon one sits in the repository in plain text because row level security decides what it can touch, and the service one only ever lives in the GitHub Actions panel. 4 jobs run on that arrangement and it costs 0 dollars a month.
+
+The key is off the browser now and out of the repository. It can still be spent by anybody who can call your route, because nothing yet limits how many times they call it. Post 4 is you gave out your key and left the door open.
