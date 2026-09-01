@@ -115,10 +115,72 @@
     return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   }
 
+  // --- kontrol tiki: hangi bölümleri geçtin, tarayıcıda kalır -------------
+  // Hesap yok, sunucu yok. localStorage yoksa (gizli sekme, kapalı) sessizce
+  // hiçbir şey olmaz.
+  var ANAHTAR = "vibecodedslopware.gecilen";
+
+  function gecilenOku() {
+    try {
+      var ham = window.localStorage.getItem(ANAHTAR);
+      var liste = ham ? JSON.parse(ham) : [];
+      return Array.isArray(liste) ? liste : [];
+    } catch (e) { return []; }
+  }
+
+  function gecilenYaz(liste) {
+    try { window.localStorage.setItem(ANAHTAR, JSON.stringify(liste)); } catch (e) {}
+  }
+
+  function kontrolTikiKur() {
+    var bolum = window.BOLUM;
+    var kutular = document.querySelectorAll("label.gec input.gec-kutu");
+    if (!bolum || !kutular.length) return;
+    var gecilen = gecilenOku();
+    var acik = gecilen.indexOf(bolum) !== -1;
+
+    function ciz() {
+      Array.prototype.forEach.call(kutular, function (k) {
+        k.checked = acik;
+        k.parentNode.classList.toggle("oldu", acik);
+      });
+    }
+    Array.prototype.forEach.call(kutular, function (k) {
+      k.addEventListener("change", function () {
+        acik = k.checked;
+        var liste = gecilenOku().filter(function (b) { return b !== bolum; });
+        if (acik) liste.push(bolum);
+        gecilenYaz(liste);
+        ciz();
+      });
+    });
+    ciz();
+  }
+
+  function mufredatTikiKur() {
+    var satirlar = document.querySelectorAll("div.toctree-wrapper li[data-bolum]");
+    if (!satirlar.length) return;
+    var gecilen = gecilenOku(), sayi = 0;
+    Array.prototype.forEach.call(satirlar, function (li) {
+      if (gecilen.indexOf(li.getAttribute("data-bolum")) === -1) return;
+      sayi += 1;
+      li.classList.add("gecti");
+      var damga = li.querySelector("span.durum.gecti");
+      if (damga) damga.hidden = false;
+    });
+    var sayac = document.querySelector("p.henuz span.gecilen");
+    if (sayac && sayi) {
+      sayac.querySelector("b").textContent = String(sayi);
+      sayac.hidden = false;
+    }
+  }
+
   function baslat() {
     kopyalamayiKur();
     icindekileriKur();
     vurgula();
+    kontrolTikiKur();
+    mufredatTikiKur();
   }
 
   if (document.readyState === "loading") {

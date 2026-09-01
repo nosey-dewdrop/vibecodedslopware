@@ -919,3 +919,43 @@ ul.navbar li.ara form
         padding-right: 0;
     }
 }
+
+/* --- kontrol tiki: okurun kendi projesi için, tarayıcıda kalır ------------ */
+
+div.admonition.kontrol label.gec
+{
+    display: block;
+    margin-top: .8em;
+    padding-top: .6em;
+    border-top: 1px dotted #ccc;
+    cursor: pointer;
+    font-size: 11pt;
+    color: gray;
+}
+
+div.admonition.kontrol label.gec input
+{
+    margin-right: .4em;
+}
+
+div.admonition.kontrol label.gec.oldu
+{
+    color: darkgreen;
+}
+
+div.toctree-wrapper li span.durum.gecti
+{
+    color: darkgreen;
+    font-style: normal;
+}
+
+div.toctree-wrapper li.gecti > a::before
+{
+    content: "\2713\00a0";
+    color: darkgreen;
+}
+
+p.henuz span.gecilen b
+{
+    color: darkgreen;
+}

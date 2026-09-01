@@ -31,6 +31,9 @@ S = {
         "yakinda": "yakında",
         "haftada": "haftada bir bölüm",
         "kontrol": "kontrol",
+        "gectim": "projem bu kontrolü geçiyor",
+        "gecti": "geçti",
+        "gecilen": "geçtin",
         "henuz": "bu bölüm henüz yazılmadı.",
         "yazilmadi": "yazılmadı",
         "lisans": "metin cc by-nc, kod mit",
@@ -59,6 +62,9 @@ S = {
         "yakinda": "soon",
         "haftada": "one chapter a week",
         "kontrol": "check",
+        "gectim": "my project passes this check",
+        "gecti": "passed",
+        "gecilen": "passed",
         "henuz": "this chapter is not written yet.",
         "yazilmadi": "not written",
         "lisans": "text cc by-nc, code mit",
@@ -408,7 +414,9 @@ def markdown(kaynak, dil):
             parca.append(("html",
                           '<div class="admonition note kontrol">'
                           f'<p class="admonition-title">{S[dil]["kontrol"]}</p>'
-                          f"{govde_}</div>"))
+                          f"{govde_}"
+                          '<label class="gec"><input type="checkbox" class="gec-kutu"> '
+                          f'{S[dil]["gectim"]}</label></div>'))
             continue
 
         if satir.startswith("```"):
@@ -530,7 +538,7 @@ def duz(h):
 
 
 # ---------------------------------------------------------------- iskelet
-def kafa(veri, baslik, aciklama, kanonik, yukari, dil, karsi_url, indeksle=True):
+def kafa(veri, baslik, aciklama, kanonik, yukari, dil, karsi_url, indeksle=True, bolum=""):
     obur = "en" if dil == "tr" else "tr"
     t = S[dil]
     robot = "index,follow" if indeksle else "noindex"
@@ -561,7 +569,7 @@ def kafa(veri, baslik, aciklama, kanonik, yukari, dil, karsi_url, indeksle=True)
     <meta property="og:url" content="{kanonik}" />
     <meta name="twitter:card" content="summary" />
     <meta name="theme-color" content="#ffffff" />
-    <script>window.KOK = "{yukari}"; window.DIL = "{dil}";</script>
+    <script>window.KOK = "{yukari}"; window.DIL = "{dil}"; window.BOLUM = "{bolum}";</script>
   </head><body>
 <div class='header'><a href='{yukari}'>vibecodedslopware</a></div>
 """
@@ -706,7 +714,8 @@ def mufredat_kur(veri, m, dil, onek, indeks):
                 bolum_alan(sonraki, "baslik", dil)) if sonraki else None)
         kirinti = [(f'{yukari}{m["kod"]}/', m["ad"]), ("", baslik)]
 
-        sayfa = [kafa(veri, baslik, neden, kanonik, yukari, dil, karsi),
+        sayfa = [kafa(veri, baslik, neden, kanonik, yukari, dil, karsi,
+                      bolum=f'{m["kod"]}/{b["slug"]}'),
                  navbar(veri, yukari, dil, karsi),
                  gezinti(yukari, dil, kirinti, onc, son, kisayol=True),
                  GOVDE_AC,
@@ -770,7 +779,8 @@ def mufredat_ana(veri, m, dil, onek):
         p.append(f'<p class="henuz">{t["hazirlaniyor"]}</p>')
     else:
         p.append(f'<p class="henuz">{len(duzlem)} {t["bolumler"]} &#183; '
-                 f'{yazilan} {t["yayinda"]} &#183; {t["haftada"]}.</p>')
+                 f'{yazilan} {t["yayinda"]} &#183; {t["haftada"]}'
+                 f'<span class="gecilen" hidden> &#183; <b>0</b> {t["gecilen"]}</span>.</p>')
         for sv in m["seviyeler"]:
             sv_ad = f'{sv["kod"]} {metin(sv["ad"], dil)}'
             sv_id = slugla(sv_ad)
@@ -788,9 +798,10 @@ def mufredat_ana(veri, m, dil, onek):
                 damga = ("" if yazildi
                          else f'<span class="durum">{t["yazilmadi"]}</span>')
                 p.append(
-                    f'<li class="{sinif}">'
+                    f'<li class="{sinif}" data-bolum="{m["kod"]}/{b["slug"]}">'
                     f'<a class="reference internal" href="{yukari}{m["kod"]}/{b["slug"]}/">'
                     f'{kac(bolum_alan(b, "baslik", dil))}</a>{damga}'
+                    f'<span class="durum gecti" hidden>{t["gecti"]}</span>'
                     f'<p class="neden">{kac(bolum_alan(b, "neden", dil))}</p></li>')
             p.append("</ol>\n</div>")
             p.append("</section>")
