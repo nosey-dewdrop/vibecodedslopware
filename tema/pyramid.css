@@ -970,3 +970,169 @@ p.henuz span.gecilen b
         margin: .25em 0;
     }
 }
+
+/* --- kilitli bölüm: link yok, kilit var, tarih hover'da ------------------ */
+
+div.toctree-wrapper li.kilitli span.baslik
+{
+    color: gray;
+}
+
+div.toctree-wrapper li.kilitli span.kilit
+{
+    cursor: help;
+    padding-left: .5em;
+    font-size: 10pt;
+    position: relative;
+}
+
+div.toctree-wrapper li.kilitli span.kilit span.gizli
+{
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    overflow: hidden;
+}
+
+div.toctree-wrapper li.kilitli span.kilit:hover span.gizli,
+div.toctree-wrapper li.kilitli span.kilit:focus span.gizli
+{
+    position: absolute;
+    left: 1.6em;
+    top: -.2em;
+    width: auto;
+    overflow: visible;
+    white-space: nowrap;
+    background: #333;
+    color: white;
+    padding: .2em .6em;
+    border-radius: 4px;
+    font-size: 10pt;
+    z-index: 5;
+}
+
+/* --- abone formu -------------------------------------------------------- */
+
+form.abone
+{
+    margin: 2.5em 0 1em 0;
+    padding: 1em 1.2em;
+    border: 1px dotted #bbb;
+    max-width: 30em;
+}
+
+form.abone label
+{
+    display: block;
+    font-weight: bold;
+    margin-bottom: .5em;
+}
+
+form.abone span.abone-satir
+{
+    display: flex;
+    gap: .5em;
+}
+
+form.abone input[type=email]
+{
+    flex: 1;
+    font: inherit;
+    padding: .3em .5em;
+    border: 1px solid #bbb;
+    min-width: 0;
+}
+
+form.abone input[type=submit]
+{
+    font: inherit;
+    padding: .3em .9em;
+    border: 1px solid #333;
+    background: #333;
+    color: white;
+    cursor: pointer;
+}
+
+form.abone small
+{
+    display: block;
+    color: gray;
+    margin-top: .4em;
+    font-size: 10pt;
+}
+
+/* --- kitap sayfası: bölümler sayfa kırılımıyla, pdf için ----------------- */
+
+section.kitap section.kitap-bolum
+{
+    margin-top: 4em;
+    padding-top: 2em;
+    border-top: 1px dotted #bbb;
+}
+
+section.kitap h1 span.no
+{
+    color: gray;
+    font-weight: normal;
+    margin-right: .3em;
+}
+
+@media print
+{
+    div.header, ul.navbar, div.related, div.footer, form.abone,
+    div.sphinxsidebar, a.headerlink, button.kopyala, label.gec
+    {
+        display: none !important;
+    }
+
+    section.kitap section.kitap-bolum
+    {
+        page-break-before: always;
+        border-top: none;
+        margin-top: 0;
+    }
+
+    div.body
+    {
+        width: auto;
+        margin: 0;
+        padding: 0;
+    }
+
+    a
+    {
+        color: inherit;
+        text-decoration: none;
+    }
+}
+
+/* --- sıradaki bölüm, paylaş, iyileştir ---------------------------------- */
+
+span.siradaki
+{
+    font-style: normal;
+}
+
+p.paylas
+{
+    margin-top: 2.5em;
+    color: gray;
+    font-size: 11pt;
+}
+
+p.paylas button.link-kopyala
+{
+    font: inherit;
+    color: #3465a4;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+p.iyilestir
+{
+    color: gray;
+    font-size: 10pt;
+}

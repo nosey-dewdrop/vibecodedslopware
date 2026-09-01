@@ -175,7 +175,26 @@
     }
   }
 
+  // --- paylaş: linki kopyala ------------------------------------------------
+  function linkKopyalaKur() {
+    var dugmeler = document.querySelectorAll("button.link-kopyala");
+    Array.prototype.forEach.call(dugmeler, function (d) {
+      d.addEventListener("click", function () {
+        var link = d.getAttribute("data-link") || window.location.href;
+        var bitir = function () {
+          var eski = d.textContent;
+          d.textContent = d.getAttribute("data-oldu") || "ok";
+          setTimeout(function () { d.textContent = eski; }, 1400);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(link).then(bitir, function () {});
+        }
+      });
+    });
+  }
+
   function baslat() {
+    linkKopyalaKur();
     kopyalamayiKur();
     icindekileriKur();
     vurgula();

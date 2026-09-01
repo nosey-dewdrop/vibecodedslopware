@@ -13,8 +13,11 @@ gümüş çizgili kod blokları, dipte italik gri lisans şeridi.
 
 Bağımlılık yok. `python3 kur.py`.
 """
+import datetime as dt
 import html
 import json
+import os
+import subprocess
 import re
 import shutil
 import unicodedata
@@ -23,13 +26,41 @@ from pathlib import Path
 KOK = Path(__file__).parent
 YAZILAR = KOK / "yazilar"
 DILLER = ["tr", "en"]
+# Kilitler bu tarihe göre açılır. Test için: KUR_TARIH=2026-11-09 python3 kur.py
+BUGUN = dt.date.fromisoformat(os.environ.get("KUR_TARIH") or dt.date.today().isoformat())
+AYLAR = {"tr": ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz",
+                "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"],
+         "en": ["January", "February", "March", "April", "May", "June", "July",
+                "August", "September", "October", "November", "December"]}
+
+
+def tarih_yaz(iso, dil):
+    d = dt.date.fromisoformat(iso)
+    return f"{d.day} {AYLAR[dil][d.month - 1]} {d.year}"
+
+
+def acik_mi(b):
+    return dt.date.fromisoformat(b["tarih"]) <= BUGUN
 
 S = {
     "tr": {
         "bolumler": "bölüm",
         "yayinda": "yayında",
         "yakinda": "yakında",
-        "haftada": "haftada bir bölüm",
+        "haftada": "üç günde bir bölüm",
+        "kilitli": "kilitli",
+        "acilir": "{tarih} tarihinde açılır",
+        "abone": "yeni bölüm çıkınca mail gelsin",
+        "abone_dugme": "yaz",
+        "abone_not": "sadece yeni bölüm haberi. başka bir şey yok.",
+        "kitap": "kitap",
+        "kitap_ozet": "yayındaki bütün bölümler tek sayfada. yazdırmak ya da pdf için.",
+        "siradaki": "sıradaki bölüm",
+        "paylas": "paylaş",
+        "linki_kopyala": "linki kopyala",
+        "kopyalandi_link": "kopyalandı",
+        "iyilestir": "bu sayfayı iyileştir",
+        "iyilestir_not": "kaynağı GitHub'da, yanlış gördüğün yeri düzelt.",
         "kontrol": "kontrol",
         "gectim": "projem bu kontrolü geçiyor",
         "gecti": "geçti",
@@ -61,7 +92,20 @@ S = {
         "bolumler": "chapters",
         "yayinda": "published",
         "yakinda": "soon",
-        "haftada": "one chapter a week",
+        "haftada": "a chapter every three days",
+        "kilitli": "locked",
+        "acilir": "opens on {tarih}",
+        "abone": "email me when a new chapter is out",
+        "abone_dugme": "go",
+        "abone_not": "only new chapter news. nothing else.",
+        "kitap": "book",
+        "kitap_ozet": "every published chapter on one page. for printing or the pdf.",
+        "siradaki": "next chapter",
+        "paylas": "share",
+        "linki_kopyala": "copy link",
+        "kopyalandi_link": "copied",
+        "iyilestir": "improve this page",
+        "iyilestir_not": "the source is on GitHub, fix what you see wrong.",
         "kontrol": "check",
         "gectim": "my project passes this check",
         "gecti": "passed",
@@ -540,7 +584,8 @@ def duz(h):
 
 
 # ---------------------------------------------------------------- iskelet
-def kafa(veri, baslik, aciklama, kanonik, yukari, dil, karsi_url, indeksle=True, bolum=""):
+def kafa(veri, baslik, aciklama, kanonik, yukari, dil, karsi_url, indeksle=True, bolum="", og=None):
+    og = og or f'{veri["site"]["url"]}tema/og-{dil}.png'
     obur = "en" if dil == "tr" else "tr"
     t = S[dil]
     robot = "index,follow" if indeksle else "noindex"
@@ -563,13 +608,14 @@ def kafa(veri, baslik, aciklama, kanonik, yukari, dil, karsi_url, indeksle=True,
     <link rel="alternate" hreflang="{dil}" href="{kanonik}" />
     <link rel="alternate" hreflang="{obur}" href="{karsi_url}" />
     <link rel="search" title="{t["ara"]}" href="{yukari}ara/" />
+    <link rel="alternate" type="application/rss+xml" title="vibecodedslopware" href="{yukari}rss.xml" />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='white'/%3E%3Crect x='6' y='6' width='6' height='20' fill='%23808080'/%3E%3Crect x='20' y='6' width='6' height='20' fill='%23808080'/%3E%3C/svg%3E" />
     <meta property="og:type" content="article" />
     <meta property="og:site_name" content="vibecodedslopware" />
     <meta property="og:title" content="{html.escape(baslik)}" />
     <meta property="og:description" content="{html.escape(aciklama)}" />
     <meta property="og:url" content="{kanonik}" />
-    <meta property="og:image" content="{veri["site"]["url"]}tema/og-{dil}.png" />
+    <meta property="og:image" content="{og}" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -585,6 +631,8 @@ def navbar(veri, yukari, dil, karsi_url):
     p = ["<ul class='navbar'>"]
     for m in veri["mufredatlar"]:
         p.append(f'    <li><a href="{yukari}{m["kod"]}/">{m["ad"]}</a></li>')
+    p.append(f'    <li><a href="{yukari}kitap/">html</a></li>')
+    p.append(f'    <li><a href="{yukari}kitap/slopware-{dil}.pdf">pdf</a></li>')
     p.append('    <li><a href="https://github.com/nosey-dewdrop/vibecodedslopware">github</a></li>')
     p.append(f'    <li><a href="{karsi_url}">{"en" if dil == "tr" else "tr"}</a></li>')
     p.append(f"""    <li class="ara"><form action="{yukari}ara/" method="get" role="search">
@@ -593,6 +641,23 @@ def navbar(veri, yukari, dil, karsi_url):
     </form></li>""")
     p.append("</ul>\n")
     return "\n".join(p)
+
+
+def abone_formu(veri, dil):
+    """Buttondown gömülü formu. site.buttondown boşsa form basılmaz."""
+    kullanici = veri["site"].get("buttondown", "")
+    if not kullanici:
+        return ""
+    t = S[dil]
+    return f"""<form class="abone" action="https://buttondown.com/api/emails/embed-subscribe/{kullanici}"
+      method="post" target="_blank">
+  <label for="abone-mail">{t["abone"]}</label>
+  <span class="abone-satir"><input type="email" id="abone-mail" name="email" required
+         placeholder="mail" autocomplete="email" />
+  <input type="submit" value="{t["abone_dugme"]}" /></span>
+  <input type="hidden" name="tag" value="{dil}" />
+  <small>{t["abone_not"]}</small>
+</form>"""
 
 
 def gezinti(yukari, dil, kirinti, onceki=None, sonraki=None, kisayol=False, karsi_url=None):
@@ -667,9 +732,14 @@ def kur():
     for m in veri["mufredatlar"]:
         if (KOK / m["kod"]).exists():
             shutil.rmtree(KOK / m["kod"])
+    en_pdf = KOK / "en" / "kitap" / "slopware-en.pdf"
+    en_pdf_yedek = en_pdf.read_bytes() if en_pdf.exists() else None
     for eski in ("en", "ara", "bolum"):
         if (KOK / eski).exists():
             shutil.rmtree(KOK / eski)
+    if en_pdf_yedek:
+        en_pdf.parent.mkdir(parents=True, exist_ok=True)
+        en_pdf.write_bytes(en_pdf_yedek)
 
     stem_js_yaz()
 
@@ -682,6 +752,7 @@ def kur():
         okul_sayfasi(veri, dil, onek)
         arama_sayfasi(veri, dil, onek)
         arama_indeksi(indeks, dil)
+        rss_yaz(veri, dil, onek)
         toplam += 2
 
     site_haritasi(veri)
@@ -698,7 +769,11 @@ def mufredat_kur(veri, m, dil, onek, indeks):
     yukari = "../../" if dil == "tr" else "../../../"
     sayac = 0
 
-    for idx, b in enumerate(duzlem):
+    # Tarihi gelmemiş bölüm kilitli: sayfası kurulmaz, listede tıklanmaz.
+    # Tarihi gelmiş ama md'si olmayan bölüm (ör. EN ikizi henüz yok) "yazılmadı"
+    # sayfasıyla kurulur. Sayfalar arası önceki/sonraki yalnızca açıklar arasında.
+    acik = [b for b in duzlem if acik_mi(b)]
+    for idx, b in enumerate(acik):
         sv = seviye_of[b["slug"]]
         baslik = bolum_alan(b, "baslik", dil)
         neden = bolum_alan(b, "neden", dil)
@@ -709,6 +784,7 @@ def mufredat_kur(veri, m, dil, onek, indeks):
             govde_ = bolumle(parca, dil)
             icerik = icindekiler(basliklar, dil) + "\n" + govde_
             aranan = duz(govde_)
+            b[f"govde_{dil}"] = govde_
         else:
             icerik = f'<p class="henuz">{t["henuz"]} {t["haftada"]}.</p>'
             basliklar, aranan = [], ""
@@ -716,19 +792,34 @@ def mufredat_kur(veri, m, dil, onek, indeks):
         # tek bir "durum" alanı yazarsak tr taraması en tarafını da yayında
         # sanıyor ve boş sayfalar aramaya giriyor.
         b[f"durum_{dil}"] = "yazildi" if kaynak.exists() else "bos"
+        b[f"ozet_{dil}"] = neden or " ".join(aranan.split()[:60])
 
         kanonik = f'{site["url"]}{onek}{m["kod"]}/{b["slug"]}/'
         karsi = f'{site["url"]}{"en/" if dil == "tr" else ""}{m["kod"]}/{b["slug"]}/'
-        onceki = duzlem[idx - 1] if idx > 0 else None
-        sonraki = duzlem[idx + 1] if idx < len(duzlem) - 1 else None
+        onceki = acik[idx - 1] if idx > 0 else None
+        sonraki = acik[idx + 1] if idx < len(acik) - 1 else None
         onc = ((f'{yukari}{m["kod"]}/{onceki["slug"]}/',
                 bolum_alan(onceki, "baslik", dil)) if onceki else None)
         son = ((f'{yukari}{m["kod"]}/{sonraki["slug"]}/',
                 bolum_alan(sonraki, "baslik", dil)) if sonraki else None)
         kirinti = [(f'{yukari}{m["kod"]}/', m["ad"]), ("", baslik)]
 
+        og = og_uret(veri, b, dil) if kaynak.exists() else None
+        kuyruk = ""
+        if kaynak.exists():
+            kaynak_url = (f'https://github.com/nosey-dewdrop/vibecodedslopware/edit/main/'
+                          f'yazilar/{dil}/{m["kod"]}/{b["slug"]}.md')
+            li = "https://www.linkedin.com/sharing/share-offsite/?url=" + html.escape(kanonik)
+            kuyruk = (f'<p class="paylas"><span>{t["paylas"]}:</span> '
+                      f'<a href="{li}" target="_blank" rel="noopener">linkedin</a> &#183; '
+                      f'<a href="https://x.com/intent/post?url={html.escape(kanonik)}" '
+                      f'target="_blank" rel="noopener">x</a> &#183; '
+                      f'<button type="button" class="link-kopyala" data-link="{kanonik}" '
+                      f'data-oldu="{t["kopyalandi_link"]}">{t["linki_kopyala"]}</button></p>'
+                      f'<p class="iyilestir"><a href="{kaynak_url}">{t["iyilestir"]}</a> '
+                      f'&#183; {t["iyilestir_not"]}</p>')
         sayfa = [kafa(veri, baslik, neden, kanonik, yukari, dil, karsi,
-                      bolum=f'{m["kod"]}/{b["slug"]}'),
+                      bolum=f'{m["kod"]}/{b["slug"]}', og=og),
                  navbar(veri, yukari, dil, karsi),
                  gezinti(yukari, dil, kirinti, onc, son, kisayol=True, karsi_url=karsi),
                  GOVDE_AC,
@@ -738,6 +829,8 @@ def mufredat_kur(veri, m, dil, onek, indeks):
                  f"¶</a></h1>",
                  f'<div class="description yazi-ozet">{kac(neden)}</div>',
                  icerik,
+                 kuyruk,
+                 abone_formu(veri, dil),
                  "</section>",
                  GOVDE_KAPA,
                  gezinti(yukari, dil, kirinti, onc, son),
@@ -760,13 +853,17 @@ def mufredat_kur(veri, m, dil, onek, indeks):
                 "h": [{"i": x["id"], "b": x["duz"]} for x in basliklar],
             })
 
-    return sayac + mufredat_ana(veri, m, dil, onek)
+    for b in duzlem:
+        if not acik_mi(b):
+            b[f"durum_{dil}"] = "kilitli"
+
+    return sayac + mufredat_ana(veri, m, dil, onek) + kitap_kur(veri, m, dil, onek)
 
 
 def mufredat_ana(veri, m, dil, onek):
     site, t = veri["site"], S[dil]
     duzlem = [b for sv in m["seviyeler"] for b in sv["bolumler"]]
-    yazilan = sum(1 for b in duzlem if b[f"durum_{dil}"] == "yazildi")
+    yazilan = sum(1 for b in duzlem if b.get(f"durum_{dil}") == "yazildi")
     yukari = "../" if dil == "tr" else "../../"
     kanonik = f'{site["url"]}{onek}{m["kod"]}/'
     karsi = f'{site["url"]}{"en/" if dil == "tr" else ""}{m["kod"]}/'
@@ -793,31 +890,50 @@ def mufredat_ana(veri, m, dil, onek):
     else:
         p.append(f'<p class="henuz">{len(duzlem)} {t["bolumler"]} &#183; '
                  f'{yazilan} {t["yayinda"]} &#183; {t["haftada"]}'
-                 f'<span class="gecilen" hidden> &#183; <b>0</b> {t["gecilen"]}</span>.</p>')
+                 f'<span class="gecilen" hidden> &#183; <b>0</b> {t["gecilen"]}</span>.'
+                 f'{siradaki_satir(m, dil)}</p>')
+        tek = len(m["seviyeler"]) == 1
         for sv in m["seviyeler"]:
             sv_ad = f'{sv["kod"]} {metin(sv["ad"], dil)}'
             sv_id = slugla(sv_ad)
             p.append(f'<section id="{sv_id}">')
-            p.append(f'<h2>{sv["kod"]} / {kac(metin(sv["ad"], dil))}'
-                     f'<a class="headerlink" href="#{sv_id}" title="'
-                     f'{"Bu başlığa bağlantı" if dil == "tr" else "Link to this heading"}">'
-                     f'¶</a></h2>')
-            p.append(f'<p>{kac(metin(sv["ozet"], dil))}</p>')
+            if not tek:
+                p.append(f'<h2>{sv["kod"]} / {kac(metin(sv["ad"], dil))}'
+                         f'<a class="headerlink" href="#{sv_id}" title="'
+                         f'{"Bu başlığa bağlantı" if dil == "tr" else "Link to this heading"}">'
+                         f'¶</a></h2>')
+                p.append(f'<p>{kac(metin(sv["ozet"], dil))}</p>')
             basla = sv["bolumler"][0]["no"] if sv["bolumler"] else 0
             p.append(f'<div class="toctree-wrapper compound">\n<ol start="{basla}">')
             for b in sv["bolumler"]:
-                yazildi = b[f"durum_{dil}"] == "yazildi"
+                durum = b[f"durum_{dil}"]
+                baslik_b = kac(bolum_alan(b, "baslik", dil))
+                neden_b = bolum_alan(b, "neden", dil)
+                neden_html = f'<p class="neden">{kac(neden_b)}</p>' if neden_b else ""
+                if durum == "kilitli":
+                    # Link yok: tıklanmaz. Tarih hover'da (title) ve ekran okuyucuda.
+                    ne_zaman = t["acilir"].format(tarih=tarih_yaz(b["tarih"], dil))
+                    p.append(
+                        f'<li class="toctree-l1 kilitli" data-bolum="{m["kod"]}/{b["slug"]}">'
+                        f'<span class="baslik">{baslik_b}</span>'
+                        f'<span class="kilit" title="{kac(ne_zaman)}" tabindex="0">'
+                        f'<span aria-hidden="true">&#128274;</span>'
+                        f'<span class="gizli">{kac(ne_zaman)}</span></span>'
+                        f'{neden_html}</li>')
+                    continue
+                yazildi = durum == "yazildi"
                 sinif = "toctree-l1" if yazildi else "toctree-l1 yazilmadi"
                 damga = ("" if yazildi
                          else f'<span class="durum">{t["yazilmadi"]}</span>')
                 p.append(
                     f'<li class="{sinif}" data-bolum="{m["kod"]}/{b["slug"]}">'
                     f'<a class="reference internal" href="{yukari}{m["kod"]}/{b["slug"]}/">'
-                    f'{kac(bolum_alan(b, "baslik", dil))}</a>{damga}'
+                    f'{baslik_b}</a>{damga}'
                     f'<span class="durum gecti" hidden>{t["gecti"]}</span>'
-                    f'<p class="neden">{kac(bolum_alan(b, "neden", dil))}</p></li>')
+                    f'{neden_html}</li>')
             p.append("</ol>\n</div>")
             p.append("</section>")
+        p.append(abone_formu(veri, dil))
 
     p.append("</section>")
     p.append(GOVDE_KAPA)
@@ -828,6 +944,165 @@ def mufredat_ana(veri, m, dil, onek):
     klasor.mkdir(parents=True, exist_ok=True)
     (klasor / "index.html").write_text("\n".join(p), encoding="utf-8")
     return 1
+
+
+def kitap_kur(veri, m, dil, onek):
+    """Yayındaki bölümler tek sayfada: yazdırılır, pdf'i buradan çıkar."""
+    site, t = veri["site"], S[dil]
+    if m["durum"] != "yayinda":
+        return 0
+    duzlem = [b for sv in m["seviyeler"] for b in sv["bolumler"]]
+    yayinda = [b for b in duzlem if b.get(f"durum_{dil}") == "yazildi"]
+    yukari = "../" if dil == "tr" else "../../"
+    kanonik = f'{site["url"]}{onek}kitap/'
+    karsi = f'{site["url"]}{"en/" if dil == "tr" else ""}kitap/'
+    baslik = metin(m["baslik"], dil)
+    kirinti = [("", t["kitap"])]
+
+    p = [kafa(veri, f'{t["kitap"]} · {baslik}', t["kitap_ozet"], kanonik, yukari, dil, karsi),
+         navbar(veri, yukari, dil, karsi),
+         gezinti(yukari, dil, kirinti, kisayol=True, karsi_url=karsi),
+         GOVDE_AC,
+         '  <section id="kitap" class="kitap">',
+         f'<h1>{kac(baslik)}<a class="headerlink" href="#kitap">¶</a></h1>',
+         f'<div class="description yazi-ozet">{kac(metin(m["ozet"], dil))}</div>',
+         f'<p class="henuz">{len(yayinda)} / {len(duzlem)} {t["bolumler"]} &#183; '
+         f'<a href="{yukari}kitap/slopware-{dil}.pdf">pdf</a> &#183; {kac(t["kitap_ozet"])}</p>',
+         '<div class="contents local topic" id="contents"><ul class="simple">']
+    for b in yayinda:
+        p.append(f'<li><a class="reference internal" href="#{b["slug"]}">'
+                 f'{b["no"]:02d} {kac(bolum_alan(b, "baslik", dil))}</a></li>')
+    p.append("</ul></div>")
+    for b in yayinda:
+        p.append(f'<section id="{b["slug"]}" class="kitap-bolum">')
+        p.append(f'<h1><span class="no">{b["no"]:02d}</span> {kac(bolum_alan(b, "baslik", dil))}'
+                 f'<a class="headerlink" href="#{b["slug"]}">¶</a></h1>')
+        neden = bolum_alan(b, "neden", dil)
+        if neden:
+            p.append(f'<div class="description yazi-ozet">{kac(neden)}</div>')
+        p.append(b[f"govde_{dil}"])
+        p.append("</section>")
+    p.append("</section>")
+    p.append(GOVDE_KAPA)
+    p.append(gezinti(yukari, dil, kirinti))
+    p.append(ayak(yukari, dil))
+
+    klasor = KOK / onek.rstrip("/") / "kitap" if onek else KOK / "kitap"
+    klasor.mkdir(parents=True, exist_ok=True)
+    (klasor / "index.html").write_text("\n".join(p), encoding="utf-8")
+    pdf_yaz(klasor / "index.html", klasor / f"slopware-{dil}.pdf")
+    return 1
+
+
+def siradaki_satir(m, dil, kisa=False):
+    """Kilitli ilk bölüm ve tarihi. Hepsi açıksa boş."""
+    t = S[dil]
+    for sv in m["seviyeler"]:
+        for b in sv["bolumler"]:
+            if not acik_mi(b):
+                tarih = tarih_yaz(b["tarih"], dil)
+                if kisa:
+                    return f' &#183; {t["siradaki"]}: {tarih}'
+                return (f'<br /><span class="siradaki">{t["siradaki"]}: '
+                        f'<b>{kac(bolum_alan(b, "baslik", dil))}</b>, {tarih}.</span>')
+    return ""
+
+
+OG_SABLON = """<!doctype html><meta charset="utf-8">
+<link rel="stylesheet" href="{fontlar}">
+<style>
+body{{margin:0;width:1200px;height:630px;background:#fff;font-family:"Noto Sans",sans-serif;color:#333;overflow:hidden}}
+.k{{position:absolute;left:80px;top:120px;right:80px}}
+.logo{{font-family:"Special Elite",monospace;font-size:56px;color:gray;text-shadow:silver 0 0 6px;margin:0}}
+.no{{font-family:"Roboto Slab",serif;font-size:28px;color:gray;margin:40px 0 0}}
+h1{{font-family:"Roboto Slab",serif;font-weight:400;font-size:54px;line-height:1.25;margin:8px 0 0;color:#333}}
+p.alt{{font-style:italic;color:gray;font-size:26px;margin:24px 0 0}}
+</style>
+<body><div class="k"><p class="logo">vibecodedslopware</p>
+<p class="no">{no}</p><h1>{baslik}</h1><p class="alt">{alt}</p></div>"""
+
+
+def og_uret(veri, b, dil):
+    """Her yayındaki bölüme kendi paylaşım görseli: LinkedIn'de başlık görünsün.
+    Chrome yoksa eldeki görsel durur, o da yoksa sitenin genel görseli."""
+    hedef = KOK / "tema" / "og" / f'{b["slug"]}-{dil}.png'
+    url = f'{veri["site"]["url"]}tema/og/{b["slug"]}-{dil}.png'
+    chrome = chrome_bul()
+    if not chrome:
+        return url if hedef.exists() else None
+    hedef.parent.mkdir(parents=True, exist_ok=True)
+    kaynak = hedef.with_suffix(".html")
+    kaynak.write_text(OG_SABLON.format(
+        fontlar=FONTLAR, no=f'{b["no"]:02d} / {S[dil]["bolumler"]}',
+        baslik=kac(bolum_alan(b, "baslik", dil)),
+        alt=kac(bolum_alan(b, "neden", dil) or metin(veri["site"]["aciklama"], dil))),
+        encoding="utf-8")
+    komut = [chrome, "--headless=new", "--disable-gpu", "--hide-scrollbars",
+             "--window-size=1200,630", f"--screenshot={hedef}",
+             "--virtual-time-budget=6000", kaynak.resolve().as_uri()]
+    try:
+        subprocess.run(komut, check=True, capture_output=True, timeout=90)
+    except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as e:
+        print(f"  og basılamadı ({b['slug']}, {dil}): {e}")
+    finally:
+        kaynak.unlink(missing_ok=True)
+    return url if hedef.exists() else None
+
+
+def chrome_bul():
+    for aday in ("google-chrome", "google-chrome-stable", "chromium", "chromium-browser",
+                 "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"):
+        if shutil.which(aday) or Path(aday).exists():
+            return aday
+    return None
+
+
+def pdf_yaz(html_yolu, pdf_yolu):
+    """Kitap sayfasını Chrome ile pdf'e basar. Chrome yoksa eldeki pdf durur."""
+    chrome = chrome_bul()
+    if not chrome:
+        print(f"  chrome yok, {pdf_yolu.name} güncellenmedi")
+        return
+    komut = [chrome, "--headless=new", "--disable-gpu", "--no-pdf-header-footer",
+             f"--print-to-pdf={pdf_yolu}", "--virtual-time-budget=8000",
+             "--run-all-compositor-stages-before-draw", html_yolu.resolve().as_uri()]
+    try:
+        subprocess.run(komut, check=True, capture_output=True, timeout=120)
+    except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as e:
+        print(f"  pdf basılamadı: {e}")
+
+
+def rss_yaz(veri, dil, onek):
+    """Buttondown'ın 'RSS'ten mail' otomasyonu buradan okur."""
+    site = veri["site"]
+    u = f'{site["url"]}{onek}'
+    p = ['<?xml version="1.0" encoding="UTF-8"?>',
+         '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>',
+         '<title>vibecodedslopware</title>',
+         f'<link>{u}</link>',
+         f'<description>{html.escape(metin(site["aciklama"], dil))}</description>',
+         f'<language>{dil}</language>',
+         f'<atom:link href="{u}rss.xml" rel="self" type="application/rss+xml" />']
+    kalemler = []
+    for m in veri["mufredatlar"]:
+        for sv in m["seviyeler"]:
+            for b in sv["bolumler"]:
+                if b.get(f"durum_{dil}") == "yazildi":
+                    kalemler.append((b["tarih"], m, b))
+    kalemler.sort(key=lambda k: (k[0], k[2]["no"]), reverse=True)
+    for tarih, m, b in kalemler:
+        link = f'{u}{m["kod"]}/{b["slug"]}/'
+        d = dt.datetime.combine(dt.date.fromisoformat(tarih), dt.time(9, 0),
+                                tzinfo=dt.timezone(dt.timedelta(hours=3)))
+        p.append("<item>")
+        p.append(f'<title>{html.escape(bolum_alan(b, "baslik", dil))}</title>')
+        p.append(f"<link>{link}</link><guid isPermaLink=\"true\">{link}</guid>")
+        p.append(f'<pubDate>{d.strftime("%a, %d %b %Y %H:%M:%S %z")}</pubDate>')
+        p.append(f'<description>{html.escape(b.get(f"ozet_{dil}", ""))}</description>')
+        p.append("</item>")
+    p.append("</channel></rss>")
+    hedef = KOK / onek.rstrip("/") if onek else KOK
+    (hedef / "rss.xml").write_text("\n".join(p), encoding="utf-8")
 
 
 def okul_sayfasi(veri, dil, onek):
@@ -853,12 +1128,12 @@ def okul_sayfasi(veri, dil, onek):
 
     for m in veri["mufredatlar"]:
         duzlem = [b for sv in m["seviyeler"] for b in sv["bolumler"]]
-        yazilan = sum(1 for b in duzlem if b[f"durum_{dil}"] == "yazildi")
+        yazilan = sum(1 for b in duzlem if b.get(f"durum_{dil}") == "yazildi")
         if m["durum"] == "yakinda":
             sag = f'<span class="ders-sayi">{t["yakinda"]}</span>'
         else:
             sag = (f'<span class="ders-sayi">{len(duzlem)} {t["bolumler"]} &#183; '
-                   f'{yazilan} {t["yayinda"]}</span>')
+                   f'{yazilan} {t["yayinda"]}{siradaki_satir(m, dil, kisa=True)}</span>')
         p.append(f"""  <div class="ders">
     <a class="ders-ad" href="{yukari}{m["kod"]}/">{kac(m["ad"])}</a>{sag}
     <p class="ders-ozet">{kac(metin(m["ozet"], dil))}</p>

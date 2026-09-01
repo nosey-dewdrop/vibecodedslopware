@@ -1,0 +1,29 @@
+# Her sabah 09:00 (TR) siteyi yeniden kurar: tarihi gelen bölümün kilidi
+# kendiliğinden açılır, rss güncellenir, Buttondown maili atar. Push gerekmez.
+name: kur
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  kur:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: kur
+        run: python3 kur.py
+        env:
+          TZ: Europe/Istanbul
+      - name: commit
+        run: |
+          git config user.name "kur"
+          git config user.email "kur@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet && echo "değişiklik yok" && exit 0
+          git commit -m "kur: $(date -u +%Y-%m-%d) scheduled rebuild"
+          git push
