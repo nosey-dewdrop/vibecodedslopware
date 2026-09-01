@@ -24,6 +24,10 @@ jobs:
           git config user.name "kur"
           git config user.email "kur@users.noreply.github.com"
           git add -A
-          git diff --cached --quiet && echo "değişiklik yok" && exit 0
+          # Chrome her koşuda pdf/og baytlarını biraz farklı basıyor; sadece
+          # onlar değiştiyse gerçek bir değişiklik yok, gürültü commit'i atma.
+          if git diff --cached --quiet -- . ':(exclude)*.pdf' ':(exclude)tema/og/*.png'; then
+            echo "değişiklik yok"; exit 0
+          fi
           git commit -m "kur: $(date -u +%Y-%m-%d) scheduled rebuild"
           git push
