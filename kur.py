@@ -35,6 +35,7 @@ S = {
         "gecti": "geçti",
         "gecilen": "geçtin",
         "henuz": "bu bölüm henüz yazılmadı.",
+        "kayip": "böyle bir sayfa yok. adres değişmiş ya da hiç olmamış olabilir.",
         "yazilmadi": "yazılmadı",
         "lisans": "metin cc by-nc, kod mit",
         "kaynak": "kaynağı burada",
@@ -66,6 +67,7 @@ S = {
         "gecti": "passed",
         "gecilen": "passed",
         "henuz": "this chapter is not written yet.",
+        "kayip": "no such page. the address may have changed or never existed.",
         "yazilmadi": "not written",
         "lisans": "text cc by-nc, code mit",
         "kaynak": "source is here",
@@ -567,7 +569,10 @@ def kafa(veri, baslik, aciklama, kanonik, yukari, dil, karsi_url, indeksle=True,
     <meta property="og:title" content="{html.escape(baslik)}" />
     <meta property="og:description" content="{html.escape(aciklama)}" />
     <meta property="og:url" content="{kanonik}" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content="{veri["site"]["url"]}tema/og-{dil}.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#ffffff" />
     <script>window.KOK = "{yukari}"; window.DIL = "{dil}"; window.BOLUM = "{bolum}";</script>
   </head><body>
@@ -590,14 +595,19 @@ def navbar(veri, yukari, dil, karsi_url):
     return "\n".join(p)
 
 
-def gezinti(yukari, dil, kirinti, onceki=None, sonraki=None, kisayol=False):
+def gezinti(yukari, dil, kirinti, onceki=None, sonraki=None, kisayol=False, karsi_url=None):
     """yazbel'in üstte ve altta tekrarlayan noktalı 'related' şeridi."""
     t = S[dil]
     ks = ' accesskey="I"' if kisayol else ""
     p = [f'    <div class="related" role="navigation" aria-label="{t["gezinti"]}">',
-         f"      <h3>{t['gezinti']}</h3>", "      <ul>",
-         f'        <li class="right" style="margin-right: 10px">',
-         f'          <a href="{yukari}ara/" title="{t["arama"]}"{ks}>{t["ara"]}</a></li>']
+         f"      <h3>{t['gezinti']}</h3>", "      <ul>"]
+    if karsi_url:
+        # navbar 500px altında gizli; dil değiştirmenin tek yolu bu şerit.
+        obur = "en" if dil == "tr" else "tr"
+        p.append(f'        <li class="right dil" style="margin-right: 10px">'
+                 f'<a href="{karsi_url}" hreflang="{obur}">{obur}</a></li>')
+    p.append(f'        <li class="right" style="margin-right: 10px">')
+    p.append(f'          <a href="{yukari}ara/" title="{t["arama"]}"{ks}>{t["ara"]}</a></li>')
     if sonraki:
         ks = ' accesskey="N"' if kisayol else ""
         p.append(f'        <li class="right" >\n          <a href="{sonraki[0]}" '
@@ -675,6 +685,9 @@ def kur():
         toplam += 2
 
     site_haritasi(veri)
+    dort_yuz_dort(veri)
+    (KOK / "robots.txt").write_text(
+        f"User-agent: *\nAllow: /\nSitemap: {veri['site']['url']}sitemap.xml\n", encoding="utf-8")
     print(f"{toplam} sayfa kuruldu ({len(veri['mufredatlar'])} müfredat × {len(DILLER)} dil).")
 
 
@@ -717,7 +730,7 @@ def mufredat_kur(veri, m, dil, onek, indeks):
         sayfa = [kafa(veri, baslik, neden, kanonik, yukari, dil, karsi,
                       bolum=f'{m["kod"]}/{b["slug"]}'),
                  navbar(veri, yukari, dil, karsi),
-                 gezinti(yukari, dil, kirinti, onc, son, kisayol=True),
+                 gezinti(yukari, dil, kirinti, onc, son, kisayol=True, karsi_url=karsi),
                  GOVDE_AC,
                  f'  <section id="{b["slug"]}">',
                  f'<h1>{kac(baslik)}<a class="headerlink" href="#{b["slug"]}" '
@@ -768,7 +781,7 @@ def mufredat_ana(veri, m, dil, onek):
 
     p = [kafa(veri, baslik, ozet, kanonik, yukari, dil, karsi),
          navbar(veri, yukari, dil, karsi),
-         gezinti(yukari, dil, kirinti, None, son, kisayol=True),
+         gezinti(yukari, dil, kirinti, None, son, kisayol=True, karsi_url=karsi),
          GOVDE_AC,
          f'  <section id="{kimlik}">',
          f'<h1>{kac(baslik)}<a class="headerlink" href="#{kimlik}" title="'
@@ -830,7 +843,7 @@ def okul_sayfasi(veri, dil, onek):
     p = [kafa(veri, "vibecodedslopware", aciklama, kanonik, yukari, dil, karsi),
          navbar(veri, yukari, dil, karsi),
          gezinti(yukari, dil, kirinti,
-                 None, (f'{yukari}{ilk["kod"]}/', ilk["ad"]), kisayol=True),
+                 None, (f'{yukari}{ilk["kod"]}/', ilk["ad"]), kisayol=True, karsi_url=karsi),
          GOVDE_AC,
          '  <section id="okul">',
          "<h1>vibecodedslopware</h1>",
@@ -871,7 +884,7 @@ def arama_sayfasi(veri, dil, onek):
     p = [kafa(veri, t["arama"], t["arama_ipucu"], kanonik, yukari, dil, karsi,
               indeksle=False),
          navbar(veri, yukari, dil, karsi),
-         gezinti(yukari, dil, kirinti, kisayol=True),
+         gezinti(yukari, dil, kirinti, kisayol=True, karsi_url=karsi),
          GOVDE_AC,
          f'  <h1 id="arama-basligi">{t["arama"]}</h1>',
          "  <noscript>\n  <div class=\"admonition warning\">"
@@ -958,6 +971,28 @@ window.belirtecle = function (s, dil) {{
 }};
 """
     (KOK / "tema" / "stem.js").write_text(js, encoding="utf-8")
+
+
+def dort_yuz_dort(veri):
+    """GitHub Pages kökteki 404.html'i her kayıp yol için verir. Yollar köke
+    göre mutlak, çünkü sayfa hangi derinlikte istendiği bilinmiyor."""
+    site = veri["site"]
+    kok = "/" + site["url"].split("/", 3)[3]  # https://host/repo/ -> /repo/
+    dil = "tr"
+    t = S[dil]
+    p = [kafa(veri, "404", t["kayip"], f'{site["url"]}404', kok, dil,
+              f'{site["url"]}en/', indeksle=False),
+         navbar(veri, kok, dil, f'{site["url"]}en/'),
+         gezinti(kok, dil, [("", "404")]),
+         GOVDE_AC,
+         '  <section id="kayip">',
+         '<h1>404<a class="headerlink" href="#kayip">¶</a></h1>',
+         f'<p>{t["kayip"]}</p>',
+         f'<p><a href="{kok}">{t["ev"]}</a> &#183; <a href="{kok}slopware/">slopware</a>'
+         f' &#183; <a href="{kok}ara/">{t["ara"]}</a> &#183; <a href="{kok}en/">en</a></p>',
+         "</section>", GOVDE_KAPA,
+         gezinti(kok, dil, [("", "404")]), ayak(kok, dil)]
+    (KOK / "404.html").write_text("\n".join(p), encoding="utf-8")
 
 
 def site_haritasi(veri):

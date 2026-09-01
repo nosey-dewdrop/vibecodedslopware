@@ -1,8 +1,8 @@
 # rabadon devridaim — vibecodedslopware
-updated: 2026-08-18T13:27:53Z
+updated: 2026-09-01T20:45:07Z
 
 ## goal (as captured from the session)
-kanka durur musun müfredata göre neleri araştırdın mesela
+(no goal captured)
 
 ## tests
 not run this cycle
@@ -11,14 +11,15 @@ not run this cycle
 - none
 
 ## last moves
-- bash: cd /Users/damummyphus/damla_projects_2026/00_currently_on_working/vibecodedslopw
-- bash: cd /Users/damummyphus/damla_projects_2026/00_currently_on_working/vibecodedslopw
-- bash: cd /Users/damummyphus/damla_projects_2026/00_currently_on_working/vibecodedslopw
-- bash: cd /Users/damummyphus/damla_projects_2026/00_currently_on_working/vibecodedslopw
-- bash: cd /Users/damummyphus/damla_projects_2026/00_currently_on_working/vibecodedslopw
-- bash: cd /Users/damummyphus/damla_projects_2026/00_currently_on_working/vibecodedslopw
-- bash: cd /Users/damummyphus/damla_projects_2026/00_currently_on_working/vibecodedslopw
-- bash: cd /Users/damummyphus/damla_projects_2026/00_currently_on_working/vibecodedslopw
+- bash: cd ~/damla_projects_2026/vibecodedslopware && sed -n 545,560p kur.py; echo ...; 
+- bash: cd ~/damla_projects_2026/vibecodedslopware && grep -n "window.KOK" kur.py; sed -
+- bash: cd ~/damla_projects_2026/vibecodedslopware && python3 - <<'EOF'
+from pathlib imp
+- bash: cd ~/damla_projects_2026/vibecodedslopware && (python3 -c "import playwright; pr
+- bash: cd ~/damla_projects_2026/vibecodedslopware && cat > /private/tmp/claude-501/-Use
+- Read: kontrol.png
+- Read: mufredat.png
+- bash: cd ~/damla_projects_2026/vibecodedslopware && pkill -f "http.server 8765"; git a
 
 ## for the next session
 - if tests are RED above: that is the open front — start there.
