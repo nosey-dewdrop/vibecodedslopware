@@ -15,7 +15,7 @@ BUNUN SONUCU — canli sitede degisiklik
   yayinliyor. Birlesimde bunlar 301'e tasindi. Site listesi degisecek.
   Yayinlanmis iki bolum (slopware-nedir, localhost) yerinde kaliyor.
 
-TOPLAM 48 BOLUM. 101: 12 · 201: 12 · 301: 14 · 401: 10
+TOPLAM 49 BOLUM. 101: 12 · 201: 12 · 301: 15 · 401: 10
 
 
 ==============================================================================
@@ -80,16 +80,20 @@ Not 24: 40 bunu 101'e eklenecek diye isaretlemis ama deploy'dan once anlatilamaz
  26  yetkilendirme ve RLS                    B   40#23 + 25#8'in ikinci yarisi + 25#9
  27  tarayicidaki kontrol kontrol degildir   25#8'in icinden ayrildi
  28  girdi guvenilmezdir                     40#24
- 29  dosya yuklemek masum bir islem degil    25#10
- 30  bagimlilik zinciri                      B   40#25 + 25#18 (npm install bir guven kararidir)
- 31  LLM'li urunun guvenligi                 B   40#26 + 25#16 (ajana ne kadar yetki)
- 32  rate limit                              B   40#27 + 25#5 (anahtari dagittin)
- 33  olcek — N+1, baglanti havuzu, onbellek  B   40#28 + 25#11 (100 satirda hizli)
- 34  webhook                                 25#12 ve 25#13 ikisi de varsayiyor, ikisi de tanitmiyor
- 35  ayni istek iki kez — idempotency        25#12 (kullanici iki kere odedi)
- 36  disarisi senin kadar saglam degil       25#14
- 37  log ve alarm                            40#29
- 38  izleme                                  40#30
+ 29  insanlar sana guvenmeli — PII ve sizinti  25#7
+ 30  dosya yuklemek masum bir islem degil    25#10
+ 31  bagimlilik zinciri                      B   40#25 + 25#18 (npm install bir guven kararidir)
+ 32  LLM'li urunun guvenligi                 B   40#26 + 25#16 (ajana ne kadar yetki)
+ 33  rate limit                              B   40#27 + 25#5 (anahtari dagittin)
+ 34  olcek — N+1, baglanti havuzu, onbellek  B   40#28 + 25#11 (100 satirda hizli)
+ 35  webhook                                 25#12 ve 25#13 ikisi de varsayiyor, ikisi de tanitmiyor
+ 36  ayni istek iki kez — idempotency        25#12 (kullanici iki kere odedi)
+ 37  disarisi senin kadar saglam degil       25#14
+ 38  log ve alarm                            40#29
+ 39  izleme                                  40#30
+
+Not 29: 25'te PII, saklama suresi, silme hakki ve KVKK burada karisikti.
+Birlesimde hukuki detay 401'e (KVKK bolumu) gitti, guven ve sizinti burada kaldi.
 
 Not 27: 25 bunu #8'in icine sikistirmis ama Damla'nin yayinlanmis listesinde
 ayri madde: "if the check is in the browser there is no check".
@@ -102,16 +106,16 @@ Not 34: webhook iki mufredatta da yok, ikisi de kullaniyor. Yeni.
 ==============================================================================
 
  no  bolum                                   kaynak
- 39  maliyet kontrolu                        B   40#31 + 25#17 (torpil = token faturasi)
- 40  wrapper anatomisi                       40#32
- 41  kimsenin istemedigi seyi yapmak         40#33
- 42  kullaniciyla konusmak                   40#34
- 43  MVP ve launch                           40#35
- 44  KVKK'yi gelistirici olarak okumak       40#36
- 45  yurtdisina aktarim ve cerez             40#37
- 46  para almak                              B   40#38 + 25#13 (odeme basarili dondu)
- 47  fiyatlama ve gercek metrik              40#39
- 48  default alive mi default dead mi        40#40
+ 40  maliyet kontrolu                        B   40#31 + 25#17 (torpil = token faturasi)
+ 41  wrapper anatomisi                       40#32
+ 42  kimsenin istemedigi seyi yapmak         40#33
+ 43  kullaniciyla konusmak                   40#34
+ 44  MVP ve launch                           40#35
+ 45  KVKK'yi gelistirici olarak okumak       40#36
+ 46  yurtdisina aktarim ve cerez             40#37
+ 47  para almak                              B   40#38 + 25#13 (odeme basarili dondu)
+ 48  fiyatlama ve gercek metrik              40#39
+ 49  default alive mi default dead mi        40#40
 
 
 ==============================================================================
@@ -166,9 +170,9 @@ BIRLESIMIN GETIRDIGI ISLER
     ir-globe ornegi, restoran analojisi. Birlesim ikisini de icerir.
 
 4 · SITE LISTESI GUNCELLENECEK
-    mufredat.json 25 bolum ve tek seviye tutuyor. Birlesim 48 bolum, dort
+    mufredat.json 25 bolum ve tek seviye tutuyor. Birlesim 49 bolum, dort
     seviye. json yeniden yazilacak, kur.py'nin seviye destegi kontrol edilecek.
     Yayinlanmis iki bolumun slug'i degismeyecek (slopware-nedir, localhost).
 
 5 · TAKVIM YENIDEN HESAPLANACAK
-    3 gunde bir x 48 bolum = 144 gun. Su anki plan 25 bolum icin 75 gundu.
+    3 gunde bir x 49 bolum = 147 gun. Su anki plan 25 bolum icin 75 gundu.
