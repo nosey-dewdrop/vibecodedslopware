@@ -7,7 +7,7 @@
     <meta name="author" content="Damla Su Bilge" />
     <meta name="robots" content="index,follow" />
 
-    <title>guys, I am on localhost &#8212; vibecodedslopware</title>
+    <title>why does your link only open for you? &#8212; vibecodedslopware</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400&family=Roboto+Slab:wght@400;700&family=Special+Elite&display=swap" />
@@ -21,10 +21,10 @@
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='white'/%3E%3Crect x='6' y='6' width='6' height='20' fill='%23808080'/%3E%3Crect x='20' y='6' width='6' height='20' fill='%23808080'/%3E%3C/svg%3E" />
     <meta property="og:type" content="article" />
     <meta property="og:site_name" content="vibecodedslopware" />
-    <meta property="og:title" content="guys, I am on localhost" />
+    <meta property="og:title" content="why does your link only open for you?" />
     <meta property="og:description" content="npm run dev bir program başlatıyor, o program bir portu dinliyor, 127.0.0.1 senin makinen. Terminal ve klasör burada öğrenilir. Okurun ilk duvarı." />
     <meta property="og:url" content="https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/localhost/" />
-    <meta property="og:image" content="https://nosey-dewdrop.github.io/vibecodedslopware/tema/og-en.png" />
+    <meta property="og:image" content="https://nosey-dewdrop.github.io/vibecodedslopware/tema/og/localhost-en.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -53,10 +53,12 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../ara/" title="Search" accesskey="I">search</a></li>
         <li class="right" >
-          <a href="../../../slopware/slopware-nedir/" title="what slopware is, and why now" accesskey="P">previous</a> |</li>
+          <a href="../../../slopware/dev-ve-build/" title="what is the difference between npm run dev and npm run build?" accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../../../slopware/terminal-ve-klasor/" title="why can your deploy not find your files?" accesskey="P">previous</a> |</li>
 <li class="nav-item nav-item-0"><a href="../../../" title="home">&#x2302;</a></li>
           <li class="nav-item nav-item-1"><a href="../../../slopware/" >slopware</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">guys, I am on localhost</a></li>
+        <li class="nav-item nav-item-this"><a href="">why does your link only open for you?</a></li>
       </ul>
     </div>
 
@@ -65,10 +67,45 @@
           <div class="body" role="main">
 
   <section id="localhost">
-<h1>guys, I am on localhost<a class="headerlink" href="#localhost" title="Link to this heading">¶</a></h1>
+<h1>why does your link only open for you?<a class="headerlink" href="#localhost" title="Link to this heading">¶</a></h1>
 <div class="description yazi-ozet">npm run dev bir program başlatıyor, o program bir portu dinliyor, 127.0.0.1 senin makinen. Terminal ve klasör burada öğrenilir. Okurun ilk duvarı.</div>
-<p class="henuz">this chapter is not written yet. a chapter every three days.</p>
-
+<div class="contents local topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#what-does-localhost-mean">What does localhost mean?</a></li>
+<li><a class="reference internal" href="#can-your-own-phone-open-it">Can your own phone open it?</a></li>
+<li><a class="reference internal" href="#how-far-does-the-local-network-reach">How far does the local network reach?</a></li>
+<li><a class="reference internal" href="#can-anyone-else-open-your-project">Can anyone else open your project?</a></li>
+</ul></div>
+<p>This chapter is about famous localhost:3000. Jokes about it have been going around the internet for a long time. Many people believe CS is dead because they built a website hosting on local. You click your own link and it opens. Your friend clicks it and it does not. Why does it happen, what is localhost:3000, and how to fix this issue?</p>
+<section id="what-does-localhost-mean">
+<h2>What does localhost mean?<a class="headerlink" href="#what-does-localhost-mean" title="Link to this heading">¶</a></h2>
+<p>It begins with localhost:3000 or 127.0.0.1:3000, which are the same address written two ways. localhost is a name and 127.0.0.1 is the number the name stands for. RFC 6761 reserves both for one purpose, and that purpose is to mean the computer that is asking. When you type it, your machine sends the request to a program on itself. The request never leaves the machine, which is why this is called the loopback address. When your friend types it, their machine sends the request to a program on itself and finds none. Each computer's localhost is a different server.</p>
+<p>The number after the colon is the port. If the address is the building, the port is the apartment inside it. One machine runs many programs and each waits at its own number. 3000 is a convention development tools picked, nothing more. The port is fine. The building is the problem, because you gave your friend the name every building uses for itself.</p>
+</section>
+<section id="can-your-own-phone-open-it">
+<h2>Can your own phone open it?<a class="headerlink" href="#can-your-own-phone-open-it" title="Link to this heading">¶</a></h2>
+<p>Open the terminal and cd into any folder that has a file or two in it. Run this.</p>
+<div class="highlight-console notranslate"><div class="highlight"><button class="kopyala" type="button" data-oldu="copied">copy</button><pre><span></span><span class="nb">python3</span> -m http.server 8000 --bind 127.0.0.1
+</pre></div></div>
+<p>This starts a small web server. The flag tells it to answer only the machine it is running on. Open localhost:8000 in the browser and you see the folder's files listed. Now type the same address into your phone's browser. Nothing comes back, even though the phone is on the same wifi. The phone went looking for a program at port 8000 on itself.</p>
+<p>Now stop the server with Ctrl+C and start it again without the flag.</p>
+<div class="highlight-console notranslate"><div class="highlight"><button class="kopyala" type="button" data-oldu="copied">copy</button><pre><span></span><span class="nb">python3</span> -m http.server 8000
+</pre></div></div>
+<p>The flag was doing all the work. 127.0.0.1 told the server to listen on the loopback address alone, so requests arriving over wifi were never answered. Without the flag this tool listens on 0.0.0.0, which is not an address you connect to. It means every network interface the machine has, including the wifi card. A request from the phone is now accepted the same as one from the machine itself. You will see 0.0.0.0 again in Docker logs and in cloud deploy output and it always means the same thing.</p>
+<p>Now find the laptop's address on the local network. On a Mac that is ipconfig getifaddr en0 and on Linux hostname -I. It looks like 192.168.1.24. If the Mac command comes back empty your wifi is on another interface, so try en1. Type http://192.168.1.24:8000 into the phone and the file list appears. Nothing in the files changed, only which doors the program answers and which machine the phone was told to look at.</p>
+</section>
+<section id="how-far-does-the-local-network-reach">
+<h2>How far does the local network reach?<a class="headerlink" href="#how-far-does-the-local-network-reach" title="Link to this heading">¶</a></h2>
+<p>'So I drop the flag and I am live,' you may be thinking. What you have is a server reachable from the same wifi. 192.168.1.24 is an address inside your home network and means nothing outside it, so a friend in a cafe or a customer on mobile data cannot reach it. And when the laptop lid closes, nothing is running anywhere.</p>
+<p>A product has to answer while you are asleep, so the program has to run on a machine that stays on and has an address the internet can route to. Putting it there is called deploying, and that is chapter 16. ir-globe answers at three in the morning because it is not on my laptop.</p>
+</section>
+<section id="can-anyone-else-open-your-project">
+<h2>Can anyone else open your project?<a class="headerlink" href="#can-anyone-else-open-your-project" title="Link to this heading">¶</a></h2>
+<p>Look at the address bar of the project you are proudest of. If it begins with localhost or 127.0.0.1, the number of people who can open it is 1. Then close the laptop. Turn off wifi on your phone so you are on mobile data and try to open the project. Whatever comes back is the answer to whether it exists yet.</p>
+<p>After that come the two commands you run without reading them. Only one of npm run dev and npm run build makes a thing you can deploy.</p>
+</section>
+<p class="paylas"><span>share:</span> <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/localhost/" target="_blank" rel="noopener">linkedin</a> &#183; <a href="https://x.com/intent/post?url=https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/localhost/" target="_blank" rel="noopener">x</a> &#183; <button type="button" class="link-kopyala" data-link="https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/localhost/" data-oldu="copied">copy link</button></p><p class="iyilestir"><a href="https://github.com/nosey-dewdrop/vibecodedslopware/edit/main/yazilar/en/slopware/localhost.md">improve this page</a> &#183; the source is on GitHub, fix what you see wrong.</p>
 
 </section>
 
@@ -84,10 +121,12 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../ara/" title="Search">search</a></li>
         <li class="right" >
-          <a href="../../../slopware/slopware-nedir/" title="what slopware is, and why now">previous</a> |</li>
+          <a href="../../../slopware/dev-ve-build/" title="what is the difference between npm run dev and npm run build?">next</a> |</li>
+        <li class="right" >
+          <a href="../../../slopware/terminal-ve-klasor/" title="why can your deploy not find your files?">previous</a> |</li>
 <li class="nav-item nav-item-0"><a href="../../../" title="home">&#x2302;</a></li>
           <li class="nav-item nav-item-1"><a href="../../../slopware/" >slopware</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">guys, I am on localhost</a></li>
+        <li class="nav-item nav-item-this"><a href="">why does your link only open for you?</a></li>
       </ul>
     </div>
 

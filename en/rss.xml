@@ -5,4 +5,40 @@
 <description>software curricula. what slopware is, how to spot it, what to do.</description>
 <language>en</language>
 <atom:link href="https://nosey-dewdrop.github.io/vibecodedslopware/en/rss.xml" rel="self" type="application/rss+xml" />
+<item>
+<title>why does the till stand in a different room?</title>
+<link>https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/vitrin-ve-kasa/</link><guid isPermaLink="true">https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/vitrin-ve-kasa/</guid>
+<pubDate>Thu, 03 Sep 2026 09:00:00 +0300</pubDate>
+<description>Frontend, backend ve aradaki güven sınırı. Deploy&#x27;u anlamak için önce neyi deploy ettiğini bilmek gerekiyor.</description>
+</item>
+<item>
+<title>what is the difference between npm run dev and npm run build?</title>
+<link>https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/dev-ve-build/</link><guid isPermaLink="true">https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/dev-ve-build/</guid>
+<pubDate>Mon, 31 Aug 2026 09:00:00 +0300</pubDate>
+<description>Biri senin makinende bellekte sayfa kuruyor, digeri sunucuya gidecek klasoru yaziyor. Deploy edilen klasor, hic acmadigin klasor.</description>
+</item>
+<item>
+<title>why does your link only open for you?</title>
+<link>https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/localhost/</link><guid isPermaLink="true">https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/localhost/</guid>
+<pubDate>Fri, 28 Aug 2026 09:00:00 +0300</pubDate>
+<description>npm run dev bir program başlatıyor, o program bir portu dinliyor, 127.0.0.1 senin makinen. Terminal ve klasör burada öğrenilir. Okurun ilk duvarı.</description>
+</item>
+<item>
+<title>why can your deploy not find your files?</title>
+<link>https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/terminal-ve-klasor/</link><guid isPermaLink="true">https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/terminal-ve-klasor/</guid>
+<pubDate>Tue, 25 Aug 2026 09:00:00 +0300</pubDate>
+<description>Dosya ve klasör kavramı olmadan hiçbir sonraki bölüm oturmuyor.</description>
+</item>
+<item>
+<title>what is the thing on your screen?</title>
+<link>https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/ekranindaki-sey/</link><guid isPermaLink="true">https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/ekranindaki-sey/</guid>
+<pubDate>Sat, 22 Aug 2026 09:00:00 +0300</pubDate>
+<description>Sayfa sihir değil, indirilen bir dosya yığını. Model buradan başlıyor.</description>
+</item>
+<item>
+<title>why does this book exist?</title>
+<link>https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/slopware-nedir/</link><guid isPermaLink="true">https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/slopware-nedir/</guid>
+<pubDate>Wed, 19 Aug 2026 09:00:00 +0300</pubDate>
+<description>Herkes bu kelimeyi söylüyor ama kimse tanımını bilmiyor.</description>
+</item>
 </channel></rss>

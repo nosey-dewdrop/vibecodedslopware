@@ -433,6 +433,14 @@ def satir_ici(s):
                    + kac(kutu[int(m.group(1))]) + "</span></code>"),
         s,
     )
+    s = re.sub(
+        r"\[\^([0-9A-Za-z_-]+)\]",
+        lambda m: (f'<sup class="dipnot-ref" id="dipnot-ref-{m.group(1)}">'
+                   f'<a href="#dipnot-{m.group(1)}">{m.group(1)}</a></sup>'),
+        s,
+    )
+    s = re.sub(r"(?<=[.!?,;:\w])\*(?![*\w])",
+               '<sup class="ek-ref"><a href="../../ek/">*</a></sup>', s)
     return s
 
 
@@ -447,6 +455,20 @@ def markdown(kaynak, dil):
     i = 0
     while i < len(satirlar):
         satir = satirlar[i]
+
+        m_dip = re.match(r"^\[\^([0-9A-Za-z_-]+)\]:\s*(.*)$", satir)
+        if m_dip:
+            ad = m_dip.group(1)
+            blok = [m_dip.group(2)]
+            i += 1
+            while i < len(satirlar) and satirlar[i].startswith(("    ", "\t")):
+                blok.append(satirlar[i].strip())
+                i += 1
+            parca.append(("html",
+                          f'<aside class="dipnot" id="dipnot-{ad}">'
+                          f'<a class="dipnot-geri" href="#dipnot-ref-{ad}">{ad}</a>'
+                          f"<p>{satir_ici(' '.join(blok).strip())}</p></aside>"))
+            continue
 
         if satir.strip() == "::kontrol":
             i += 1
