@@ -1,16 +1,14 @@
-# SLOPWARE — MÜFREDAT VE KAYNAK DOSYASI
+# SLOPWARE — MALZEME BANKASI
 
-40 bölüm, 4 seviye. Türkçe yazılır, İngilizce ikizi çıkar.
-Ton: öğretici ve güçlü, zorbalık yok. Her bölümde Damla'nın kendi vakası var.
+Bolum listesi ARTIK BURADA DEGIL. Liste `mufredat.json`'da, siteyi o kuruyor.
+Bu dosya o bolumlerin malzemesi: kaynak, olcum, dogrulama, hangi vaka kullanilir
+hangisi kullanilmaz.
 
-**Bölüm iskeleti (Yazbel'in pedagojisi, her bölümde aynı):**
-çalışıyor görünen kod → "iyi, hoş, ama" → nerede çöküyor → doğrusu → benim vakam
+2 Eylul 2026'da karar verildi: 25 bolumluk yayin takvimi ile 40 bolumluk kitap
+plani tek listede birlesti. 47 bolum, dort seviye. Ayri liste tutulmayacak.
 
-**Kararlar:** Terim "slopware" olarak kalır, Türkçe karşılık uydurulmaz.
-URL'de numara ve tarih yok (`/slopware-nedir`). Statik jeneratör + git'te düz metin.
-Lisans gün 1'de belli — kalıcı rehber iddiası lisanssız inandırıcı değil.
-
-**Araştırma durumu:** 101 ✅ · 201 ✅ · 301 ⏳ (limit) · 401 ⏳ (limit)
+Bu dosyadaki eski 40 bolumluk numaralandirma GECERSIZ. Malzemeyi konu adiyla ara,
+numarayla degil.
 
 ---
 

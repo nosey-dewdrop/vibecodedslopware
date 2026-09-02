@@ -1,73 +1,80 @@
 VIBECODEDSLOPWARE — DEVIR DOSYASI
-2 Eylul 2026. Bu dosyayi bastan sona oku, sonra basla.
+2 Eylul 2026.
 
-Calisma dizini:
-  ~/damla_projects_2026/vibecodedslopware/
-  GitHub: nosey-dewdrop/vibecodedslopware  (site yayinda, gunluk rebuild action var)
+Calisma dizini: ~/damla_projects_2026/vibecodedslopware/
+GitHub: nosey-dewdrop/vibecodedslopware   (site yayinda, gunluk rebuild action)
 
 
 ==============================================================================
-0 · ONCE BUNU OKU — IKI MUFREDAT VARDI, BIRI OLDU
+0 · MUFREDAT KAPANDI. BIR DAHA YAZILMAYACAK.
 ==============================================================================
 
-2 Eylul'de bir oturum, bu reponun varligini bilmeden, ayni isin paralel bir
-kopyasini uretti:
-  ~/damla_projects_2026/işte tüm dosyalar/slopware101/
-Orada 29 bolumluk bir harita, bir DEVIR.txt ve 320 KB'lik bir curriculum.txt var.
-HEPSI GECERSIZ. O klasor ESKI KOSU'dur. Yapisi, numaralari, dili (Ingilizce) ve
-bolum iskeleti bu reponunkiyle catisiyor.
+Iki hafta icinde alti kez mufredat yazildi: 40, 28, 26, 25, 29, 49.
+Sebep her seferinde ayniydi — yazi begenilmeyince plan yeniden yazildi.
+Cunku plan yazmak, yazinin iyi olup olmadigiyla yuzlesmeden uretilebilen tek sey.
 
-  KANONIK OLAN BU REPO. MUFREDAT.md.
+2 Eylul'de kapandi. Liste `mufredat.json`'da, 47 bolum, dort seviye.
+`MUFREDAT.md` artik liste degil, MALZEME BANKASI.
 
-Eski kosunun tek degeri malzemesidir. Ne tasinacagi olculdu ve yazildi:
-  ESKI-KOSUDAN-TASINACAK.txt   96 kalem, 24 boluma dagitilmis
-Tasima bitince eski klasore bir daha bakilmaz.
+  BIR DAHA MUFREDAT YAZILMAYACAK.
+  Bolum kotuyse bolum duzeltilir. Liste degistirilmez.
 
-Yeni oturum eski klasoru acmayacak. Acmasi gereken tek dosya yukaridaki.
+Eski kosu klasoru (~/damla_projects_2026/işte tüm dosyalar/slopware101) sadece
+malzeme icin acilir, plan icin acilmaz. Oradaki harita ve devir dosyalari
+gecersiz.
 
 
 ==============================================================================
 1 · BU NE ISI
 ==============================================================================
 
-Bir KITAP. Yazbel'in pedagojisi ve gorunumu — tema birebir yazbel'in Sphinx
-pyramid temasindan alinmis, ¶ cipalari, tek kolon, gezinti seridi.
+Bir KITAP. Yazbel gibi: tam bir bolgeyi kapsiyor, bedava, kalici, tek ses.
+Ama Python ogretmiyor. Ogrettigi sey: yaptigin seyin neden ayakta durmadigi.
 
-  40 bolum, 4 seviye:
-    101  bu sey nasil calisiyor?          bolum 0-11
-    201  ayaga kaldir                     bolum 12-21
-    301  gercek kullanici ve saldirgan    bolum 22-31
-    401  founder                          bolum 32-40
+Okur sifirdan baslayan biri DEGIL. Elinde calisan gorunen bir sey var ve modeli
+yok. Ona tepeden bakilmaz.
 
-  TURKCE ASILDIR. Ingilizce ikizi cikar. (Eski kosu bunu Ingilizce sanmisti.)
-
-TEZ — pedagoji arastirmasindan cikti, uydurma degil
-  Vibe coder'in kafasinda NOTIONAL MACHINE yok. AI'in ciktisi ona sihir gibi
+TEZ — pedagoji arastirmasindan, uydurma degil
+  Vibe coder'in kafasinda notional machine yok. AI'in ciktisi ona sihir gibi
   gorunuyor cunku "makine" diye bir zihinsel model kurulmamis.
-  Kaynak: Sorel & du Boulay, Notional Machines and Introductory Programming
-  Education, ACM TOCE 2013.
-  Kitabin isi o modeli kurmak.
+  Sorel & du Boulay, ACM TOCE 2013. Kitabin isi o modeli kurmak.
 
-BOLUM ISKELETI — her bolumde ayni, degismez
-  calisiyor gorunen kod > "iyi, hos, ama" > nerede cokuyor > dogrusu > benim vakam
+BU KITABI BASKA HICBIR SEYE BENZETMEYEN SEY
+  Okunmuyor, kendi projende calistiriliyor.
+  Her bolumun sonunda bir KONTROL var: okurun kendi projesinde yapacagi somut
+  bir sey. mufredat.json'da her bolumun "kontrol" alani dolu.
+  47 bolumun sonunda okur kendi projesini bastan sona denetlemis oluyor.
+  Bolum bittiginde okur elindeki seyle BUGUN farkli bir sey yapmiyorsa,
+  o bolum dokumantasyon olmus.
 
-  Dikkat: bolum OLAYLA acilmiyor. "Calisiyor gorunen kod" ile aciliyor.
-  Okurun kendi elindeki sey ile.
-
-101'IN DEMIR KURALI
-  101 boyunca tek bir CVE numarasi, tek bir OWASP kodu gecmez.
-  Magazin yasagi burada zaten yazili.
-
-TON
-  Ogretici ve guclu, zorbalik yok. Her bolumde Damla'nin kendi vakasi var.
-  Terim "slopware" olarak kalir, Turkce karsilik uydurulmaz.
-  URL'de numara ve tarih yok (/slopware-nedir).
-
-IKI KATMAN — her kalemde ikisi de
+IKI KATMAN — her bolumde ikisi de
   ILKE : aletsiz dogru cumle, bes yil sonra da dogru.
   ALET : bu yilin somut ornegi, TARIHLI. 2030'da okuyan kontrol etmesi
          gerektigini bilsin.
-  Sadece ilke kalirsa soyut olur. Sadece alet kalirsa iki yil sonra oler.
+
+TR VE EN — CEVIRI DEGIL, YERELLESTIRME
+  Ayni bolum, ayni ilke, FARKLI yerel kanit.
+    TR : kapi eksi/technopat/donanimhaber · hukuk KVKK ve 5651 ·
+         odeme iyzico ve PayTR
+    EN : kapi Reddit/HN · hukuk GDPR · odeme Stripe
+  Ingilizce surum Turkce'nin cevirisi degil, kendi okuruna yazilmis hali.
+  Turkce asildir cunku bosluk orada mutlak.
+
+FORMAT BULUNDU — yazilarin/tr/slopware/localhost.md
+  Uzun. Ogretiyor. Calistirilabilir egzersizi var. Damla'nin kendi itirafi
+  iciinde (shortstorylong 2272 konu, missingsemicolon 1206 soru, ikisi de
+  bitmis ikisi de canlida degil). OLAYLA ACMIYOR, okurun elindeki seyle aciyor.
+
+  Reddedilen 2 ve 5 numara Ingilizceydi ve 2.800 karakterdi. localhost'u 2.800
+  karakterde ogretemezsin. LinkedIn formati ogretmeyi olduruyor.
+  LinkedIn bolumden KESILIR, ters yonde calisilmaz.
+
+BOLUM ISKELETI
+  calisiyor gorunen kod > "iyi, hos, ama" > nerede cokuyor > dogrusu >
+  benim vakam > kontrol
+
+101'IN DEMIR KURALI
+  101 boyunca tek CVE numarasi, tek OWASP kodu gecmez.
 
 
 ==============================================================================
@@ -200,16 +207,16 @@ Kaybolursa geri gelmez. En degerli beşi:
 
   1. Damla'nin birebir "dear connections" taslagi (~700 kelime) + 7 dokunulmaz
      cumle. Canlida tek cumlesi bile yok. SERININ SESI BU, yeniden kurulamaz.
-     > Bolum 0.
+     > slopware-nedir ve herkes-her-seyi-yapabilir
   2. 93 repo taramasi. 158>93 repo, 11'inde .env hicbiri commit'li degil,
      17 repoda RLS ve 309 policy (216'si auth.uid() karsilastiriyor), 8 repoda
      gomulu anon key (hepsi role:anon, service_role sifir), 23 Node reposunun
      8'inde lockfile yok. Rehberin "ben olctum" iddiasinin tamami buna dayaniyor.
-     > Bolum 7, 12, 16, 23, 25.
+     > sir-nedir, git, veritabani-baglamak, rls, bagimlilik-zinciri
   3. stitchu'nun tarihli kendi hatasi: 27 Agu 2026 oncesi PUBLIC_ANALYZE = "on",
      Origin'siz curl Anthropic parasi harciyordu, hicbir sayac toplami bilmiyordu.
      Ve 93 repodan sadece 1'inde gercekten kodlanmis rate limit var.
-     > Bolum 7 ve 27. En durust acilis bu.
+     > sir-nedir ve rate-limit. En durust acilis bu.
   4. Turkce forum katmaninin tamami — 14 alinti (eksi ID'li ve tarihli,
      technopat, donanimhaber, r10.net). Canlida SIFIR. Rehberin Turkce MOAT
      iddiasini tasiyacak tek malzeme.
@@ -217,12 +224,13 @@ Kaybolursa geri gelmez. En degerli beşi:
      callback, 24 saat retry, 3DS zorunlulugu; 5651 yer saglayici yukumlulugu
      (6 ay trafik, 24 saat yanit, 2 gun kaldirma, ceza araligi) + Giscus.
      Canlida "5651" hic gecmiyor.
-     > Bolum 36, 37, 38.
+     > insanlar-sana-guvenmeli ve yorum-kutusu
 
-En cok yuk alan bolumler: 3 (localhost, 22 kalem — eskide RFC seviyesi derinlik
-var), 0 (20 kalem), 38 (15), 7 (12), 26 (11), 16+23 (11).
+En cok yuk alan bolumler: localhost (22 kalem, eskide RFC seviyesi derinlik var),
+slopware-nedir (20), insanlar-sana-guvenmeli (15), sir-nedir (12), ajana-yetki (11),
+rls (11).
 
-Yontem: MUFREDAT.md'nin ilgili bolumune eklenir, ustune yazilmaz.
+Yontem: MUFREDAT.md malzeme bankasidir, ilgili konuya eklenir. Liste degistirilmez.
 Kapilar: K1, K2.
 Bitince commit: "migrate material from the old run into the curriculum"
 
@@ -267,15 +275,9 @@ IS 3 · 301 VE 401 ARASTIRMASI
 MUFREDAT.md basinda: "Arastirma durumu: 101 ✅ · 201 ✅ · 301 ⏳ (limit) · 401 ⏳ (limit)"
 Ikisi de limitte kesilmis, yarim.
 
-301 (22-31): Auth · Yetkilendirme ve RLS ✅ · Girdi guvenilmezdir ·
-Bagimlilik zinciri · LLM'li urunun guvenligi · Rate limit · Olcek (N+1,
-baglanti havuzu, onbellek) · Log ve alarm · Izleme · Maliyet kontrolu ✅
-  > 23 ve 31 dolu. Kalan 8 bolum arastirma bekliyor.
-
-401 (32-40): Wrapper anatomisi · Kimsenin istemedigi seyi yapmak ·
-Kullaniciyla konusmak · MVP ve launch ✅ · KVKK ✅ · Yurtdisina aktarim ve
-cerez · Para almak · Fiyatlama ve gercek metrik · Default alive mi
-  > 32, 35, 36-37 kismen dolu. Kalan arastirma bekliyor.
+301 ve 401'in bolumleri mufredat.json'da. Ikisinin de arastirmasi limitte
+kesilmis, yarim. Once KURTARILAN-ARASTIRMA.md'deki islenmemis raporlar isleniyor,
+SONRA yeni arastirma yapiliyor. Iki kez arastirilmaz.
 
 KURTARILAN-ARASTIRMA.md'de ⏳ isaretli raporlar var, once oraya bakilir:
   R12/R16/R29 npm tedarik zinciri > 25 · R25 caching > 28 · R19 feature toggle >
@@ -316,20 +318,12 @@ izin verilmez.
 Bitince commit: "close verification debts"
 
 ------------------------------------------------------------------------------
-IS 5 · BES YENI BOLUM ADAYI — DAMLA KARAR VERECEK
+IS 5 · KARAR VERILDI — ARTIK IS DEGIL
 ------------------------------------------------------------------------------
 
-Bosluk analizinden cikti. Eski kosuda malzemesi var, canli mufredatta hicbir
-bolume oturmuyorlar:
-
-  1. idempotency ve webhook       (odeme ve dis servis bunu varsayiyor)
-  2. AI yazi imzasi, em-dash      (urunun metin yuzu)
-  3. erisilebilirlik + Turkce kirilmalari, WebAIM sayilari, I/i
-  4. transactional e-posta, SPF/DKIM/DMARC
-  5. acik kaynak ekosistemi, curl/Stenberg + LinkedIn basvuru seli
-
-Bolum acilir mi, var olan bolumun icine mi girer, yoksa bu seriye ait degil mi.
-UYDURULMAZ, Damla'ya sorulur.
+Yeri belirsiz denen bes bolum (same chips, yazi hali, erisilebilirlik, yorum
+kutusu, CS oldu mu, PR'i kim okuyacak) 401'e yerlesti. Wrapper anatomisi de
+401'de. mufredat.json'a bakilir.
 
 ------------------------------------------------------------------------------
 IS 6 · BOLUM YAZIMI
