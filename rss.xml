@@ -6,10 +6,10 @@
 <language>tr</language>
 <atom:link href="https://nosey-dewdrop.github.io/vibecodedslopware/rss.xml" rel="self" type="application/rss+xml" />
 <item>
-<title>localhost, neden sadece sende çalışıyor</title>
+<title>guys, I am on localhost</title>
 <link>https://nosey-dewdrop.github.io/vibecodedslopware/slopware/localhost/</link><guid isPermaLink="true">https://nosey-dewdrop.github.io/vibecodedslopware/slopware/localhost/</guid>
-<pubDate>Tue, 01 Sep 2026 09:00:00 +0300</pubDate>
-<description>Linki arkadaşına attın, açılmıyor. En yaygın ilk duvar.</description>
+<pubDate>Wed, 02 Sep 2026 09:00:00 +0300</pubDate>
+<description>npm run dev bir program başlatıyor, o program bir portu dinliyor, 127.0.0.1 senin makinen. Terminal ve klasör burada öğrenilir. Okurun ilk duvarı.</description>
 </item>
 <item>
 <title>slopware nedir, neden şimdi</title>

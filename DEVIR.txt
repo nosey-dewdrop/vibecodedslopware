@@ -9,11 +9,13 @@ GitHub: nosey-dewdrop/vibecodedslopware   (site yayinda, gunluk rebuild action)
 0 · MUFREDAT KAPANDI. BIR DAHA YAZILMAYACAK.
 ==============================================================================
 
-Iki hafta icinde alti kez mufredat yazildi: 40, 28, 26, 25, 29, 49.
+Iki hafta icinde yedi kez mufredat yazildi: 40, 28, 26, 25, 29, 49, 47.
 Sebep her seferinde ayniydi — yazi begenilmeyince plan yeniden yazildi.
 Cunku plan yazmak, yazinin iyi olup olmadigiyla yuzlesmeden uretilebilen tek sey.
 
-2 Eylul'de kapandi. Liste `mufredat.json`'da, 47 bolum, dort seviye.
+2 Eylul aksami Damla ile KILITLENDI. Liste `mufredat.json`'da, 52 bolum (0-50 + sonsoz), bes kisim:
+101 elindeki sey ne · 201 ayaga kaldir · 301 gercek kullanici ve saldirgan · 401 urunun yuzu · 501 para.
+25'in 25'i ve 40'in 41'i icinde, esleme olculdu, kayip sifir. Damla'nin sozu: "guzel seviyorum bunu kilitleyelim".
 `MUFREDAT.md` artik liste degil, MALZEME BANKASI.
 
   BIR DAHA MUFREDAT YAZILMAYACAK.
