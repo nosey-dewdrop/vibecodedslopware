@@ -1,0 +1,681 @@
+BOSLUK ANALIZI — eski kosu (slopware101) vs canli mufredat (/tmp/vcs)
+Tarih: 2 Eylul 2026
+
+KAYNAKLAR
+  CANLI  : /tmp/vcs/MUFREDAT.md (83 KB, 40 bolum) + /tmp/vcs/KURTARILAN-ARASTIRMA.md (791 KB, 43 rapor)
+  ESKI   : ~/damla_projects_2026/işte tüm dosyalar/slopware101/slopware101_curriculum.txt (320 KB, 25 YAZI)
+           + _kaynak/ (32 dosya) + slopware101_harita.txt + DEVIR.txt
+
+YONTEM
+  Eski dosyadan otomatik cikarim: 60 domain, 177 benzersiz sayi (3+ hane), 256 ozel-isim
+  token'i (frekans >=2). Her biri canli iki dosyada grep ile arandi. Asagidakiler
+  canlida HIC gecmeyenler. Ayrica eski dosyanin "Damla ornegi / Damla olcumu / TR katman /
+  Kapi / Acilis kancasi" satirlarinin tamami elle okundu.
+
+
+==============================================================================
+1 · TASINACAK  (eskide var, canlida yok)
+==============================================================================
+Toplam 96 kalem. 24 canli bolume dagiliyor + 4 kalem hicbir bolume baglanmiyor.
+
+
+BOLUM 0 (slopware nedir, neden simdi)
+- DAMLA'NIN KENDI TASLAGI, BIREBIR, ~700 kelime — "dear connections" parodi acilisi.
+  Eski dosya satir 12-52. Canlida bu metnin TEK CUMLESI bile yok.
+  Icindeki vuruslar: "bilmeyen kotudur" (Platon) · "dugme dikmek" analojisi ·
+  "akil akildan ustundur" · "your friendly neighbour damla will save you from the
+  slopware world" · "torpille kotu is buyuk token faturasi demek ve bu kararlari icin
+  uzulecek kisi ben asla degilim" · "People think that localhost websites killed CS." ·
+  "lack of technical depth gave the localhost:3000 owners a courage of a superhero" ·
+  "In March 2025 someone posted that his vibecoded project was under attack."
+- Damla'nin duzeltme notlari: "girisi ikiye bolduk" · "siralar taslak" ·
+  "taslaklarimdan cumleler dogrulanmali. mesela platon yazmisim sokratesmis" ·
+  KOBOL -> COBOL duzeltmesi · Turkce-Ingilizce karisimi korunur karari.
+- COBOL -> C++ -> Java -> Python -> LLM zinciri = serinin TEZI. Canlida "COBOL" kelimesi
+  hic gecmiyor. LLM'i "bir ust-seviye dil" olarak konumlandiran tum argüman eskide.
+- Damla ornegi: bu yaz bes is gorusmesi, hicbirinden alinmadi; torpil argumani.
+- Damla ornegi: bir staj yerinin gonderdigi case'i acmadan "adamin sirketini urune
+  cevirdim" (lulumelon).
+- "Gusto" kavrami (estetik zevk / mimari tat / ayirt etme yetenegi) — slopware'in
+  panzehiri olarak. Canlida yok.
+- "Same chips, same texts" / ortalamaya gerileme (regression to the mean) metaforu.
+- "Slop Borcu (Slop Debt) vs Teknik Borc" ayrimi: teknik borc bilincli ve izole,
+  slop borcu her dosyaya homojen yayilir. Canlida bu ayrim yok.
+- "Ozyinelemeli kalite dususu" (recursive quality degradation): LLM kotu mimariyi
+  context'ten okuyup standart sanip kopyaliyor.
+- Merriam-Webster "slop"u 2025 Yilin Kelimesi secti.
+- ekşi 180285751, 6 Ara 2025 — "olm iki sene oncesine kadar bir bok anlamayan siz
+  degil miydiniz" (serinin acilis kapisi).
+- Damla ornegi: barista dukkaninin dijital menusu — kod bilmeyen bir yerde kod isledi.
+- NY Fed College Labor Market dashboard (2023 Census, CNBC 16 May 2025): yeni CS mezunu
+  issizligi %6,1, computer engineering %7,5; art history %3,0, nutritional sciences %0,4,
+  philosophy %3,2. AYNI veride CS erken kariyer medyan maasi 80.000 $ — tum major'lar
+  icinde EN YUKSEK. Celiski bolumun kalbi.
+  UYARI (eskide isaretli): NY Fed'in Sub 2026 guncellemesinde (2024 Census) CE %7,8,
+  genel yeni mezun issizligi %5,6. Tek surume sabitlenmek zorunlu.
+- NACE Winter 2026 Salary Survey (150 isveren, 8 Eki-30 Kas 2025): 2026 CS bachelor
+  ort. baslangic maasi 81.535 $, master 94.212 $, doktora 121.667 $; yillik artis %6,9.
+  Birebir: "This year's projected increase of 6.9% far exceeds last year's anticipated
+  increase of 2%."
+- SignalFire 2025 State of Tech Talent: Big Tech yeni mezun ise alimi 2019'a gore
+  %50+ dustu; yeni mezunlar Big Tech ise alimlarinin yalnizca %7'si.
+- National Student Clearinghouse (15 Oca 2026 Final Fall Enrollment): 4 yillik
+  kolejlerde Computer and Information Sciences lisans kaydi %8,1 dususle ~659.700'den
+  606.100'e indi; graduate duzeyde %14,0 dusus. Stanford'dan Jacob Light ~20 yilda ilk
+  dususu saptadi ama "the data does not show artificial intelligence caused the decline".
+- BLS: software developer isleri 2024-2034 %15 buyume ongoruyor (ortalamanin cok ustunde).
+- Indeed yazilim ilanlari Sub 2022 - Agu 2025 arasi %71 dustu.
+- IEEE Spectrum'un tokati: "The degree is not the problem. The hiring pipeline is."
+  (spectrum.ieee.org/computer-science-degree-isnt-dead)
+- ekşi 183019007, 8 Nis 2026, 97 fav — "muhasebeci kendi formunu tasarlayip iki satir
+  mantik ekleyebiliyorsa muhendislere neden ihtiyac duyalim"
+- ekşi 7214853 — "tamamen yok olma ihtimali yok sekerim"
+- ekşi 42117?p=309 — "junior seviyede kalmayin... sirketler AI ciktilarini yonlendirebilen
+  kidemli profiller ariyor"
+
+BOLUM 3 (localhost nedir, neden sadece sende calisiyor)
+- BU BOLUMUN TAMAMI ESKIDE VAR VE CANLIDA 8 SATIR. Eski dosyada 420 satirlik, RFC
+  seviyesinde bir DERINLIK bolumu var. Kalemler:
+  · RFC 6761 (Cheshire & Krochmal, Sub 2013, doi:10.17487/RFC6761) localhost'u
+    special-use domain name yapar. RFC 2606 (Haz 1999) .localhost'u rezerve TLD listesine
+    koyar. localhost adini hicbir registrar satamaz — protokol seviyesinde yasakli.
+  · RFC 1122 (Eki 1989) §3.2.1.3(g) loopback adresini tanimlar, ismini degil.
+  · RFC 990 (Kas 1986) asil atama: "The class A network number 127 is assigned the
+    'loopback' function." /8 secilmedi — 1986'da CIDR yoktu (CIDR 1993, RFC 1518/1519),
+    adres alani classful idi. "Neden /8?" sorusunun gercek cevabi bu.
+  · IPv4'te loopback'e ayrilan adres sayisi 16.777.216, IPv6'da 1. "IETF ayni hatayi iki
+    kere yapmadi."
+  · Bir IETF Internet-Draft 127/8'i 65.536 adrese (127.0.0.0/16) daraltmayi oneriyor.
+  · IANA kaydinda 127/8 icin "False [with exceptions noted in RFC8029 and RFC5884]" —
+    MPLS LSP Ping ve MPLS-BFD 127/8'i kablo uzerinde kasitli kullaniyor.
+  · RFC 4291 §2.5.3 (::1 loopback) · RFC 6724 default policy table'da ::1/128 precedence 50
+    -> localhost'a baglanan Node client once ::1'i deniyor.
+  · RFC 6335 §6 port araliklari: System 0-1023, User 1024-49151, Dynamic/Ephemeral
+    49152-65535 (never assigned). 5173 ve 4200 icin IANA kaydi YOK.
+  · Port alani 16 bit = 0-65535, 65536 deger. Baglantiyi benzersiz kilan 4'lu tuple.
+  · RFC 9293 §3.5.2 — connection refused'in resmi tanimi: dinleyen socket yoksa RST.
+  · RFC 1918 private address space (10/8, 172.16/12, 192.168/16) + RFC 3927 link-local
+    169.254.0.0/16 — "Wi-Fi bagli ama internet yok"un sebebi.
+  · 0.0.0.0'in IANA'da iki kaydi: 0.0.0.0/8 "This network" (RFC 791 §3.2) ve 0.0.0.0/32
+    "This host on this network" (RFC 1122 §3.2.1.3). "0.0.0.0 = tum arayuzler" socket
+    API'sinin yerel konvansiyonu, IP protokolunde boyle bir anlam yok.
+  · /etc/hosts tarihi: HOSTS.TXT (SRI-NIC), DNS RFC 1034/1035 (1987) onu degistirdi.
+  · TLS 1.3 RFC 8446, TCP RFC 9293 ile 8 adimli tam istek hayat dongusu.
+  · --host flag'inin gercekte ne yaptigi: sadece listen()'a verilen bind adresini
+    degistirir. vite --host = 0.0.0.0. webpack-dev-server ayrica local-ip / local-ipv4 /
+    local-ipv6 ozel degerlerini destekliyor; Vite'da bu YOK.
+  · Tunel araclari (ngrok, cloudflared) tam olarak ne yapiyor.
+- DAMLA OLCUMU — bu makinede yapildi (macOS Darwin 24.2.0, Node v26.5.0):
+  · macOS/BSD'de 127.0.0.1 disindaki loopback adresleri OLU: ping 127.0.0.2 ->
+    "1 packets transmitted, 0 packets received, 100.0% packet loss". Linux'ta 127.7.7.7
+    ping atar ve bind edilebilir (systemd-resolved 127.0.0.53'te bu yuzden oturabiliyor).
+  · lo0 satiri: "lo0: flags=8049<UP,LOOPBACK,RUNNING,MULTICAST> mtu 16384" —
+    macOS MTU 16384, Linux 65536. Ayni kavram, farkli sayi.
+  · Iki hata yan yana olculdu: nc -vz 127.0.0.1 9 -> "Connection refused";
+    nc -vz -w 3 192.0.2.1 81 -> "Operation timed out". Refused vs timeout farki.
+  · /etc/hosts icerigi ve "Do not change this entry" yorumu.
+- TR KATMAN (canlida sifir Turkce forum var):
+  · Technopat 928550 — "localhostte yaptigim ve gorebildigim site yayinladigim yerde
+    farkli bir sekilde gozukuyor ve eksik gozukuyor"
+  · Technopat 3637536 — "localhostu public yapmak icin bir video izledim. Her seyi dogru
+    yaptim fakat siteye giremedim"
+  · DonanimHaber 41465212 — "hersey hazir sitem hazir domain hosting hazir ancak ne
+    yaptimsa siteyi yollayip calistiramadim"
+  · programmerhumor, ~Kas 2025 — "there's no place like localhost" memi
+- Damla ornegi: ir-globe — aylardir dokunulmadan calisiyor, 0 dolar altyapi.
+
+BOLUM 4 (bir uygulama kac parcadan olusur)
+- ekşi 7081819 (backend vs frontend) — "ikisi de bos is degil, ikisi de roket bilimi
+  degil". Analoji: restoran, frontend = salon/menu, backend = mutfak.
+- ekşi 93570 (front-end) — biri "backend gibi guzel bir yazim stili yok" derken digeri
+  ikisinin esdeger oldugunu savunuyor. Gatekeeping-karsiti tez icin acilis kancasi.
+  (Canlida bu bolumun "somut kanit"i UserFrosting dokumani; Turkce katman hic yok.)
+- Backend'in zorunlulugu argumani: frontend kullanicinin makinesinde kosar, tamamen
+  manipule edilebilir; fiyat/yetki/odeme frontend'de yapilirsa DevTools ile degistirilir.
+  Zero-trust cercevesi.
+
+BOLUM 6 (veri nerede duruyor)
+- ekşi 185795579, 20 Agu 2026 — "json yeter aga, mysql ne alaka?"
+- programmerhumor.io webdev-memes, ~16 Agu 2026 — "YEET everything into localStorage"
+- ACID (Atomicity/Consistency/Isolation/Durability) ve veritabaninin "veri saklama" degil
+  "veri butunlugu" icin var oldugu argumani.
+- Not: canlidaki stitchu store.js ornegi eskide de var, ORTUSME.
+
+BOLUM 7 (sir nedir)
+- @leojr94_, 15 Mart 2025 — "my saas was built with Cursor, zero hand written code"
+  (x.com/leojr94_/status/1900767509621674109); IKI GUN SONRA 17 Mart 2025 —
+  "guys, i'm under attack ever since I started to share how I built my SaaS using Cursor"
+  (x.com/leojr94_/status/1901560276488511759).
+  ** Canlida bu vaka HIC yok. Damla'nin kendi dokunulmaz cumlesi bu olaya atif yapiyor. **
+- ekşi (vibe coding s.2) leojr94 adini dogrudan geciriyor: "vibe coder birisi
+  uygulamasinin icinde koydugu api key yuzunden hacklenmisti; adamin adi 'leojr94'
+  falandi sanirim bakabilirsiniz." Turk kitleyle S-serisi arasindaki en guclu kopru.
+- ekşi 174418154, 9 Nis 2025 — "bazen gidip kodun icine secret key falan yaziyor...
+  gece yatakta mis gibi uyurken bir kac bin dolarlik olabilirsiniz"
+- HN 44789920, 4 Agu 2025 — "the S in vibe coded stands for security"
+- GitHub 2024'te 39 milyon secret sizdigini acikladi. (Canlida GitGuardian sayilari var,
+  GitHub'in kendi rakami YOK.)
+- Toyota GitHub key olayi (adi geciyor, detay _kaynak/ altinda).
+- xAI key olayi: key "at least 52 different LLMs used by xAI"e erisim veriyordu; en yenisi
+  9 Temmuz'da olusturulan grok-4-0709.
+- DAMLA OLCUMU — 93 REPO TARAMASI (olcum tarihi 2026-08-30, iki ayri rapor, web arastirmasi
+  yok, alt-ajan yok). Canlida bu olcumun TEK SAYISI yok:
+  · find . -maxdepth 6 -name ".git" -not -path "./icerik/*" | wc -l -> 158.
+    158 git reposundan 93'u Damla'nin kendi projesi. Elenen 65'in dokumu var
+    (41 audit-clone, 19 upstream fork, 3 oss, 2 submodule).
+  · 93 repodan 11'inde .env dosyasi, HICBIRI commit edilmemis; 7'sinde .env.example yok.
+  · .gitignore'unda .env satiri olan repo: 33/93 (%35,5). Kesisim: .env dosyasi olan
+    11 reponun 11'inde de .gitignore'da .env var.
+  · stitchu ham cikti: Secrets.example.txt 686 byte, adi .env.example DEGIL.
+  · rabadon .gitignore: kokte duz ".env" yaziyordu, sadece o adi yakaliyor; pattern ile
+    degistirildi, sebebi yanina yazildi.
+  · Canli (arsivde olmayan) 5 repo: stitchu, rabadon, orkestra, lulumelon, hakem-sbx-a.
+  · 93 reponun tam listesi eski dosyada duruyor.
+- DAMLA OLCUMU — stitchu'nun kendi hatasi, tarihli: backend/wrangler.toml'da 27 Agu
+  2026'dan ONCE PUBLIC_ANALYZE = "on" gercekten acikti; Origin header'i olmayan bir curl
+  govde dogrulayicisina ulasip Anthropic parasi harciyordu, ve hicbir sayac gunluk toplami
+  bilmiyordu. guard.js yorumlari 17 Agu'da olculmus bir HTTP 200'den bahsediyor.
+  ** Olculmus, tarihli, kendi hatasi. Bolumun en guclu acilisi olabilir. **
+- Damla ornegi: stitchu — vision modeli tek bir Cloudflare Worker arkasinda, tarayici
+  API key'i hic tutmuyor; 218 KB WebAssembly cizim motoru bilerek tarayicida.
+- Kaynak: juliadiez.substack.com — ".env files... are a boundary marker".
+- dev.to horror story derlemesi: OpenAI musterileri key calindiktan sonra 10.000$+ fatura;
+  bir AWS kullanicisi hafta sonunda 50.000$+ fatura. [DOGRULANMADI — ikincil derleme]
+
+BOLUM 8 + 11 (hata mesajini okumak / kendi projeni teshis et)
+- ekşi 174941113, 30 Nis 2025 — "problem cozme kismini insanin elinden alip en dertli
+  kismini insana yukleyen"
+- ekşi (vibe coding) — "kodun ne oldugu anlasilmadan 'calissin yeter' mantigi ile kopyala
+  pastala yapiliyorsa bu tamamen vibe coding"
+- ekşi (vibe coding s.2) — "0 bilgi ile yazilan kod bu kadar oluyor"
+- CloudBees 2026, 19 May 2026, n=213 (satici anketi).
+- Slopware teshis kriterleri (4 madde): kod kokulari / try-except-pass · asiri yuzeysel
+  yorum satirlari (AI kodlarinin %90-100'unde) · mantiksal klonlama (cyclomatic complexity
+  drift) · kalici borc %22,7 survival rate. [3'u DOGRULANMADI, kaynaksiz]
+- 6.299 GitHub deposu, AI teknik borcunun %89,3'u kod kokusu. [DOGRULANMADI, calisma adi yok]
+- DAMLA ORNEGI, EN GUCLU KALEM: "the test that proved nothing" — LMCache PR'inda Damla'nin
+  yazdigi test, yamayi geri cekince de gecti; inceleyen muhendis branch'i kendi makinesine
+  cekti. Birebir: "So the test was not checking anything, it was only turning green."
+  ** Canlida "LMCache" kelimesi hic gecmiyor. **
+- Damla: 12 acik kaynak katkisi, hepsi kendi yazmadigi kod tabanlarina —
+  elmo #522 (merged), LMCache, traceroot, goose, crush, microsandbox.
+
+BOLUM 9 (AI'a is yaptirmak)
+- HN 44885398, anthropics/claude-code issue 3382, 13 Agu 2025, 773 puan.
+- ekşi 174605968, 17 Nis 2025 — "attempt fix simulator"
+- @Sakshi50038 postu (x.com/Sakshi50038/status/2090047385506664711), ~19 Agu 2026,
+  "Who's gonna tell vibe coders about..." ~100 terim. ~6.800 begeni / ~750.000
+  goruntulenme [DOGRULANMADI].
+- 19.000 satirlik AI uretilen Node.js core PR'i; satir basina 2 dk inceleme = ~90 is gunu
+  yuk. Satir sayisi kaynaklarda 14.000-19.000 arasi degisiyor. [DOGRULANMADI]
+- Tek bir kullanici profil kartinin 47 farkli implementasyonu uretilmis vaka.
+- 2026 frontier model kohortu halusinasyon orani %4,62-6,10 (Churilov arXiv preprint,
+  hakemli degil). [DOGRULANMADI]
+
+BOLUM 12 + 13 (git ve ortamlar / .env)
+- Damla'nin ENV DEGISKEN ENVANTERI (canlida yok): VERCEL_OIDC_TOKEN (11 gecme),
+  APP_TOKEN, CLAUDE_API_KEY, ANTHROPIC_API_KEY, GROQ_API_KEY, TURNSTILE_SECRET,
+  TURNSTILE_SITE_KEY, PUBLIC_ANALYZE, PUBLIC_WALL, PUBLIC_DRAFT, BENCH_BYPASS,
+  DEV_ORIGIN, DAILY_ANALYZE_CAP, RATE_LIMIT, INNGEST_DEV, NX_DAEMON, TURBO_*, VERCEL_*,
+  NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, RABADON_OFF, RABADON_JUDGE,
+  RABADON_ALLOWLIST, RABADON_GATED_SOCK. NOT-IN-GIT isaretlemesi 8 kez geciyor.
+- stitchu guard.js: DEV_ORIGIN sadece yerel gelistirme icin, kodda birebir yorum
+  "never set in production".
+- Replit vakasi, Tem 2025 — ajan kod dondurma sirasinda prod veritabanini sildi, sonra
+  "rollback imkansiz" dedi; rollback CALISIYORDU. 1.206 yonetici kaydi ve 1.196'dan fazla
+  sirket profili gitti (~2.400 kayit); Jason Lemkin 18 Tem 2025, HN #44632575.
+  ** Canlida MUFREDAT.md'de "Replit" sadece 3 kez, bu vaka anlatilmiyor. **
+
+BOLUM 16 + 23 (veritabani baglamak / yetkilendirme ve RLS)
+- DAMLA OLCUMU — RLS POLICY TABLOSU (canlida sifir):
+  · 17 repoda row level security acik, toplam 309 policy, 216'si satiri cagiranla
+    karsilastiriyor.
+  · Kaynak dosyaya gomulu Supabase anon key: 8 repo / 7 proje. Tam liste:
+    00_cwo/gymgyme/js/config.js, gymgyme/js/config.js, blog (6 dosya),
+    forget-me-not/lib/supabase.ts, inkbee/web/js/config.js, ir-globe/admin/config.js,
+    messageinabottle/js/config.js, sightstone/docs/index.html + docs/unsubscribe.html.
+  · HEPSI "role":"anon". service_role hicbirinde YOK. Olcum komutu:
+    git grep -lE 'eyJ[A-Za-z0-9_-]{20,}' HEAD, sonra payload decode edilip yalnizca
+    "role" alani okundu, token degeri hicbir yere yazilmadi.
+  · Repo basina "enable row level security" / "create policy" sayilari:
+    gymgyme 1/3 · gymgyme(kopya) 1/3 · blog 1/7 · inkbee 22/40 · ir-globe 6/9 ·
+    messageinabottle 10/13 · sightstone 3/3 · forget-me-not 0/0.
+  · forget-me-not TEK ACIK KALAN YER: commit'li anon key var, repoda hic RLS/policy SQL'i
+    yok. Kontrol edilmeli, gerekirse RLS acilip anahtar rotate edilmeli. [DOGRULANMADI]
+  · inkbee en olgun ornek: 22 enable RLS, 40 create policy,
+    supabase/cati/0001_inkbee_cati.sql.
+  · OLCUM SIRASINDA YAPILAN HATA, YAZIYA GIRECEK TUZAK: ilk taramada grep -i 'RLS'
+    kullanildi, 52 repo eslesti — cunku "urls" ve "curls" de esleşiyor. O sayi cop.
+    Dogrusu "create policy" ve "enable row level security" ile aramak.
+- Damla ornegi: messageinabottle — mektup yazarina ait; alici ancak bir delivery satiri
+  baglarsa okuyor, recipient_id = auth.uid().
+- Damla ornegi: muayenehane — 9 policy; public sadece status = 'published' okuyor,
+  gerisi admin kontrolunden geciyor. Hasta ve doktor ayni veriye erismiyor.
+- Damla ornegi: ir-globe admin — veritabani anahtari tarayiciya gidiyor, ustunde
+  "anon key public'tir, asil koruma RLS + auth" yorumu duruyor.
+- McHire / McDonald's vakasi (Ian Carroll + Sam Curry, ian.sh, bildirim 30 Haz 2025):
+  "123456"/"123456" ile admin paneli, sonra IDOR. /api/lead/cem-xhr endpoint'inde
+  lead_id (baslangic 64.185.742) artirilip azaltilarak 64 MILYONA kadar basvuru kaydina
+  erisilebiliyordu: isim, e-posta, telefon. Platformu Paradox.ai yapti, "Olivia" adli
+  AI chatbot'u yurutuyor, McDonald's franchise'larinin ~%90'inda kullaniliyor.
+  ** Canlida "McHire", "Paradox.ai", "Ian Carroll" HIC gecmiyor. Eski dosya bunu
+  "listenin en guclu fikri" diye isaretlemis. **
+- PortSwigger IDOR ornegi: customer_number=132355 degerini degistirmek.
+- Escape.tech 5.600 uygulama taramasi. [ikincil, birincil rapora bakilmali]
+- Superblocks ve vibeappscanner.com analizleri (Lovable 1.645 proje / 170 / 303 endpoint
+  rakaminin ikinci ve ucuncu kaynagi — canlida sadece mattpalmer.io var).
+- Cloud Security Alliance: 1.400 AI uygulamasinda 2.000+ kritik acik. [DOGRULANMADI]
+- ekşi (vibe coding s.8) — "ordaki promptlarin birinin yarin loveble, cursor vs. icinde
+  prompt injection attacklara zaafiyet yaratacak mi bilmiyoruz. elbet birgun buyuk bir
+  acik olacak." ** Bu TAHMIN CVE-2025-48757 ile fiilen dogrulandi. Cok guclu kalem. **
+- OWASP: 318.000+ vaka, 34 CWE (Broken Access Control). Ders: "kim oldugun ile ne
+  yapabilecegin ayri sorular."
+
+BOLUM 24 (girdi guvenilmezdir — dosya yukleme)
+- Damla: stitchu upload yolu — 2,8 MB siniri, HTTP 413, dort dosya tipi.
+- Supabase Storage public bucket sizintilari icin kapi araniyor [KAPI_BEKLENIYOR].
+
+BOLUM 25 (bagimlilik zinciri)
+- DAMLA OLCUMU — LOCKFILE ORANI (canlida yok): package.json iceren 23 repodan 15'inde
+  lockfile var, 8'inde YOK. Yani Damla'nin Node projelerinin %35'inde npm install iki
+  farkli makinede iki farkli agac kurabilir.
+  Komut: git ls-files | grep -E '(package-lock.json|yarn.lock|pnpm-lock.yaml)$'
+  Ek tuzak: package-lock.json JWT-benzeri base64 dizeler (integrity hash) iceriyor —
+  otomatik secret taramalari burada yanlis alarm veriyor.
+- s1ngularity / nx.dev postmortem, 26-27 Agu 2025. Bayrak adlari ve repo sayisi Wiz
+  Research'un, nx'in postmortem'inin degil; Wiz'in son sayimi 6.700'den fazla.
+  ** Canlida "s1ngularity" ve "nx.dev" HIC gecmiyor. **
+- Slopsquatting BIRINCIL KUNYE (canlida ozet var, kunye yok): Spracklen, Wijewickrama,
+  Sakib, Maiti, Viswanath & Jadliwala, "We Have a Package for You!", USENIX Security
+  Symposium 2025 (13-15 Agu, Seattle; UT San Antonio, U. Oklahoma, Virginia Tech),
+  arXiv:2406.10279. Canlida OLMAYAN sayilar: 576.000 kod ornegi · 205.474 BENZERSIZ
+  halusine paket adi · GPT-4 Turbo en dusuk %3,59.
+- Terimi PSF'den Seth Larson ortaya atti. Lasso Security arastirmacisi Bar Lanyado'nun
+  deneyinde ici bos huggingface-cli paketi PyPI'de 30.000'den fazla indirildi ve
+  Alibaba'nin GraphTranslator README dosyasina bile girdi.
+- OSSRA 2026 raporu: %93 zombie component.
+- recodehive/#870 — .gitignore ihmali, main'e dogrudan push, "fix"/"stuff" commit mesajlari.
+
+BOLUM 26 (LLM'li urunun guvenligi)
+- Moltbook / Wiz Research (Gal Nagli, Oca-Sub 2026): "1.5 million API authentication
+  tokens, 35,000 email addresses, and private messages between agents" aciga cikti;
+  1,5 milyon ajana karsilik yalnizca ~17.000 insan sahip vardi. Ifsa 31 Oca 21:48 UTC,
+  yama 1 Sub 01:00 UTC (~3 saat). "AI apps had 0/15 CSRF protection".
+  ** Canlida "Moltbook" HIC gecmiyor — en taze vaka. **
+- "Lethal trifecta" (private data + untrusted content + external communication) ve
+  Meta Rule of Two. ** Canlida "lethal trifecta" HIC gecmiyor. **
+- OWASP Top 10 for LLM tam tablosu: prompt injection · sensitive info disclosure
+  (Samsung 2023 muhendislerinin ic kodlari sizdirmasi) · improper output handling ·
+  excessive agency · training data poisoning. LLM06 Misinformation.
+  ** Canlida OWASP Top 10:2025 (web) var, OWASP LLM Top 10 YOK. **
+- "yok say deme"nin neden ise yaramadigi.
+- DAMLA: rabadon'un ajan yetki protokolu — RABADON_ALLOWLIST, RABADON_GATED_SOCK,
+  RABADON_JUDGE, RABADON_OFF; redteam/, repair/, hooks/, AGENTS-PROTOCOL.md,
+  SPEC-SELF-REPAIR.md. hakem-sbx-a/tree = "hakem sandbox", ajan izolasyonu icin ayri repo.
+  [icerik okunmadi, sadece varlik tespit edildi — DOGRULANMADI]
+- MCP mimarisi ve tehdit modeli: Host/Client/Server ucluu; server-side prompt injection,
+  confused deputy, arbitrary code execution; RBAC + human-in-the-loop + sandbox.
+  ** Canlida "Model Context Protocol" HIC gecmiyor. **
+- DSPy (Declarative Self-improving Python, Stanford): Signature + Compiler + Teleprompter;
+  770M parametreli kucuk modellerin devasa kapali modellere kafa tutmasi.
+  ** Canlida "DSPy" HIC gecmiyor. Damla'nin taslaginda "sonra llm system engineeringe
+  dair konseptleri" diye ACIKCA istedigi katman bu. **
+- Anthropic orkestrasyon oruntuleri tablosu: Prompt Chaining · Routing · Parallelization
+  (sectioning/voting) · Orchestrator-Workers · Evaluator-Optimizer, her biri icin
+  karmasiklik/gecikme/use case.
+- Context Bloat / Context Rot / Context Compaction; Focus mimarisi (civik mantar
+  ilhamli aktif sikistirma) token tuketimini ort. %22,7, gorev bazinda %57'ye kadar
+  azaltiyor. [DOGRULANMADI]
+- Anthropic: agent'lar sohbetin ~4 kati, multi-agent ~15 kati token; multi-agent
+  tek-agent Claude Opus 4'u %90,2 gecti.
+- Spec-Driven Development + Pydantic sema dogrulamasi + ADR (Architecture Decision
+  Records) + CI'da metrik esikli merge reddi (kopya orani %12'yi asarsa merge yok).
+
+BOLUM 27 (rate limit)
+- DAMLA OLCUMU, cok sert: rate limit / captcha mekanizmasi olan repo sayisi 3 —
+  stitchu (backend/guard.js), kisalafinuzunu (PROJECT.md'de sadece PLAN),
+  seviyorsevmiyor (tarayici raporunda BULGU olarak). Yani 93 repodan sadece 1'inde
+  GERCEKTEN KODLANMIS rate limit var.
+- stitchu guard.js savunma katmanlari isimlendirilmis: originAllowed (baska siteyi
+  durdurur, curl'u DURDURMAZ — yorumda acikca yaziyor), Turnstile,
+  DAILY_ANALYZE_CAP = 300 (cuzdan sigortasi, tum tier'lar ayni sayacta),
+  KV ulasilamazsa fail-closed.
+- Demo: for i in {1..100}; do curl <endpoint>; done — rate limit yok, 100 istek geciyor.
+
+BOLUM 28 (olcek — N+1, baglanti havuzu, onbellek)
+- DAMLA OLCUMU — RABADON MOTORU (canlida sifir): 16.933 satir bagimliliksiz C++,
+  aksiyon basina 2,29 ms medyan, basladigi Node kapisinin 100,77 ms'sine karsi,
+  vaka basina 40 kosu, zamanlamadan once verdict parity kanitlandi.
+- N+1 matematigi: 100 kayit = 101 sorgu; 1.000 oge = 1.001 sorgu. 50 makale x 1 author
+  sorgusu = 51 sorgu; 1.000 eszamanli kullanicida saniyede 51.000 sorgu -> connection
+  pool tukenir.
+- Analoji: markete tek listeyle bir kez gitmek vs her urun icin ayri sefer.
+- "Her 100ms gecikme donusumu ~%1 dusurur" yaygin alintisi — kisisel anekdot olarak
+  cercevele, olgu gibi sunma. [DOGRULANMADI]
+
+YENI BOLUM ADAYI — IDEMPOTENCY (canli mufredatta HIC KARSILIGI YOK)
+  Eski YAZI 12 "Kullanici iki kere odedi" bir bolumu tek basina tasiyor:
+- RFC 9110 — POST ve PATCH idempotent DEGILDIR, bu yuzden POST acik bir idempotency key
+  gerektirir.
+- Webhook'lar at-least-once teslim eder; ayni event iki kez gelir.
+- Exactly-once teslimatin matematiksel olarak imkansizligi (Akkoyunlu ve dig., 1975) —
+  kavramsal cipa.
+- Stripe modeli: check-first DEGIL; yaniti key'e karsi sakla, ikinci istekte cached
+  response don; tekrar icin 409 Conflict; key'leri kullanici basina scope'la ve sure ver.
+  Optimistic locking / version.
+- Columbia DAPLab oruntu 3 "Business Logic Mismatch", 8 Oca 2026.
+- WooCommerce GitHub Issue #2331 (zenn.dev/kg_filled): webhook mukerrer islenmesi order
+  notlarini 2-3 kez kaydetti, envanteri fazladan dusurdu.
+- Distributed Computing'in Yanilgilari (Peter Deutsch, 1994) birinci madde
+  "The network is reliable". Red Gate: aceminin aga duydugu "a touching faith".
+- Analoji: asansor dugmesine bes kez basmak — asansor bir kez gelir.
+- Damla ornegi: ir-globe — 6 saatte 4.500 haber, %0,35 birlestirme orani; ayni haberi
+  iki kez saymamak tam bu problem.
+
+BOLUM 29 + 30 (log ve alarm / izleme)
+- ekşi 181140061, 14 Oca 2026 — "saatli bomba"
+- DAMLA OLCUMU — RABADON DEFTERI (canlida sifir): son 30 gunde 59 projede 15.188 aksiyon
+  kapidan gecti, 61'i reddedildi, her ret kural id'siyle defterde. Kendi tatbikatlari
+  sayilmiyor, 3.495'i emit'te disarida birakiliyor.
+  Ve: "rabadon maliyeti Claude Code'un zaten diske yazdigi transkriptlerden okuyor, yani
+  sayi uretmek token harcamiyor."
+- AWS US-EAST-1 postmortem, 19-20 Eki 2025 (aws.amazon.com/message/101925): DynamoDB DNS
+  yonetiminde latent race condition bos bir DNS kaydi uretti; DynamoDB toparlaninca
+  EC2'nin DropletWorkflow Manager'i (DWFM) lease islerini yeniden kurmaya calisti,
+  timeout'a girdi, retry -> "congestive collapse".
+  ** Canlida MUFREDAT.md'de us-east-1 YOK (KURTARILAN'da 3 gecme var, islenmemis). **
+- GitClear kisa vadeli churn tablosu (canlidakinden farkli/ek): kopya kod %8,3 -> %12,3
+  (%48 artis, 5+ satirlik bloklarda 8 kat patlama) · moved/refactor %25 -> <%10 ·
+  30 gunluk code churn %3,3 -> %5,7-7,1 · AI-insan turnover orani 1,8x-2,5x.
+  Canlida sadece "moved %24,8 -> %9,5" var.
+- GitClear 2026 "Maintainability Gap" raporu ayri bir sinyal olarak izliyor.
+
+BOLUM 31 (maliyet kontrolu)
+- Damla ornegi: lulumelon — 400 canli cagri 3,69 dolar; Wilson araligi donduruyor,
+  tek sayi degil. ** Canlida "lulumelon" 1 kez geciyor ama bu sayi yok. **
+- Milkie Way (kurucu Sudeep Chauhan, tomilkieway.com): 72.000 dolar Firebase/Cloud Run
+  faturasi. Cloud Run varsayilani max-instances=1000, concurrency=80. Aralik 2020.
+  ** Canlida "Milkie" HIC gecmiyor. Eski dosya bunu en guclu 6 arasinda #2 saymis. **
+- "$47,000 agent loop", Kasim 2025: "Four agents entered an infinite loop... They ran
+  for 11 days". [DOGRULANMADI]
+- Belgelenen serverless kazalari: 383 $ (dokumantasyon sitesinde recursive cagri) ·
+  1.300 $ (S3 yanlis yapilandirma) · 11.000 $ (DoS kaskadi) · 104.500 $ (deploy dongusu).
+- Bir ajan hobi agini tararken 6.531 $ AWS faturasi cikardi. [DOGRULANMADI]
+- 60.000+ yetkisiz istek, fatura 18.000 dolari asti. [DOGRULANMADI]
+- State of FinOps 2026 (FinOps Foundation, 1.192 katilimci, 83 milyar dolar uzeri bulut
+  harcamasi): FinOps ekiplerinin %98'i...
+- ekşi 183612901, 6 May 2026 — "hesap makinesi kodlayacakken palantiri kodladin sonra da
+  kredi bitti diye aglaniyorsun"
+- HN 49403740, 22 Agu 2026.
+- theregister.com 10 Aralik 2020 kaydi (EnrichLead / Guillermo Rauch baglantili).
+
+BOLUM 33 (kimsenin istemedigi seyi yapmak — homojenlik)
+- ADAM WATHAN TWEET'I, birebir (7 Agu 2025, x.com/adamwathan/status/1953510802159219096):
+  "I'd like to formally apologize for making every button in Tailwind UI bg-indigo-500
+  five years ago, leading to every AI generated UI on earth also being indigo."
+  Erisim: kaynaklar celisiyor, 684.000 (aibase.com) ile 1M+ arasi. [DOGRULANMADI]
+  ** Canlida "Wathan", "indigo", "mor gradient" HIC gecmiyor. Eski dosya bunu en guclu
+  6 arasinda #5, "en gorsel" diye isaretlemis. **
+- Damla ornegi: 29 Tem'de silinen 2B formul beyni, 67 SVG ve 22 sayfa. Ve sunflower'in
+  cizimleri Damla'nin elinden. sunflower + moonlight iOS, cizimler Damla'nin.
+
+YENI BOLUM ADAYI — AI YAZI IMZASI (canlida karsiligi yok)
+  Eski YAZI 21 "Aynisinin yazi hali":
+- Freeburg 2026: GPT-4.1 1.000 kelimede 10,62 em-dash kullaniyor, insan bazi 3,23.
+- Kobak vd. (arXiv:2406.07016, 14,2M PubMed ozeti): "delve" kullanimi ~25 kat artti;
+  2024 ozetlerinin >=%10'unda asiri-kullanilan kelime.
+- JAAD: AI-polished metinlerde %75-85 yanlis-pozitif "AI" damgasi.
+- Turnitin %4 yanlis pozitif (vendor kaynakli): ABD'de yilda 2,2 milyon odevde %1 hata
+  22.000, %4 hata 88.000 masum ogrenciyi isaretler.
+- "Em dash AI isareti degil. Emily Dickinson onu 1860'ta oksijen gibi kullaniyordu."
+- ekşi 181462015, 29 Oca 2026 — "ne ofke var, ne mizah, ne risk. dusunce degil, ilik bir
+  metin corbasi"
+- Damla ornegi: kendi yazi kurallari, em dash yasagi [ORNEK_BEKLENIYOR].
+
+YENI BOLUM ADAYI — ERISILEBILIRLIK VE TURKCE KIRILMALARI (canlida karsiligi YOK)
+  Eski YAZI 22. Damla'nin kendi taslak cumlesi: "insanlar yaptiklari projenin bir insan
+  icin oldugunu gozden cikararak urun yapiyor."
+- WebAIM Million 2025 (Sub 2025 verisi): 1 milyon ana sayfada 50.960.288 hata, sayfa
+  basina 51 hata (2024'teki 56,8'den %10,3 azalma); ana sayfalarin %94,8'inde WCAG
+  hatasi; dusuk kontrast %79,1; alt-text eksikligi %55,5.
+- WebAIM Million 2026 (Sub 2026): 56,1 hata/sayfa (%10,1 ARTIS — tekrar kotulesti),
+  %95,9 WCAG hatasi, dusuk kontrast %83,9.
+- Next.js sayfalari ort. 38,6 hata, ortalamanin %24,2 ALTINDA.
+  ** Canlida "WebAIM", "WCAG", "erisilebilirlik" HIC gecmiyor. **
+- Turkce'nin dort I'si: i, İ, ı, I. "istanbul".toUpperCase() -> "ISTANBUL", "İSTANBUL"
+  degil. Dogrusu toLocaleUpperCase('tr-TR').
+- PostgreSQL BUG #5903 (2011): Turkish_Turkey.1254 ile lower('İ') ve upper('ı') ayni
+  karakteri donduruyor; Robert Haas'in notuna gore davranis OS locale'ine bagli.
+- Microsoft Learn: ASP.NET gelistiricisinin "ı" karakterinin veritabanina "i" olarak
+  yazilmasi sorunu.
+- Turkce slug tuzagi: cocur/slugify "Turkiye Kupasi"ni Almanca kuraliyla "tuerkiye-kupasi"
+  yapiyor, dogrusu "turkiye-kupasi". Kendi ruleset'ini yaz ve test et.
+- Blank white screen: loading ve error state olmadiginda vibe-coded uygulamalarin
+  imza kusuru.
+- Damla ornegi: eksi_analyzer ve seviyorsevmiyor — ikisi de Turkce metin isliyor,
+  İ/ı dali orada [TARANACAK].
+
+YENI BOLUM ADAYI — TRANSACTIONAL E-POSTA (canlida karsiligi YOK)
+- Google sender guidelines (support.google.com/a/answer/81126): 1 Sub 2024'ten itibaren
+  Gmail'e gunde 5.000+ mesaj gonderenler icin SPF + DKIM ve en az p=none DMARC ile
+  FROM domain hizalamasi zorunlu. RFC 8058 tek-tik abonelikten cikma son tarihi
+  1 Haz 2024. Kasim 2025'ten itibaren tam uygulama, kalici 5xx ret.
+- Microsoft 5 May 2025'te Outlook/Hotmail icin 550 5.7.515 ile SMTP duzeyinde ret.
+- 2026 placement testi: Postmark %83,3 inbox / %1,0 spam; SES %77,1 inbox / %20 spam.
+  EmailToolTester 2026: Postmark %93,8 ort. inbox, "Best Transactional Service 2026".
+- DKIM: 2048-bit anahtar, selector._domainkey.yourdomain. SES/Resend CNAME saglar.
+  Uzun anahtar kopyalanirken kesilirse DKIM SESSIZCE bozulur.
+- peal.dev vakasi: "the confirmation email was landing in spam for half our users" —
+  sorun iki hafta boyunca onboarding akisi zannedildi.
+- Araclar: GlockApps, MXToolbox, List-Unsubscribe / List-Unsubscribe-Post.
+
+BOLUM 38 (para almak) — ODEME MALZEMESI
+  ** Canlida "iyzico" 2, "PayTR" 1 kez geciyor, ikisi de sadece bir uyari cumlesinde.
+     Asagidakilerin TAMAMI eskide. Eski dosya bunu en guclu 6 arasinda #3 saymis. **
+- Turk gelistirici alintisi: "Ilk iyzico entegrasyonumu yaparken 5 gun harcadim, sandbox
+  konfigurasyonu... webhook dogrulama birer birer mayin gibi patladi."
+- r10.net/opencart PayTR threadi — "provizyonda tutuyor ama bize aktarmiyor... sitede
+  calismayan bir sey yok" (~2023-24).
+- Technopat Trendyol 3D Secure basligi — "basarili da olsa beyaz ekranda kalmistim":
+  success dondu ama siparis belirsiz. [DOGRULANMADI]
+- iyzico Authorization header'inda HMAC-SHA1 imza gonderir; PayTR HMAC-SHA256 kullanir.
+  Dogrulama: random-string ile request body'nin secret uzerinden HMAC'ini hesapla.
+- iyzico callback bir FORM POST'tur, JSON degil — req.formData() ile okunur.
+- iyzico callback URL'ine gelen istek basarisiz olursa 24 SAATE kadar retry eder;
+  webhook'ta 30 SANIYE timeout vardir. [gelistirici blogu, resmi dokumanla teyit edilecek]
+- Ali Cinaroglu: "Ayni webhook 2 kere gelebilir. conversationId ile daha once islenmis mi
+  kontrol edin." Webhook = source of truth.
+- Stripe dokumani, yanlis modeli birebir curutuyor: "Don't attempt to handle order
+  fulfillment on the client side because customers can leave the page after payment is
+  complete but before the fulfillment process initiates."
+- 3D Secure Turkiye'de BDDK nedeniyle pratikte zorunlu; tum Turk bankalari SMS OTP
+  tabanli 3DS v1 uygular.
+- Turkiye'de sanal POS saglayicilari: iyzico, PayTR, Param, Craftgate.
+- Ikinci yanlis model: production credentials ile gelistirip gercek para hareketi yaratmak.
+- Demo: stripe listen --forward-to localhost:3000/webhook + stripe trigger
+  payment_intent.succeeded.
+- ByteByteGo system design: "How to design a Payment System" ve "Digital Wallet"
+  ayri bolumler.
+- Damla ornegi: ir-globe parali musteriye teslim edildi; gymgyme'den kaldirilan
+  premium butonu [TARANACAK].
+
+BOLUM 36 + 37 (KVKK / cerez ve aktarim) — HUKUK MALZEMESI
+- 5651 SAYILI KANUN — YER SAGLAYICI SORUMLULUGU. ** Canlida "5651" HIC gecmiyor. **
+  · Yorum islevi olan bir blog, yazarini yer saglayici yapabilir; kisi ayni anda hem
+    icerik hem yer saglayici olabilir.
+  · Madde 5: yer saglayicinin icerigi kontrol veya arastirma yukumlulugu YOKTUR; ancak
+    haberdar edilince uyar-kaldir kapsaminda yayindan cikarmali.
+  · Trafik bilgilerini 6 AY saklamali. BTK'ya faaliyet bildirimi yukumlulugu var.
+  · Kisilik hakki ihlalinde once icerik saglayiciya, ulasilamazsa yer saglayiciya
+    basvurulur; yer saglayici en gec 24 SAAT icinde yanitlamali.
+  · Madde 9: yer saglayici, basvuruyu IKI GUN icinde yerine getirmekle yukumlu.
+  · Madde 5(2): yer saglayicilik bildiriminde bulunmayana 10.000-100.000 TL idari para
+    cezasi.
+  · Cozum: yorumlari Giscus (GitHub Discussions) uzerinden barindirmak yorum verisini
+    GitHub'a tasir ve yazarin yer saglayici maruziyetini AZALTIR — icerik yazarin
+    sunucusunda barinmaz. Ucretsiz, veritabani gerektirmez, cookie/tracking yok,
+    moderasyon GitHub'da. Astro'ya @giscus/react ile client:only="react".
+- IYS / 6563 SAYILI KANUN. ** Canlida "IYS" 1 kez, sadece "IYS != KVKK" cumlesinde. **
+  · IYS Temel Hizmetler: onay alinan 25.000 elektronik iletisim adresine kadar UCRETSIZ;
+    25.001'den itibaren ucretlendirme baslar (iys.org.tr).
+  · Ceza 2026 (RG 25.12.2025 tebligi, %25,49 yeniden degerleme): Madde 12 uyarinca
+    onaysiz/onaya aykiri ticari elektronik ileti 2.859 - 14.309 TL; ret hakki ihlali
+    5.723 - 42.930 TL.
+  · Denetim TICARET BAKANLIGI (Il Ticaret Mudurlukleri) — BTK DEGIL.
+  · IYS ve KVKK bagimsiz isler; bir ihlal her iki mevzuat kapsaminda AYRI AYRI
+    cezalandirilabilir.
+  · Ucretsiz, tamamen egitsel bir bulten "ticari elektronik ileti" taniminin disinda
+    kalma yonunde guclu argumana sahiptir; ancak kisisel marka/danismanlik tanitimi
+    yapilirsa "ticari amac" kapsamina girme riski var.
+- VERBIS — KVKK 04.09.2025 tarih 2025/1572 sayili Kurul Karari (RG 1 Eki 2025, 33034).
+  ** Canlidaki dayanak Kurul 2023/1154; bu DAHA YENI karar ve canlida yok. **
+- "Aydinlatma metni onaya bagli degildir (kosulsuz); acik riza son caredir ve her an
+  geri alinabilir." (canlidaki KVKK bolumunde bu ayrim yok)
+- KVKK = 6698 sayili Kisisel Verilerin Korunmasi Kanunu (kanun numarasi canlida hic
+  yazmiyor).
+- UGC yukumluluk listesi: spam, abuse, illegal content, CSAM riski, telif sikayeti,
+  report/block akislari, icerik uretiminde rate limiting, otomatik moderasyon,
+  takedown yukumlulukleri.
+- Ders cumlesi: "Kullanici icerigi bir ozellik degil bir yukumluluktur."
+
+BOLUM 25 / 0 (acik kaynak ekosistemi) — curl / STENBERG / BASVURU SELI
+  ** Canlida "Stenberg", "curl bug bounty", "Jazzband" HIC gecmiyor. **
+- Daniel Stenberg, "Death by a thousand slops", daniel.haxx.se, 14 Tem 2025.
+- Stenberg birebir: "about 20% of all submissions... In early July, about 5% of the
+  submissions in 2025 had turned out to be genuine vulnerabilities... 81 of them to be
+  exact, with over 90,000 USD paid in awards."
+- curl "effectively being DDoSed". Gelen raporlardan biri curl'de VAR OLMAYAN bir
+  fonksiyona atifta bulunan GDB session'lari ve register dump'lari iceriyordu.
+- curl bug bounty Nis 2019'da acildi, 31 Oca 2026'da kapatildi. Kapatma PR #20312:
+  "BUG-BOUNTY.md: we stop the bug-bounty end of Jan 2026". curl 16 SAATTE 7 HackerOne
+  raporu aldi, hicbiri gercek acik degildi.
+  Bazi kaynaklarda 87 dogrulanmis acik / 100.000+ dolar; en muhafazakar rakam (Stenberg'in
+  kendi ifadesi) kullanildi. [Mart 2026'da yeniden acildigi iddiasi zayif kaynakli,
+  DOGRULANMADI]
+- Stenberg'in KARSI-ORNEGI (Eyl 2025): Joshua Rogers'in AI-destekli araclarla gonderdigi
+  GERCEK bulgular 50 bug fix'e yol acti. ** Arac degil, insan yargisindan yoksun kullanim
+  sorun. Bu nuans bolumun durustluk cipasi. **
+- curl'un security.txt / policy metnindeki AI satiri: "We will ban you and ridicule you
+  in public if you waste our time on crap reports."
+- Seth Larson bu raporlari Aralik 2024'te "the canary in the coal mine" olarak tanimladi.
+- Jazzband kapanisi, jazzband.co, 14 Mar 2026 + HN 47990989, 2 May 2026 —
+  "I want my friggin' 20 minutes back".
+- LINKEDIN BASVURU SELI — NYT, Haziran 2025: "LinkedIn reports an average of 11,000
+  applications submitted per minute... a 45% increase in the past year"; gerekce olarak
+  "generative artificial intelligence tools are contributing to the deluge".
+  ** Canlida LinkedIn var ama SADECE dagitim kanali olarak (erisim dususu, carousel vs
+  video). Basvuru seli verisi YOK. **
+- Robert Half'in kavrami "resume illusion"; recruiter'larin adi "applicant tsunami".
+- ~%82 isveren AI ozgecmis taramasi kullaniyor; ~%49,6 aday basvurunun bir yerinde AI
+  kullaniyor.
+- Checkr, Eyl 2025, 3.000 hiring manager: %59'u adaylarin kendilerini yanlis tanitmak
+  icin AI kullandigindan supheli, ama yalnizca %19'u mevcut surecinin bunu yakalayacagindan
+  emin.
+- Amazon remote mulakatta kopya nedeniyle onsite'a donuyor.
+- Vinit Shahdeo'nun "solution blindness"i: "The code is there. The understanding isn't."
+- Blind'da "AI job applications flooding every positions" basligi.
+- Damla'nin BIREBIR TASLAGI (YAZI 25, 1·TASLAK) — canlida yok:
+  "Buyuk ihtimalle siz de yasamissinizdir, tam size uygun bir pozisyon, secileceginize
+  istatistiksel olarak neredeyse eminsiniz ama secilmediniz. Nedenini sorunca yok
+  Ankara'dasin, yok ikizler burcusun, yok 170 boyundasin gibi bahane cevaplar alirsiniz.
+  Neden sizce? Bence tamamen gostermelik ilanlar acildigi icin, coktan bazi yerlerin bazi
+  insanlara verildigi icin. Artik bir proje gelistirmek bir ise girmekten daha stratejik
+  bir karar. Yoksa sizin yariniz kadar kendisini gelistirmis bir insanin CV'nizi nedensiz
+  yere cope atmasini izlersiniz. Ben 2 yillik ozel sektor tecrubemden sadece bunu anladim."
+- Damla ornegi: LMCache PR'inda incelemeyi yapan muhendisin branch'i kendi makinesine
+  cekip kosturmasi — inceleme maliyetinin somut hali.
+
+BOLUM 16 / 24 (Tea app eki)
+- Tea App, sirketin kendi aciklamasi 25 Tem 2025: kimlik dogrulama icin tutulan gorseller
+  kimliksiz Firebase bucket'inda. Sifre yok, sifreleme yok; gorseller 4chan'de yayildi.
+  Bazi gorsellerde GPS metadatasi vardi, biri kullanici konumlarini haritalayan bir arac
+  yayinladi.
+  ** Canlida Tea var ama 4chan yayilmasi, GPS metadatasi ve haritalama araci YOK. **
+- Damla ornegi: App Store'dan geri cekilen uygulama.
+
+
+BOLUME BAGLANAMAYAN (4 kalem)
+- "00 · STOK" notu: S1 v1, 30 Agu'da yazildi, 2.370 karakter; sonra S1'in 0_intro olarak
+  yayinda oldugu anlasildi. Dosya duruyor: out/S01_dear_connections/v1.md + gate_v1.md.
+  Kullanilmadi, silinmedi. -> Uretim/arsiv notu, mufredat kalemi degil.
+- YAYIN SIRASI ONERISI (eski dosyanin kendi karari): en guclu alti — 1) S9 RLS
+  2) S5 anahtar+rate limit (Milkie Way 72k) 3) S13 odeme (iyzico/PayTR) 4) S16 prompt
+  injection 5) S20 mor gradient (Wathan) 6) S18 slopsquatting.
+  Takvim kurallari: ayni damardan gelenler arka arkaya cikmaz · art arda ayni turden
+  ikiden fazla yazi yok · art arda ayni profile konusulmaz · hatayla acan yazilar yan
+  yana gelmez. -> Yayin plani, mufredat kalemi degil, ama karar tasiyor.
+- "Kendi deneyiminden yazilacak, gercek forum alintisi bulunamadi" listesi: S6 veritabani ·
+  S7 KVKK · S15 bos catch · S22 Turkce karakter · S23 5651. -> Acik borc listesi.
+- DOKUNULMAZ CUMLELER blogundan iki tanesi hicbir boluma baglanmiyor:
+  "Sewing whatever you want is kinda chic." ve "Love me and put me in Chanel."
+  (stitchu marka cizgisi.)
+
+
+==============================================================================
+2 · ORTUSME
+==============================================================================
+Tahmin: ORTUSME ~%25-30. Cakisma neredeyse tamamen VAKA/OLGU katmaninda; canlinin
+akademik-pedagojik katmani ile eskinin Damla-olcumu + Turkce katmani hemen hic kesismiyor.
+
+Ikisinde de tam olarak duran kalemler:
+- Lovable CVE-2025-48757 (1.645 proje / 170 / %10,3) — ikisinde de, canlida cok daha
+  derin (Palmer'in Replit calisani olmasi, "disputed" etiketi, NVD ayrintilari).
+- Tea app Firebase sizintisi — ikisinde de, canlida "vibe-coded deme" uyarisiyla,
+  eskide 4chan/GPS ayrintisiyla.
+- Slopsquatting / USENIX Security 2025 %19,7 — ikisinde de. Canlida 2,23M ornek ve %43
+  tekrar var; eskide birincil kunye + 205.474 benzersiz ad var.
+- GitGuardian 28.649.024 / 29 milyon secret, %34 artis — ikisinde de.
+- GitClear 211 milyon satir — ikisinde de, farkli metrik kesitleriyle.
+- METR RCT %19 yavaslama ve algi ucurumu — ikisinde de.
+- Supabase RLS temelleri, anon vs service_role — ikisinde de.
+- Replit prod DB silme — ikisinde de ADI geciyor; canlida islenmemis, eskide tam vaka.
+- Veracode %45 insecure — ikisinde de.
+- Prompt injection kavrami — ikisinde de.
+- Damla ornekleri gymgyme / shortstorylong / missingsemicolon / stitchu store.js —
+  ikisinde de.
+- Cloudflare, OWASP, KVKK genel cercevesi — ikisinde de (canli cok daha derin).
+
+Canlinin ayni kalemi DAHA IYI tasidigi yerler: Lovable ikinci BOLA vakasi (Nis 2026),
+LLMjacking/Sysdig 46.080 $/gun, Facebook 91M EUR, GitLab 2017, Knight Capital,
+Product Hunt olculmus donusum verisi, wrapper ekonomisi (Cal AI / Gamma / OpenEvidence).
+
+
+==============================================================================
+3 · CANLININ USTUN OLDUGU YERLER  (eskide yok, is degil, bilgi)
+==============================================================================
+- Notional machine TEZI (Sorel & du Boulay, ACM TOCE 2013) — 101'in tum pedagojik omurgasi.
+  Eskide hicbir karsiligi yok.
+- Python Tutor (Guo, SIGCSE 2013) · MIT Missing Semester 2026 · Julia Evans zine'leri
+  (DNS, debugging, bash) — ogretim araclari katmani.
+- The Verge "File not found" ve "camasir sepeti" mental modeli — terminal/klasor bolumu.
+- Barik et al. ICSE 2017 eye-tracking: gelistiriciler hata mesajini OKUYOR, %25 fiksasyon;
+  "okumuyorlar" klisesinin curutulmesi. Ve CHI 2021 (hata mesajlarinin CS birakma faktoru).
+- Addy Osmani spec yazisi + Simon Willison "vibe engineering" + GitHub Spec Kit +
+  Uberto Barbini — "kabul kriteri" kanonu.
+- 12-Factor tam okumasi (III Config, X dev/prod parity) ve isimli ortam gruplarinin
+  anti-pattern sayilmasi nuansi.
+- Knight Capital 2012 (SEC 34-70694), GitLab 31 Oca 2017 bes-kurtarma-yolu-da-tutmadi,
+  Cloudflare 18 Kas 2025 .unwrap() panigi, Microsoft Teams/Spotify/Ericsson sertifika
+  vakalari — buyuk postmortem katmani.
+- Migration derinligi: Fowler ParallelChange, strong_migrations tehlike tablosu, Squawk
+  lock_timeout resetesi, CREATE INDEX CONCURRENTLY'nin invalid-index tuzagi.
+- Google SRE Book Bol. 26 ve "restore testi" bash bloklari; RPO/RTO.
+- OWASP A10:2025 + CWE-636 fail open / fail closed nuansi.
+- Supabase Splinter linter'inin 6 ERROR kurali + 0025 public_bucket_allows_listing.
+- Supabase auth rate limit tam tablosu + JWT asimetrik imzalama gecisi ve 20 dakika
+  bekleme kurali.
+- Maliyet: maxTurns/maxBudgetUsd, inference_geo 1.1x, fast mode, arac baglama token
+  maliyeti, prompt caching basabas noktasi, Batch API, AWS Budget Actions.
+- 401 katmani neredeyse TAMAMEN canliya ozgu: wrapper anatomisi (RethinkDB postmortem,
+  Cal AI, Photo AI, Gamma, Cursor, Lovable ARR egrisi, OpenEvidence "search glue"),
+  Product Hunt/HN olculmus launch verisi, KVKK SS-2 ve yeterlilik karari, Stripe'in
+  Turkiye'de olmamasi, genc girisimci istisnasi + BAG-KUR teşviğinin kaldirilmasi,
+  ETBIS ceza bandi, PMF/default alive.
+- Moonlight risk uyarisi (Sertac Tasdelen tutuklamasi, MASAK boyutu).
+- Rakip analizi: Turkce'de sifir sonuc, Osmani/Kim-Yegge/Barbini nerede bitiyor,
+  Yazbel pedagojisi ve "ansiklopedi olmus" zaafi, site yapisi kararlari.
+- LLMjacking / Sysdig 46.080 $/gun + "OpenAI Reverse Proxy" havuzlari, 30 gunluk erisim
+  30 dolara.
+- Facebook 91M EUR (Irlanda DPC), Twitter/GitHub duz metin parola, CWE-117.
+
+==============================================================================

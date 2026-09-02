@@ -1,0 +1,431 @@
+VIBECODEDSLOPWARE — DEVIR DOSYASI
+2 Eylul 2026. Bu dosyayi bastan sona oku, sonra basla.
+
+Calisma dizini:
+  ~/damla_projects_2026/vibecodedslopware/
+  GitHub: nosey-dewdrop/vibecodedslopware  (site yayinda, gunluk rebuild action var)
+
+
+==============================================================================
+0 · ONCE BUNU OKU — IKI MUFREDAT VARDI, BIRI OLDU
+==============================================================================
+
+2 Eylul'de bir oturum, bu reponun varligini bilmeden, ayni isin paralel bir
+kopyasini uretti:
+  ~/damla_projects_2026/işte tüm dosyalar/slopware101/
+Orada 29 bolumluk bir harita, bir DEVIR.txt ve 320 KB'lik bir curriculum.txt var.
+HEPSI GECERSIZ. O klasor ESKI KOSU'dur. Yapisi, numaralari, dili (Ingilizce) ve
+bolum iskeleti bu reponunkiyle catisiyor.
+
+  KANONIK OLAN BU REPO. MUFREDAT.md.
+
+Eski kosunun tek degeri malzemesidir. Ne tasinacagi olculdu ve yazildi:
+  ESKI-KOSUDAN-TASINACAK.txt   96 kalem, 24 boluma dagitilmis
+Tasima bitince eski klasore bir daha bakilmaz.
+
+Yeni oturum eski klasoru acmayacak. Acmasi gereken tek dosya yukaridaki.
+
+
+==============================================================================
+1 · BU NE ISI
+==============================================================================
+
+Bir KITAP. Yazbel'in pedagojisi ve gorunumu — tema birebir yazbel'in Sphinx
+pyramid temasindan alinmis, ¶ cipalari, tek kolon, gezinti seridi.
+
+  40 bolum, 4 seviye:
+    101  bu sey nasil calisiyor?          bolum 0-11
+    201  ayaga kaldir                     bolum 12-21
+    301  gercek kullanici ve saldirgan    bolum 22-31
+    401  founder                          bolum 32-40
+
+  TURKCE ASILDIR. Ingilizce ikizi cikar. (Eski kosu bunu Ingilizce sanmisti.)
+
+TEZ — pedagoji arastirmasindan cikti, uydurma degil
+  Vibe coder'in kafasinda NOTIONAL MACHINE yok. AI'in ciktisi ona sihir gibi
+  gorunuyor cunku "makine" diye bir zihinsel model kurulmamis.
+  Kaynak: Sorel & du Boulay, Notional Machines and Introductory Programming
+  Education, ACM TOCE 2013.
+  Kitabin isi o modeli kurmak.
+
+BOLUM ISKELETI — her bolumde ayni, degismez
+  calisiyor gorunen kod > "iyi, hos, ama" > nerede cokuyor > dogrusu > benim vakam
+
+  Dikkat: bolum OLAYLA acilmiyor. "Calisiyor gorunen kod" ile aciliyor.
+  Okurun kendi elindeki sey ile.
+
+101'IN DEMIR KURALI
+  101 boyunca tek bir CVE numarasi, tek bir OWASP kodu gecmez.
+  Magazin yasagi burada zaten yazili.
+
+TON
+  Ogretici ve guclu, zorbalik yok. Her bolumde Damla'nin kendi vakasi var.
+  Terim "slopware" olarak kalir, Turkce karsilik uydurulmaz.
+  URL'de numara ve tarih yok (/slopware-nedir).
+
+IKI KATMAN — her kalemde ikisi de
+  ILKE : aletsiz dogru cumle, bes yil sonra da dogru.
+  ALET : bu yilin somut ornegi, TARIHLI. 2030'da okuyan kontrol etmesi
+         gerektigini bilsin.
+  Sadece ilke kalirsa soyut olur. Sadece alet kalirsa iki yil sonra oler.
+
+
+==============================================================================
+2 · REPO NASIL CALISIYOR
+==============================================================================
+
+  yazilar/<dil>/<mufredat>/<slug>.md   >  [en/]<mufredat>/<slug>/index.html
+  mufredat.json                        >  index, bolum listesi, arama, RSS
+  python3 kur.py                       >  siteyi kurar, bagimlilik yok
+  .github/workflows/kur.yml            >  gunluk rebuild
+
+  Takvim: mufredat.json > site > takvim > aralik_gun = 3.
+  Bolum tarihi gecmediyse ve md dosyasi yoksa KILITLI gorunur.
+  Test icin: KUR_TARIH=2026-11-09 python3 kur.py
+
+  Yazilmis bolumler (2 tane, Turkce):
+    yazilar/tr/slopware/slopware-nedir.md
+    yazilar/tr/slopware/localhost.md
+  Ingilizce ikizleri henuz yok.
+
+  Kitap ciktisi: kitap/slopware-tr.pdf ve en/kitap/slopware-en.pdf
+  Bolum basina OG gorseli: tema/og/
+
+  .rabadon/ dokunulmaz.
+
+
+==============================================================================
+3 · DAMLA'NIN KURALLARI — IHLAL EDILEMEZ
+==============================================================================
+
+BICIM
+  - Link ve URL metnin icine serpistirilmez. Kaynagin adi cumlenin icinde gecer.
+    (Kaynak dosyalarinda URL durur, yayinlanan bolumde kalabalik yapmaz.)
+  - Ajan notu sizmayacak: VERDICT, Caveats, kapsam eslemesi, FLAG, kanoniklik,
+    <E1>, [research_2.md]. Hicbiri.
+  - Damla'nin cumleleri BUTUN halinde. Parcalanmis, etiketli madde listesi YASAK.
+    Yazim hatasi, Turkce-Ingilizce karisimi, kucuk harf AYNEN kalir.
+  - Ayni sey iki kez yazilmaz.
+
+ICERIK
+  - Olay bolumun KAPISI bile degil — bolum calisiyor gorunen kodla aciliyor.
+    Olay varsa govdede, tek tane, kisa. MAGAZIN YOK.
+  - Istatistik yigilmaz. Bir sayi ancak okurun yapacagi seyi degistiriyorsa girer.
+  - Genelleme yok. Her bolum kendi konusunu anlatir.
+  - Bir sey bir kez anlatilir.
+  - Katkisi olmayan paragraf silinir. Kimlik paragrafi generiktir.
+  - Vaat: problem var, cozumu var. Birkac gercek ornek, sonra cozum.
+  - Her soru cumlesi "?" ile biter. Basliklar dahil.
+  - Emojiyi Damla koyar.
+
+VERI
+  - Uydurma YOK. Kaynakta olmayan sayi, olay, isim, alinti yazilmaz.
+  - Damla ornegi uydurulamaz. Bulunamazsa "ornek bekleniyor" kalir.
+  - Kaynagi zayifsa DOGRULANMADI.
+  - Hicbir kaynak dosya silinmez.
+
+SUREC
+  - Numara uydurulmaz. MUFREDAT.md ne diyorsa o.
+  - Damla'ya rapor degil URUN gosterilir. Bir bolum ac, oldugu gibi goster.
+
+
+==============================================================================
+4 · GECEN OTURUMDA YAPILAN HATALAR — TEKRARLANMAYACAK
+==============================================================================
+
+1. Bu reponun varligi kontrol edilmedi. Bir gun boyunca paralel, daha kotu bir
+   mufredat uretildi.
+   > Ise baslamadan once: gh repo list, ve ~/damla_projects_2026 altinda ayni
+     isimli klasor var mi diye bak. Iki kopya varsa DOKUNMADAN SOR.
+
+2. Ne istendigini anlamadan uretmeye baslandi. Plan iki kez yanlis yazildi.
+   > Once anla, sonra uret. Emin degilsen SOR.
+
+3. Arastirma ajanlarina "once bir gercek olay bul" denildi. Yani magazinden
+   baslatildi. Damla yakaladi: "kirmizi cizgimiz bunun magazine kaymamasi."
+   > Once mekanizma, sonra demo. Olay aranmaz.
+
+4. Temizlik ajanlari veri kesti. Replit kayit sayilari, GitClear oranlari,
+   USENIX 205.474, WebAIM sayilari dustu. Olcum yakaladi.
+   > Ajana "temizle" derken neyin dusebilecegini de soyle, sonra OLC.
+
+5. Ana oturum 320 KB'lik dosyayi acti, context sisti.
+   > Buyuk dosya acilmaz, script yazilir.
+
+
+==============================================================================
+5 · KAPILAR — GECILMEDEN TESLIM YOK
+==============================================================================
+
+K1 · KIRLILIK
+  Yeni yazilan bolumde ajan notu, etiket, markdown artigi var mi:
+    grep -c "VERDICT\|Caveats\|kapsam esleme\|<E[0-9]>\|FLAG\|research_[0-9]" DOSYA
+  Hepsi 0.
+
+K2 · VERI KAYBI
+  Bir malzeme tasindiginda kaynaktaki her sayi hedefte var mi.
+  python3 ile sayi token kumesi cikarilir, fark alinir. Kayip = HATA.
+
+K3 · TERIM DENETIMI
+  Bir terim, kullanildigi bolumden ONCE tanitilmis mi.
+  MUFREDAT.md'nin bolum sirasi bunun yasasidir. 101'de gecen bir terim
+  201'de tanitiliyorsa hatadir.
+
+K4 · ISKELET
+  Bolum su sirada mi:
+    calisiyor gorunen kod > "iyi, hos, ama" > nerede cokuyor > dogrusu > benim vakam
+  Ve olayla acilmiyor.
+
+K5 · 101 TEMIZLIGI
+  101'in bolumlerinde (0-11) CVE numarasi ve OWASP kodu var mi:
+    grep -c "CVE-\|OWASP\|LLM0[0-9]" yazilar/tr/slopware/*.md
+  101 bolumleri icin 0 olmali.
+
+K6 · SITE KURULUYOR MU
+  python3 kur.py hatasiz kosuyor mu, uretilen HTML aciliyor mu.
+
+
+==============================================================================
+6 · YAPILACAK IS — SIRAYLA
+==============================================================================
+
+------------------------------------------------------------------------------
+IS 1 · ESKI KOSUDAN MALZEME TASIMA        (once bu — digerleri buna dayaniyor)
+------------------------------------------------------------------------------
+
+Dosya: ESKI-KOSUDAN-TASINACAK.txt  (96 kalem, 24 boluma dagitilmis)
+
+Bunlar eski kosuda var, MUFREDAT.md ve KURTARILAN-ARASTIRMA.md'de HIC yok.
+Kaybolursa geri gelmez. En degerli beşi:
+
+  1. Damla'nin birebir "dear connections" taslagi (~700 kelime) + 7 dokunulmaz
+     cumle. Canlida tek cumlesi bile yok. SERININ SESI BU, yeniden kurulamaz.
+     > Bolum 0.
+  2. 93 repo taramasi. 158>93 repo, 11'inde .env hicbiri commit'li degil,
+     17 repoda RLS ve 309 policy (216'si auth.uid() karsilastiriyor), 8 repoda
+     gomulu anon key (hepsi role:anon, service_role sifir), 23 Node reposunun
+     8'inde lockfile yok. Rehberin "ben olctum" iddiasinin tamami buna dayaniyor.
+     > Bolum 7, 12, 16, 23, 25.
+  3. stitchu'nun tarihli kendi hatasi: 27 Agu 2026 oncesi PUBLIC_ANALYZE = "on",
+     Origin'siz curl Anthropic parasi harciyordu, hicbir sayac toplami bilmiyordu.
+     Ve 93 repodan sadece 1'inde gercekten kodlanmis rate limit var.
+     > Bolum 7 ve 27. En durust acilis bu.
+  4. Turkce forum katmaninin tamami — 14 alinti (eksi ID'li ve tarihli,
+     technopat, donanimhaber, r10.net). Canlida SIFIR. Rehberin Turkce MOAT
+     iddiasini tasiyacak tek malzeme.
+  5. Odeme + 5651 hukuk paketi. iyzico HMAC-SHA1 / PayTR HMAC-SHA256, form POST
+     callback, 24 saat retry, 3DS zorunlulugu; 5651 yer saglayici yukumlulugu
+     (6 ay trafik, 24 saat yanit, 2 gun kaldirma, ceza araligi) + Giscus.
+     Canlida "5651" hic gecmiyor.
+     > Bolum 36, 37, 38.
+
+En cok yuk alan bolumler: 3 (localhost, 22 kalem — eskide RFC seviyesi derinlik
+var), 0 (20 kalem), 38 (15), 7 (12), 26 (11), 16+23 (11).
+
+Yontem: MUFREDAT.md'nin ilgili bolumune eklenir, ustune yazilmaz.
+Kapilar: K1, K2.
+Bitince commit: "migrate material from the old run into the curriculum"
+
+------------------------------------------------------------------------------
+IS 2 · 101 VE 201'IN KENDI EKSIKLERI
+------------------------------------------------------------------------------
+
+MUFREDAT.md bunlari kendisi isaretlemis, bakilmayi bekliyor.
+
+101'e eklenecekler (⚠ 101'E EKLENMESI GEREKENLER basligi altinda):
+  - Bagimliliklar / paket yoneticisi — MUFREDAT "EN BUYUK EKSIK" diyor.
+    npm install ne yapiyor, node_modules nedir, lockfile neden var.
+    Bolum 9 ve 5 bunu varsayiyor, hicbir yerde anlatilmiyor.
+  - Version control / geri alma. "AI bir seyi bozdu, geri alamiyorum" —
+    101'in en yaygin acil durumu.
+  - Ortamlar (dev/prod) ve config farki. Bolum 3 ile 5 arasinda kavramsal
+    ucurum var. SIRA DUZELTMESI: 5 ile 7 arasina girer.
+  - Kimlik dogrulama vs yetkilendirme. "Giris ekrani guvenlik degildir"
+    tek cumlesi bile buyuk katki.
+  - Loglar / "sunucu ne diyor". Bolum 5 ile 8 arasindaki kayip halka.
+  - Para / kuota / rate limit — bir paragraf. (Egitim kaynagi bulunamadi, BOSLUK.)
+
+201'e eklenecekler:
+  - Rollback / geri alma — "en buyuk eksik". Bolum 14 deploy'u anlatiyor,
+    geri almayi kimse anlatmiyor. 18 ile kritik bag: contract fazi calistiktan
+    sonra kod rollback'i GUVENLI DEGILDIR.
+  - Izleme / alarm. "Yedeginin calistigini duyacak bir kanalin olsun."
+    Alarm kanalinin KENDISININ test edilmesi.
+  - Staging ve ortam parity. Preview URL'ler varsayilan olarak halka acik.
+  - Feature flag / deploy ile release'i ayirmak — 12'de tek paragraf.
+  - npm ci vs npm install, lockfile commit.
+  - Baglanti havuzu: serverless + Postgres = too many connections.
+    Lokalde asla gorulmez. DOGRULANMADI — Supabase pooler dokumani cekilmedi.
+
+Kapilar: K1, K3, K5.
+Bitince commit: "close the flagged gaps in 101 and 201"
+
+------------------------------------------------------------------------------
+IS 3 · 301 VE 401 ARASTIRMASI
+------------------------------------------------------------------------------
+
+MUFREDAT.md basinda: "Arastirma durumu: 101 ✅ · 201 ✅ · 301 ⏳ (limit) · 401 ⏳ (limit)"
+Ikisi de limitte kesilmis, yarim.
+
+301 (22-31): Auth · Yetkilendirme ve RLS ✅ · Girdi guvenilmezdir ·
+Bagimlilik zinciri · LLM'li urunun guvenligi · Rate limit · Olcek (N+1,
+baglanti havuzu, onbellek) · Log ve alarm · Izleme · Maliyet kontrolu ✅
+  > 23 ve 31 dolu. Kalan 8 bolum arastirma bekliyor.
+
+401 (32-40): Wrapper anatomisi · Kimsenin istemedigi seyi yapmak ·
+Kullaniciyla konusmak · MVP ve launch ✅ · KVKK ✅ · Yurtdisina aktarim ve
+cerez · Para almak · Fiyatlama ve gercek metrik · Default alive mi
+  > 32, 35, 36-37 kismen dolu. Kalan arastirma bekliyor.
+
+KURTARILAN-ARASTIRMA.md'de ⏳ isaretli raporlar var, once oraya bakilir:
+  R12/R16/R29 npm tedarik zinciri > 25 · R25 caching > 28 · R19 feature toggle >
+  201 · R31/R11/R34/R41 Stripe Atlas, GIB ozelgeleri, TR abonelik > 38 ·
+  R30 ramen profitable > 40 · R3/R14 bruт marj, NDR > 39 ·
+  R7/R17/R26/R4 launch ekonomisi > 35 · R1/R24/R33/R36/R22/R35 wrapper
+  birincil kaynaklar ve kuskucu dosya > 32 · R9/R15 Bolt.new, Replit > 23, 32 ·
+  R21 Stack Overflow anketi, algi ucurumu > 0, 9
+
+  Yani 301 ve 401'in bir kismi zaten elde, islenmeyi bekliyor. Once o islenir,
+  SONRA yeni arastirma yapilir. Iki kez arastirilmaz.
+
+ARASTIRMA KURALI — kirmizi cizgi
+  Magazin degil. Olay avina cikilmaz. Toplama sirasi:
+    kavram > mekanizma > demo > yanlis model > ilke+alet > TR katman > olay
+  Demo ucuncu sirada ve kitabin en onemli parcasi.
+  Olay en sonda, zorunlu degil, aranmaz.
+
+Bitince commit: "research for 301 and 401"
+
+------------------------------------------------------------------------------
+IS 4 · DOGRULAMA BORCLARI
+------------------------------------------------------------------------------
+
+MUFREDAT.md "⚠ 201 — YAYINDAN ONCE KAPATILACAK DOGRULAMA BORCLARI" tablosu:
+
+  GitLab postmortem       403, arsiv de yok. Tarayicidan acilacak, DMARC ve
+                          pg_dump 9.2/9.6 alintilari teyit edilecek.
+  SEC 34-70694 (Knight)   403. Bolum 12, 14 ve 21'in ucu birden buna yasliyor.
+                          ONCELIK.
+  CVE-2025-48757 NVD      CVSS 9.3 ikincil kaynaktan.
+  Teams/Spotify/Ericsson  Resmi postmortem yok/kapali.
+  Migration felaketi      Bulunamadi.
+
+Bunlar KAPANMADAN 201 yayina cikmaz. Damla'nin disari yanlis cumle kurmasina
+izin verilmez.
+
+Bitince commit: "close verification debts"
+
+------------------------------------------------------------------------------
+IS 5 · BES YENI BOLUM ADAYI — DAMLA KARAR VERECEK
+------------------------------------------------------------------------------
+
+Bosluk analizinden cikti. Eski kosuda malzemesi var, canli mufredatta hicbir
+bolume oturmuyorlar:
+
+  1. idempotency ve webhook       (odeme ve dis servis bunu varsayiyor)
+  2. AI yazi imzasi, em-dash      (urunun metin yuzu)
+  3. erisilebilirlik + Turkce kirilmalari, WebAIM sayilari, I/i
+  4. transactional e-posta, SPF/DKIM/DMARC
+  5. acik kaynak ekosistemi, curl/Stenberg + LinkedIn basvuru seli
+
+Bolum acilir mi, var olan bolumun icine mi girer, yoksa bu seriye ait degil mi.
+UYDURULMAZ, Damla'ya sorulur.
+
+------------------------------------------------------------------------------
+IS 6 · BOLUM YAZIMI
+------------------------------------------------------------------------------
+
+40 bolumun 2'si yazili (Turkce): slopware-nedir, localhost.
+Ingilizce ikizleri henuz yok.
+
+Bir bolum ancak IS 1-4 o bolum icin bittiginde yazilir. Malzemesi eksikken
+yazilan bolum dokumantasyon olur.
+
+Yazim kurali: TURKCE ASILDIR, Ingilizce ikizi sonra cikar.
+Yayin takvimi 3 gunde bir (mufredat.json > takvim > aralik_gun).
+
+Kapilar: K1, K3, K4, K5, K6.
+
+
+==============================================================================
+7 · ORKESTRASYON
+==============================================================================
+
+CONTEXT EKONOMISI — bu bolumun tamami bunun icin var
+  Onceki oturum context sisip oldu, cunku ana oturum her seyi kendi okudu.
+
+  K-1  Ana oturum buyuk dosyalari ACMAZ.
+       MUFREDAT.md 83 KB, KURTARILAN-ARASTIRMA.md 791 KB,
+       ESKI-KOSUDAN-TASINACAK.txt 46 KB. Read ile acma.
+       grep, sed -n, python script kullan; ciktisina bak.
+
+  K-2  Ajanlar dosyaya yazar, metni geri DONDURMEZ.
+       Her ajanin talimatinin sonunda:
+       "Bana SADECE ozet dondur. Metni dondurme, dosyaya yaz."
+
+  K-3  Dogrulama gozle degil script'le. Kapilar grep ve python.
+
+  K-4  Her fazdan sonra commit. Context olurse yeni oturum DEVIR.txt + git log
+       ile devam eder. Faz ortasinda birakma.
+
+  K-5  Damla'ya rapor degil URUN gosterilir.
+
+FAZ 1 · TASIMA                    1-2 ajan
+  IS 1. ESKI-KOSUDAN-TASINACAK.txt bolum bolum MUFREDAT.md'ye islenir.
+  Ustune yazilmaz, eklenir. Ajan hangi bolume ne ekleyecegini dosyadan okur.
+  Kapilar: K1, K2. Commit.
+
+FAZ 2 · ISLENMEMIS RAPORLAR       2-3 ajan paralel
+  IS 3'un ilk yarisi. KURTARILAN-ARASTIRMA.md'deki ⏳ raporlar ilgili bolume
+  islenir. Yeni arastirma YOK — elde olan isleniyor.
+  Kapilar: K1, K2. Commit.
+
+FAZ 3 · EKSIKLERI KAPAT           3-4 ajan paralel
+  IS 2. 101 ve 201'in ⚠ listeleri. Arastirma kurali (kavram > mekanizma > demo)
+  her ajanin talimatinda birebir yazili olacak.
+  Kapilar: K1, K3, K5. Commit.
+
+FAZ 4 · DOGRULAMA BORCLARI        1 ajan
+  IS 4. 403'lu kaynaklar, oncelik SEC 34-70694.
+  Kapatilamayan kalem DOGRULANMADI olarak isaretli kalir, silinmez.
+  Commit.
+
+FAZ 5 · 301 VE 401 ARASTIRMASI    4-5 ajan paralel
+  IS 3'un ikinci yarisi. FAZ 2'den sonra, cunku elde ne oldugu once bilinmeli.
+  Commit.
+
+FAZ 6 · BOLUM YAZIMI              bolum basina 1 ajan, gruplar halinde
+  IS 6. Turkce asil, iskelet sabit, K4 ve K5 her bolumde kosulur.
+  Her gruptan sonra python3 kur.py ve K6.
+  Commit.
+
+NEREDE KALDIGINI BULMA
+  git log --oneline:
+    "migrate material from the old run"  > FAZ 1 bitti
+    "process the recovered reports"      > FAZ 2 bitti
+    "close the flagged gaps"             > FAZ 3 bitti
+    "close verification debts"           > FAZ 4 bitti
+    "research for 301 and 401"           > FAZ 5 bitti
+  Hicbiri yoksa FAZ 1'den basla.
+
+
+==============================================================================
+8 · KARAR BEKLEYENLER — DAMLA'YA SORULACAK, UYDURULMAYACAK
+==============================================================================
+
+1. Bes yeni bolum adayi (IS 5). Acilir mi, icine mi girer, ait degil mi?
+
+2. Eski kosu klasoru (~/damla_projects_2026/işte tüm dosyalar/slopware101)
+   tasima bittikten sonra ne olacak? Arsive mi, silinecek mi?
+
+3. Ingilizce ikizler ne zaman? Turkce bolumler biriktikce mi, her bolumde mi?
+
+4. Yayin takvimi 3 gunde bir. 40 bolum = 120 gun. Bu hizda mi kalinacak?
+
+5. Eski kosuda "en guclu 6" diye isaretlenmis yayin sirasi vardi ve icindeki
+   uc kalem (Milkie Way 72 bin dolar, Adam Wathan indigo tweet'i, McHire)
+   canli mufredatta HIC gecmiyor. Girecek mi?
+
+6. _kaynak/ altindaki 32 dosya (DAMLA_SES.md 68 KB, DAMLA_YAZI.md 58 KB,
+   3-DURUS.md 47 KB, research_1-11) bosluk analizinde ACILMADI.
+   Curriculum'a suzulmemis malzeme orada durabilir. Ayri bir tur gerekir mi?
