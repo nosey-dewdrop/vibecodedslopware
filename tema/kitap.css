@@ -7,12 +7,12 @@
  */
 
 :root {
-  --kagit: #fbf9f6;
-  --murekkep: #1d1a17;
-  --murekkep-soluk: #6d675f;
-  --cizgi: #ddd6cb;
+  --kagit: #ffffff;
+  --murekkep: #000000;
+  --murekkep-soluk: #666666;
+  --cizgi: #dddddd;
   --vurgu: #7b3fa8;
-  --gecti: #9a948b;
+  --gecti: #999999;
   --olcu: 34em;
   --kenar-en: 17.5em;
 }
@@ -51,7 +51,7 @@ body {
   max-width: var(--olcu);
   margin: 0 auto;
   padding: 2.5em 0 4em;
-  font-family: "Crimson Pro", Georgia, "Times New Roman", serif;
+  font-family: "CMU Serif", Georgia, "Times New Roman", serif;
   font-size: 1.32rem;
   line-height: 1.62;
   color: var(--murekkep);
@@ -71,7 +71,7 @@ body {
 }
 
 .kitap div.body h1 {
-  font-family: "Crimson Pro", Georgia, serif;
+  font-family: "CMU Serif", Georgia, serif;
   font-size: 2.05rem;
   font-weight: 600;
   line-height: 1.22;
@@ -82,7 +82,7 @@ body {
 }
 
 .kitap div.body h2 {
-  font-family: "Crimson Pro", Georgia, serif;
+  font-family: "CMU Serif", Georgia, serif;
   font-size: 1.42rem;
   font-weight: 600;
   margin: 2.1em 0 0.55em;
@@ -107,7 +107,7 @@ body {
 }
 
 .kitap div.body pre {
-  background: #f3efe8;
+  background: #f6f6f6;
   border: 1px solid var(--cizgi);
   border-radius: 3px;
   padding: 0.85em 1em;
@@ -142,7 +142,7 @@ body {
   overflow-y: auto;
   padding: 2.6em 1.6em 3em 0;
   border-right: 1px solid var(--cizgi);
-  font-family: "Crimson Pro", Georgia, serif;
+  font-family: "CMU Serif", Georgia, serif;
   font-size: 0.97rem;
   line-height: 1.4;
 }
@@ -305,7 +305,7 @@ body {
   max-width: var(--olcu);
   margin: 0 auto;
   padding: 3em 0 5em;
-  font-family: "Crimson Pro", Georgia, "Times New Roman", serif;
+  font-family: "CMU Serif", Georgia, "Times New Roman", serif;
   font-size: 1.32rem;
   line-height: 1.62;
 }
@@ -403,7 +403,7 @@ body {
 
   @bottom-center {
     content: counter(page);
-    font-family: "Crimson Pro", Georgia, serif;
+    font-family: "CMU Serif", Georgia, serif;
     font-size: 10pt;
     color: #666;
   }
@@ -476,7 +476,7 @@ body {
   pre {
     break-inside: avoid;
     page-break-inside: avoid;
-    background: #f6f4f0 !important;
+    background: #f7f7f7 !important;
     border: 1px solid #ddd !important;
     font-size: 9pt;
   }
@@ -488,8 +488,8 @@ body {
 }
 
 /* --- sayfa içi içindekiler: kitap kenar notu, yazbel'in kırmızı etiketi değil */
-.kitap div.contents.local.topic,
-.kitap-tam div.contents.local.topic {
+.kitap div.contents.local.topic ,
+.kitap-tam div.contents.local.topic  {
   margin: 0 0 2.6em;
   padding: 0 0 0 1em;
   border: 0;
@@ -497,9 +497,9 @@ body {
   background: none;
 }
 
-.kitap div.contents.local.topic,
-.kitap-tam div.contents.local.topic > p.topic-title {
-  font-family: "Crimson Pro", Georgia, serif;
+.kitap div.contents.local.topic > p.topic-title ,
+.kitap-tam div.contents.local.topic > p.topic-title  {
+  font-family: "CMU Serif", Georgia, serif;
   font-size: 0.8rem;
   font-weight: 400;
   letter-spacing: 0.1em;
@@ -509,22 +509,22 @@ body {
   border: 0;
 }
 
-.kitap div.contents.local.topic,
-.kitap-tam div.contents.local.topic ul {
+.kitap div.contents.local.topic ul ,
+.kitap-tam div.contents.local.topic ul  {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.kitap div.contents.local.topic,
-.kitap-tam div.contents.local.topic li {
+.kitap div.contents.local.topic li ,
+.kitap-tam div.contents.local.topic li  {
   display: block;
   margin: 0.18em 0;
   text-indent: 0;
 }
 
-.kitap div.contents.local.topic,
-.kitap-tam div.contents.local.topic li a {
+.kitap div.contents.local.topic li a ,
+.kitap-tam div.contents.local.topic li a  {
   display: inline;
   color: var(--murekkep-soluk);
   background: none;
@@ -535,13 +535,13 @@ body {
   text-decoration: none;
 }
 
-.kitap div.contents.local.topic,
-.kitap-tam div.contents.local.topic li a:hover {
+.kitap div.contents.local.topic li a:hover ,
+.kitap-tam div.contents.local.topic li a:hover  {
   color: var(--vurgu);
 }
 
-.kitap div.contents.local.topic,
-.kitap-tam div.contents.local.topic li a.aktif {
+.kitap div.contents.local.topic li a.aktif ,
+.kitap-tam div.contents.local.topic li a.aktif  {
   background: none;
   color: var(--vurgu);
 }
@@ -566,4 +566,27 @@ body {
   flex: 1;
   border-bottom: 1px dotted var(--cizgi);
   transform: translateY(-0.25em);
+}
+
+/* Kitap sayfası da kenarla birlikte gelir, ama gövdesi sütunun ortasında. */
+.kitap .kitap-tam {
+  max-width: var(--olcu);
+  margin: 0 auto;
+}
+
+/* Tema div.body'yi float ve yüzde genişlikle konumluyor; grid sütununun
+ * içinde ikisi de gövdeyi sütunun dışına taşırıyor. */
+.kitap .documentwrapper {
+  float: none;
+  width: auto;
+}
+
+.kitap div.body {
+  float: none;
+  width: auto;
+  min-width: 0;
+}
+
+.kitap .kitap-tam {
+  width: auto;
 }

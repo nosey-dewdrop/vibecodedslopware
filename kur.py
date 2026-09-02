@@ -136,8 +136,10 @@ S = {
 }
 
 FONTLAR = ("https://fonts.googleapis.com/css2?"
-           "family=Crimson+Pro:ital,wght@0,400;0,600;1,400"
-           "&family=Roboto+Slab:wght@400;700&family=Special+Elite&display=swap")
+           "family=Roboto+Slab:wght@400;700&family=Special+Elite&display=swap")
+# LaTeX'in kendi yazı tipi. Paketin kendi css'i "font-style: roman" diyor ve bu
+# geçersiz bir değer, tarayıcı yüzü tanımayıp başka aileye düşüyordu. Yüzleri
+# doğrudan bağlıyoruz.
 
 
 def metin(alan, dil):
@@ -627,6 +629,7 @@ def kafa(veri, baslik, aciklama, kanonik, yukari, dil, karsi_url, indeksle=True,
     <link rel="stylesheet" href="{FONTLAR}" />
     <link rel="stylesheet" type="text/css" href="{yukari}tema/pygments.css" />
     <link rel="stylesheet" type="text/css" href="{yukari}tema/pyramid.css" />
+    <link rel="stylesheet" type="text/css" href="{yukari}tema/cmu.css" />
     <link rel="stylesheet" type="text/css" href="{yukari}tema/kitap.css" />
     <link rel="canonical" href="{kanonik}" />
     <link rel="alternate" hreflang="{dil}" href="{kanonik}" />
@@ -815,6 +818,7 @@ def kur():
 
     site_haritasi(veri)
     dort_yuz_dort(veri)
+    eski_en_yonlendir(veri)
     (KOK / "robots.txt").write_text(
         f"User-agent: *\nAllow: /\nSitemap: {veri['site']['url']}sitemap.xml\n", encoding="utf-8")
     print(f"{toplam} sayfa kuruldu ({len(veri['mufredatlar'])} müfredat × {len(DILLER)} dil).")
@@ -1023,6 +1027,8 @@ def kitap_kur(veri, m, dil, onek):
     p = [kafa(veri, f'{t["kitap"]} · {baslik}', t["kitap_ozet"], kanonik, yukari, dil, karsi),
          navbar(veri, yukari, dil, karsi),
          gezinti(yukari, dil, kirinti, kisayol=True, karsi_url=karsi),
+         '<div class="kitap">',
+         kenar(veri, m, dil, yukari, None),
          GOVDE_AC,
          '  <section id="kitap" class="kitap-tam">',
          f'<h1>{kac(baslik)}<a class="headerlink" href="#kitap">¶</a></h1>',
@@ -1045,6 +1051,7 @@ def kitap_kur(veri, m, dil, onek):
         p.append("</section>")
     p.append("</section>")
     p.append(GOVDE_KAPA)
+    p.append("</div>")
     p.append(gezinti(yukari, dil, kirinti))
     p.append(ayak(yukari, dil))
 
@@ -1314,21 +1321,47 @@ def dort_yuz_dort(veri):
     göre mutlak, çünkü sayfa hangi derinlikte istendiği bilinmiyor."""
     site = veri["site"]
     kok = "/" + site["url"].split("/", 3)[3]  # https://host/repo/ -> /repo/
-    dil = "tr"
+    dil = DILLER[0]
     t = S[dil]
     p = [kafa(veri, "404", t["kayip"], f'{site["url"]}404', kok, dil,
-              f'{site["url"]}en/', indeksle=False),
-         navbar(veri, kok, dil, f'{site["url"]}en/'),
+              site["url"], indeksle=False),
+         navbar(veri, kok, dil, site["url"]),
          gezinti(kok, dil, [("", "404")]),
          GOVDE_AC,
          '  <section id="kayip">',
          '<h1>404<a class="headerlink" href="#kayip">¶</a></h1>',
          f'<p>{t["kayip"]}</p>',
          f'<p><a href="{kok}">{t["ev"]}</a> &#183; <a href="{kok}slopware/">slopware</a>'
-         f' &#183; <a href="{kok}ara/">{t["ara"]}</a> &#183; <a href="{kok}en/">en</a></p>',
+         f' &#183; <a href="{kok}kitap/">{t["kitap"]}</a>'
+         f' &#183; <a href="{kok}ara/">{t["ara"]}</a></p>',
          "</section>", GOVDE_KAPA,
          gezinti(kok, dil, [("", "404")]), ayak(kok, dil)]
     (KOK / "404.html").write_text("\n".join(p), encoding="utf-8")
+
+
+def eski_en_yonlendir(veri):
+    """EN köke taşındı. Eski /en/... adresleri hâlâ paylaşılmış linklerde
+    duruyor, o yüzden her biri için köke atan bir sayfa bırakılır."""
+    site = veri["site"]
+    kok = "/" + site["url"].split("/", 3)[3]
+    yollar = ["", "ara/", "kitap/"]
+    for m in veri["mufredatlar"]:
+        yollar.append(f'{m["kod"]}/')
+        for sv in m["seviyeler"]:
+            for b in sv["bolumler"]:
+                yollar.append(f'{m["kod"]}/{b["slug"]}/')
+    for yol in yollar:
+        hedef = f"{kok}{yol}"
+        klasor = KOK / "en" / yol if yol else KOK / "en"
+        klasor.mkdir(parents=True, exist_ok=True)
+        (klasor / "index.html").write_text(
+            f'<!DOCTYPE html>\n<html lang="{DILLER[0]}"><head><meta charset="utf-8">'
+            f'<meta http-equiv="refresh" content="0; url={hedef}">'
+            f'<link rel="canonical" href="{site["url"]}{yol}">'
+            f'<meta name="robots" content="noindex"><title>moved</title></head>'
+            f'<body><p>This page moved to <a href="{hedef}">{site["url"]}{yol}</a>.</p>'
+            f'<script>location.replace("{hedef}");</script></body></html>\n',
+            encoding="utf-8")
 
 
 def site_haritasi(veri):
