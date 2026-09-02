@@ -152,6 +152,7 @@
         if (acik) liste.push(bolum);
         gecilenYaz(liste);
         ciz();
+        kenarKur();
       });
     });
     ciz();
@@ -173,6 +174,29 @@
       sayac.querySelector("b").textContent = String(sayi);
       sayac.hidden = false;
     }
+  }
+
+  // --- kenardaki müfredat: geçtiğin bölümün üstü çizilir -----------------
+  // Aynı listeden okur, ayrı bir kayıt tutmaz. Bölüm sonundaki kontrolü
+  // işaretlediğin an bu da dolar.
+  function kenarKur() {
+    var kenar = document.querySelector("nav.kenar");
+    if (!kenar) return;
+    var satirlar = kenar.querySelectorAll("li.kenar-bolum[data-bolum]");
+    var kapalilar = kenar.querySelectorAll("li.kenar-bolum.kapali");
+    var toplam = satirlar.length + kapalilar.length;
+    var gecilen = gecilenOku(), sayi = 0;
+
+    Array.prototype.forEach.call(satirlar, function (li) {
+      var gecti = gecilen.indexOf(li.getAttribute("data-bolum")) !== -1;
+      li.classList.toggle("gecti", gecti);
+      if (gecti) sayi += 1;
+    });
+
+    var dolu = kenar.querySelector(".kenar-dolu");
+    if (dolu && toplam) dolu.style.width = ((sayi / toplam) * 100).toFixed(1) + "%";
+    var sayac = kenar.querySelector(".kenar-sayi b");
+    if (sayac) sayac.textContent = String(sayi);
   }
 
   // --- paylaş: linki kopyala ------------------------------------------------
@@ -200,6 +224,7 @@
     vurgula();
     kontrolTikiKur();
     mufredatTikiKur();
+    kenarKur();
   }
 
   if (document.readyState === "loading") {

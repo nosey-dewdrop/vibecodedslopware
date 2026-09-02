@@ -25,7 +25,7 @@ from pathlib import Path
 
 KOK = Path(__file__).parent
 YAZILAR = KOK / "yazilar"
-DILLER = ["tr", "en"]
+DILLER = ["en"]
 # Kilitler bu tarihe göre açılır. Test için: KUR_TARIH=2026-11-09 python3 kur.py
 BUGUN = dt.date.fromisoformat(os.environ.get("KUR_TARIH") or dt.date.today().isoformat())
 AYLAR = {"tr": ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz",
@@ -135,7 +135,8 @@ S = {
     },
 }
 
-FONTLAR = ("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400"
+FONTLAR = ("https://fonts.googleapis.com/css2?"
+           "family=Crimson+Pro:ital,wght@0,400;0,600;1,400"
            "&family=Roboto+Slab:wght@400;700&family=Special+Elite&display=swap")
 
 
@@ -626,6 +627,7 @@ def kafa(veri, baslik, aciklama, kanonik, yukari, dil, karsi_url, indeksle=True,
     <link rel="stylesheet" href="{FONTLAR}" />
     <link rel="stylesheet" type="text/css" href="{yukari}tema/pygments.css" />
     <link rel="stylesheet" type="text/css" href="{yukari}tema/pyramid.css" />
+    <link rel="stylesheet" type="text/css" href="{yukari}tema/kitap.css" />
     <link rel="canonical" href="{kanonik}" />
     <link rel="alternate" hreflang="{dil}" href="{kanonik}" />
     <link rel="alternate" hreflang="{obur}" href="{karsi_url}" />
@@ -656,7 +658,8 @@ def navbar(veri, yukari, dil, karsi_url):
     p.append(f'    <li><a href="{yukari}kitap/">html</a></li>')
     p.append(f'    <li><a href="{yukari}kitap/slopware-{dil}.pdf">pdf</a></li>')
     p.append('    <li><a href="https://github.com/nosey-dewdrop/vibecodedslopware">github</a></li>')
-    p.append(f'    <li><a href="{karsi_url}">{"en" if dil == "tr" else "tr"}</a></li>')
+    if len(DILLER) > 1:
+        p.append(f'    <li><a href="{karsi_url}">{"en" if dil == "tr" else "tr"}</a></li>')
     p.append(f"""    <li class="ara"><form action="{yukari}ara/" method="get" role="search">
       <input type="text" name="q" placeholder="{t["arama_kutusu"]}" aria-label="{t["ara"]}"
              autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
@@ -688,7 +691,7 @@ def gezinti(yukari, dil, kirinti, onceki=None, sonraki=None, kisayol=False, kars
     ks = ' accesskey="I"' if kisayol else ""
     p = [f'    <div class="related" role="navigation" aria-label="{t["gezinti"]}">',
          f"      <h3>{t['gezinti']}</h3>", "      <ul>"]
-    if karsi_url:
+    if karsi_url and len(DILLER) > 1:
         # navbar 500px altında gizli; dil değiştirmenin tek yolu bu şerit.
         obur = "en" if dil == "tr" else "tr"
         p.append(f'        <li class="right dil" style="margin-right: 10px">'
@@ -711,6 +714,39 @@ def gezinti(yukari, dil, kirinti, onceki=None, sonraki=None, kisayol=False, kars
     p.append(f'        <li class="nav-item nav-item-this"><a href="">'
              f'{html.escape(kirinti[-1][1])}</a></li>')
     p.append("      </ul>\n    </div>")
+    return "\n".join(p)
+
+
+
+def kenar(veri, m, dil, yukari, simdiki_slug):
+    """Her bölüm sayfasının solunda duran müfredat: hangi bölümdesin, kaçını
+    geçtin, sırada ne var. Tikler bölüm sonundaki kontrolle aynı yerden okunur."""
+    t = S[dil]
+    toplam = sum(len(sv["bolumler"]) for sv in m["seviyeler"])
+    p = [f'<nav class="kenar" aria-label="{kac(m["ad"])}">',
+         '  <div class="kenar-ust">',
+         f'    <a class="kenar-ad" href="{yukari}{m["kod"]}/">{kac(m["ad"])}</a>',
+         '    <div class="kenar-cubuk"><span class="kenar-dolu"></span></div>',
+         f'    <p class="kenar-sayi"><b>0</b> / {toplam} {kac(t["gecilen"])}</p>',
+         '  </div>',
+         '  <ol class="kenar-liste">']
+    for sv in m["seviyeler"]:
+        p.append(f'    <li class="kenar-seviye">{kac(sv["kod"])} &#183; '
+                     f'{kac(sv.get(f"ad_{dil}") or sv["ad"])}</li>')
+        for b in sv["bolumler"]:
+            slug, no = b["slug"], b["no"]
+            baslik = kac(bolum_alan(b, "baslik", dil))
+            kimlik = f'{m["kod"]}/{slug}'
+            if not acik_mi(b):
+                acilir = t["acilir"].format(tarih=tarih_yaz(b["tarih"], dil))
+                p.append(f'    <li class="kenar-bolum kapali"><i>{no:02d}</i>'
+                         f'<span>{baslik}</span><em title="{kac(acilir)}">&#183;</em></li>')
+            else:
+                simdi = " burada" if slug == simdiki_slug else ""
+                p.append(f'    <li class="kenar-bolum{simdi}" data-bolum="{kimlik}">'
+                         f'<i>{no:02d}</i>'
+                         f'<a href="{yukari}{m["kod"]}/{slug}/">{baslik}</a></li>')
+    p += ["  </ol>", "</nav>"]
     return "\n".join(p)
 
 
@@ -754,7 +790,7 @@ def kur():
     for m in veri["mufredatlar"]:
         if (KOK / m["kod"]).exists():
             shutil.rmtree(KOK / m["kod"])
-    en_pdf = KOK / "en" / "kitap" / "slopware-en.pdf"
+    en_pdf = KOK / "kitap" / "slopware-en.pdf"
     en_pdf_yedek = en_pdf.read_bytes() if en_pdf.exists() else None
     for eski in ("en", "ara", "bolum"):
         if (KOK / eski).exists():
@@ -767,7 +803,7 @@ def kur():
 
     toplam = 0
     for dil in DILLER:
-        onek = "" if dil == "tr" else "en/"
+        onek = ""
         indeks = []
         for m in veri["mufredatlar"]:
             toplam += mufredat_kur(veri, m, dil, onek, indeks)
@@ -788,7 +824,7 @@ def mufredat_kur(veri, m, dil, onek, indeks):
     site, t = veri["site"], S[dil]
     duzlem = [b for sv in m["seviyeler"] for b in sv["bolumler"]]
     seviye_of = {b["slug"]: sv for sv in m["seviyeler"] for b in sv["bolumler"]}
-    yukari = "../../" if dil == "tr" else "../../../"
+    yukari = "../../"
     sayac = 0
 
     # Tarihi gelmemiş bölüm kilitli: sayfası kurulmaz, listede tıklanmaz.
@@ -817,7 +853,7 @@ def mufredat_kur(veri, m, dil, onek, indeks):
         b[f"ozet_{dil}"] = neden or " ".join(aranan.split()[:60])
 
         kanonik = f'{site["url"]}{onek}{m["kod"]}/{b["slug"]}/'
-        karsi = f'{site["url"]}{"en/" if dil == "tr" else ""}{m["kod"]}/{b["slug"]}/'
+        karsi = kanonik
         onceki = acik[idx - 1] if idx > 0 else None
         sonraki = acik[idx + 1] if idx < len(acik) - 1 else None
         onc = ((f'{yukari}{m["kod"]}/{onceki["slug"]}/',
@@ -844,6 +880,8 @@ def mufredat_kur(veri, m, dil, onek, indeks):
                       bolum=f'{m["kod"]}/{b["slug"]}', og=og),
                  navbar(veri, yukari, dil, karsi),
                  gezinti(yukari, dil, kirinti, onc, son, kisayol=True, karsi_url=karsi),
+                 '<div class="kitap">',
+                 kenar(veri, m, dil, yukari, b["slug"]),
                  GOVDE_AC,
                  f'  <section id="{b["slug"]}">',
                  f'<h1>{kac(baslik)}<a class="headerlink" href="#{b["slug"]}" '
@@ -855,6 +893,7 @@ def mufredat_kur(veri, m, dil, onek, indeks):
                  abone_formu(veri, dil),
                  "</section>",
                  GOVDE_KAPA,
+                 '</div>',
                  gezinti(yukari, dil, kirinti, onc, son),
                  ayak(yukari, dil)]
         sayfa = "\n".join(sayfa)
@@ -886,9 +925,9 @@ def mufredat_ana(veri, m, dil, onek):
     site, t = veri["site"], S[dil]
     duzlem = [b for sv in m["seviyeler"] for b in sv["bolumler"]]
     yazilan = sum(1 for b in duzlem if b.get(f"durum_{dil}") == "yazildi")
-    yukari = "../" if dil == "tr" else "../../"
+    yukari = "../"
     kanonik = f'{site["url"]}{onek}{m["kod"]}/'
-    karsi = f'{site["url"]}{"en/" if dil == "tr" else ""}{m["kod"]}/'
+    karsi = kanonik
     baslik = metin(m["baslik"], dil)
     ozet = metin(m["ozet"], dil)
     kimlik = slugla(m["kod"])
@@ -975,9 +1014,9 @@ def kitap_kur(veri, m, dil, onek):
         return 0
     duzlem = [b for sv in m["seviyeler"] for b in sv["bolumler"]]
     yayinda = [b for b in duzlem if b.get(f"durum_{dil}") == "yazildi"]
-    yukari = "../" if dil == "tr" else "../../"
+    yukari = "../"
     kanonik = f'{site["url"]}{onek}kitap/'
-    karsi = f'{site["url"]}{"en/" if dil == "tr" else ""}kitap/'
+    karsi = kanonik
     baslik = metin(m["baslik"], dil)
     kirinti = [("", t["kitap"])]
 
@@ -985,7 +1024,7 @@ def kitap_kur(veri, m, dil, onek):
          navbar(veri, yukari, dil, karsi),
          gezinti(yukari, dil, kirinti, kisayol=True, karsi_url=karsi),
          GOVDE_AC,
-         '  <section id="kitap" class="kitap">',
+         '  <section id="kitap" class="kitap-tam">',
          f'<h1>{kac(baslik)}<a class="headerlink" href="#kitap">¶</a></h1>',
          f'<div class="description yazi-ozet">{kac(metin(m["ozet"], dil))}</div>',
          f'<p class="henuz">{len(yayinda)} / {len(duzlem)} {t["bolumler"]} &#183; '
@@ -1131,7 +1170,7 @@ def okul_sayfasi(veri, dil, onek):
     site, t = veri["site"], S[dil]
     yukari = "" if dil == "tr" else "../"
     kanonik = f'{site["url"]}{onek}'
-    karsi = f'{site["url"]}{"en/" if dil == "tr" else ""}'
+    karsi = kanonik
     aciklama = metin(site["aciklama"], dil)
 
     ilk = veri["mufredatlar"][0]
@@ -1173,9 +1212,9 @@ def okul_sayfasi(veri, dil, onek):
 
 def arama_sayfasi(veri, dil, onek):
     site, t = veri["site"], S[dil]
-    yukari = "../" if dil == "tr" else "../../"
+    yukari = "../"
     kanonik = f'{site["url"]}{onek}ara/'
-    karsi = f'{site["url"]}{"en/" if dil == "tr" else ""}ara/'
+    karsi = kanonik
     kirinti = [("", t["arama"])]
 
     p = [kafa(veri, t["arama"], t["arama_ipucu"], kanonik, yukari, dil, karsi,

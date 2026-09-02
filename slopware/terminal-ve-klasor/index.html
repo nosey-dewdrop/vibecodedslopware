@@ -1,35 +1,36 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Dosya ve klasör kavramı olmadan hiçbir sonraki bölüm oturmuyor." />
+    <meta name="description" content="The same command run one level up serves nothing. Most deploy failures start here." />
     <meta name="author" content="Damla Su Bilge" />
     <meta name="robots" content="index,follow" />
 
-    <title>terminal ve klasör &#8212; vibecodedslopware</title>
+    <title>why can your deploy not find your files? &#8212; vibecodedslopware</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400&family=Roboto+Slab:wght@400;700&family=Special+Elite&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Roboto+Slab:wght@400;700&family=Special+Elite&display=swap" />
     <link rel="stylesheet" type="text/css" href="../../tema/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../tema/pyramid.css" />
+    <link rel="stylesheet" type="text/css" href="../../tema/kitap.css" />
     <link rel="canonical" href="https://nosey-dewdrop.github.io/vibecodedslopware/slopware/terminal-ve-klasor/" />
+    <link rel="alternate" hreflang="en" href="https://nosey-dewdrop.github.io/vibecodedslopware/slopware/terminal-ve-klasor/" />
     <link rel="alternate" hreflang="tr" href="https://nosey-dewdrop.github.io/vibecodedslopware/slopware/terminal-ve-klasor/" />
-    <link rel="alternate" hreflang="en" href="https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/terminal-ve-klasor/" />
-    <link rel="search" title="ara" href="../../ara/" />
+    <link rel="search" title="search" href="../../ara/" />
     <link rel="alternate" type="application/rss+xml" title="vibecodedslopware" href="../../rss.xml" />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='white'/%3E%3Crect x='6' y='6' width='6' height='20' fill='%23808080'/%3E%3Crect x='20' y='6' width='6' height='20' fill='%23808080'/%3E%3C/svg%3E" />
     <meta property="og:type" content="article" />
     <meta property="og:site_name" content="vibecodedslopware" />
-    <meta property="og:title" content="terminal ve klasör" />
-    <meta property="og:description" content="Dosya ve klasör kavramı olmadan hiçbir sonraki bölüm oturmuyor." />
+    <meta property="og:title" content="why can your deploy not find your files?" />
+    <meta property="og:description" content="The same command run one level up serves nothing. Most deploy failures start here." />
     <meta property="og:url" content="https://nosey-dewdrop.github.io/vibecodedslopware/slopware/terminal-ve-klasor/" />
-    <meta property="og:image" content="https://nosey-dewdrop.github.io/vibecodedslopware/tema/og-tr.png" />
+    <meta property="og:image" content="https://nosey-dewdrop.github.io/vibecodedslopware/tema/og/terminal-ve-klasor-en.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#ffffff" />
-    <script>window.KOK = "../../"; window.DIL = "tr"; window.BOLUM = "slopware/terminal-ve-klasor";</script>
+    <script>window.KOK = "../../"; window.DIL = "en"; window.BOLUM = "slopware/terminal-ve-klasor";</script>
   </head><body>
 <div class='header'><a href='../../'>vibecodedslopware</a></div>
 
@@ -37,40 +38,182 @@
     <li><a href="../../slopware/">slopware</a></li>
     <li><a href="../../systems/">systems engineering</a></li>
     <li><a href="../../kitap/">html</a></li>
-    <li><a href="../../kitap/slopware-tr.pdf">pdf</a></li>
+    <li><a href="../../kitap/slopware-en.pdf">pdf</a></li>
     <li><a href="https://github.com/nosey-dewdrop/vibecodedslopware">github</a></li>
-    <li><a href="https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/terminal-ve-klasor/">en</a></li>
     <li class="ara"><form action="../../ara/" method="get" role="search">
-      <input type="text" name="q" placeholder="ara…" aria-label="ara"
+      <input type="text" name="q" placeholder="search…" aria-label="search"
              autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
     </form></li>
 </ul>
 
-    <div class="related" role="navigation" aria-label="Gezinti">
-      <h3>Gezinti</h3>
+    <div class="related" role="navigation" aria-label="Navigation">
+      <h3>Navigation</h3>
       <ul>
-        <li class="right dil" style="margin-right: 10px"><a href="https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/terminal-ve-klasor/" hreflang="en">en</a></li>
         <li class="right" style="margin-right: 10px">
-          <a href="../../ara/" title="Arama" accesskey="I">ara</a></li>
+          <a href="../../ara/" title="Search" accesskey="I">search</a></li>
         <li class="right" >
-          <a href="../../slopware/localhost/" title="guys, I am on localhost" accesskey="N">sonraki</a> |</li>
+          <a href="../../slopware/localhost/" title="why does your link only open for you?" accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../../slopware/ekranindaki-sey/" title="ekranındaki şey ne?" accesskey="P">önceki</a> |</li>
-<li class="nav-item nav-item-0"><a href="../../" title="ana sayfa">&#x2302;</a></li>
+          <a href="../../slopware/ekranindaki-sey/" title="what is the thing on your screen?" accesskey="P">previous</a> |</li>
+<li class="nav-item nav-item-0"><a href="../../" title="home">&#x2302;</a></li>
           <li class="nav-item nav-item-1"><a href="../../slopware/" >slopware</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">terminal ve klasör</a></li>
+        <li class="nav-item nav-item-this"><a href="">why can your deploy not find your files?</a></li>
       </ul>
     </div>
+<div class="kitap">
+<nav class="kenar" aria-label="slopware">
+  <div class="kenar-ust">
+    <a class="kenar-ad" href="../../slopware/">slopware</a>
+    <div class="kenar-cubuk"><span class="kenar-dolu"></span></div>
+    <p class="kenar-sayi"><b>0</b> / 55 passed</p>
+  </div>
+  <ol class="kenar-liste">
+    <li class="kenar-seviye">101 &#183; what is this thing you built?</li>
+    <li class="kenar-bolum" data-bolum="slopware/slopware-nedir"><i>00</i><a href="../../slopware/slopware-nedir/">why does this book exist?</a></li>
+    <li class="kenar-bolum" data-bolum="slopware/ekranindaki-sey"><i>01</i><a href="../../slopware/ekranindaki-sey/">what is the thing on your screen?</a></li>
+    <li class="kenar-bolum burada" data-bolum="slopware/terminal-ve-klasor"><i>02</i><a href="../../slopware/terminal-ve-klasor/">why can your deploy not find your files?</a></li>
+    <li class="kenar-bolum" data-bolum="slopware/localhost"><i>03</i><a href="../../slopware/localhost/">why does your link only open for you?</a></li>
+    <li class="kenar-bolum" data-bolum="slopware/dev-ve-build"><i>04</i><a href="../../slopware/dev-ve-build/">what is the difference between npm run dev and npm run build?</a></li>
+    <li class="kenar-bolum" data-bolum="slopware/vitrin-ve-kasa"><i>05</i><a href="../../slopware/vitrin-ve-kasa/">why does the till stand in a different room?</a></li>
+    <li class="kenar-bolum kapali"><i>06</i><span>what is the browser actually doing?</span><em title="opens on 6 September 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>07</i><span>where your data actually lives</span><em title="opens on 9 September 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>08</i><span>what a secret is</span><em title="opens on 12 September 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>09</i><span>reading the error</span><em title="opens on 15 September 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>10</i><span>what does "it works" mean?</span><em title="opens on 18 September 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>11</i><span>acceptance criteria, not prompts</span><em title="opens on 21 September 2026">&#183;</em></li>
+    <li class="kenar-seviye">201 &#183; get it off your machine</li>
+    <li class="kenar-bolum kapali"><i>12</i><span>git, and getting back</span><em title="opens on 24 September 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>13</i><span>dev, prod and .env</span><em title="opens on 27 September 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>14</i><span>what npm install actually downloads</span><em title="opens on 30 September 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>15</i><span>what the build step does</span><em title="opens on 3 October 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>16</i><span>your first real deploy</span><em title="opens on 6 October 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>17</i><span>domain, DNS and HTTPS</span><em title="opens on 9 October 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>18</i><span>the deploy you can't undo</span><em title="opens on 12 October 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>19</i><span>connecting a database</span><em title="opens on 15 October 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>20</i><span>schema and indexes</span><em title="opens on 18 October 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>21</i><span>migrations</span><em title="opens on 21 October 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>22</i><span>backup and restore</span><em title="opens on 24 October 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>23</i><span>the silent catch</span><em title="opens on 27 October 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>24</i><span>tests and CI</span><em title="opens on 30 October 2026">&#183;</em></li>
+    <li class="kenar-seviye">301 &#183; real users and real attackers</li>
+    <li class="kenar-bolum kapali"><i>25</i><span>logging in</span><em title="opens on 2 November 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>26</i><span>you are logged in, but are you allowed?</span><em title="opens on 5 November 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>27</i><span>a check in the browser is not a check</span><em title="opens on 8 November 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>28</i><span>input is never trustworthy</span><em title="opens on 11 November 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>29</i><span>your database is open by default</span><em title="opens on 14 November 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>30</i><span>file upload is not an innocent operation</span><em title="opens on 17 November 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>31</i><span>you gave out your key and left the door open</span><em title="opens on 20 November 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>32</i><span>people have to trust you</span><em title="opens on 23 November 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>33</i><span>npm install is a trust decision</span><em title="opens on 26 November 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>34</i><span>how much power did you hand the agent?</span><em title="opens on 29 November 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>35</i><span>fast at 100 rows, dead at 10,000</span><em title="opens on 2 December 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>36</i><span>when someone else calls you: webhooks</span><em title="opens on 5 December 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>37</i><span>the user paid twice</span><em title="opens on 8 December 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>38</i><span>the payment said success, the order was never saved</span><em title="opens on 11 December 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>39</i><span>the outside world is not as solid as you</span><em title="opens on 14 December 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>40</i><span>it crashed and you cannot tell why</span><em title="opens on 17 December 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>41</i><span>the bill</span><em title="opens on 20 December 2026">&#183;</em></li>
+    <li class="kenar-seviye">401 &#183; the part people touch</li>
+    <li class="kenar-bolum kapali"><i>42</i><span>it works but nobody can use it</span><em title="opens on 23 December 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>43</i><span>the moment you open a comment box</span><em title="opens on 26 December 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>44</i><span>same chips, same texts</span><em title="opens on 29 December 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>45</i><span>the same thing in prose</span><em title="opens on 1 January 2027">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>46</i><span>anatomy of a wrapper</span><em title="opens on 4 January 2027">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>47</i><span>who is going to read your PR?</span><em title="opens on 7 January 2027">&#183;</em></li>
+    <li class="kenar-seviye">501 &#183; money</li>
+    <li class="kenar-bolum kapali"><i>48</i><span>building what nobody asked for</span><em title="opens on 10 January 2027">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>49</i><span>talking to users</span><em title="opens on 13 January 2027">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>50</i><span>the MVP and the launch</span><em title="opens on 16 January 2027">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>51</i><span>taking money</span><em title="opens on 19 January 2027">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>52</i><span>pricing and the numbers that are real</span><em title="opens on 22 January 2027">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>53</i><span>default alive or default dead</span><em title="opens on 25 January 2027">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>54</i><span>afterword: anyone can build anything</span><em title="opens on 28 January 2027">&#183;</em></li>
+  </ol>
+</nav>
 
     <div class="document">
       <div class="documentwrapper">
           <div class="body" role="main">
 
   <section id="terminal-ve-klasor">
-<h1>terminal ve klasör<a class="headerlink" href="#terminal-ve-klasor" title="Bu başlığa bağlantı">¶</a></h1>
-<div class="description yazi-ozet">Dosya ve klasör kavramı olmadan hiçbir sonraki bölüm oturmuyor.</div>
-<p class="henuz">bu bölüm henüz yazılmadı. üç günde bir bölüm.</p>
-
+<h1>why can your deploy not find your files?<a class="headerlink" href="#terminal-ve-klasor" title="Link to this heading">¶</a></h1>
+<div class="description yazi-ozet">The same command run one level up serves nothing. Most deploy failures start here.</div>
+<div class="contents local topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#where-are-you-standing">Where are you standing?</a></li>
+<li><a class="reference internal" href="#is-the-terminal-a-different-place">Is the terminal a different place?</a></li>
+<li><a class="reference internal" href="#what-is-a-path">What is a path?</a></li>
+<li><a class="reference internal" href="#why-is-this-so-hard-to-learn">Why is this so hard to learn?</a></li>
+<li><a class="reference internal" href="#why-does-this-decide-whether-things-work">Why does this decide whether things work?</a></li>
+<li><a class="reference internal" href="#what-is-in-your-project-folder">What is in your project folder?</a></li>
+</ul></div>
+<p>You ran a command inside a folder a moment ago and a server appeared, and I never said which folder it was reading or why that mattered. The same command run from one step higher up would have served nothing.</p>
+<p>A whole family of failures comes out of that. The build that works on your machine and returns file not found on the deploy is one, the image that loads locally and 404s in production is another. In every one of them a program is standing somewhere you did not expect, reading a path that means something different from there.</p>
+<section id="where-are-you-standing">
+<h2>Where are you standing?<a class="headerlink" href="#where-are-you-standing" title="Link to this heading">¶</a></h2>
+<p>Open a terminal. On a Mac it is called Terminal. On Windows, use the one your development tools installed rather than the old black box.</p>
+<p>A command never runs in general. It runs while you are standing somewhere and where you are standing changes what it does.</p>
+<div class="highlight-text notranslate"><div class="highlight"><button class="kopyala" type="button" data-oldu="copied">copy</button><pre><span></span>pwd
+</pre></div></div>
+<p>Print working directory. It answers with the absolute path of where you are standing right now.</p>
+<div class="highlight-console notranslate"><div class="highlight"><button class="kopyala" type="button" data-oldu="copied">copy</button><pre><span></span><span class="nb">ls</span> -F
+</pre></div></div>
+<p>Plain ls lists files and folders together with no way to tell them apart, and -F puts a slash on the end of every folder name. Do not try to work it out from the name. README has no dot and is a file, while a folder called backup.old has one and is still a folder.</p>
+<div class="highlight-console notranslate"><div class="highlight"><button class="kopyala" type="button" data-oldu="copied">copy</button><pre><span></span><span class="nb">cd</span> Desktop
+</pre></div></div>
+<p>Change directory, into the Desktop that sits inside wherever you already are. Run pwd again and the answer has grown by one step. Run ls -F and the contents have changed, because the same command means something different here.</p>
+<div class="highlight-console notranslate"><div class="highlight"><button class="kopyala" type="button" data-oldu="copied">copy</button><pre><span></span><span class="nb">cd</span> ..
+</pre></div></div>
+<p>Two dots is a real entry that exists inside every folder on the disk and it points at that folder's parent.</p>
+<p>That is the whole of navigation. Three commands and one convention, and they work the same way on every Mac and every Linux machine and inside the terminal your Windows tools installed.</p>
+</section>
+<section id="is-the-terminal-a-different-place">
+<h2>Is the terminal a different place?<a class="headerlink" href="#is-the-terminal-a-different-place" title="Link to this heading">¶</a></h2>
+<p>If the terminal still feels like a second machine hiding underneath the one you use, open Finder or Explorer and go to your project folder. Put that window on one side of your screen and the terminal on the other. Now cd your way to the same folder and run ls -F.</p>
+<p>They are the same thing. The icons on the left and the names on the right are one folder described in two ways, and the three commands you just learned will reach any folder on the disk.</p>
+</section>
+<section id="what-is-a-path">
+<h2>What is a path?<a class="headerlink" href="#what-is-a-path" title="Link to this heading">¶</a></h2>
+<p>A folder holds files and other folders and those hold more. All of it hangs down from one starting point, so your whole disk is a single tree.</p>
+<p>A path is directions through that tree and pwd printed one of them.</p>
+<div class="highlight-text notranslate"><div class="highlight"><button class="kopyala" type="button" data-oldu="copied">copy</button><pre><span></span>/Users/damla/Desktop/project
+</pre></div></div>
+<p>It means start at the top of the disk and go into Users, then into damla and Desktop and project. Each slash is a door you walk through. A postal address is written the same way and a path is that written on one line.</p>
+<p>There are two kinds.</p>
+<div class="highlight-text notranslate"><div class="highlight"><button class="kopyala" type="button" data-oldu="copied">copy</button><pre><span></span>/Users/damla/project/style.css     absolute
+style.css                          relative
+</pre></div></div>
+<p>The absolute one begins with a slash and is measured from the top of the disk, so it means the same file wherever you use it. The relative one is measured from where you are standing, so those same characters point at different files depending on where they are read.</p>
+</section>
+<section id="why-is-this-so-hard-to-learn">
+<h2>Why is this so hard to learn?<a class="headerlink" href="#why-is-this-so-hard-to-learn" title="Link to this heading">¶</a></h2>
+<p>Go back to the folder with index.html and style.css in it and start the server again. The page loads and the word is red. Now stop the server, run cd .. to step up one level, and start it again from there.</p>
+<div class="highlight-console notranslate"><div class="highlight"><button class="kopyala" type="button" data-oldu="copied">copy</button><pre><span></span><span class="nb">cd</span> ..
+<span class="nb">python3</span> -m http.server 8000
+</pre></div></div>
+<p>Open localhost:8000. There is no page, only a list of folder names. Nothing was moved and nothing was deleted. The href inside your HTML still says style.css and it still means the style.css next to me, and the server is now standing one level up where no such file sits. Your whole project is intact and unreachable.</p>
+<p>That is the entire failure, and here is why it stays invisible until it costs you a day. A few years ago lecturers in physics and engineering started running into something they could not explain. They would ask a class to open a file from a particular directory. We as students usually struggle to do exactly that, myself included, even though we use a computer all day and use it well.</p>
+<p>A file lives in the app or on the computer, and the way you reach it is to search for it.</p>
+<p>That model works for daily life. Put everything in one pile and search when you need something. You will find your holiday photographs every time. It stops working at the deploy, because the machine you deploy to has no search box. It is handed a path and goes exactly there. If nothing is there it stops.</p>
+<p>Directory structure is so ordinary to the people who know it that words for it are hard to find, so nobody explains it and nobody asks.</p>
+</section>
+<section id="why-does-this-decide-whether-things-work">
+<h2>Why does this decide whether things work?<a class="headerlink" href="#why-does-this-decide-whether-things-work" title="Link to this heading">¶</a></h2>
+<p>Every build step, every deploy tool and every error message you will read for the rest of your life assumes you know where you are standing.</p>
+<p>File does not exist almost always means a relative path was read from a folder you were not expecting. The file was there all along, and the program was standing somewhere else when it went looking for it. You saw exactly that a minute ago with a server one level too high.</p>
+<p>Something works on your machine and dies on the deploy for the same reason. You typed the command while standing inside the project folder. The other machine runs it while standing wherever it happens to start, so the relative path points at a place that does not exist. Chapter 16 is where this bites hardest.</p>
+<p>MIT teaches a free course for exactly this gap called The Missing Semester of Your CS Education. Julia Evans draws comics about the shell that are the friendliest thing on the subject.</p>
+</section>
+<section id="what-is-in-your-project-folder">
+<h2>What is in your project folder?<a class="headerlink" href="#what-is-in-your-project-folder" title="Link to this heading">¶</a></h2>
+<p>Open a terminal and leave your editor closed.</p>
+<p>Get to your project folder using only pwd, ls -F and cd. Read what comes back after each step instead of typing the whole path from memory.</p>
+<p>When you arrive, which folder in that list can you not describe the contents of? There will be one, usually node_modules or dist or .next.</p>
+<p>Go into it and look, changing nothing. The next time something breaks that folder is going to appear in the error message (which should not be the first time you see the name).</p>
+<p>Next comes localhost, and the reason a link that opens instantly for you does not open for your friend.</p>
+</section>
+<p class="paylas"><span>share:</span> <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://nosey-dewdrop.github.io/vibecodedslopware/slopware/terminal-ve-klasor/" target="_blank" rel="noopener">linkedin</a> &#183; <a href="https://x.com/intent/post?url=https://nosey-dewdrop.github.io/vibecodedslopware/slopware/terminal-ve-klasor/" target="_blank" rel="noopener">x</a> &#183; <button type="button" class="link-kopyala" data-link="https://nosey-dewdrop.github.io/vibecodedslopware/slopware/terminal-ve-klasor/" data-oldu="copied">copy link</button></p><p class="iyilestir"><a href="https://github.com/nosey-dewdrop/vibecodedslopware/edit/main/yazilar/en/slopware/terminal-ve-klasor.md">improve this page</a> &#183; the source is on GitHub, fix what you see wrong.</p>
 
 </section>
 
@@ -80,26 +223,27 @@
       <div class="clearer"></div>
     </div>
 
-    <div class="related" role="navigation" aria-label="Gezinti">
-      <h3>Gezinti</h3>
+</div>
+    <div class="related" role="navigation" aria-label="Navigation">
+      <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../../ara/" title="Arama">ara</a></li>
+          <a href="../../ara/" title="Search">search</a></li>
         <li class="right" >
-          <a href="../../slopware/localhost/" title="guys, I am on localhost">sonraki</a> |</li>
+          <a href="../../slopware/localhost/" title="why does your link only open for you?">next</a> |</li>
         <li class="right" >
-          <a href="../../slopware/ekranindaki-sey/" title="ekranındaki şey ne?">önceki</a> |</li>
-<li class="nav-item nav-item-0"><a href="../../" title="ana sayfa">&#x2302;</a></li>
+          <a href="../../slopware/ekranindaki-sey/" title="what is the thing on your screen?">previous</a> |</li>
+<li class="nav-item nav-item-0"><a href="../../" title="home">&#x2302;</a></li>
           <li class="nav-item nav-item-1"><a href="../../slopware/" >slopware</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">terminal ve klasör</a></li>
+        <li class="nav-item nav-item-this"><a href="">why can your deploy not find your files?</a></li>
       </ul>
     </div>
 
 <div class="footer">
-	&copy; 2026, Damla Su Bilge | <a href="https://github.com/nosey-dewdrop/vibecodedslopware">kaynağı burada</a>, ben düşersem sen fork'la.
-	metin cc by-nc, kod mit.
+	&copy; 2026, Damla Su Bilge | <a href="https://github.com/nosey-dewdrop/vibecodedslopware">source is here</a>, if I go down, fork it.
+	text cc by-nc, code mit.
 <br>
-elde yazılmış bir jeneratörle kuruldu &#183; görünüm yazbel'in pyramid temasından
+built with a hand-written generator &#183; look borrowed from yazbel's pyramid theme
 <br>
 <br>
 </div>

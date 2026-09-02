@@ -41,25 +41,28 @@
        "baslik_en": "why does this book exist?",
        "tarih": "2026-08-19",
        "neden": "Herkes bu kelimeyi söylüyor ama kimse tanımını bilmiyor.",
-       "kontrol": "Elindeki şeyin demosu mu var, kendisi mi var?"
+       "kontrol": "Elindeki şeyin demosu mu var, kendisi mi var?",
+       "neden_en": "Why this book exists, who is writing it, and how to read it."
       },
       {
        "no": 1,
        "slug": "ekranindaki-sey",
        "baslik": "ekranındaki şey ne?",
        "baslik_en": "what is the thing on your screen?",
-       "neden": "Sayfa sihir değil, indirilen bir dosya yığını. Model buradan başlıyor.",
-       "kontrol": "Sağ tık, kaynağı görüntüle. DevTools Network. Kaç dosya indi?",
-       "tarih": "2026-08-22"
+       "tarih": "2026-08-22",
+       "neden": "Sayfa bir yer değil, her bakışta yeniden gelen bir teslimat. Model buradan başlıyor.",
+       "kontrol": "DevTools Network. Kaç dosya indi, kaç kilobayt, hangisini tanımıyorsun?",
+       "neden_en": "A page is not a place. It is a delivery that happens again every time somebody looks."
       },
       {
        "no": 2,
        "slug": "terminal-ve-klasor",
        "baslik": "terminal ve klasör",
        "baslik_en": "why can your deploy not find your files?",
-       "neden": "Dosya ve klasör kavramı olmadan hiçbir sonraki bölüm oturmuyor.",
-       "kontrol": "pwd, ls, cd. Aynı klasörü dosya yöneticisinde yan yana aç.",
-       "tarih": "2026-08-25"
+       "tarih": "2026-08-25",
+       "neden": "Aynı komut bir üst klasörden koşunca hiçbir şey servis etmiyor. Deploy hatalarının çoğu burada başlıyor.",
+       "kontrol": "pwd, ls -F, cd ile projene yürü. İçini anlatamadığın klasör hangisi?",
+       "neden_en": "The same command run one level up serves nothing. Most deploy failures start here."
       },
       {
        "no": 3,
@@ -68,7 +71,8 @@
        "baslik_en": "why does your link only open for you?",
        "tarih": "2026-08-28",
        "neden": "npm run dev bir program başlatıyor, o program bir portu dinliyor, 127.0.0.1 senin makinen. Terminal ve klasör burada öğrenilir. Okurun ilk duvarı.",
-       "kontrol": "Adres çubuğunda localhost var mı? Terminali kapat, site kapandı mı? Laptopu kapat, mobil veriyle aç."
+       "kontrol": "Adres çubuğunda localhost var mı? Terminali kapat, site kapandı mı? Laptopu kapat, mobil veriyle aç.",
+       "neden_en": "Your machine answers its own name. Your friend's machine answers its own, and finds nothing."
       },
       {
        "no": 4,
@@ -76,8 +80,9 @@
        "baslik": "npm run dev ve npm run build",
        "baslik_en": "what is the difference between npm run dev and npm run build?",
        "tarih": "2026-08-31",
-       "neden": "Biri senin makinende bellekte sayfa kuruyor, digeri sunucuya gidecek klasoru yaziyor. Deploy edilen klasor, hic acmadigin klasor.",
-       "kontrol": "npm run build calistir. Ciktiyi python3 -m http.server ile ac ve kendi siteni gez."
+       "neden": "Biri bellekte sayfa kuruyor, diğeri sunucuya gidecek klasörü yazıyor. Deploy edilen, hiç açmadığın klasör.",
+       "kontrol": "npm run build çalıştır. Çıktıyı python3 -m http.server ile aç ve kendi siteni gez.",
+       "neden_en": "One builds pages in memory for you. The other writes the folder your users get."
       },
       {
        "no": 5,
@@ -86,9 +91,496 @@
        "baslik_en": "why does the till stand in a different room?",
        "tarih": "2026-09-03",
        "neden": "Frontend, backend ve aradaki güven sınırı. Deploy'u anlamak için önce neyi deploy ettiğini bilmek gerekiyor.",
-       "kontrol": "Kendi projende sınırı bul: hangi kod ziyaretçinin makinesinde çalışıyor?"
+       "kontrol": "Kendi projende sınırı bul: hangi kod ziyaretçinin makinesinde çalışıyor?",
+       "neden_en": "Everything delivered to the browser belongs to whoever is standing there."
+      },
+      {
+       "no": 6,
+       "slug": "tarayici-ne-yapiyor",
+       "baslik": "tarayıcı ne yapıyor?",
+       "baslik_en": "what is the browser actually doing?",
+       "tarih": "2026-09-06",
+       "neden": "Adres yazınca dosyalar iniyor, sonra sayfa sunucuya istek atıyor, yanıt alıyor. Bundan sonra her bölüm istek, yanıt, Network sekmesi diyecek.",
+       "kontrol": "DevTools Network: kaç dosya indi? Tek bir isteğin metodunu, adresini, durum kodunu oku."
+      },
+      {
+       "no": 7,
+       "slug": "veri-nerede-yasar",
+       "baslik": "veri nerede yaşar",
+       "baslik_en": "where your data actually lives",
+       "tarih": "2026-09-09",
+       "neden": "Tarayıcı depolaması, sonra veritabanı. Yenileyince gidiyorsa hiç yazılmamış demektir.",
+       "kontrol": "Sayfayı yenile. Veri duruyor mu? Başka tarayıcıda aç. Duruyor mu?"
+      },
+      {
+       "no": 8,
+       "slug": "sir-nedir",
+       "baslik": "sır nedir",
+       "baslik_en": "what a secret is",
+       "tarih": "2026-09-12",
+       "neden": "Anahtar, parola, token. Neden tarayıcıya konmaz.",
+       "kontrol": "Build çıktısında anahtarını ara. Bulursan herkes buldu."
+      },
+      {
+       "no": 9,
+       "slug": "hata-mesajini-okumak",
+       "baslik": "hata mesajını okumak",
+       "baslik_en": "reading the error",
+       "tarih": "2026-09-15",
+       "neden": "Hata mesajı anlamsız değil, okunmayı bekliyor.",
+       "kontrol": "Kasten bir hata çıkar. En üstteki satır senin kodun mu?"
+      },
+      {
+       "no": 10,
+       "slug": "calisiyor-ne-demek",
+       "baslik": "\"çalışıyor\" ne demek?",
+       "baslik_en": "what does \"it works\" mean?",
+       "tarih": "2026-09-18",
+       "neden": "Bir kez çalışmak ile çalışıyor olmak aynı şey değil.",
+       "kontrol": "Aynı işi üç farklı girdiyle yap. Üçü de doğru mu?"
+      },
+      {
+       "no": 11,
+       "slug": "kabul-kriteri",
+       "baslik": "prompt değil, kabul kriteri",
+       "baslik_en": "acceptance criteria, not prompts",
+       "tarih": "2026-09-21",
+       "neden": "İyi prompt diye bir şey yok, kabul kriteri var. Bu müfredatın özgün katkısı burada.",
+       "kontrol": "Son promptunu al, kabul kriterine çevir. Kaç madde çıktı?"
       }
-     ]
+     ],
+     "ad_en": "what is this thing you built?"
+    },
+    {
+     "kod": "201",
+     "ad": "ayağa kaldır",
+     "ozet": {
+      "tr": "senin makinenden çıkarır, senden bağımsız yaşatır.",
+      "en": "gets it off your machine and keeps it alive without you."
+     },
+     "bolumler": [
+      {
+       "no": 12,
+       "slug": "git",
+       "baslik": "git ve geri alma",
+       "baslik_en": "git, and getting back",
+       "tarih": "2026-09-24",
+       "neden": "\"AI bir şeyi bozdu, geri alamıyorum\" en yaygın acil durum.",
+       "kontrol": "Sildiğin bir dosyayı git log -p ile geri bul."
+      },
+      {
+       "no": 13,
+       "slug": "dev-prod-env",
+       "baslik": "dev, prod ve .env",
+       "baslik_en": "dev, prod and .env",
+       "tarih": "2026-09-27",
+       "neden": "Sır nedir'i biliyorsun, şimdi mekanizması.",
+       "kontrol": ".gitignore'da .env var mı, ve geçmişte anahtar duruyor mu?"
+      },
+      {
+       "no": 14,
+       "slug": "npm-install",
+       "baslik": "npm install ne indiriyor",
+       "baslik_en": "what npm install actually downloads",
+       "tarih": "2026-09-30",
+       "neden": "node_modules'e senin yazmadığın binlerce satır iniyor. Lokalde çalışıp deploy'da patlamanın bir numaralı sebebi.",
+       "kontrol": "node_modules'te kaç paket var? package.json'da kaç tane yazıyor?"
+      },
+      {
+       "no": 15,
+       "slug": "build",
+       "baslik": "build ne yapıyor",
+       "baslik_en": "what the build step does",
+       "tarih": "2026-10-03",
+       "neden": "npm run dev senin siten değil. Build çıktısı senin siten.",
+       "kontrol": "npm run build koş, dist klasörüne bak, source map'i aç."
+      },
+      {
+       "no": 16,
+       "slug": "ilk-deploy",
+       "baslik": "ilk gerçek deploy",
+       "baslik_en": "your first real deploy",
+       "tarih": "2026-10-06",
+       "neden": "Kodun senden bağımsız yaşamaya başladığı an.",
+       "kontrol": "Laptopu kapat. Adres hâlâ açılıyor mu?"
+      },
+      {
+       "no": 17,
+       "slug": "domain-dns-https",
+       "baslik": "domain, DNS ve HTTPS",
+       "baslik_en": "domain, DNS and HTTPS",
+       "tarih": "2026-10-09",
+       "neden": "Okunabilir bir ad, onu adrese çeviren şey, ve kilidi getiren şey.",
+       "kontrol": "Adres çubuğunda kilit var mı? Sertifika kimin?"
+      },
+      {
+       "no": 18,
+       "slug": "rollback",
+       "baslik": "geri alamadığın deploy",
+       "baslik_en": "the deploy you can't undo",
+       "tarih": "2026-10-12",
+       "neden": "Deploy'u herkes anlatıyor, geri almayı kimse anlatmıyor.",
+       "kontrol": "Son deploy'unu geri alabilir misin? Dene."
+      },
+      {
+       "no": 19,
+       "slug": "veritabani-baglamak",
+       "baslik": "veritabanı bağlamak",
+       "baslik_en": "connecting a database",
+       "tarih": "2026-10-15",
+       "neden": "Veri nerede duruyor'un mekanizması.",
+       "kontrol": "Uygulamanı kapat, veriyi veritabanından doğrudan oku."
+      },
+      {
+       "no": 20,
+       "slug": "sema-ve-indeks",
+       "baslik": "şema ve indeks",
+       "baslik_en": "schema and indexes",
+       "tarih": "2026-10-18",
+       "neden": "Verinin şekli ve neden bazı sorgular yavaş.",
+       "kontrol": "En çok kullandığın sorguya EXPLAIN çek."
+      },
+      {
+       "no": 21,
+       "slug": "migration",
+       "baslik": "migration",
+       "baslik_en": "migrations",
+       "tarih": "2026-10-21",
+       "neden": "Şema değişince eski veriye ne oluyor.",
+       "kontrol": "Bir sütun ekle, eski kayıtlarda ne var?"
+      },
+      {
+       "no": 22,
+       "slug": "yedek",
+       "baslik": "yedek ve geri yükleme",
+       "baslik_en": "backup and restore",
+       "tarih": "2026-10-24",
+       "neden": "Yedeğin var demek geri yükleyebiliyorsun demek değil.",
+       "kontrol": "Yedeğini gerçekten geri yükle. Boş bir yere."
+      },
+      {
+       "no": 23,
+       "slug": "sessiz-catch",
+       "baslik": "sessiz catch, yutulan hata",
+       "baslik_en": "the silent catch",
+       "tarih": "2026-10-27",
+       "neden": "Kod çökmüyor, testler geçiyor, ve veri sessizce kayboluyor.",
+       "kontrol": "Kodunda boş catch bloğu ara."
+      },
+      {
+       "no": 24,
+       "slug": "test-ve-ci",
+       "baslik": "test ve CI",
+       "baslik_en": "tests and CI",
+       "tarih": "2026-10-30",
+       "neden": "Yeşil ama hiçbir şey kontrol etmeyen test. Yazmadığın kodu nasıl denetlersin.",
+       "kontrol": "Bir testin doğruladığı satırı sil. Test hâlâ geçiyor mu?"
+      }
+     ],
+     "ad_en": "get it off your machine"
+    },
+    {
+     "kod": "301",
+     "ad": "gerçek kullanıcı ve saldırgan",
+     "ozet": {
+      "tr": "kapıyı dünyaya açtığında ne oluyor.",
+      "en": "what happens the moment you open the door to the world."
+     },
+     "bolumler": [
+      {
+       "no": 25,
+       "slug": "auth",
+       "baslik": "giriş yapmak",
+       "baslik_en": "logging in",
+       "tarih": "2026-11-02",
+       "neden": "Kim olduğunu kanıtlamak. Session, token, ve token'ın nerede durduğu.",
+       "kontrol": "Token'ın nerede duruyor? JavaScript'ten okunabiliyor mu?"
+      },
+      {
+       "no": 26,
+       "slug": "yetkilendirme",
+       "baslik": "giriş yaptın, peki yetkin var mı?",
+       "baslik_en": "you are logged in, but are you allowed?",
+       "tarih": "2026-11-05",
+       "neden": "Kimlik ile yetki ayrı sorular, ve ikisi de sunucuda sorulur.",
+       "kontrol": "URL'deki id'yi bir artır. Başkasının verisi geldi mi?"
+      },
+      {
+       "no": 27,
+       "slug": "tarayicidaki-kontrol",
+       "baslik": "tarayıcıdaki kontrol kontrol değildir",
+       "baslik_en": "a check in the browser is not a check",
+       "tarih": "2026-11-08",
+       "neden": "CSS ile gizlemek gizlemek değil. Endpoint hâlâ açık.",
+       "kontrol": "Gizli butonun çağırdığı adrese doğrudan istek at."
+      },
+      {
+       "no": 28,
+       "slug": "girdi-guvenilmez",
+       "baslik": "girdi güvenilmezdir",
+       "baslik_en": "input is never trustworthy",
+       "tarih": "2026-11-11",
+       "neden": "Kullanıcıdan gelen her şey bir saldırgandan gelmiş olabilir.",
+       "kontrol": "Kendi formuna beklemediğin bir şey yaz. Ne oluyor?"
+      },
+      {
+       "no": 29,
+       "slug": "rls",
+       "baslik": "veritabanının default'u açıktır",
+       "baslik_en": "your database is open by default",
+       "tarih": "2026-11-14",
+       "neden": "Tarayıcı veritabanıyla doğrudan konuşuyorsa bekçi kim?",
+       "kontrol": "public şemanda rowsecurity false olan tabloları sor."
+      },
+      {
+       "no": 30,
+       "slug": "dosya-yuklemek",
+       "baslik": "dosya yüklemek masum bir işlem değil",
+       "baslik_en": "file upload is not an innocent operation",
+       "tarih": "2026-11-17",
+       "neden": "Yüklenen dosya bir kapıdır, kilidi tablonunkinden ayrı.",
+       "kontrol": "Yüklenmiş bir dosyanın adresini çıkış yapmış bir pencerede aç."
+      },
+      {
+       "no": 31,
+       "slug": "rate-limit",
+       "baslik": "anahtarı dağıttın, kapıyı açık bıraktın",
+       "baslik_en": "you gave out your key and left the door open",
+       "tarih": "2026-11-20",
+       "neden": "Anahtar dışarıdaysa kimse saymıyorsa fatura senin.",
+       "kontrol": "Kendi API'ne saniyede yüz istek at. Duruyor mu?"
+      },
+      {
+       "no": 32,
+       "slug": "insanlar-sana-guvenmeli",
+       "baslik": "insanlar sana güvenmeli",
+       "baslik_en": "people have to trust you",
+       "tarih": "2026-11-23",
+       "neden": "Kullanıcı aldığın anda sorumluluk aldın. Hangi veriyi tutuyorsun, ne kadar süre, nasıl silinir. KVKK aydınlatma ile rıza, yurtdışına aktarım, çerez.",
+       "kontrol": "Tuttuğun verilerden hangisini gerçekten tutman gerekiyor?"
+      },
+      {
+       "no": 33,
+       "slug": "bagimlilik-zinciri",
+       "baslik": "npm install bir güven kararıdır",
+       "baslik_en": "npm install is a trust decision",
+       "tarih": "2026-11-26",
+       "neden": "AI önerdiği için paketin var olduğunu sanmak.",
+       "kontrol": "Bağımlılıklarından birini npm view ile ara. Gerçek mi?"
+      },
+      {
+       "no": 34,
+       "slug": "ajana-yetki",
+       "baslik": "ajana ne kadar yetki verdin?",
+       "baslik_en": "how much power did you hand the agent?",
+       "tarih": "2026-11-29",
+       "neden": "Model metin üretiyor sanıyorsun, oysa komut çalıştırıyor.",
+       "kontrol": "Ajanının hangi araçlara erişimi var? Listele."
+      },
+      {
+       "no": 35,
+       "slug": "olcek",
+       "baslik": "100 satırda hızlı, 10.000'de ölü",
+       "baslik_en": "fast at 100 rows, dead at 10,000",
+       "tarih": "2026-12-02",
+       "neden": "Lokalde hızlıydı çünkü veri azdı.",
+       "kontrol": "Tablona on bin satır bas, aynı sayfayı aç."
+      },
+      {
+       "no": 36,
+       "slug": "webhook",
+       "baslik": "başkası seni arıyor: webhook",
+       "baslik_en": "when someone else calls you: webhooks",
+       "tarih": "2026-12-05",
+       "neden": "Şimdiye kadar hep sen istek attın. Bu bunun tersi ve endpoint'in herkese açık.",
+       "kontrol": "Webhook adresine imzasız bir istek at. Kabul ediyor mu?"
+      },
+      {
+       "no": 37,
+       "slug": "idempotency",
+       "baslik": "kullanıcı iki kere ödedi",
+       "baslik_en": "the user paid twice",
+       "tarih": "2026-12-08",
+       "neden": "Aynı isteği iki kez almak normaldir, iki kez işlemek senin hatandır.",
+       "kontrol": "Aynı isteği iki kez at. İki kayıt mı oldu?"
+      },
+      {
+       "no": 38,
+       "slug": "odeme-basarili-dondu",
+       "baslik": "ödeme başarılı döndü, sipariş kaydedilmedi",
+       "baslik_en": "the payment said success, the order was never saved",
+       "tarih": "2026-12-11",
+       "neden": "Redirect ile webhook aynı şey değil. Sanal POS, 3D Secure, mutabakat. Sipariş kaydını tarayıcının dönüşünden değil webhook'tan yazarsın.",
+       "kontrol": "Ödeme sayfasından dönüşü tarayıcıda kes. Sipariş yine de kaydedildi mi?"
+      },
+      {
+       "no": 39,
+       "slug": "disarisi-saglam-degil",
+       "baslik": "dışarısı senin kadar sağlam değil",
+       "baslik_en": "the outside world is not as solid as you",
+       "tarih": "2026-12-14",
+       "neden": "Bağlı olduğun servis çöktüğünde ne oluyor.",
+       "kontrol": "Dış çağrılarında timeout var mı? Ara."
+      },
+      {
+       "no": 40,
+       "slug": "log-ve-alarm",
+       "baslik": "çöktü ve nedenini bilmiyorsun",
+       "baslik_en": "it crashed and you cannot tell why",
+       "tarih": "2026-12-17",
+       "neden": "Sunucuda ne olduğunu görmüyorsan tahmin ediyorsun.",
+       "kontrol": "Prod'da kasten hata çıkar. Haberin oldu mu?"
+      },
+      {
+       "no": 41,
+       "slug": "maliyet",
+       "baslik": "torpil = token faturası",
+       "baslik_en": "the bill",
+       "tarih": "2026-12-20",
+       "neden": "Kötü tasarım artık zaman kaybı değil, doğrudan nakit yakımı.",
+       "kontrol": "Bu ayki faturanı aç. Hangi satır en büyük?"
+      }
+     ],
+     "ad_en": "real users and real attackers"
+    },
+    {
+     "kod": "401",
+     "ad": "ürünün yüzü",
+     "ozet": {
+      "tr": "çalışan bir şeyden kullanılan bir şeye.",
+      "en": "from something that runs to something people use."
+     },
+     "bolumler": [
+      {
+       "no": 42,
+       "slug": "kimse-kullanamiyor",
+       "baslik": "çalışıyor ama kimse kullanamıyor",
+       "baslik_en": "it works but nobody can use it",
+       "tarih": "2026-12-23",
+       "neden": "Kontrast, klavye, mobil, ve Türkçe karakterin kırdığı yerler.",
+       "kontrol": "Sitende sadece klavyeyle gezin. Her yere ulaşabildin mi?"
+      },
+      {
+       "no": 43,
+       "slug": "yorum-kutusu",
+       "baslik": "yorum kutusunu açtığın an",
+       "baslik_en": "the moment you open a comment box",
+       "tarih": "2026-12-26",
+       "neden": "Herkes içerik girebildiği an başka bir işin sahibi oldun.",
+       "kontrol": "Kendi yorum kutuna bir script yapıştır. Ne oluyor?"
+      },
+      {
+       "no": 44,
+       "slug": "same-chips",
+       "baslik": "same chips, same texts",
+       "baslik_en": "same chips, same texts",
+       "tarih": "2026-12-29",
+       "neden": "Her AI ürünü neden aynı moru kullanıyor.",
+       "kontrol": "Üç AI ürününün landing sayfasını yan yana aç."
+      },
+      {
+       "no": 45,
+       "slug": "yazi-hali",
+       "baslik": "aynısının yazı hali",
+       "baslik_en": "the same thing in prose",
+       "tarih": "2027-01-01",
+       "neden": "Görsel homojenleşmenin metindeki karşılığı.",
+       "kontrol": "Son yazdığın metni oku. Hangi cümle bilgi taşımıyor?"
+      },
+      {
+       "no": 46,
+       "slug": "wrapper-anatomisi",
+       "baslik": "wrapper anatomisi",
+       "baslik_en": "anatomy of a wrapper",
+       "tarih": "2027-01-04",
+       "neden": "Bir wrapper ne zaman öğrenme aracı, ne zaman ürün taklidi.",
+       "kontrol": "LLM çağrısını çıkar. Geriye ne kalıyor, ve o şey birinin işine yarıyor mu?"
+      },
+      {
+       "no": 47,
+       "slug": "pr-kim-okuyacak",
+       "baslik": "gönderdiğin PR'ı kim okuyacak?",
+       "baslik_en": "who is going to read your PR?",
+       "tarih": "2027-01-07",
+       "neden": "Üretmek ucuzladı, okumak ucuzlamadı.",
+       "kontrol": "Son PR'ını aç. Her satırını açıklayabiliyor musun?"
+      }
+     ],
+     "ad_en": "the part people touch"
+    },
+    {
+     "kod": "501",
+     "ad": "para",
+     "ozet": {
+      "tr": "kitabın amacı şirket kurdurmak. önceki dört kısım buraya çıkan merdiven.",
+      "en": "the point of the book is a company. the four parts before this are the stairs up to it."
+     },
+     "bolumler": [
+      {
+       "no": 48,
+       "slug": "kimsenin-istemedigi-sey",
+       "baslik": "kimsenin istemediği şeyi yapmak",
+       "baslik_en": "building what nobody asked for",
+       "tarih": "2027-01-10",
+       "neden": "Yapabilmek ile istenmesi ayrı şeyler. Artık her şeyi yapabiliyorsun, soru neyi yapmayacağın.",
+       "kontrol": "Ürününü kullanan, senin tanımadığın kaç kişi var? Sayıyı yaz."
+      },
+      {
+       "no": 49,
+       "slug": "kullaniciyla-konusmak",
+       "baslik": "kullanıcıyla konuşmak",
+       "baslik_en": "talking to users",
+       "tarih": "2027-01-13",
+       "neden": "İlk on kullanıcı, ne sorulur, ne sorulmaz. Anket değil, konuşma.",
+       "kontrol": "Bir kullanıcıyla on dakika konuş. Ne yapmaya çalışıyordu, nerede takıldı?"
+      },
+      {
+       "no": 50,
+       "slug": "mvp-ve-launch",
+       "baslik": "MVP ve launch",
+       "baslik_en": "the MVP and the launch",
+       "tarih": "2027-01-16",
+       "neden": "Ne kadar az yeter, nerede duyurulur, ne zaman. Türkiye'de kapı ekşi, technopat; dışarıda HN, Product Hunt.",
+       "kontrol": "Ürününden çıkarabileceğin her şeyi çıkar. Hâlâ işe yarıyor mu?"
+      },
+      {
+       "no": 51,
+       "slug": "para-almak",
+       "baslik": "para almak",
+       "baslik_en": "taking money",
+       "tarih": "2027-01-19",
+       "neden": "iyzico, PayTR, Stripe Türkiye'de yok, merchant of record vergiyi halletmez, fatura. Para geçen an hukuk ve muhasebe başlar.",
+       "kontrol": "İlk gerçek ödemeyi al. Faturası kesildi mi, para hesabına düştü mü?"
+      },
+      {
+       "no": 52,
+       "slug": "fiyatlama-ve-metrik",
+       "baslik": "fiyatlama ve gerçek metrik",
+       "baslik_en": "pricing and the numbers that are real",
+       "tarih": "2027-01-22",
+       "neden": "AI ürününün marjı SaaS'ınki değil, her istek para. Hangi sayı gerçek, hangisi gösteriş.",
+       "kontrol": "Bir kullanıcı sana ayda kaç liraya mal oluyor? Ondan kaç lira alıyorsun?"
+      },
+      {
+       "no": 53,
+       "slug": "default-alive",
+       "baslik": "default alive mı default dead mi",
+       "baslik_en": "default alive or default dead",
+       "tarih": "2027-01-25",
+       "neden": "Bu hızla yaşar mı ölür mü, hesabı. Kasa, aylık yakım, büyüme.",
+       "kontrol": "Bugünkü gelir ve giderle kaç ay yaşıyorsun? Hesapla, yaz."
+      },
+      {
+       "no": 54,
+       "slug": "herkes-her-seyi-yapabilir",
+       "baslik": "sonsöz: herkes her şeyi yapabilir",
+       "baslik_en": "afterword: anyone can build anything",
+       "tarih": "2027-01-28",
+       "neden": "Kitabın tezi. Kötülük bilgisizliktendir, ve bilgisizlik geçici.",
+       "kontrol": "Başında yapamayacağını sandığın hangi şeyi şimdi yapabiliyorsun?"
+      }
+     ],
+     "ad_en": "money"
     }
    ],
    "aralik_gun": 3,

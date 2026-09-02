@@ -2,19 +2,43 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>
 <title>vibecodedslopware</title>
 <link>https://nosey-dewdrop.github.io/vibecodedslopware/</link>
-<description>yazılım müfredatları. slopware nedir, nasıl fark edilir, ne yapmalı.</description>
-<language>tr</language>
+<description>software curricula. what slopware is, how to spot it, what to do.</description>
+<language>en</language>
 <atom:link href="https://nosey-dewdrop.github.io/vibecodedslopware/rss.xml" rel="self" type="application/rss+xml" />
 <item>
-<title>guys, I am on localhost</title>
-<link>https://nosey-dewdrop.github.io/vibecodedslopware/slopware/localhost/</link><guid isPermaLink="true">https://nosey-dewdrop.github.io/vibecodedslopware/slopware/localhost/</guid>
-<pubDate>Fri, 28 Aug 2026 09:00:00 +0300</pubDate>
-<description>npm run dev bir program başlatıyor, o program bir portu dinliyor, 127.0.0.1 senin makinen. Terminal ve klasör burada öğrenilir. Okurun ilk duvarı.</description>
+<title>why does the till stand in a different room?</title>
+<link>https://nosey-dewdrop.github.io/vibecodedslopware/slopware/vitrin-ve-kasa/</link><guid isPermaLink="true">https://nosey-dewdrop.github.io/vibecodedslopware/slopware/vitrin-ve-kasa/</guid>
+<pubDate>Thu, 03 Sep 2026 09:00:00 +0300</pubDate>
+<description>Everything delivered to the browser belongs to whoever is standing there.</description>
 </item>
 <item>
-<title>slopware nedir, neden şimdi</title>
+<title>what is the difference between npm run dev and npm run build?</title>
+<link>https://nosey-dewdrop.github.io/vibecodedslopware/slopware/dev-ve-build/</link><guid isPermaLink="true">https://nosey-dewdrop.github.io/vibecodedslopware/slopware/dev-ve-build/</guid>
+<pubDate>Mon, 31 Aug 2026 09:00:00 +0300</pubDate>
+<description>One builds pages in memory for you. The other writes the folder your users get.</description>
+</item>
+<item>
+<title>why does your link only open for you?</title>
+<link>https://nosey-dewdrop.github.io/vibecodedslopware/slopware/localhost/</link><guid isPermaLink="true">https://nosey-dewdrop.github.io/vibecodedslopware/slopware/localhost/</guid>
+<pubDate>Fri, 28 Aug 2026 09:00:00 +0300</pubDate>
+<description>Your machine answers its own name. Your friend&#x27;s machine answers its own, and finds nothing.</description>
+</item>
+<item>
+<title>why can your deploy not find your files?</title>
+<link>https://nosey-dewdrop.github.io/vibecodedslopware/slopware/terminal-ve-klasor/</link><guid isPermaLink="true">https://nosey-dewdrop.github.io/vibecodedslopware/slopware/terminal-ve-klasor/</guid>
+<pubDate>Tue, 25 Aug 2026 09:00:00 +0300</pubDate>
+<description>The same command run one level up serves nothing. Most deploy failures start here.</description>
+</item>
+<item>
+<title>what is the thing on your screen?</title>
+<link>https://nosey-dewdrop.github.io/vibecodedslopware/slopware/ekranindaki-sey/</link><guid isPermaLink="true">https://nosey-dewdrop.github.io/vibecodedslopware/slopware/ekranindaki-sey/</guid>
+<pubDate>Sat, 22 Aug 2026 09:00:00 +0300</pubDate>
+<description>A page is not a place. It is a delivery that happens again every time somebody looks.</description>
+</item>
+<item>
+<title>why does this book exist?</title>
 <link>https://nosey-dewdrop.github.io/vibecodedslopware/slopware/slopware-nedir/</link><guid isPermaLink="true">https://nosey-dewdrop.github.io/vibecodedslopware/slopware/slopware-nedir/</guid>
 <pubDate>Wed, 19 Aug 2026 09:00:00 +0300</pubDate>
-<description>Herkes bu kelimeyi söylüyor ama kimse tanımını bilmiyor.</description>
+<description>Why this book exists, who is writing it, and how to read it.</description>
 </item>
 </channel></rss>

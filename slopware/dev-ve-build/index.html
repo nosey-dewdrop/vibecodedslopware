@@ -1,35 +1,36 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Biri senin makinende bellekte sayfa kuruyor, digeri sunucuya gidecek klasoru yaziyor. Deploy edilen klasor, hic acmadigin klasor." />
+    <meta name="description" content="One builds pages in memory for you. The other writes the folder your users get." />
     <meta name="author" content="Damla Su Bilge" />
     <meta name="robots" content="index,follow" />
 
-    <title>npm run dev ve npm run build &#8212; vibecodedslopware</title>
+    <title>what is the difference between npm run dev and npm run build? &#8212; vibecodedslopware</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400&family=Roboto+Slab:wght@400;700&family=Special+Elite&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Roboto+Slab:wght@400;700&family=Special+Elite&display=swap" />
     <link rel="stylesheet" type="text/css" href="../../tema/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../tema/pyramid.css" />
+    <link rel="stylesheet" type="text/css" href="../../tema/kitap.css" />
     <link rel="canonical" href="https://nosey-dewdrop.github.io/vibecodedslopware/slopware/dev-ve-build/" />
+    <link rel="alternate" hreflang="en" href="https://nosey-dewdrop.github.io/vibecodedslopware/slopware/dev-ve-build/" />
     <link rel="alternate" hreflang="tr" href="https://nosey-dewdrop.github.io/vibecodedslopware/slopware/dev-ve-build/" />
-    <link rel="alternate" hreflang="en" href="https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/dev-ve-build/" />
-    <link rel="search" title="ara" href="../../ara/" />
+    <link rel="search" title="search" href="../../ara/" />
     <link rel="alternate" type="application/rss+xml" title="vibecodedslopware" href="../../rss.xml" />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='white'/%3E%3Crect x='6' y='6' width='6' height='20' fill='%23808080'/%3E%3Crect x='20' y='6' width='6' height='20' fill='%23808080'/%3E%3C/svg%3E" />
     <meta property="og:type" content="article" />
     <meta property="og:site_name" content="vibecodedslopware" />
-    <meta property="og:title" content="npm run dev ve npm run build" />
-    <meta property="og:description" content="Biri senin makinende bellekte sayfa kuruyor, digeri sunucuya gidecek klasoru yaziyor. Deploy edilen klasor, hic acmadigin klasor." />
+    <meta property="og:title" content="what is the difference between npm run dev and npm run build?" />
+    <meta property="og:description" content="One builds pages in memory for you. The other writes the folder your users get." />
     <meta property="og:url" content="https://nosey-dewdrop.github.io/vibecodedslopware/slopware/dev-ve-build/" />
-    <meta property="og:image" content="https://nosey-dewdrop.github.io/vibecodedslopware/tema/og-tr.png" />
+    <meta property="og:image" content="https://nosey-dewdrop.github.io/vibecodedslopware/tema/og/dev-ve-build-en.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#ffffff" />
-    <script>window.KOK = "../../"; window.DIL = "tr"; window.BOLUM = "slopware/dev-ve-build";</script>
+    <script>window.KOK = "../../"; window.DIL = "en"; window.BOLUM = "slopware/dev-ve-build";</script>
   </head><body>
 <div class='header'><a href='../../'>vibecodedslopware</a></div>
 
@@ -37,40 +38,161 @@
     <li><a href="../../slopware/">slopware</a></li>
     <li><a href="../../systems/">systems engineering</a></li>
     <li><a href="../../kitap/">html</a></li>
-    <li><a href="../../kitap/slopware-tr.pdf">pdf</a></li>
+    <li><a href="../../kitap/slopware-en.pdf">pdf</a></li>
     <li><a href="https://github.com/nosey-dewdrop/vibecodedslopware">github</a></li>
-    <li><a href="https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/dev-ve-build/">en</a></li>
     <li class="ara"><form action="../../ara/" method="get" role="search">
-      <input type="text" name="q" placeholder="ara…" aria-label="ara"
+      <input type="text" name="q" placeholder="search…" aria-label="search"
              autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
     </form></li>
 </ul>
 
-    <div class="related" role="navigation" aria-label="Gezinti">
-      <h3>Gezinti</h3>
+    <div class="related" role="navigation" aria-label="Navigation">
+      <h3>Navigation</h3>
       <ul>
-        <li class="right dil" style="margin-right: 10px"><a href="https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/dev-ve-build/" hreflang="en">en</a></li>
         <li class="right" style="margin-right: 10px">
-          <a href="../../ara/" title="Arama" accesskey="I">ara</a></li>
+          <a href="../../ara/" title="Search" accesskey="I">search</a></li>
         <li class="right" >
-          <a href="../../slopware/vitrin-ve-kasa/" title="vitrin ve kasa" accesskey="N">sonraki</a> |</li>
+          <a href="../../slopware/vitrin-ve-kasa/" title="why does the till stand in a different room?" accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../../slopware/localhost/" title="guys, I am on localhost" accesskey="P">önceki</a> |</li>
-<li class="nav-item nav-item-0"><a href="../../" title="ana sayfa">&#x2302;</a></li>
+          <a href="../../slopware/localhost/" title="why does your link only open for you?" accesskey="P">previous</a> |</li>
+<li class="nav-item nav-item-0"><a href="../../" title="home">&#x2302;</a></li>
           <li class="nav-item nav-item-1"><a href="../../slopware/" >slopware</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">npm run dev ve npm run build</a></li>
+        <li class="nav-item nav-item-this"><a href="">what is the difference between npm run dev and npm run build?</a></li>
       </ul>
     </div>
+<div class="kitap">
+<nav class="kenar" aria-label="slopware">
+  <div class="kenar-ust">
+    <a class="kenar-ad" href="../../slopware/">slopware</a>
+    <div class="kenar-cubuk"><span class="kenar-dolu"></span></div>
+    <p class="kenar-sayi"><b>0</b> / 55 passed</p>
+  </div>
+  <ol class="kenar-liste">
+    <li class="kenar-seviye">101 &#183; what is this thing you built?</li>
+    <li class="kenar-bolum" data-bolum="slopware/slopware-nedir"><i>00</i><a href="../../slopware/slopware-nedir/">why does this book exist?</a></li>
+    <li class="kenar-bolum" data-bolum="slopware/ekranindaki-sey"><i>01</i><a href="../../slopware/ekranindaki-sey/">what is the thing on your screen?</a></li>
+    <li class="kenar-bolum" data-bolum="slopware/terminal-ve-klasor"><i>02</i><a href="../../slopware/terminal-ve-klasor/">why can your deploy not find your files?</a></li>
+    <li class="kenar-bolum" data-bolum="slopware/localhost"><i>03</i><a href="../../slopware/localhost/">why does your link only open for you?</a></li>
+    <li class="kenar-bolum burada" data-bolum="slopware/dev-ve-build"><i>04</i><a href="../../slopware/dev-ve-build/">what is the difference between npm run dev and npm run build?</a></li>
+    <li class="kenar-bolum" data-bolum="slopware/vitrin-ve-kasa"><i>05</i><a href="../../slopware/vitrin-ve-kasa/">why does the till stand in a different room?</a></li>
+    <li class="kenar-bolum kapali"><i>06</i><span>what is the browser actually doing?</span><em title="opens on 6 September 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>07</i><span>where your data actually lives</span><em title="opens on 9 September 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>08</i><span>what a secret is</span><em title="opens on 12 September 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>09</i><span>reading the error</span><em title="opens on 15 September 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>10</i><span>what does "it works" mean?</span><em title="opens on 18 September 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>11</i><span>acceptance criteria, not prompts</span><em title="opens on 21 September 2026">&#183;</em></li>
+    <li class="kenar-seviye">201 &#183; get it off your machine</li>
+    <li class="kenar-bolum kapali"><i>12</i><span>git, and getting back</span><em title="opens on 24 September 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>13</i><span>dev, prod and .env</span><em title="opens on 27 September 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>14</i><span>what npm install actually downloads</span><em title="opens on 30 September 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>15</i><span>what the build step does</span><em title="opens on 3 October 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>16</i><span>your first real deploy</span><em title="opens on 6 October 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>17</i><span>domain, DNS and HTTPS</span><em title="opens on 9 October 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>18</i><span>the deploy you can't undo</span><em title="opens on 12 October 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>19</i><span>connecting a database</span><em title="opens on 15 October 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>20</i><span>schema and indexes</span><em title="opens on 18 October 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>21</i><span>migrations</span><em title="opens on 21 October 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>22</i><span>backup and restore</span><em title="opens on 24 October 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>23</i><span>the silent catch</span><em title="opens on 27 October 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>24</i><span>tests and CI</span><em title="opens on 30 October 2026">&#183;</em></li>
+    <li class="kenar-seviye">301 &#183; real users and real attackers</li>
+    <li class="kenar-bolum kapali"><i>25</i><span>logging in</span><em title="opens on 2 November 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>26</i><span>you are logged in, but are you allowed?</span><em title="opens on 5 November 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>27</i><span>a check in the browser is not a check</span><em title="opens on 8 November 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>28</i><span>input is never trustworthy</span><em title="opens on 11 November 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>29</i><span>your database is open by default</span><em title="opens on 14 November 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>30</i><span>file upload is not an innocent operation</span><em title="opens on 17 November 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>31</i><span>you gave out your key and left the door open</span><em title="opens on 20 November 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>32</i><span>people have to trust you</span><em title="opens on 23 November 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>33</i><span>npm install is a trust decision</span><em title="opens on 26 November 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>34</i><span>how much power did you hand the agent?</span><em title="opens on 29 November 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>35</i><span>fast at 100 rows, dead at 10,000</span><em title="opens on 2 December 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>36</i><span>when someone else calls you: webhooks</span><em title="opens on 5 December 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>37</i><span>the user paid twice</span><em title="opens on 8 December 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>38</i><span>the payment said success, the order was never saved</span><em title="opens on 11 December 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>39</i><span>the outside world is not as solid as you</span><em title="opens on 14 December 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>40</i><span>it crashed and you cannot tell why</span><em title="opens on 17 December 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>41</i><span>the bill</span><em title="opens on 20 December 2026">&#183;</em></li>
+    <li class="kenar-seviye">401 &#183; the part people touch</li>
+    <li class="kenar-bolum kapali"><i>42</i><span>it works but nobody can use it</span><em title="opens on 23 December 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>43</i><span>the moment you open a comment box</span><em title="opens on 26 December 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>44</i><span>same chips, same texts</span><em title="opens on 29 December 2026">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>45</i><span>the same thing in prose</span><em title="opens on 1 January 2027">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>46</i><span>anatomy of a wrapper</span><em title="opens on 4 January 2027">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>47</i><span>who is going to read your PR?</span><em title="opens on 7 January 2027">&#183;</em></li>
+    <li class="kenar-seviye">501 &#183; money</li>
+    <li class="kenar-bolum kapali"><i>48</i><span>building what nobody asked for</span><em title="opens on 10 January 2027">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>49</i><span>talking to users</span><em title="opens on 13 January 2027">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>50</i><span>the MVP and the launch</span><em title="opens on 16 January 2027">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>51</i><span>taking money</span><em title="opens on 19 January 2027">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>52</i><span>pricing and the numbers that are real</span><em title="opens on 22 January 2027">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>53</i><span>default alive or default dead</span><em title="opens on 25 January 2027">&#183;</em></li>
+    <li class="kenar-bolum kapali"><i>54</i><span>afterword: anyone can build anything</span><em title="opens on 28 January 2027">&#183;</em></li>
+  </ol>
+</nav>
 
     <div class="document">
       <div class="documentwrapper">
           <div class="body" role="main">
 
   <section id="dev-ve-build">
-<h1>npm run dev ve npm run build<a class="headerlink" href="#dev-ve-build" title="Bu başlığa bağlantı">¶</a></h1>
-<div class="description yazi-ozet">Biri senin makinende bellekte sayfa kuruyor, digeri sunucuya gidecek klasoru yaziyor. Deploy edilen klasor, hic acmadigin klasor.</div>
-<p class="henuz">bu bölüm henüz yazılmadı. üç günde bir bölüm.</p>
-
+<h1>what is the difference between npm run dev and npm run build?<a class="headerlink" href="#dev-ve-build" title="Link to this heading">¶</a></h1>
+<div class="description yazi-ozet">One builds pages in memory for you. The other writes the folder your users get.</div>
+<div class="contents local topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#what-is-running-when-you-run-npm-run-dev">What is running when you run npm run dev?</a></li>
+<li><a class="reference internal" href="#what-does-the-build-do">What does the build do?</a></li>
+<li><a class="reference internal" href="#which-one-gets-deployed">Which one gets deployed?</a></li>
+<li><a class="reference internal" href="#why-do-the-two-behave-differently">Why do the two behave differently?</a></li>
+<li><a class="reference internal" href="#what-comes-out-of-your-own-build">What comes out of your own build?</a></li>
+</ul></div>
+<p>Localhost turned out to be a name your machine uses for itself. The other half of the address is still unexplained, because something is answering at that door, and in a framework project that something is npm run dev.</p>
+<p>You have run that command a thousand times without wondering what it is. Sitting next to it in the same file there is npm run build. It takes much longer and produces a folder you have probably never opened. That folder is the part your users get.</p>
+<section id="what-is-running-when-you-run-npm-run-dev">
+<h2>What is running when you run npm run dev?<a class="headerlink" href="#what-is-running-when-you-run-npm-run-dev" title="Link to this heading">¶</a></h2>
+<p>What runs is a program sitting in your terminal and waiting to be asked for things, the same way python3 -m http.server did in chapter 1. This one is far cleverer about what it hands over.</p>
+<p>Go to the terminal where it says ready and press Ctrl and C. Refresh the browser. The site is gone and the error is a refused connection, which means nothing is listening at that door any more.</p>
+<p>Now start it again and open the project folder, looking for the HTML that arrived in the browser. There is no such file. Your project has a src folder full of components and not one of them is a page. Nothing on the disk matches what you saw in view source.</p>
+<p>The dev server built that page in memory the moment your browser asked for it and then let it go. Its whole job is to read the source, work out what the browser needs right now and hand it over. Then it watches the files so it can do the same thing the instant you save. Nothing was written down, so a save appears in the browser in under a second.</p>
+</section>
+<section id="what-does-the-build-do">
+<h2>What does the build do?<a class="headerlink" href="#what-does-the-build-do" title="Link to this heading">¶</a></h2>
+<div class="highlight-console notranslate"><div class="highlight"><button class="kopyala" type="button" data-oldu="copied">copy</button><pre><span></span><span class="nb">npm</span> run build
+</pre></div></div>
+<p>It takes a while, where the dev server started instantly. When it finishes there is a new folder called dist on Vite and .next on Next.js. Go in there with the commands from chapter 2.</p>
+<div class="highlight-console notranslate"><div class="highlight"><button class="kopyala" type="button" data-oldu="copied">copy</button><pre><span></span><span class="nb">cd</span> dist
+<span class="nb">ls</span> -F
+</pre></div></div>
+<p>The HTML that did not exist a minute ago is in there. So are the scripts, with names like index-4f3a9c.js. Those characters in the middle are there so a browser can safely keep an old copy without mistaking it for the new one after you deploy. The CSS from every component in the project has been gathered into one file.</p>
+<p>Your source is written in whatever shape lets you work. This folder is written for browsers, in one shape and once. The dev server had been standing in for it on demand without ever writing a word of it to disk.</p>
+</section>
+<section id="which-one-gets-deployed">
+<h2>Which one gets deployed?<a class="headerlink" href="#which-one-gets-deployed" title="Link to this heading">¶</a></h2>
+<p>The folder gets deployed, never your source and never the dev server. Deploying means building that folder and putting its contents somewhere that answers requests all day, so a visitor is handed a finished file instead of waiting for a program to work one out.</p>
+<p>You can serve that folder yourself right now.</p>
+<div class="highlight-console notranslate"><div class="highlight"><button class="kopyala" type="button" data-oldu="copied">copy</button><pre><span></span><span class="nb">cd</span> dist
+<span class="nb">python3</span> -m http.server 8000
+</pre></div></div>
+<p>Open localhost:8000. That is your site, coming out of a plain file server that has never heard of your framework. It is the same server that handed you one line of HTML in chapter 1.</p>
+</section>
+<section id="why-do-the-two-behave-differently">
+<h2>Why do the two behave differently?<a class="headerlink" href="#why-do-the-two-behave-differently" title="Link to this heading">¶</a></h2>
+<p>'Same code, same project, so it will behave the same way,' you may be thinking. Open one of those scripts in dist and read it. Your function names are gone, replaced by single letters. The spaces are gone. The whole file is one line.</p>
+<p>The dev server is optimised for you. It starts instantly and refreshes instantly, keeps your variable names so errors stay readable, and squashes nothing. The build is optimised for the visitor, so it makes the smallest files it can, squashes everything together, drops code that nothing uses and shortens every name it can reach.</p>
+<p>Squashing changes behaviour. Code that quietly relied on a function still having its own name breaks, because the name is gone and you just read the file where it went missing. A value read while the build is running gets frozen into the file, so changing it on the server afterwards changes nothing until you build again, and chapter 13 is about the trouble that causes. A file the dev server found by walking your folder is missing from the output entirely if nothing imported it properly.</p>
+<p>So a project can run beautifully for weeks and fall over on the first deploy without a line of source having changed. When somebody says it works on my machine they are usually telling the truth, because their machine was running the friendly version.</p>
+<p>Before you deploy, run the build and serve the output locally the way you just did, then click around your own site. Anything broken in that folder is broken in production, and you get to find it while you are sitting in front of it.</p>
+</section>
+<section id="what-comes-out-of-your-own-build">
+<h2>What comes out of your own build?<a class="headerlink" href="#what-comes-out-of-your-own-build" title="Link to this heading">¶</a></h2>
+<p>Run npm run build on your own project and let it finish.</p>
+<p>How long did it take? Whatever that number is, it happens again on every deploy.</p>
+<p>What is inside the folder? Go in with cd dist or cd .next and run ls -F, then find the HTML your source never contained.</p>
+<p>Then serve it with python3 -m http.server 8000 and use your own site coming out of a file server that knows nothing about your framework. If something works under npm run dev and not in there, you have found a real bug months before a stranger would have found it for you.</p>
+<p>Chapter 5 goes to the shop front and the till. What a backend is, and why some things can never live in the files you just looked at however well you hide them.</p>
+</section>
+<p class="paylas"><span>share:</span> <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://nosey-dewdrop.github.io/vibecodedslopware/slopware/dev-ve-build/" target="_blank" rel="noopener">linkedin</a> &#183; <a href="https://x.com/intent/post?url=https://nosey-dewdrop.github.io/vibecodedslopware/slopware/dev-ve-build/" target="_blank" rel="noopener">x</a> &#183; <button type="button" class="link-kopyala" data-link="https://nosey-dewdrop.github.io/vibecodedslopware/slopware/dev-ve-build/" data-oldu="copied">copy link</button></p><p class="iyilestir"><a href="https://github.com/nosey-dewdrop/vibecodedslopware/edit/main/yazilar/en/slopware/dev-ve-build.md">improve this page</a> &#183; the source is on GitHub, fix what you see wrong.</p>
 
 </section>
 
@@ -80,26 +202,27 @@
       <div class="clearer"></div>
     </div>
 
-    <div class="related" role="navigation" aria-label="Gezinti">
-      <h3>Gezinti</h3>
+</div>
+    <div class="related" role="navigation" aria-label="Navigation">
+      <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../../ara/" title="Arama">ara</a></li>
+          <a href="../../ara/" title="Search">search</a></li>
         <li class="right" >
-          <a href="../../slopware/vitrin-ve-kasa/" title="vitrin ve kasa">sonraki</a> |</li>
+          <a href="../../slopware/vitrin-ve-kasa/" title="why does the till stand in a different room?">next</a> |</li>
         <li class="right" >
-          <a href="../../slopware/localhost/" title="guys, I am on localhost">önceki</a> |</li>
-<li class="nav-item nav-item-0"><a href="../../" title="ana sayfa">&#x2302;</a></li>
+          <a href="../../slopware/localhost/" title="why does your link only open for you?">previous</a> |</li>
+<li class="nav-item nav-item-0"><a href="../../" title="home">&#x2302;</a></li>
           <li class="nav-item nav-item-1"><a href="../../slopware/" >slopware</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">npm run dev ve npm run build</a></li>
+        <li class="nav-item nav-item-this"><a href="">what is the difference between npm run dev and npm run build?</a></li>
       </ul>
     </div>
 
 <div class="footer">
-	&copy; 2026, Damla Su Bilge | <a href="https://github.com/nosey-dewdrop/vibecodedslopware">kaynağı burada</a>, ben düşersem sen fork'la.
-	metin cc by-nc, kod mit.
+	&copy; 2026, Damla Su Bilge | <a href="https://github.com/nosey-dewdrop/vibecodedslopware">source is here</a>, if I go down, fork it.
+	text cc by-nc, code mit.
 <br>
-elde yazılmış bir jeneratörle kuruldu &#183; görünüm yazbel'in pyramid temasından
+built with a hand-written generator &#183; look borrowed from yazbel's pyramid theme
 <br>
 <br>
 </div>
