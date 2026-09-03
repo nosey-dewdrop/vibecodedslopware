@@ -111,15 +111,10 @@
      söylüyoruz: `a[accesskey]` ilk bulduğunu, yani aramayı getiriyordu. */
   function baglanti(yon) {
     var harf = yon === "next" ? "N" : "P";
-    var a = document.querySelector('.related a[accesskey="' + harf + '"]');
+    /* Görünmez çıpa: sayfanın başında, yalnızca bu tuşlar için duruyor. */
+    var a = document.querySelector('.kisayol a[accesskey="' + harf + '"]');
     if (a) return a;
-    var hepsi = document.querySelectorAll(".related a");
-    for (var i = 0; i < hepsi.length; i++) {
-      var t = (hepsi[i].textContent || "").trim().toLowerCase();
-      if (yon === "next" && t === "next") return hepsi[i];
-      if (yon === "prev" && t === "previous") return hepsi[i];
-    }
-    /* Şerit yoksa bölüm sonundaki geçişe düş. */
+    /* Çıpa yoksa bölüm sonundaki geçişe düş. */
     return document.querySelector("nav.sonraki ." + (yon === "next" ? "ileri" : "geri"));
   }
 

@@ -227,12 +227,6 @@ dialog.kutu .kapat:hover {
    kitap.css'in rem'li ızgarası birime çevriliyor; boş kolonlar gerçek
    boşluk, kenar notu 50 birimin içinde. */
 
-.kitap {
-  grid-template-columns: 15fr 20fr 50fr 15fr;
-  gap: 0 2.2rem;
-  width: 94%;
-  max-width: 88rem;
-}
 
 /* Sol boşluk: ızgarada bir yer tutar, içi yok. */
 .kitap::before {
@@ -747,19 +741,9 @@ div.footer {
 }
 
 .kitap {
-  width: 100%;
-  max-width: var(--sayfa-en);
-  padding-left: var(--sayfa-kenar);
-  padding-right: var(--sayfa-kenar);
   /* Boş kolonlar 15'ten 4'e indi: yazı hâlâ ortada ama ekran kullanılıyor. */
-  grid-template-columns: 4fr 21fr 54fr 4fr;
-  gap: 0 2.6rem;
 }
 
-.kitap.tek {
-  width: 100%;
-  max-width: var(--sayfa-en);
-}
 
 /* Üst bar sayfanın üçte birini yiyordu. Ad, şerit ve gövde arasındaki
    boşluk bir kitabın künye sayfası kadar: var ama sessiz. */
@@ -862,11 +846,6 @@ ul.navbar a,
  * konmuştu. Kitabın kenar notu kâğıdın SAĞINDA durur, altında değil.
  * Izgara dört gerçek kolon: liste · kâğıt · kenar notu, iki yanda dar
  * boşluk. */
-.kitap {
-  grid-template-columns: 20fr 50fr 17fr;
-  gap: 0 2.4rem;
-  justify-content: center;
-}
 
 .kitap::before {
   display: none;
@@ -1047,13 +1026,6 @@ div.footer,
   width: 100%;
 }
 
-.kitap {
-  grid-template-columns: minmax(15rem, 20fr) minmax(0, 58fr) minmax(11rem, 16fr);
-  gap: 0 2.2rem;
-  justify-content: stretch;
-  padding-left: var(--sayfa-kenar);
-  padding-right: var(--sayfa-kenar);
-}
 
 .kitap div.body p,
 .kitap div.body h1,
@@ -1066,11 +1038,6 @@ div.footer,
   margin-right: 0;
 }
 
-.kitap.tek div.body {
-  max-width: none;
-  padding-left: 0;
-  padding-right: 0;
-}
 
 /* ==================================================== arama kutusu */
 /* Alt çizgili çıplak bir input değil: kendi kutusu, büyüteci ve odak
@@ -1212,21 +1179,11 @@ form.arama input[type="submit"]:hover {
 }
 
 /* 2 · Sağ ve sol boşluk yok. Izgara ekranın kenarından kenarına. */
-.kitap {
-  grid-template-columns: minmax(14rem, 19fr) minmax(0, 57fr) minmax(12rem, 18fr);
-  gap: 0 2rem;
-  padding-left: 1.2rem;
-  padding-right: 1.2rem;
-  max-width: none;
-  width: 100%;
-}
 
 .header,
 ul.navbar,
 .related,
 div.footer {
-  padding-left: 1.2rem;
-  padding-right: 1.2rem;
   max-width: none;
 }
 
@@ -1778,4 +1735,370 @@ ul.navbar form.ara::before {
   height: 1px;
   overflow: hidden;
   clip-path: inset(50%);
+}
+
+
+/* ==================================================== IZGARA — TEK TANIM
+ * Damla'nın ölçüsü: "100 birim ekran sağ ve soldan 15 boş desen. 70
+ * birimimiz var. bunun 20 biriminde alt alta ch1 ch2 ch3 yazacak."
+ *
+ * Sonra: "sağ ve solda çok fazla boşluklar var azaltalım" ve "yanlarda az
+ * da olsa boşluk istiyorum". Yani 15 birimlik boş kolonlar kalktı, yerine
+ * gerçek ama dar bir kenar payı geldi. Kalan üç kolon onun oranında:
+ * liste 20, yazı 50, kenar notu ~17.
+ *
+ * Bu dosyada bir zamanlar dokuz ayrı ızgara tanımı vardı, her biri bir
+ * öncekini eziyordu. Tanım burada, tek. Başka yere yazılmaz.
+ */
+.kitap {
+  display: grid;
+  grid-template-columns: minmax(14rem, 20fr) minmax(0, 50fr) minmax(11rem, 17fr);
+  gap: 0 2.4rem;
+  align-items: start;
+  width: 100%;
+  max-width: 108rem;
+  margin: 0 auto;
+  padding: 0 3rem 4rem;
+}
+
+.kitap.tek {
+  display: block;
+  max-width: 108rem;
+  padding: 0 3rem 4rem;
+}
+
+.header,
+ul.navbar,
+div.footer {
+  width: 100%;
+  max-width: 108rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
+.kitap .kenar     { grid-column: 1; }
+.kitap .document  { grid-column: 2; }
+.kitap .kenar-not { grid-column: 3; grid-row: 1; }
+
+/* Kenar notu yazının sağında ve yapışkan: sayfayla birlikte kaymaz. */
+.kitap .kenar-not {
+  position: sticky;
+  top: 1.2rem;
+  align-self: start;
+  padding: 1rem 0 0;
+  margin: 0;
+}
+
+/* Yazı kolonu ölçüsünü kolonundan alır. */
+.kitap div.body,
+.kitap div.body p,
+.kitap div.body h1,
+.kitap div.body h2,
+.kitap div.body ul,
+.kitap div.body ol,
+.kitap div.body blockquote {
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* Kenar notu için yer kalmayınca yazının altına iner. */
+@media screen and (max-width: 1280px) {
+  .kitap {
+    grid-template-columns: minmax(13rem, 22fr) minmax(0, 60fr);
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .kitap.tek,
+  .header,
+  ul.navbar,
+  div.footer {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .kitap .kenar-not {
+    grid-column: 2;
+    grid-row: auto;
+    position: static;
+  }
+}
+
+/* Telefonda liste yazının önünde duramaz: tek kolon. */
+@media screen and (max-width: 1000px) {
+  .kitap {
+    display: block;
+    padding-left: 1.3rem;
+    padding-right: 1.3rem;
+  }
+
+  .kitap.tek,
+  .header,
+  ul.navbar,
+  div.footer {
+    padding-left: 1.3rem;
+    padding-right: 1.3rem;
+  }
+}
+
+/* ============================== müfredat listesi
+ * Bu listeyi bir zamanlar yazbel'in pyramid.css'i boyuyordu: silver, gray,
+ * darkgreen, #333 ve 49 tane kilit emojisi. Dört CSS anahtar rengi, hiçbiri
+ * bu sitenin renk sisteminde yok, ve aynı "kilitli" durumu yandaki listeyle
+ * iki farklı işaretle çiziyordu. Dosya artık yüklenmiyor; liste burada.
+ */
+.toctree-wrapper {
+  margin: 1.2rem 0 2.4rem;
+}
+
+/* Numara CSS sayacından gelirse her seviyede sıfırdan başlıyor ve 201'in
+   ilk bölümü "01" oluyor; oysa o 12. bölüm. Sayı `<ol start>` değerinden
+   gelir, yani veriden. */
+.toctree-wrapper ol {
+  list-style: decimal-leading-zero;
+  margin: 0;
+  padding: 0 0 0 2.8em;
+}
+
+.toctree-wrapper ol li::marker {
+  color: var(--murekkep-soluk);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.toctree-wrapper li.toctree-l1 {
+  padding: 0.5rem 0;
+  border-top: 1px solid var(--cizgi);
+  font-family: var(--mono);
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+
+.toctree-wrapper li.toctree-l1 > a,
+.toctree-wrapper li.toctree-l1 > .baslik {
+  color: var(--murekkep);
+  text-decoration: none;
+  border: 0;
+}
+
+.toctree-wrapper li.toctree-l1 > a:hover {
+  color: var(--vurgu);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Bölümün neden var olduğunu söyleyen satır. */
+.toctree-wrapper p.neden {
+  margin: 0.25rem 0 0;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--murekkep-soluk);
+  text-indent: 0;
+  text-align: left;
+  max-width: 68ch;
+}
+
+/* Kilitli: yandaki listeyle aynı işaret, aynı anlam. */
+.toctree-wrapper li.kilitli > .baslik {
+  color: var(--gecti);
+}
+
+/* Kilit işareti başlığın YANINDA, kendi satırında değil: ızgaranın ikinci
+   sütununda ayrı bir hücreye düşüyordu ve boşlukta duran bir nokta gibi
+   görünüyordu. Başlıkla aynı hücreyi paylaşır. */
+.toctree-wrapper .kilit {
+  display: inline-block;
+  margin-left: 0.5em;
+  position: relative;
+  font-size: 11px;
+  color: var(--gecti);
+  cursor: help;
+  outline: none;
+}
+
+.toctree-wrapper .kilit .gizli {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 6px);
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 120ms linear;
+  white-space: nowrap;
+  background: #171221;
+  color: #efe8f7;
+  font-size: 11px;
+  padding: 0.32em 0.6em;
+  border-radius: 3px;
+  z-index: 60;
+  pointer-events: none;
+}
+
+:root[data-tema="gece"] .toctree-wrapper .kilit .gizli {
+  background: #efe8f7;
+  color: #171221;
+}
+
+.toctree-wrapper .kilit:hover .gizli,
+.toctree-wrapper .kilit:focus .gizli {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Geçilen bölümün üstü çizilir: kenardaki listeyle aynı. */
+.toctree-wrapper li.gecti > a {
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+  color: var(--gecti);
+}
+
+/* `display` vermek `hidden` özniteliğini eziyor: gizli olması gereken
+   "passed" damgası her bölümün altında görünüyordu. */
+[hidden] {
+  display: none !important;
+}
+
+.toctree-wrapper span.durum {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--murekkep-soluk);
+}
+
+.toctree-wrapper span.durum.gecti {
+  color: var(--vurgu);
+}
+
+/* Seviye başlığı ve sayaç satırı: her sayfada aynı tipografi. */
+p.henuz {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  font-style: normal;
+  line-height: 1.7;
+  color: var(--murekkep-soluk);
+  margin: 0 0 1.6rem;
+  text-indent: 0;
+  text-align: left;
+}
+
+p.henuz .siradaki,
+p.henuz .gecilen {
+  color: var(--murekkep-soluk);
+}
+
+p.henuz i,
+.kenar-sayi .sayi,
+p.henuz .sayi {
+  font-style: normal;
+  font-weight: 400;
+  color: var(--murekkep);
+}
+
+/* Seviye başlıkları (101, 201 …) */
+.kitap div.body h2 .headerlink,
+.kitap div.body h1 .headerlink {
+  font-weight: 400;
+}
+
+/* ============================== tek kolonlu sayfalar: tek eksen
+ * Başlık ortalanırken gövde sola yaslanıyordu: aynı sayfadaki iki şey iki
+ * ayrı eksende duruyordu. İkisi de ortada. */
+.kitap.tek div.body {
+  max-width: 62rem;
+  margin: 0 auto;
+}
+
+.kitap.tek div.body > * {
+  max-width: none;
+}
+
+/* ============================== ayak sayfanın dibinde
+ * Kısa bir sayfada ayak ekranın ortasında kalıyor ve altında ölü bir
+ * bant bırakıyordu. */
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+body > div.footer {
+  margin-top: auto;
+}
+
+/* ============================== soru listesi
+ * İki sabit kolon, kalem sayısı ne olursa olsun: sağ kolon her seferinde
+ * başka bir yerde bitiyordu. Kolonlar genişliğe göre kendiliğinden. */
+.seo-liste {
+  columns: 18rem auto;
+  column-gap: 2.4rem;
+}
+
+/* ============================== şeridin rengi: tek sistem
+ * Yeşil/mavi/mor/sarı hiçbir şey söylemiyordu: [slopware] [forum]'dan daha
+ * yeşil değil. Aynı satırda hem anlamlı bir sistem (soluk = tıklanamaz) hem
+ * rastgele bir gökkuşağı vardı.
+ *
+ * Tek sistem, üç durum:
+ *   mürekkep   gidilebilir bir yer
+ *   vurgu      tek eylem: kaydol
+ *   soluk      henüz yok
+ */
+.kitap-bag,
+.oku-bag,
+.forum-bag,
+.dil-bag,
+.tema-dugme {
+  color: var(--murekkep);
+}
+
+.mail-ac {
+  color: var(--vurgu);
+}
+
+.yakinda {
+  color: var(--murekkep-soluk);
+  opacity: 1;
+}
+
+ul.navbar a:hover,
+ul.navbar button:hover {
+  color: var(--vurgu);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Bulunduğun kitap: rengiyle değil, altındaki çizgiyle. */
+ul.navbar a[aria-current="page"] {
+  border-bottom: 1px solid var(--vurgu);
+}
+
+:root[data-tema="gece"] .kitap-bag,
+:root[data-tema="gece"] .oku-bag,
+:root[data-tema="gece"] .forum-bag,
+:root[data-tema="gece"] .dil-bag,
+:root[data-tema="gece"] .tema-dugme {
+  color: var(--ink);
+}
+
+:root[data-tema="gece"] .yakinda {
+  color: var(--ink-dim);
+}
+
+/* Kahve düğmesi ayağın tek çerçeveli öğesiydi: yanındaki imzayla aynı
+   sistemde olsun. */
+.kahve {
+  border: 0;
+  padding: 0;
+  text-decoration: underline;
+  text-decoration-color: var(--cizgi-koyu);
+  text-underline-offset: 4px;
+}
+
+.kahve:hover {
+  color: var(--vurgu);
+  text-decoration-color: var(--vurgu);
 }

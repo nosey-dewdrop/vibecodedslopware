@@ -161,7 +161,9 @@ ul.navbar a:hover {
 .kitap-tam h2 {
   font-family: var(--serif);
   font-size: 1.35rem;
-  font-weight: 700;
+  /* Kanun: her şey 400. Bir başlığı ayıran şey kalınlığı değil, boyu ve
+     üstündeki boşluk. */
+  font-weight: 400;
   margin: 2rem 0 0.5em;
   padding: 0;
   border: 0;

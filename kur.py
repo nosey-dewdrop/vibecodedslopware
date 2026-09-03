@@ -767,7 +767,6 @@ def kafa(veri, baslik, aciklama, kanonik, yukari, dil, karsi_url, indeksle=True,
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="{FONTLAR}" />
     <link rel="stylesheet" type="text/css" href="{yukari}tema/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="{yukari}tema/pyramid.css" />
     <link rel="stylesheet" type="text/css" href="{yukari}tema/cmu.css" />
     <link rel="stylesheet" type="text/css" href="{yukari}tema/kitap.css" />
     <link rel="stylesheet" type="text/css" href="{yukari}tema/kabuk.css" />
@@ -977,35 +976,23 @@ def notlar_bolumu(dil):
 
 
 def gezinti(yukari, dil, kirinti, onceki=None, sonraki=None, kisayol=False, karsi_url=None):
-    """Kırıntı ve yön. Başka hiçbir şey.
+    """Klavye kısayolunun çıpası. Görünür bir şerit değil.
 
-    Burada bir zamanlar arama, dil ve forum bağlantıları da vardı. Üçü de
-    navbarda duruyor: aynı bağlantıyı iki kere basmak okura yeni bir şey
-    söylemiyor, sadece şeridi dolduruyor."""
-    t = S[dil]
-    p = [f'    <div class="related" role="navigation" aria-label="{t["gezinti"]}">',
-         f"      <h3>{t['gezinti']}</h3>", "      <ul>"]
-
-    # Kırıntı: solda, nerede olduğunu söyler. Kitabın adı navbarda zaten
-    # bir bağlantı; burada ikinci kez bağlantı olmaz, yalnızca yol gösterir.
-    for n, (url, ad) in enumerate(kirinti[:-1], start=1):
-        p.append(f'          <li class="nav-item nav-item-{n}">'
-                 f'{html.escape(ad)}</li>')
-    p.append(f'        <li class="nav-item nav-item-this">'
-             f'{html.escape(kirinti[-1][1])}</li>')
-
-    # Yön bağlantıları burada YOK: bölümün altında duruyorlar. Aynı iki
-    # bağlantıyı iki kere basmak okura yeni bir şey söylemiyor.
-    # Klavye kısayolu (n / p) yine de bir çıpaya ihtiyaç duyduğu için
-    # görünmez birer bağlantı bırakılır.
-    if kisayol and onceki:
-        p.append(f'        <li class="gizli-yon"><a href="{onceki[0]}" '
-                 f'accesskey="P" tabindex="-1" aria-hidden="true">p</a></li>')
-    if kisayol and sonraki:
-        p.append(f'        <li class="gizli-yon"><a href="{sonraki[0]}" '
-                 f'accesskey="N" tabindex="-1" aria-hidden="true">n</a></li>')
-
-    p.append("      </ul>\n    </div>")
+    Burada bir zamanlar yazbel'in "related" şeridi vardı: kırıntı, arama,
+    dil ve yön bağlantıları. Hepsi başka bir yerde duruyor artık (kırıntı
+    ve arama navbarda, yön bölümün altında), ve aynı bağlantıyı iki kere
+    basmak okura yeni bir şey söylemiyordu. Geriye yalnızca n/p tuşlarının
+    tutunacağı iki görünmez bağlantı kaldı."""
+    if not kisayol or (not onceki and not sonraki):
+        return ""
+    p = ['    <div class="kisayol" hidden>']
+    if onceki:
+        p.append(f'      <a href="{onceki[0]}" accesskey="P" tabindex="-1" '
+                 f'aria-hidden="true">p</a>')
+    if sonraki:
+        p.append(f'      <a href="{sonraki[0]}" accesskey="N" tabindex="-1" '
+                 f'aria-hidden="true">n</a>')
+    p.append("    </div>")
     return "\n".join(p)
 
 
@@ -1020,10 +1007,10 @@ def bolum_sonu(yukari, dil, onceki, sonraki):
     p = ['<nav class="sonraki" aria-label="' + kac(t["gezinti"]) + '">']
     if onceki:
         p.append(f'  <a class="geri" href="{onceki[0]}">'
-                 f'<span>{kac(t["onceki"])}</span><b>{kac(onceki[1])}</b></a>')
+                 f'<span>{kac(t["onceki"])}</span><i>{kac(onceki[1])}</i></a>')
     if sonraki:
         p.append(f'  <a class="ileri" href="{sonraki[0]}">'
-                 f'<span>{kac(t["sonraki"])}</span><b>{kac(sonraki[1])}</b></a>')
+                 f'<span>{kac(t["sonraki"])}</span><i>{kac(sonraki[1])}</i></a>')
     p.append("</nav>")
     return "\n".join(p)
 
@@ -1044,7 +1031,7 @@ def kenar(veri, m, dil, yukari, simdiki_slug):
          '<span class="selam-kod">)</span></button>',
          f'    <a class="kenar-ad" href="{yukari}{m["kod"]}/">{kac(m["ad"])}</a>',
          '    <div class="kenar-cubuk"><span class="kenar-dolu"></span></div>',
-         f'    <p class="kenar-sayi"><b>0</b> / {toplam} {kac(t["gecilen"])}'
+         f'    <p class="kenar-sayi"><span class="sayi">0</span> / {toplam} {kac(t["gecilen"])}'
          f' <span class="kenar-yuzde"></span></p>',
 
          f'    <button type="button" class="kenar-ac" aria-expanded="false">'
@@ -1336,7 +1323,7 @@ def mufredat_ana(veri, m, dil, onek):
     else:
         p.append(f'<p class="henuz">{len(duzlem)} {t["bolumler"]} &#183; '
                  f'{yazilan} {t["yayinda"]} &#183; {t["haftada"]}'
-                 f'<span class="gecilen" hidden> &#183; <b>0</b> {t["gecilen"]}</span>.'
+                 f'<span class="gecilen" hidden> &#183; <span class="sayi">0</span> {t["gecilen"]}</span>.'
                  f'{siradaki_satir(m, dil)}</p>')
         tek = len(m["seviyeler"]) == 1
         for sv in m["seviyeler"]:
@@ -1359,12 +1346,14 @@ def mufredat_ana(veri, m, dil, onek):
                 if durum == "kilitli":
                     # Link yok: tıklanmaz. Tarih hover'da (title) ve ekran okuyucuda.
                     ne_zaman = t["acilir"].format(tarih=tarih_yaz(b["tarih"], dil))
+                    # Kilit işareti başlığın içinde: ayrı bir hücreye
+                    # düşünce boşlukta duran bir noktaya dönüşüyordu.
                     p.append(
                         f'<li class="toctree-l1 kilitli" data-bolum="{m["kod"]}/{b["slug"]}">'
-                        f'<span class="baslik">{baslik_b}</span>'
+                        f'<span class="baslik">{baslik_b}'
                         f'<span class="kilit" title="{kac(ne_zaman)}" tabindex="0">'
-                        f'<span aria-hidden="true">&#128274;</span>'
-                        f'<span class="gizli">{kac(ne_zaman)}</span></span>'
+                        f'<span aria-hidden="true">&#9679;</span>'
+                        f'<span class="gizli">{kac(ne_zaman)}</span></span></span>'
                         f'{neden_html}</li>')
                     continue
                 yazildi = durum == "yazildi"
@@ -1455,7 +1444,7 @@ def siradaki_satir(m, dil, kisa=False):
                 if kisa:
                     return f' &#183; {t["siradaki"]}: {tarih}'
                 return (f'<br /><span class="siradaki">{t["siradaki"]}: '
-                        f'<b>{kac(bolum_alan(b, "baslik", dil))}</b>, {tarih}.</span>')
+                        f'<i>{kac(bolum_alan(b, "baslik", dil))}</i>, {tarih}.</span>')
     return ""
 
 
@@ -1906,9 +1895,12 @@ def forum_sayfasi(veri, dil, onek):
          f'<h1>{kac(t["forum"])}<a class="headerlink" href="#forum">&#182;</a></h1>',
          f'<div class="description yazi-ozet">{kac(t["forum_ozet"])}</div>']
 
-    p.append(forum_formu(veri, dil))
+    form = forum_formu(veri, dil)
+    p.append(form)
 
-    if not kalemler:
+    # Form yoksa zaten "yakında" diyor; altına bir de "henüz soru yok"
+    # yazmak aynı boşluğu iki kere anlatmak olur.
+    if not kalemler and "<form" in form:
         p.append(f'<p class="forum-bos">{kac(t["forum_bos"])}</p>')
     else:
         for k in kalemler:
@@ -1957,10 +1949,10 @@ def arama_sayfasi(veri, dil, onek):
          gezinti(yukari, dil, kirinti, kisayol=True, karsi_url=karsi),
          '<div class="kitap tek">',
          GOVDE_AC,
-         f'  <h1 id="arama-basligi">{t["arama"]}</h1>',
+         f'  <h1 id="arama-basligi">{kac(t["ara"])}</h1>',
+         f'  <div class="description yazi-ozet">{kac(t["arama_ipucu"])}</div>',
          "  <noscript>\n  <div class=\"admonition warning\">"
          f"<p>{t['js_yok']}</p></div>\n  </noscript>",
-         f'  <p>{t["arama_ipucu"]}</p>',
          f"""  <form class="arama" action="" method="get" role="search">
     <input type="text" name="q" aria-labelledby="arama-basligi" value=""
            autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />

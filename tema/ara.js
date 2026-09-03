@@ -129,7 +129,7 @@
 
       var nerede = document.createElement("span");
       nerede.className = "nerede";
-      nerede.textContent = " — " + r.s.n;
+      nerede.textContent = " \u00b7 " + r.s.n;
       li.appendChild(nerede);
 
       var p = document.createElement("p");

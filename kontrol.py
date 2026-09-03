@@ -261,8 +261,12 @@ def _():
 @kural("X2", "yazbelden çaldığın şeyler, istemiyorum", "ev ikonu/ok/tekrar yok")
 def _():
     h = oku(BOLUM)
+    # Şerit tamamen kalktı: kırıntı navbarda, yön bölümün altında.
+    # Geriye yalnızca n/p tuşlarının tutunduğu görünmez çıpa kaldı.
     return ("&#x2302;" not in h and "&#187;" not in h
-            and h.count('class="related"') == 1)
+            and 'class="related"' not in h
+            and "&#128274;" not in oku("slopware/index.html")
+            and "pyramid.css" not in h)
 
 
 @kural("X3", "SORU OLAN HER ŞEY ? İLE BİTER", "soru başlıkları")
@@ -288,6 +292,52 @@ def _():
 
 
 # ------------------------------------------------------------------ seo
+@kural("X6", "BOLD YOK, her şey 400", "font-weight 700 yok")
+def _():
+    for f in ("tema/kitap.css", "tema/kabuk.css", "tema/gece.css"):
+        if re.search(r"font-weight:\s*(700|800|900|bold)\b", oku(f)):
+            return False
+    return True
+
+
+@kural("X7", "renk anlam taşır, iki sistem bir satırda olmaz",
+       "şeritte tek renk sistemi")
+def _():
+    c = oku("tema/kabuk.css")
+    # Gökkuşağı kalktı: kitap/okuma/forum/dil aynı mürekkep.
+    m = re.search(r"\.kitap-bag,\s*\n\.oku-bag,\s*\n\.forum-bag,\s*\n"
+                  r"\.dil-bag,\s*\n\.tema-dugme \{\s*\n\s*color: var\(--murekkep\)", c)
+    return m is not None
+
+
+@kural("X8", "aynı durum tek işaretle çizilir", "kilit emojisi yok")
+def _():
+    return "&#128274;" not in oku("slopware/index.html")
+
+
+@kural("X9", "her sayfa aynı tasarımdan", "arama sayfası da yazi-ozet kullanır")
+def _():
+    return 'class="description yazi-ozet"' in oku("ara/index.html")
+
+
+@kural("X10", "ayak sayfanın dibinde", "kısa sayfada ölü bant yok")
+def _():
+    return "min-height: 100vh" in oku("tema/kabuk.css")
+
+
+@kural("X11", "tek ızgara tanımı", "kitap ızgarası bir yerde")
+def _():
+    c = oku("tema/kabuk.css")
+    # `.kitap {` blogu icinde grid-template-columns kac kere geciyor
+    n = len(re.findall(r"\n\.kitap \{[^}]*grid-template-columns", c))
+    return n <= 1
+
+
+@kural("X12", "gizli olan görünmez", "hidden özniteliği CSS ile ezilmez")
+def _():
+    return "[hidden] {\n  display: none !important;\n}" in oku("tema/kabuk.css")
+
+
 @kural("S3", "ince sayfa basılmaz", "kelime eşiği")
 def _():
     return "SEO_EN_AZ_KELIME" in oku("kur.py")
