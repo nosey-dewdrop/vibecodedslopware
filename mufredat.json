@@ -17,7 +17,7 @@
    "alan": "email",
    "not": "servis: buttondown | sender | ozel. kod: buttondown kullanici adi, ya da formun tam adresi."
   },
-  "kahve": "",
+  "kahve": "damlahelloworld",
   "gorus": {
    "adres": "",
    "not": "send to damla buraya POST atar. tek uclu bir form servisi (formspree/netlify) adresi. bos ise dugme 'soon' der."

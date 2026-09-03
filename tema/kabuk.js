@@ -153,18 +153,7 @@
     if (oku(AD_ANAHTAR, null) === null) setTimeout(function () { adSor(false); }, 420);
   }
 
-  /* ---------- 4 · ilerleme ----------
-     site.js kenarı zaten dolduruyor; burada yalnız yüzde yazısı var. */
-  function ilerlemeCiz() {
-    var kenar = document.querySelector("nav.kenar");
-    if (!kenar) return;
-    var yuzde = kenar.querySelector(".kenar-yuzde");
-    var sayac = kenar.querySelector(".kenar-sayi b");
-    var toplam = parseInt(kenar.getAttribute("data-toplam") || "0", 10);
-    if (!yuzde || !sayac || !toplam) return;
-    var sayi = parseInt(sayac.textContent || "0", 10);
-    yuzde.textContent = Math.round((sayi / toplam) * 100) + "%";
-  }
+  /* İlerleme yüzdesi site.js'te, sayacın yanında hesaplanıyor. */
 
   /* ---------- 5 · okuma araçları ----------
      Kayıt biçimi seçim ofseti DEĞİL: yazı yeniden kurulunca bütün işaretler
@@ -286,6 +275,7 @@
 
     function goster(yer) {
       var secim = window.getSelection();
+      if (!secim.rangeCount) return;
       var aralik = secim.getRangeAt(0).getBoundingClientRect();
       cubuk.classList.add("acik");
       var g = cubuk.offsetWidth, y = cubuk.offsetHeight;
@@ -298,23 +288,47 @@
       son = yer;
     }
 
+    /* Seçim bittiğinde bak. `selectionchange` sürükleme boyunca saniyede
+       onlarca kez koşuyor ve bazı tarayıcılarda fare bırakılmadan son
+       hâli vermiyor; asıl tetik mouseup ve keyup. */
+    function tazele() {
+      var secim = window.getSelection();
+      if (!secim || secim.isCollapsed || !secim.rangeCount) {
+        gizle();
+        return;
+      }
+      // `secim.toString()` bazı bağlamlarda boş dönüyor (headless, bazı
+      // gömülü görünümler) hâlbuki seçim gerçek. Uzunluk range'den ölçülür:
+      // seciminYeri zaten range ile çalışıyor ve boş seçimde null veriyor.
+      var yer = seciminYeri(secim);
+      if (!yer) { gizle(); return; }
+      goster(yer);
+    }
+
+    document.addEventListener("mouseup", function (e) {
+      if (cubuk.contains(e.target)) return;
+      setTimeout(tazele, 10);
+    });
+
+    document.addEventListener("keyup", function (e) {
+      if (e.shiftKey || e.key === "Shift") setTimeout(tazele, 10);
+    });
+
+    /* Dokunmatikte seçim tutamakları bırakıldığında. */
     document.addEventListener("selectionchange", function () {
       var secim = window.getSelection();
       if (!secim || secim.isCollapsed) { gizle(); return; }
-      var yer = seciminYeri(secim);
-      if (!yer) { gizle(); return; }
-      // Çubuğun yeri seçim bittiğinde ölçülür; selectionchange sürüklerken
-      // saniyede onlarca kez koşuyor.
-      setTimeout(function () {
-        var s = window.getSelection();
-        if (!s || s.isCollapsed) return;
-        goster(yer);
-      }, 0);
+      clearTimeout(cubuk._z);
+      cubuk._z = setTimeout(tazele, 220);
     });
 
     document.addEventListener("mousedown", function (e) {
       if (!cubuk.contains(e.target)) gizle();
     });
+
+    document.addEventListener("scroll", function () {
+      if (cubuk.classList.contains("acik")) gizle();
+    }, { passive: true });
 
     function ekle(tur, notMetni) {
       if (!son) return;
@@ -528,13 +542,52 @@
       });
   }
 
+  /* ---------- 8 · forum soru kutusu ----------
+     Mail listesiyle ayni yol: sayfadan ayrilmadan gonderir, servis cevap
+     vermezse formun kendi POST'una duser. */
+  function forumFormuKur() {
+    var form = document.querySelector("form.forum-form");
+    if (!form) return;
+    var durum = form.querySelector(".forum-durum");
+    var dugme = form.querySelector("button[type=submit]");
+
+    form.addEventListener("submit", function (e) {
+      var alan = form.querySelector("textarea");
+      if (!alan || !alan.value.trim()) return;
+      e.preventDefault();
+      if (dugme) dugme.disabled = true;
+      if (durum) durum.textContent = "…";
+
+      var paket = new FormData(form);
+      paket.append("ad", oku(AD_ANAHTAR, "") || "");
+      paket.append("tarih", new Date().toISOString());
+
+      fetch(form.action, {
+        method: "POST",
+        body: paket,
+        headers: { "Accept": "application/json" },
+        mode: "cors"
+      }).then(function (c) {
+        if (!c.ok) throw new Error(String(c.status));
+        if (durum) durum.textContent = form.getAttribute("data-oldu") || "sent";
+        alan.value = "";
+      }).catch(function () {
+        form.target = "_blank";
+        form.submit();
+        if (durum) durum.textContent = form.getAttribute("data-oldu") || "sent";
+      }).then(function () {
+        if (dugme) dugme.disabled = false;
+      });
+    });
+  }
+
   function baslat() {
+    forumFormuKur();
     temaKur();
     yildizKur();
     adKur();
     mailKur();
     disaTiklama();
-    setTimeout(ilerlemeCiz, 0);
 
     govde = document.querySelector(".kitap div.body, .kitap-tam");
     if (govde && window.BOLUM) {
@@ -546,12 +599,6 @@
     }
 
     // Kontrol kutusu tiklenince ilerleme yüzdesi de tazelensin.
-    document.addEventListener("change", function (e) {
-      if (e.target && e.target.classList &&
-          e.target.classList.contains("gec-kutu")) {
-        setTimeout(ilerlemeCiz, 0);
-      }
-    });
 
     addEventListener("resize", function () {
       var kap = document.getElementById("yildizlar");

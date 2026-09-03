@@ -1,0 +1,323 @@
+#!/usr/bin/env python3
+"""kontrol.py — TALIMAT.md'deki her maddeyi kurulmuş siteye uygular.
+
+Damla'nın söylediği bir şey sitede yoksa burada kırmızı görünür. Amaç
+onun aynı şeyi iki kere söylemek zorunda kalmaması.
+
+    python3 kontrol.py          bütün maddeler
+    python3 kontrol.py -v       geçenleri de yaz
+
+Çıkış kodu 0 = hepsi geçti. Push kapısı budur.
+"""
+import re
+import sys
+from pathlib import Path
+
+KOK = Path(__file__).parent
+AYRINTI = "-v" in sys.argv
+
+_onbellek = {}
+
+
+def oku(yol):
+    if yol not in _onbellek:
+        p = KOK / yol
+        _onbellek[yol] = p.read_text(encoding="utf-8") if p.exists() else ""
+    return _onbellek[yol]
+
+
+BOLUM = "slopware/localhost/index.html"
+ANA = "index.html"
+FORUM = "forum/index.html"
+
+KURALLAR = []
+
+
+def kural(kod, damla, nasil):
+    def sar(f):
+        KURALLAR.append((kod, damla, nasil, f))
+        return f
+    return sar
+
+
+# ------------------------------------------------------------------ navbar
+@kural("N1", "portfolyodaki gibi VIBECODEDSLOPWARE yazacaksın", "ad ortada")
+def _():
+    return "class='header'" in oku(BOLUM) and "vibecodedslopware" in oku(BOLUM)
+
+
+@kural("N2", "cv yerine [mail liste kaydol!]", "köşeli parantez içinde düğme")
+def _():
+    return re.search(r'class="mail-ac">\[[^\]]+\]</button>', oku(BOLUM)) is not None
+
+
+@kural("N3", "form sitesi olsun istemiyorum, pop up olabilir", "<dialog>")
+def _():
+    return '<dialog class="kutu" id="mail-kutu"' in oku(BOLUM)
+
+
+@kural("N4", "mail liste tıklayınca cidden kaydolunsun", "gerçek POST")
+def _():
+    return "fetch(form.action" in oku("tema/kabuk.js")
+
+
+@kural("N5", "diğer switch amacı en/tr", "dil değiştirici")
+def _():
+    import re as _r
+    return _r.search(r'hreflang="(tr|en)"[^>]*>\[(tr|en)\]', oku(BOLUM)) is not None
+
+
+@kural("N6", "renk değiştirmeler var, 2 renk", "tema düğmesi + iki tema")
+def _():
+    return 'class="tema-dugme"' in oku(BOLUM) and 'data-tema="gece"' in oku("tema/gece.css")
+
+
+@kural("N7", "log in hover edilince yakında, tıklanabilir değil", "span + balon")
+def _():
+    h = oku(BOLUM)
+    m = re.search(r'<span class="yakinda"[^>]*>\[log in\]<span class="balon">([^<]+)', h)
+    return m is not None and "soon" in m.group(1).lower()
+
+
+@kural("N8", "systems + product engineering, tıklanabilir değil", "iki span")
+def _():
+    h = oku(BOLUM)
+    return ('>[systems engineering]<' in h and '>[product engineering]<' in h
+            and h.count('class="yakinda"') >= 3)
+
+
+@kural("N9", "[] köşeli parantez istiyorum, yanlarında yıldız yok", "hepsi [], ✧ yok")
+def _():
+    h = oku(BOLUM)
+    serit = re.search(r"<ul class='navbar'>(.*?)</ul>", h, re.S)
+    if not serit:
+        return False
+    ic = serit.group(1)
+    if "&#10023;" in ic or "⟡" in ic:
+        return False
+    # Hover balonunun metni bir şerit öğesi değil: önce çıkarılır.
+    ic = re.sub(r'<span class="balon">.*?</span>', "", ic, flags=re.S)
+    for li in re.findall(r"<li[^>]*>.*?</li>", ic, re.S):
+        if "navbar-ayrac" in li or 'class="ara"' in li:
+            continue
+        metin = re.sub(r"<[^>]+>", "", li).strip()
+        if not metin:
+            continue
+        if not (metin.startswith("[") and metin.endswith("]")):
+            return False
+    return True
+
+
+@kural("N10", "NEDEN ÜSTTE HİÇBİR ŞEY RENKLİ DEĞİL", "şeritte renk")
+def _():
+    return "ul.navbar a[href$=" in oku("tema/kabuk.css")
+
+
+@kural("N11", "logo ile navbar arasında üst yerleşimlere çalış", "dar aralık")
+def _():
+    c = oku("tema/kabuk.css")
+    return "padding-top: 1.1rem !important" in c
+
+
+# ------------------------------------------------------------------ panel
+@kural("P1", "100 birim, sağ soldan boş, 20 birim liste", "üç kolon ızgara")
+def _():
+    return "grid-template-columns" in oku("tema/kabuk.css")
+
+
+@kural("P2", "20 biriminde alt alta ch1 ch2 ch3, scrollu", "sol kolon + scroll")
+def _():
+    return 'class="kenar"' in oku(BOLUM) and "overflow-y: auto" in oku("tema/kitap.css")
+
+
+@kural("P3", "okunan chapterların üstünü çizeceğiz", "line-through")
+def _():
+    return "kenar-bolum.gecti a" in oku("tema/kitap.css") and \
+           "line-through" in oku("tema/kitap.css")
+
+
+@kural("P4", "üstte progress de görünecek", "çubuk + sayı + yüzde")
+def _():
+    h = oku(BOLUM)
+    return "kenar-cubuk" in h and "kenar-sayi" in h and "kenar-yuzde" in h
+
+
+@kural("P5", "gelirken ismini iste", "isim dialogu")
+def _():
+    return 'id="ad-kutu"' in oku(BOLUM)
+
+
+@kural("P6", 'print("hello ___") diye selamla', "birebir print biçimi")
+def _():
+    h, j = oku(BOLUM), oku("tema/kabuk.js")
+    return ('class="selam-kod">print(' in h and 'selam-ad' in h
+            and '"hello ' in j)
+
+
+@kural("P7", "pop up kapansa da bir yerde kalsın", "sol kolonda kalıcı")
+def _():
+    return re.search(r'<button type="button" class="selam">', oku(BOLUM)) is not None
+
+
+@kural("P8", "yanlarda az da olsa boşluk istiyorum", "dar ama gerçek pay")
+def _():
+    c = oku("tema/kabuk.css")
+    m = re.findall(r"padding-left:\s*([\d.]+)rem", c)
+    if not m:
+        return False
+    son = float(m[-1])
+    return 1.0 <= son <= 5.0
+
+
+@kural("P9", "sağda olması gereken şey alta inmiş", "CONTENTS sağ kolonda")
+def _():
+    c = oku("tema/kabuk.css")
+    m = re.search(r"\.kitap \.kenar-not \{[^}]*grid-column:\s*3", c, re.S)
+    return m is not None
+
+
+@kural("P10", "prev next sadece [< prev] [next >] butonları", "kart yok")
+def _():
+    c = oku("tema/kabuk.css")
+    return 'content: "[< "' in c and 'content: " >]"' in c and \
+           "nav.sonraki a b {\n  display: none" in c
+
+
+@kural("P11", "gereksiz bir üstte div koymuşsun", "selamlama kutu değil")
+def _():
+    g = oku("tema/gece.css")
+    m = re.search(r'\.kenar-ust \{[^}]*background-color', g, re.S)
+    return m is None
+
+
+@kural("P12", "gezinti: kırıntı solda, yön sağda", "sıra doğru")
+def _():
+    c = oku("tema/kabuk.css")
+    return ".related li.nav-item {\n  order: 0" in c and \
+           ".related li.right {\n  order: 5" in c
+
+
+# ------------------------------------------------------------------ yazı
+@kural("Y1", "beyaz sayfa kalksın, zor okunuyor", "gecede koyu yüzey")
+def _():
+    g = oku("tema/gece.css")
+    m = re.search(r'\.kitap div\.body,\s*:root\[data-tema="gece"\] \.kitap-tam \{'
+                  r'[^}]*background:\s*([^;]+);', g, re.S)
+    return m is not None and "#ffffff" not in m.group(1)
+
+
+@kural("Y2", "üstü çizilebilir, highlight, not alınabilir", "üç araç")
+def _():
+    h = oku(BOLUM)
+    return all(f'data-arac="{a}"' in h for a in ("hl", "st", "not"))
+
+
+@kural("Y3", "notlar send to damla diye bana gönderilecek", "gönder düğmesi")
+def _():
+    return "send to damla" in oku("tema/kabuk.js")
+
+
+# ------------------------------------------------------------------ forum
+@kural("F1", "send to damla olanlar ve cevaplarım görünecek", "/forum/")
+def _():
+    return (KOK / FORUM).exists()
+
+
+# ------------------------------------------------------------------ footer
+@kural("A1", "footer damladan sevgiler", "imza")
+def _():
+    return "ayak-sevgi" in oku(BOLUM)
+
+
+@kural("A2", "buy me a coffee butonu, hesabı vericem", "hazır")
+def _():
+    return "buymeacoffee.com" in oku("kur.py")
+
+
+# ------------------------------------------------------------------ tema
+@kural("T2", "dark mode aynı portfolyom temasında", "pal-a birebir")
+def _():
+    g = oku("tema/gece.css")
+    return all(r in g for r in ("#171221", "#efe8f7", "#ff8fb3", "#c9a6ff"))
+
+
+@kural("T3", "sprinkle", "yıldız alanı")
+def _():
+    return 'id="yildizlar"' in oku(BOLUM)
+
+
+# ------------------------------------------------------------------ yasaklar
+@kural("X1", "neden em dash var nefret ederim", "görünür metinde — yok")
+def _():
+    for y in (BOLUM, ANA, FORUM):
+        h = oku(y)
+        govde = re.sub(r"<script.*?</script>", "", h, flags=re.S)
+        govde = re.sub(r"<style.*?</style>", "", govde, flags=re.S)
+        if "—" in govde or "&#8212;" in govde:
+            return False
+    return True
+
+
+@kural("X2", "yazbelden çaldığın şeyler, istemiyorum", "ev ikonu/ok/tekrar yok")
+def _():
+    h = oku(BOLUM)
+    return ("&#x2302;" not in h and "&#187;" not in h
+            and h.count('class="related"') == 1)
+
+
+@kural("X3", "SORU OLAN HER ŞEY ? İLE BİTER", "soru başlıkları")
+def _():
+    for d in (KOK / "soru").glob("*/index.html"):
+        m = re.search(r"<h1>([^<]+)", d.read_text(encoding="utf-8"))
+        if m and not m.group(1).strip().endswith("?"):
+            return False
+    return True
+
+
+@kural("X4", "repodaki yazıları istemiyorum kaldır", "boş sayfa kurulmaz")
+def _():
+    return "bu bölüm henüz yazılmadı" not in oku(BOLUM) and \
+           'b[f"durum_{dil}"] = "bos"\n            continue' in oku("kur.py")
+
+
+@kural("X5", "search bok gibi", "kendi zemini ve ikonu olan kutu")
+def _():
+    c = oku("tema/kabuk.css")
+    return "li.ara form::before" in c and \
+           re.search(r"ul\.navbar input\[type=\"text\"\] \{[^}]*border:", c, re.S)
+
+
+# ------------------------------------------------------------------ seo
+@kural("S3", "ince sayfa basılmaz", "kelime eşiği")
+def _():
+    return "SEO_EN_AZ_KELIME" in oku("kur.py")
+
+
+def main():
+    gecen, kalan = [], []
+    for kod, damla, nasil, f in KURALLAR:
+        try:
+            ok = bool(f())
+        except Exception as e:
+            ok = False
+            nasil += f"  [hata: {e}]"
+        (gecen if ok else kalan).append((kod, damla, nasil))
+
+    if AYRINTI:
+        for kod, damla, nasil in gecen:
+            print(f"  ok    {kod}  {damla}")
+
+    for kod, damla, nasil in kalan:
+        print(f"  KALDI {kod}  {damla}")
+        print(f"          beklenen: {nasil}")
+
+    print(f"\n{len(gecen)}/{len(KURALLAR)} madde geçti.")
+    if kalan:
+        print(f"{len(kalan)} madde Damla'nın söylediği gibi değil. PUSH YOK.")
+        return 1
+    print("Damla'nın söylediği her şey yerinde.")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

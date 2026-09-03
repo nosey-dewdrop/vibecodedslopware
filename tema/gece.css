@@ -75,7 +75,9 @@
 :root[data-tema="gece"] .kitap div.admonition.kontrol {
   background: var(--bg);
   border-color: var(--cizgi-koyu);
-  border-left-color: var(--pembe);
+  /* Kutunun sol kenarı pembeydi ve okuma alanının içinde tek başına
+     bağıran bir renkti. Renk bir şey söylemiyorsa durmaz. */
+  border-left-color: var(--cizgi-koyu);
 }
 
 :root[data-tema="gece"] .kitap .yazi-ozet {

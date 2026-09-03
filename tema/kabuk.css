@@ -1508,3 +1508,274 @@ ul.navbar a:hover {
 .related li.right ~ li.right {
   margin-left: 0 !important;
 }
+
+/* ==================================================== navbar: üç grup */
+/* Sol kitaplar, orta okuma, sağ ayarlar. Bir şerit değil, üç öbek. */
+ul.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0 1.5rem;
+  flex-wrap: wrap;
+}
+
+ul.navbar li.grup {
+  display: flex;
+  align-items: center;
+  gap: 0 0.85rem;
+  flex-wrap: wrap;
+  margin: 0;
+}
+
+ul.navbar li.grup.sol {
+  justify-content: flex-start;
+}
+
+ul.navbar li.grup.orta {
+  justify-content: center;
+}
+
+ul.navbar li.grup.sag {
+  justify-content: flex-end;
+  margin-left: auto;
+}
+
+/* Renk anlam taşır. */
+.kitap-bag { color: var(--n-yesil); }
+.oku-bag   { color: var(--n-mavi); }
+.forum-bag { color: var(--n-mor); }
+.dil-bag   { color: var(--n-sari); }
+.tema-dugme { color: var(--n-sari); }
+.mail-ac   { color: var(--vurgu); }
+
+ul.navbar a:hover,
+ul.navbar button:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Arama kutusu şeridin son öğesi. */
+ul.navbar form.ara {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+ul.navbar form.ara::before {
+  content: "⌕";
+  position: absolute;
+  left: 0.55rem;
+  font-size: 14px;
+  line-height: 1;
+  color: var(--murekkep-soluk);
+  pointer-events: none;
+}
+
+/* ==================================================== gezinti şeridi */
+/* Kırıntı solda, yön sağda. Navbarda olan hiçbir şey burada tekrar etmez. */
+.related ul {
+  display: flex;
+  align-items: baseline;
+  gap: 0 0.55rem;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.related li.yon:first-of-type {
+  margin-left: auto;
+}
+
+.related li.yon a {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--murekkep-soluk);
+}
+
+.related li.yon a:hover {
+  color: var(--vurgu);
+}
+
+@media screen and (max-width: 1100px) {
+  ul.navbar {
+    justify-content: flex-start;
+  }
+
+  ul.navbar li.grup.sag {
+    margin-left: 0;
+  }
+}
+
+/* ==================================================== kırıntı: tek boy tek font */
+/* İki parça iki ayrı tasarımdan geliyordu: biri serif 1.7rem, diğeri mono
+ * 13px. Aynı satırdaki iki şey aynı görünür. */
+.related .nav-item,
+.related .nav-item a,
+.related li.nav-item-this {
+  font-family: var(--mono) !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0;
+  line-height: 1.5;
+}
+
+.related .nav-item a {
+  color: var(--n-yesil);
+}
+
+.related li.nav-item-this {
+  color: var(--murekkep-soluk);
+}
+
+/* ==================================================== prev / next */
+/* Bir zamanlar yazının solunda ve sağında dikey duruyorlardı: dar
+ * ekranda sütunun üstüne biniyor ve okunmuyorlardı. Yazının altında,
+ * iki uca yaslı, köşeli parantezli iki buton. */
+.kitap nav.sonraki {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin: 2.6rem 0 0;
+  padding-top: 1.3rem;
+  border-top: 1px solid var(--cizgi);
+}
+
+.kitap nav.sonraki a {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--murekkep-soluk);
+  text-decoration: none;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+}
+
+.kitap nav.sonraki a:hover {
+  color: var(--vurgu);
+}
+
+.kitap nav.sonraki a b {
+  display: none;
+}
+
+.kitap nav.sonraki a span {
+  display: inline;
+  font-size: inherit;
+  letter-spacing: 0;
+  text-transform: lowercase;
+  color: inherit;
+  margin: 0;
+}
+
+.kitap nav.sonraki .geri span::before { content: "[< "; }
+.kitap nav.sonraki .geri span::after  { content: "]"; }
+.kitap nav.sonraki .ileri span::before { content: "["; }
+.kitap nav.sonraki .ileri span::after  { content: " >]"; }
+
+/* Tek başınaysa sağda kalır: ileri giden bağlantı sola yaslanmaz. */
+.kitap nav.sonraki > .ileri:only-child {
+  margin-left: auto;
+}
+
+/* ==================================================== forum: soru kutusu */
+.forum-form {
+  margin: 2rem 0 2.6rem;
+  padding: 1.4rem 0 0;
+  border-top: 1px solid var(--cizgi);
+  font-family: var(--mono);
+  font-size: 13px;
+}
+
+.forum-form h2 {
+  font-family: var(--mono) !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  margin: 0 0 0.7rem !important;
+  color: var(--murekkep);
+  border: 0 !important;
+  text-align: left;
+}
+
+.forum-form textarea {
+  font: inherit;
+  width: 100%;
+  min-height: 5.5rem;
+  resize: vertical;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--cizgi-koyu);
+  border-radius: 3px;
+  background: var(--kagit);
+  color: var(--murekkep);
+  outline: none;
+}
+
+.forum-form textarea:focus {
+  border-color: var(--vurgu);
+}
+
+.forum-form-alt {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin: 0.7rem 0 0 !important;
+}
+
+.forum-form button {
+  font: inherit;
+  padding: 0.42rem 1rem;
+  border: 1px solid var(--murekkep);
+  border-radius: 3px;
+  background: var(--murekkep);
+  color: var(--kagit);
+  cursor: pointer;
+}
+
+.forum-form button:hover {
+  background: var(--vurgu);
+  border-color: var(--vurgu);
+}
+
+.forum-form button[disabled] {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.forum-durum {
+  color: var(--vurgu);
+  font-size: 12px;
+}
+
+.forum-not {
+  margin: 0.7rem 0 0 !important;
+  font-size: 11.5px;
+  color: var(--murekkep-soluk);
+}
+
+:root[data-tema="gece"] .forum-form textarea {
+  background: var(--bg-soft);
+  border-color: var(--cizgi-koyu);
+  color: var(--ink);
+}
+
+:root[data-tema="gece"] .forum-form button {
+  background: var(--pembe);
+  border-color: var(--pembe);
+  color: var(--bg);
+}
+
+:root[data-tema="gece"] .forum-form h2 {
+  color: var(--ink);
+}
+
+/* Klavye kısayolunun çıpası: görünmez ama erişilebilir. */
+.related .gizli-yon {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}

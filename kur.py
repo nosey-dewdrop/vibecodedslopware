@@ -128,6 +128,12 @@ S = {
         "forum_ozet": "okurlardan gelen notlar ve Damla'nın cevapları.",
         "forum_bos": "henüz cevaplanmış bir soru yok. bir bölümde cümle seç, not al, gönder.",
         "forum_bolum": "bu bölüm hakkında {n} soru",
+        "forum_sor": "bir şey sor",
+        "forum_yer": "takıldığın yer neresi?",
+        "forum_gonder": "gönder",
+        "forum_gitti": "gitti. cevabı buraya düşecek.",
+        "forum_not": "adresini istemiyorum. cevabı bu sayfada yayınlıyorum.",
+        "forum_form_yakinda": "soru kutusu yakında.",
         "seo_sozluk": "sözlük",
         "seo_kontrol": "kontroller",
         "seo_belirti": "belirtiler",
@@ -210,6 +216,12 @@ S = {
         "forum_ozet": "notes readers sent, and Damla's answers.",
         "forum_bos": "no answered question yet. pick a sentence in a chapter, write a note, send it.",
         "forum_bolum": "{n} questions about this chapter",
+        "forum_sor": "ask something",
+        "forum_yer": "where are you stuck?",
+        "forum_gonder": "send",
+        "forum_gitti": "sent. the answer lands here.",
+        "forum_not": "I am not asking for your address. answers are published on this page.",
+        "forum_form_yakinda": "the question box is coming soon.",
         "seo_sozluk": "glossary",
         "seo_kontrol": "checks",
         "seo_belirti": "symptoms",
@@ -792,49 +804,60 @@ def kafa(veri, baslik, aciklama, kanonik, yukari, dil, karsi_url, indeksle=True,
 
 
 def navbar(veri, yukari, dil, karsi_url):
-    """Üst şerit: yayındaki kitaplar, yakında olanlar, ve kabuğun düğmeleri.
+    """Üst şerit, üç grup.
 
-    Yakında olan bir kitap link değil: tıklanamayan bir şey, tıklanıp
-    hiçbir yere gitmeyen bir şeyden dürüsttür. Hover'da ne zaman geleceğini
-    söyleyen bir balon var, o kadar."""
+        sol    kitaplar        okunacak olan
+        orta   book pdf forum  kitabın etrafındaki şeyler
+        sağ    kaydol, dil, tema, giriş, arama   okurun kendi ayarları
+
+    Yakında olan bir kitap link değil: tıklanıp hiçbir yere gitmeyen bir
+    şey, açıkça tıklanamayan bir şeyden kötüdür. Her öğe köşeli parantez
+    içinde: tıklanabilir olan ile olmayan aynı biçimde durur.
+    """
     t = S[dil]
     p = ["<ul class='navbar'>"]
 
-    # Her öğe köşeli parantez içinde: şerit tek bir dilde konuşur, ve
-    # tıklanabilir olan ile olmayan aynı biçimde durur. Yıldız yok.
+    # --- sol: kitaplar ---
+    p.append('  <li class="grup sol">')
     for m in veri["mufredatlar"]:
         if m.get("durum") == "yakinda":
-            p.append(f'    <li><span class="yakinda" tabindex="0" role="note" '
+            p.append(f'    <span class="yakinda" tabindex="0" role="note" '
                      f'aria-disabled="true">[{kac(m["ad"])}]'
-                     f'<span class="balon">{kac(t["yakinda_balon"])}</span></span></li>')
+                     f'<span class="balon">{kac(t["yakinda_balon"])}</span></span>')
         else:
-            p.append(f'    <li><a href="{yukari}{m["kod"]}/">[{kac(m["ad"])}]</a></li>')
+            p.append(f'    <a href="{yukari}{m["kod"]}/" class="kitap-bag">'
+                     f'[{kac(m["ad"])}]</a>')
+    p.append("  </li>")
 
-    p.append(f'    <li><a href="{yukari}kitap/">[{t["kitap"]}]</a></li>')
+    # --- orta: kitabın etrafı ---
+    p.append('  <li class="grup orta">')
+    p.append(f'    <a href="{yukari}kitap/" class="oku-bag">[{t["kitap"]}]</a>')
     if (KOK / "kitap" / f"slopware-{dil}.pdf").exists():
-        p.append(f'    <li><a href="{yukari}kitap/slopware-{dil}.pdf">[pdf]</a></li>')
-    p.append(f'    <li><a href="{yukari}forum/">[{kac(t["forum"])}]</a></li>')
+        p.append(f'    <a href="{yukari}kitap/slopware-{dil}.pdf" '
+                 f'class="oku-bag">[pdf]</a>')
+    p.append(f'    <a href="{yukari}forum/" class="forum-bag">'
+             f'[{kac(t["forum"])}]</a>')
+    p.append("  </li>")
 
-    # Mail listesi: form sayfası yok, sayfanın ortasında bir dialog açılır.
-    p.append(f'    <li><button type="button" class="mail-ac">'
-             f'[{kac(t["mail_ac"])}]</button></li>')
-
+    # --- sağ: okurun ayarları ---
+    p.append('  <li class="grup sag">')
+    p.append(f'    <button type="button" class="mail-ac">'
+             f'[{kac(t["mail_ac"])}]</button>')
     if len(DILLER) > 1:
         obur = "en" if dil == "tr" else "tr"
-        p.append(f'    <li><a href="{karsi_url}" hreflang="{obur}">[{obur}]</a></li>')
-
-    p.append('    <li><button type="button" class="tema-dugme" '
-             'aria-label="theme">[&#9680;]</button></li>')
-
-    # Üyelik yakında. Tıklanmaz, hover'da söyler.
-    p.append(f'    <li><span class="yakinda" tabindex="0" role="note" '
+        p.append(f'    <a href="{karsi_url}" hreflang="{obur}" '
+                 f'class="dil-bag">[{obur}]</a>')
+    p.append('    <button type="button" class="tema-dugme" '
+             'aria-label="theme">[&#9680;]</button>')
+    p.append(f'    <span class="yakinda" tabindex="0" role="note" '
              f'aria-disabled="true">[{kac(t["giris"])}]'
-             f'<span class="balon">{kac(t["giris_yakinda"])}</span></span></li>')
-
-    p.append(f"""    <li class="ara"><form action="{yukari}ara/" method="get" role="search">
+             f'<span class="balon">{kac(t["giris_yakinda"])}</span></span>')
+    p.append(f"""    <form class="ara" action="{yukari}ara/" method="get" role="search">
       <input type="text" name="q" placeholder="{t["arama_kutusu"]}" aria-label="{t["ara"]}"
              autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-    </form></li>""")
+    </form>""")
+    p.append("  </li>")
+
     p.append("</ul>\n")
     return "\n".join(p)
 
@@ -954,36 +977,36 @@ def notlar_bolumu(dil):
 
 
 def gezinti(yukari, dil, kirinti, onceki=None, sonraki=None, kisayol=False, karsi_url=None):
-    """yazbel'in üstte ve altta tekrarlayan noktalı 'related' şeridi."""
+    """Kırıntı ve yön. Başka hiçbir şey.
+
+    Burada bir zamanlar arama, dil ve forum bağlantıları da vardı. Üçü de
+    navbarda duruyor: aynı bağlantıyı iki kere basmak okura yeni bir şey
+    söylemiyor, sadece şeridi dolduruyor."""
     t = S[dil]
-    ks = ' accesskey="I"' if kisayol else ""
     p = [f'    <div class="related" role="navigation" aria-label="{t["gezinti"]}">',
          f"      <h3>{t['gezinti']}</h3>", "      <ul>"]
-    if karsi_url and len(DILLER) > 1:
-        # navbar 500px altında gizli; dil değiştirmenin tek yolu bu şerit.
-        obur = "en" if dil == "tr" else "tr"
-        p.append(f'        <li class="right dil" style="margin-right: 10px">'
-                 f'<a href="{karsi_url}" hreflang="{obur}">{obur}</a></li>')
-    p.append(f'        <li class="right" style="margin-right: 10px">')
-    p.append(f'          <a href="{yukari}ara/" title="{t["arama"]}"{ks}>{t["ara"]}</a></li>')
-    if sonraki:
-        ks = ' accesskey="N"' if kisayol else ""
-        p.append(f'        <li class="right" >\n          <a href="{sonraki[0]}" '
-                 f'title="{html.escape(sonraki[1])}"{ks}>{t["sonraki"]}</a> |</li>')
-    if onceki:
-        ks = ' accesskey="P"' if kisayol else ""
-        p.append(f'        <li class="right" >\n          <a href="{onceki[0]}" '
-                 f'title="{html.escape(onceki[1])}"{ks}>{t["onceki"]}</a> |</li>')
-    # Ev ikonu ve » oku yazbel temasının mirasıydı. Bir kitapta kırıntı,
-    # bölümün adıdır: ikon da ok da bir şey söylemiyor.
+
+    # Kırıntı: solda, nerede olduğunu söyler. Kitabın adı navbarda zaten
+    # bir bağlantı; burada ikinci kez bağlantı olmaz, yalnızca yol gösterir.
     for n, (url, ad) in enumerate(kirinti[:-1], start=1):
         p.append(f'          <li class="nav-item nav-item-{n}">'
-                 f'<a href="{url}" >{html.escape(ad)}</a></li>')
+                 f'{html.escape(ad)}</li>')
     p.append(f'        <li class="nav-item nav-item-this">'
              f'{html.escape(kirinti[-1][1])}</li>')
+
+    # Yön bağlantıları burada YOK: bölümün altında duruyorlar. Aynı iki
+    # bağlantıyı iki kere basmak okura yeni bir şey söylemiyor.
+    # Klavye kısayolu (n / p) yine de bir çıpaya ihtiyaç duyduğu için
+    # görünmez birer bağlantı bırakılır.
+    if kisayol and onceki:
+        p.append(f'        <li class="gizli-yon"><a href="{onceki[0]}" '
+                 f'accesskey="P" tabindex="-1" aria-hidden="true">p</a></li>')
+    if kisayol and sonraki:
+        p.append(f'        <li class="gizli-yon"><a href="{sonraki[0]}" '
+                 f'accesskey="N" tabindex="-1" aria-hidden="true">n</a></li>')
+
     p.append("      </ul>\n    </div>")
     return "\n".join(p)
-
 
 
 def bolum_sonu(yukari, dil, onceki, sonraki):
@@ -1840,6 +1863,32 @@ def forum_oku():
     return [k for k in kalemler if k.get("cevap") and k.get("soru")]
 
 
+def forum_formu(veri, dil):
+    """Foruma doğrudan soru sorma.
+
+    Bir bölümün içinden cümle seçip not göndermek bir yol; ama okurun
+    aklındaki soru bir cümleye bağlı olmayabilir. Adres yoksa form
+    basılmaz: gitmeyen bir gönder düğmesi, düğmesizlikten kötüdür."""
+    t = S[dil]
+    adres = (veri["site"].get("gorus") or {}).get("adres", "")
+    if not adres:
+        return (f'<p class="forum-bos">{kac(t["forum_form_yakinda"])}</p>')
+    return f"""
+<form class="forum-form" action="{html.escape(adres, quote=True)}" method="post"
+      data-oldu="{kac(t["forum_gitti"])}">
+  <h2>{kac(t["forum_sor"])}</h2>
+  <textarea name="soru" required aria-label="{kac(t["forum_sor"])}"
+            placeholder="{kac(t["forum_yer"])}"></textarea>
+  <input type="hidden" name="dil" value="{dil}" />
+  <input type="hidden" name="nereden" value="forum" />
+  <p class="forum-form-alt">
+    <button type="submit">{kac(t["forum_gonder"])}</button>
+    <span class="forum-durum" role="status"></span>
+  </p>
+  <p class="forum-not">{kac(t["forum_not"])}</p>
+</form>"""
+
+
 def forum_sayfasi(veri, dil, onek):
     site, t = veri["site"], S[dil]
     yukari = "../" + ("../" * onek.count("/"))
@@ -1856,6 +1905,8 @@ def forum_sayfasi(veri, dil, onek):
          '  <section id="forum">',
          f'<h1>{kac(t["forum"])}<a class="headerlink" href="#forum">&#182;</a></h1>',
          f'<div class="description yazi-ozet">{kac(t["forum_ozet"])}</div>']
+
+    p.append(forum_formu(veri, dil))
 
     if not kalemler:
         p.append(f'<p class="forum-bos">{kac(t["forum_bos"])}</p>')

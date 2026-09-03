@@ -195,10 +195,18 @@
       if (gecti) sayi += 1;
     });
 
+    var oran = toplam ? (sayi / toplam) * 100 : 0;
     var dolu = kenar.querySelector(".kenar-dolu");
-    if (dolu && toplam) dolu.style.width = ((sayi / toplam) * 100).toFixed(1) + "%";
+    if (dolu && toplam) dolu.style.width = oran.toFixed(1) + "%";
     var sayac = kenar.querySelector(".kenar-sayi b");
     if (sayac) sayac.textContent = String(sayi);
+    // Yüzde sayacın yanında, aynı anda. Ayrı bir dinleyiciyle sonradan
+    // yakalamak yarış kuruyordu ve okur ilk tikte %0 görüyordu.
+    // 1/54 yuvarlanınca 0 çıkıyor; bir bölüm geçmiş okura %0 yazmak yalan.
+    var yuzde = kenar.querySelector(".kenar-yuzde");
+    if (yuzde && toplam) {
+      yuzde.textContent = (sayi > 0 && oran < 1 ? 1 : Math.round(oran)) + "%";
+    }
   }
 
   // --- paylaş: linki kopyala ------------------------------------------------
