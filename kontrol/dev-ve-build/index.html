@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Run npm run build on your own project and let it finish. How long did it take? Whatever that number is, it happens again on every deploy. What is inside the folder?" />
+    <meta name="author" content="Damla Su Bilge" />
+    <meta name="robots" content="index,follow" />
+
+    <title>what is the difference between npm run dev and npm run build? · run this on your own project &#183; vibecodedslopware</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&family=Special+Elite&display=swap" />
+    <link rel="stylesheet" type="text/css" href="../../tema/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../tema/pyramid.css" />
+    <link rel="stylesheet" type="text/css" href="../../tema/cmu.css" />
+    <link rel="stylesheet" type="text/css" href="../../tema/kitap.css" />
+    <link rel="stylesheet" type="text/css" href="../../tema/kabuk.css" />
+    <link rel="stylesheet" type="text/css" href="../../tema/gece.css" />
+    <link rel="canonical" href="https://nosey-dewdrop.github.io/vibecodedslopware/kontrol/dev-ve-build/" />
+    <link rel="alternate" hreflang="en" href="https://nosey-dewdrop.github.io/vibecodedslopware/kontrol/dev-ve-build/" />
+    <link rel="alternate" hreflang="tr" href="https://nosey-dewdrop.github.io/vibecodedslopware/tr/kontrol/" />
+    <link rel="search" title="search" href="../../ara/" />
+    <link rel="alternate" type="application/rss+xml" title="vibecodedslopware" href="../../rss.xml" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='white'/%3E%3Crect x='6' y='6' width='6' height='20' fill='%23808080'/%3E%3Crect x='20' y='6' width='6' height='20' fill='%23808080'/%3E%3C/svg%3E" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="vibecodedslopware" />
+    <meta property="og:title" content="what is the difference between npm run dev and npm run build? · run this on your own project" />
+    <meta property="og:description" content="Run npm run build on your own project and let it finish. How long did it take? Whatever that number is, it happens again on every deploy. What is inside the folder?" />
+    <meta property="og:url" content="https://nosey-dewdrop.github.io/vibecodedslopware/kontrol/dev-ve-build/" />
+    <meta property="og:image" content="https://nosey-dewdrop.github.io/vibecodedslopware/tema/og-en.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#ffffff" />
+    <script>
+      /* Tema, stil dosyalarindan once. Bu satirlar gecikirse sayfa bir kare
+         beyaz parlayip karariyor; okurun gordugu ilk sey bir flas oluyor. */
+      try {
+        var _t = localStorage.getItem("vibecodedslopware.tema");
+        if (_t === "gece" || _t === "kagit")
+          document.documentElement.setAttribute("data-tema", _t);
+      } catch (e) {}
+    </script>
+    <script>window.KOK = "../../"; window.DIL = "en"; window.BOLUM = ""; window.GORUS_ADRES = "";</script>
+  </head><body>
+<div class='header'><a href='../../'>vibecodedslopware</a></div>
+
+<ul class='navbar'>
+    <li><a href="../../slopware/">[slopware]</a></li>
+    <li><span class="yakinda" tabindex="0" role="note" aria-disabled="true">[systems engineering]<span class="balon">coming soon</span></span></li>
+    <li><span class="yakinda" tabindex="0" role="note" aria-disabled="true">[product engineering]<span class="balon">coming soon</span></span></li>
+    <li><a href="../../kitap/">[book]</a></li>
+    <li><a href="../../kitap/slopware-en.pdf">[pdf]</a></li>
+    <li><a href="../../forum/">[forum]</a></li>
+    <li><button type="button" class="mail-ac">[join the mail list!]</button></li>
+    <li><a href="https://nosey-dewdrop.github.io/vibecodedslopware/tr/kontrol/" hreflang="tr">[tr]</a></li>
+    <li><button type="button" class="tema-dugme" aria-label="theme">[&#9680;]</button></li>
+    <li><span class="yakinda" tabindex="0" role="note" aria-disabled="true">[log in]<span class="balon">coming soon</span></span></li>
+    <li class="ara"><form action="../../ara/" method="get" role="search">
+      <input type="text" name="q" placeholder="search…" aria-label="search"
+             autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+    </form></li>
+</ul>
+
+    <div class="related" role="navigation" aria-label="Navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../ara/" title="Search" accesskey="I">search</a></li>
+          <li class="nav-item nav-item-1"><a href="../../kontrol/" >checks</a></li>
+        <li class="nav-item nav-item-this"><a href="">what is the difference between npm run dev and npm run build?</a></li>
+      </ul>
+    </div>
+<div class="kitap tek">
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body" role="main">
+
+  <section id="dev-ve-build">
+<h1>what is the difference between npm run dev and npm run build? · run this on your own project<a class="headerlink" href="#dev-ve-build">&#182;</a></h1>
+<div class="description yazi-ozet">do this on your own project. the answer is on your screen.</div>
+<p>Run npm run build on your own project and let it finish.</p>
+<p>How long did it take? Whatever that number is, it happens again on every deploy.</p>
+<p>What is inside the folder? Go in with cd dist or cd .next and run ls -F, then find the HTML your source never contained.</p>
+<p>Then serve it with python3 -m http.server 8000 and use your own site coming out of a file server that knows nothing about your framework. If something works under npm run dev and not in there, you have found a real bug months before a stranger would have found it for you.</p>
+<p class="seo-nerede">read on: <a href="../../slopware/dev-ve-build/">what is the difference between npm run dev and npm run build?</a></p>
+</section>
+
+            <div class="clearer"></div>
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+</div>
+
+<div class="footer">
+<p class="ayak-sevgi">love, damla<span class="yildizcik"> &#8902;&#729;&#10209;</span></p>
+	&copy; 2026, Damla Su Bilge | <a href="https://github.com/nosey-dewdrop/vibecodedslopware">source is here</a>, if I go down, fork it.
+	text cc by-nc, code mit.
+<br>
+built with a hand-written generator &#183; yazbel taught me what teaching in writing looks like
+<br>
+<span class="ayak-ipucu">keys: n next, p previous, / search, ? the list &#183; the chapters you pass live in this browser only &#183; <a href="../../rss.xml">rss</a></span>
+<br>
+<br>
+</div>
+
+<dialog class="kutu" id="ad-kutu" aria-labelledby="ad-baslik">
+  <button type="button" class="kapat" aria-label="close">&#215;</button>
+  <h2 id="ad-baslik">what should I call you?</h2>
+  <form method="dialog">
+    <span class="satir"><input type="text" maxlength="40" autocomplete="off"
+           aria-label="what should I call you?" />
+    <button type="submit" class="onay">ok</button></span>
+  </form>
+  <p>this name stays in this browser. it is not sent anywhere.</p>
+</dialog>
+
+<dialog class="kutu" id="mail-kutu" aria-labelledby="mail-baslik">
+  <button type="button" class="kapat" aria-label="close">&#215;</button>
+  <h2 id="mail-baslik">email me when a new chapter is out</h2>
+  <p>coming soon.</p>
+</dialog>
+
+<dialog class="kutu not-kutu" id="not-kutu" aria-labelledby="not-baslik">
+  <button type="button" class="kapat" aria-label="close">&#215;</button>
+  <h2 id="not-baslik">note</h2>
+  <blockquote class="alinti"></blockquote>
+  <form method="dialog">
+    <textarea aria-label="note"></textarea>
+    <p><button type="submit" class="onay">save</button></p>
+  </form>
+</dialog>
+
+<div id="arac-cubuk" role="toolbar" aria-label="notes">
+  <button type="button" data-arac="hl">highlight</button>
+  <button type="button" data-arac="st">strike</button>
+  <button type="button" data-arac="not">note</button>
+</div>
+<div id="yildizlar" aria-hidden="true"></div>
+
+<script src="../../tema/stem.js"></script>
+<script src="../../tema/site.js"></script>
+<script src="../../tema/kitap.js"></script>
+<script src="../../tema/kabuk.js"></script>
+  </body>
+</html>

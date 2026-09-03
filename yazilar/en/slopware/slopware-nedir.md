@@ -12,7 +12,6 @@ Tony Stark is a vibecoder with unlimited tokens. As far as I see, internships an
 
 Everyone should benefit from technology, and not only for business and money, but for making products for your own needs. As I believe from Plato, no one does wrong willingly, and nobody writes bad software on purpose either. Outside academic purposes, CS is no different from being able to sew a button on. Everyone should learn it in order to make the ideas they dream of real, and most importantly, everyone can, because I believe that for once in history anyone can build anything.
 
-I have models write code for me, and I will have them write code while I am writing this book. Some things inside my own projects are plainly wrappers and I am not going to hide that from you while asking you to be honest about yours.
 
 What matters is whether anything stands behind the code. Think about the last time your terminal told you every test passed. It told you that some tests ran and none of them complained, and nothing about whether they would have noticed a broken app.
 

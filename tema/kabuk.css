@@ -719,3 +719,479 @@ dialog.kutu blockquote.alinti {
     text-align: left;
   }
 }
+
+/* ==================================================== düzen: tek bir ölçü */
+/* Üst bar, gezinti şeridi, gövde ve ayak aynı hizada başlayıp aynı hizada
+ * bitmeli. Bunlar ayrı ayrı genişlik veriyordu (94%/88%/78rem/84rem) ve her
+ * şerit başka yerde başlıyordu; sayfanın hiçbir yerinde tek bir sol kenar
+ * yoktu. Ölçü tek yerde tanımlanır ve hepsi onu kullanır.
+ *
+ * Kenarlardaki boşluk da azaltıldı: 15/20/50/15 ızgarada boş kolonlar
+ * sayfanın üçte birini yiyordu. Kitap sayfanın ortasında durur ama ekranı
+ * kullanır. */
+:root {
+  --sayfa-en: 96rem;
+  --sayfa-kenar: 2rem;
+}
+
+.header,
+ul.navbar,
+.related,
+div.footer {
+  width: 100%;
+  max-width: var(--sayfa-en);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--sayfa-kenar);
+  padding-right: var(--sayfa-kenar);
+}
+
+.kitap {
+  width: 100%;
+  max-width: var(--sayfa-en);
+  padding-left: var(--sayfa-kenar);
+  padding-right: var(--sayfa-kenar);
+  /* Boş kolonlar 15'ten 4'e indi: yazı hâlâ ortada ama ekran kullanılıyor. */
+  grid-template-columns: 4fr 21fr 54fr 4fr;
+  gap: 0 2.6rem;
+}
+
+.kitap.tek {
+  width: 100%;
+  max-width: var(--sayfa-en);
+}
+
+/* Üst bar sayfanın üçte birini yiyordu. Ad, şerit ve gövde arasındaki
+   boşluk bir kitabın künye sayfası kadar: var ama sessiz. */
+.header {
+  padding-top: 1.5rem;
+  padding-bottom: 0.2rem;
+}
+
+ul.navbar {
+  padding-top: 0.5rem;
+  padding-bottom: 0.9rem;
+}
+
+.related {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.kitap .kenar {
+  padding-top: 1.6rem;
+}
+
+.kitap div.body {
+  padding-top: 1.6rem;
+}
+
+/* Ölçü artık kolonun kendisi. 62ch'lik sabit satır 54 birimlik bir kolonda
+   ortada küçük bir şerit bırakıyordu. */
+.kitap div.body p,
+.kitap div.body h1,
+.kitap div.body h2,
+.kitap div.body ul,
+.kitap div.body ol,
+.kitap div.body blockquote {
+  max-width: 68ch;
+}
+
+/* --- selamlama: print("hello ___") ------------------------------------- */
+.selam {
+  font-size: 13px;
+  padding-bottom: 0.7rem;
+}
+
+.selam-kod {
+  color: var(--murekkep-soluk);
+}
+
+.selam-ad {
+  color: var(--vurgu);
+}
+
+.selam:hover .selam-ad {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+:root[data-tema="gece"] .selam-kod {
+  color: var(--ink-dim);
+}
+
+:root[data-tema="gece"] .selam-ad {
+  color: var(--pembe);
+}
+
+/* --- navbar: köşeli parantezler tek satırda ---------------------------- */
+ul.navbar {
+  gap: 0 0.85rem;
+}
+
+ul.navbar a,
+.mail-ac,
+.tema-dugme,
+.yakinda {
+  font-size: 13px;
+}
+
+/* Mail listesi düğmesi şeritteki tek renkli öğe: kaydolma çağrısı odur. */
+.mail-ac {
+  color: var(--vurgu);
+}
+
+/* --- mail kutusu: kayıt oldu satırı ------------------------------------ */
+.mail-durum:empty {
+  display: none;
+}
+
+.mail-durum {
+  color: var(--vurgu) !important;
+  margin-top: 0.6rem !important;
+}
+
+@media screen and (max-width: 1100px) {
+  :root {
+    --sayfa-kenar: 1.3rem;
+  }
+}
+
+/* ============================== yerleşim: dört kolon, kenar notu sağda */
+/* CONTENTS kâğıdın altına düşmüştü: `.kenar-not` gövdeyle aynı kolona
+ * konmuştu. Kitabın kenar notu kâğıdın SAĞINDA durur, altında değil.
+ * Izgara dört gerçek kolon: liste · kâğıt · kenar notu, iki yanda dar
+ * boşluk. */
+.kitap {
+  grid-template-columns: 20fr 50fr 17fr;
+  gap: 0 2.4rem;
+  justify-content: center;
+}
+
+.kitap::before {
+  display: none;
+}
+
+.kitap .kenar {
+  grid-column: 1;
+}
+
+.kitap .document {
+  grid-column: 2;
+}
+
+.kitap .kenar-not {
+  grid-column: 3;
+  grid-row: 1;
+  position: sticky;
+  top: 1.6rem;
+  align-self: start;
+  padding-top: 1.6rem;
+  padding-bottom: 0;
+  font-size: 12.5px;
+}
+
+.kitap .kenar-not .contents.local.topic {
+  margin-bottom: 1.6rem;
+}
+
+/* ============================== yazbel artıkları */
+/* Noktalı çizgiler, ⌂ ev ikonu ve » okları temanın kendi mirası. Bu bir
+ * kitap, bir Sphinx dokümantasyonu değil. */
+.related {
+  border: 0 !important;
+  background: none !important;
+}
+
+div.related,
+div.related + div.related {
+  border-top: 0 !important;
+  border-bottom: 0 !important;
+}
+
+/* Ev ikonu ve ilk kırıntı: ikon gider, ad kalır. */
+.related .nav-item-0 {
+  display: none;
+}
+
+/* » ayracı: bir kitapta bölüm adı tek başına durur. */
+.related .nav-item a::after,
+.related .nav-item::after {
+  content: none !important;
+}
+
+.related .nav-item {
+  font-size: 13px;
+}
+
+/* Alt gezinti şeridi bir kere yeter: sayfanın dibinde tekrar eden aynı
+   satır, okura yeni bir şey söylemiyor. */
+.kitap ~ .related {
+  display: none;
+}
+
+/* Üst şerit: kırıntı solda, yön bağlantıları sağda, aralarında çizgi yok. */
+.related ul {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0 0.7rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.related li {
+  display: inline-flex;
+  margin: 0;
+  padding: 0;
+}
+
+.related li.right {
+  margin-left: auto;
+}
+
+.related li.right ~ li.right {
+  margin-left: 0;
+}
+
+.related h3 {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ============================== logo ve şerit aralığı */
+/* Ad ile şerit arasında bir kitabın künyesi kadar boşluk: ikisi tek bir
+ * blok gibi dursun, iki ayrı bölüm gibi değil. */
+.header {
+  padding-top: 2rem;
+  padding-bottom: 0;
+}
+
+ul.navbar {
+  padding-top: 0.7rem;
+  padding-bottom: 1.4rem;
+}
+
+/* ============================== hover balonu */
+/* Balon şeffaftı ve arkasındaki metin içinden okunuyordu. Kendi zemini
+ * olan, üstte duran bir kutu. */
+.yakinda .balon {
+  background: #171221;
+  color: #efe8f7;
+  border-radius: 3px;
+  padding: 0.4em 0.7em;
+  font-size: 11.5px;
+  letter-spacing: 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  z-index: 60;
+}
+
+:root[data-tema="gece"] .yakinda .balon {
+  background: #efe8f7;
+  color: #171221;
+}
+
+/* Kilit balonu da aynı: okunur bir zemin. */
+.kenar-bolum.kapali em.kilit .gizli {
+  background: #171221;
+  color: #efe8f7;
+  z-index: 60;
+}
+
+:root[data-tema="gece"] .kenar-bolum.kapali em.kilit .gizli {
+  background: #efe8f7;
+  color: #171221;
+}
+
+@media screen and (max-width: 1250px) {
+  .kitap {
+    grid-template-columns: 22fr 56fr;
+  }
+
+  .kitap .kenar-not {
+    grid-column: 2;
+    grid-row: auto;
+    position: static;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .kitap {
+    display: block;
+  }
+
+  .kitap .kenar-not {
+    position: static;
+  }
+}
+
+/* ==================================================== kenar boşluğu: yok */
+/* Sayfanın iki yanındaki ölü alan kalktı. İçerik ekranı kullanır. */
+:root {
+  --sayfa-en: none;
+  --sayfa-kenar: 1.5rem;
+}
+
+.header,
+ul.navbar,
+.related,
+div.footer,
+.kitap,
+.kitap.tek {
+  max-width: none;
+  width: 100%;
+}
+
+.kitap {
+  grid-template-columns: minmax(15rem, 20fr) minmax(0, 58fr) minmax(11rem, 16fr);
+  gap: 0 2.2rem;
+  justify-content: stretch;
+  padding-left: var(--sayfa-kenar);
+  padding-right: var(--sayfa-kenar);
+}
+
+.kitap div.body p,
+.kitap div.body h1,
+.kitap div.body h2,
+.kitap div.body ul,
+.kitap div.body ol,
+.kitap div.body blockquote {
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.kitap.tek div.body {
+  max-width: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* ==================================================== arama kutusu */
+/* Alt çizgili çıplak bir input değil: kendi kutusu, büyüteci ve odak
+ * durumu olan bir alan. */
+ul.navbar li.ara {
+  margin-left: 0.4rem;
+}
+
+ul.navbar li.ara form {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+ul.navbar li.ara form::before {
+  content: "⌕";
+  position: absolute;
+  left: 0.55rem;
+  font-size: 14px;
+  line-height: 1;
+  color: var(--murekkep-soluk);
+  pointer-events: none;
+}
+
+ul.navbar input[type="text"] {
+  font: inherit;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  width: 11rem;
+  padding: 0.32rem 0.6rem 0.32rem 1.7rem;
+  border: 1px solid var(--cizgi-koyu);
+  border-radius: 3px;
+  background: var(--kagit);
+  color: var(--murekkep);
+  outline: none;
+  transition: width 140ms ease-out, border-color 140ms linear;
+}
+
+ul.navbar input[type="text"]::placeholder {
+  color: var(--murekkep-soluk);
+  opacity: 0.8;
+}
+
+ul.navbar input[type="text"]:focus {
+  width: 15rem;
+  border-color: var(--vurgu);
+}
+
+:root[data-tema="gece"] ul.navbar input[type="text"] {
+  background: var(--bg-soft);
+  border-color: var(--cizgi-koyu);
+  color: var(--ink);
+}
+
+:root[data-tema="gece"] ul.navbar li.ara form::before {
+  color: var(--ink-dim);
+}
+
+/* Arama sayfasındaki kutu da aynı. */
+form.arama {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1.6rem 0 0;
+}
+
+form.arama input[type="text"] {
+  font: inherit;
+  font-family: var(--mono);
+  font-size: 14px;
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--cizgi-koyu);
+  border-radius: 3px;
+  background: var(--kagit);
+  color: var(--murekkep);
+  outline: none;
+}
+
+form.arama input[type="text"]:focus {
+  border-color: var(--vurgu);
+}
+
+form.arama input[type="submit"] {
+  font: inherit;
+  font-family: var(--mono);
+  font-size: 13px;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--murekkep);
+  border-radius: 3px;
+  background: var(--murekkep);
+  color: var(--kagit);
+  cursor: pointer;
+}
+
+form.arama input[type="submit"]:hover {
+  background: var(--vurgu);
+  border-color: var(--vurgu);
+}
+
+:root[data-tema="gece"] form.arama input[type="text"] {
+  background: var(--bg-soft);
+  border-color: var(--cizgi-koyu);
+  color: var(--ink);
+}
+
+:root[data-tema="gece"] form.arama input[type="submit"] {
+  background: var(--pembe);
+  border-color: var(--pembe);
+  color: var(--bg);
+}
+
+@media screen and (max-width: 1250px) {
+  .kitap {
+    grid-template-columns: minmax(14rem, 22fr) minmax(0, 60fr);
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .kitap {
+    display: block;
+  }
+}

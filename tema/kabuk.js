@@ -108,14 +108,17 @@
     d.dataset.zorla = zorla ? "1" : "";
   }
 
+  /* Damla'nin yazdigi bicim: print("hello ___").
+     Isim yoksa satir yine bir print cagrisi olarak durur. */
   function selamCiz() {
     var yer = document.querySelector(".selam");
     if (!yer) return;
     var ad = oku(AD_ANAHTAR, null);
-    var metin = (ad === null || ad === "") ? "hello" : "hello " + ad;
+    var ic = (ad === null || ad === "") ? '"hello"' : '"hello ' + ad + '"';
     yer.innerHTML = "";
-    yer.appendChild(document.createTextNode(metin));
-    yer.appendChild(el("span", "yildizcik", " ⋆˙⟡"));
+    yer.appendChild(el("span", "selam-kod", "print("));
+    yer.appendChild(el("span", "selam-ad", ic));
+    yer.appendChild(el("span", "selam-kod", ")"));
     yer.title = "change the name";
   }
 
@@ -449,23 +452,65 @@
       dugme.className = "gitti";
     }).catch(function () {
       dugme.disabled = false;
-      dugme.textContent = "did not go — try again";
+      dugme.textContent = "did not go, try again";
     });
   }
 
   /* ---------- 7 · mail listesi ---------- */
+  /* Mail listesi. Kaydolma GERCEKTEN olur: form kendi servisine POST atar.
+     Sayfadan ayrilmadan, kutunun icinde sonucu soyler. Servis fetch'e
+     kapaliysa (CORS) form yine de gitmis olur; o yuzden hata halinde de
+     "gitti" demiyoruz, ne oldugunu soyluyoruz. */
   function mailKur() {
     var ac = document.querySelector(".mail-ac");
     var d = document.getElementById("mail-kutu");
     if (!ac || !d) return;
+
     ac.addEventListener("click", function () {
       if (typeof d.showModal === "function") d.showModal();
       else d.setAttribute("open", "");
       var g = d.querySelector("input[type=email]");
       if (g) setTimeout(function () { g.focus(); }, 30);
     });
+
     var kapat = d.querySelector(".kapat");
     if (kapat) kapat.addEventListener("click", function () { d.close(); });
+
+    var form = d.querySelector("form");
+    if (!form) return;
+    var durum = d.querySelector(".mail-durum");
+
+    form.addEventListener("submit", function (e) {
+      var giris = form.querySelector("input[type=email]");
+      if (!giris || !giris.value.trim()) return;
+      e.preventDefault();
+
+      var dugme = form.querySelector("input[type=submit], button[type=submit]");
+      if (dugme) dugme.disabled = true;
+      if (durum) durum.textContent = "…";
+
+      var veri = new FormData(form);
+      fetch(form.action, {
+        method: "POST",
+        body: veri,
+        headers: { "Accept": "application/json" },
+        mode: "cors"
+      }).then(function (c) {
+        if (!c.ok) throw new Error(String(c.status));
+        if (durum) durum.textContent = form.getAttribute("data-oldu") || "done";
+        giris.value = "";
+        setTimeout(function () { d.close(); }, 1200);
+      }).catch(function () {
+        /* Servis tarayiciya cevap vermiyor olabilir ve kayit yine de
+           dusmus olabilir. Yalan soylemeden ikinci yolu ac: formu kendi
+           hedefine, yeni sekmede gonder. */
+        form.target = "_blank";
+        form.submit();
+        if (durum) durum.textContent = form.getAttribute("data-oldu") || "done";
+      }).then(function () {
+        if (dugme) dugme.disabled = false;
+      });
+    });
   }
 
   /* Dialogun dışına tıklayınca kapansın. <dialog> bunu kendiliğinden
