@@ -1,20 +1,27 @@
-/* kitap.css — bir ders kitabı sayfası.
+/* kitap.css — lulumelon'un iskeleti, bir ders kitabına yorulmuş.
  *
- * Metin ortada ve dar, LaTeX'in kendi ölçüsünde: satır 66 karakteri geçmez,
- * çünkü göz satır sonundan başına dönerken kaybolmasın. Serif gövde, çünkü
- * ekranda uzun metin okutan şey odur. Solda müfredat durur, geçtiğin bölümün
- * üstü çizilir, ve bunların hepsi yalnız senin tarayıcında yaşar.
+ * lulumelon bir ürün sayfası ve bu bir kitap, o yüzden oradan alınan şey renk
+ * değil ölçüdür: 14px'lik bir taban, 62ch'lik bir okuma genişliği, kolonların
+ * aynı taban çizgisinde hizalanması, ve süs yerine boşlukla kurulan hiyerarşi.
+ * Kâğıt beyaz kalır. Gövde Computer Modern'dir çünkü bu bir LaTeX kitabı.
+ * Çevresindeki her şey (kenar, üst bar, ayak) lulumelon'un monospace'i.
  */
 
 :root {
   --kagit: #ffffff;
-  --murekkep: #000000;
-  --murekkep-soluk: #666666;
-  --cizgi: #dddddd;
+  --murekkep: #111111;
+  --murekkep-soluk: #6b6b6b;
+  --cizgi: #e4e4e4;
+  --cizgi-koyu: #cfcfcf;
   --vurgu: #7b3fa8;
-  --gecti: #999999;
-  --olcu: 34em;
-  --kenar-en: 17.5em;
+  --gecti: #a0a0a0;
+
+  /* lulumelon'un ölçüleri. */
+  --olcu: 62ch;
+  --kenar-en: 16rem;
+  --sayfa: 82rem;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  --serif: "CMU Serif", Georgia, "Times New Roman", serif;
 }
 
 body {
@@ -22,15 +29,55 @@ body {
   color: var(--murekkep);
 }
 
-/* --- iki sütun: solda müfredat, ortada kitap ---------------------------- */
+/* --- üst bar: lulumelon'un iki satırı, ortalanmış ---------------------- */
+.header {
+  border: 0;
+  padding: 2.2rem 1.25rem 0.5rem;
+  text-align: center;
+}
+
+.header a {
+  font-family: var(--mono);
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  color: var(--murekkep);
+  text-decoration: none;
+}
+
+ul.navbar {
+  font-family: var(--mono);
+  font-size: 13.5px;
+  border: 0;
+  background: none;
+  padding: 0.6rem 1.25rem 1.6rem;
+  margin: 0;
+  text-align: center;
+  color: var(--murekkep-soluk);
+}
+
+ul.navbar li {
+  display: inline;
+  margin: 0 0.55rem;
+}
+
+ul.navbar a {
+  color: var(--murekkep-soluk);
+  text-decoration: none;
+}
+
+ul.navbar a:hover {
+  color: var(--vurgu);
+}
+
+/* --- iki sütun ---------------------------------------------------------- */
 .kitap {
   display: grid;
   grid-template-columns: var(--kenar-en) minmax(0, 1fr);
-  gap: 0;
+  gap: 0 3.5rem;
   align-items: start;
-  max-width: 68em;
+  max-width: var(--sayfa);
   margin: 0 auto;
-  padding: 0 1.5em;
+  padding: 0 1.25rem 4rem;
 }
 
 .kitap .document,
@@ -38,6 +85,7 @@ body {
 .kitap div.body {
   width: auto;
   max-width: none;
+  min-width: 0;
   margin: 0;
   padding: 0;
   background: none;
@@ -46,91 +94,154 @@ body {
   float: none;
 }
 
-/* Gövde LaTeX ölçüsünde ve sütunun ortasında. */
-.kitap div.body {
+/* --- gövde: LaTeX ------------------------------------------------------- */
+.kitap div.body,
+.kitap-tam {
   max-width: var(--olcu);
   margin: 0 auto;
-  padding: 2.5em 0 4em;
-  font-family: "CMU Serif", Georgia, "Times New Roman", serif;
-  font-size: 1.32rem;
-  line-height: 1.62;
+  padding: 2.5rem 0 3rem;
+  font-family: var(--serif);
+  font-size: 1.24rem;
+  line-height: 1.58;
   color: var(--murekkep);
   hyphens: auto;
 }
 
-.kitap div.body p {
-  margin: 0 0 1.05em;
+.kitap div.body p,
+.kitap-tam p {
+  margin: 0 0 1rem;
   text-align: justify;
-  text-justify: inter-word;
 }
 
-/* İlk paragraf girintisiz, sonrakiler girintili: kitabın kendi kuralı. */
-.kitap div.body p + p {
+.kitap div.body p + p,
+.kitap-tam p + p {
   text-indent: 1.3em;
-  margin-top: -0.35em;
+  margin-top: -0.3em;
 }
 
-.kitap div.body h1 {
-  font-family: "CMU Serif", Georgia, serif;
-  font-size: 2.05rem;
-  font-weight: 600;
-  line-height: 1.22;
+.kitap div.body h1,
+.kitap-tam > h1 {
+  font-family: var(--serif);
+  font-size: 1.95rem;
+  font-weight: 400;
+  line-height: 1.2;
   text-align: center;
-  margin: 0 0 0.15em;
+  margin: 0 0 0.2em;
+  padding: 0;
   border: 0;
   color: var(--murekkep);
 }
 
-.kitap div.body h2 {
-  font-family: "CMU Serif", Georgia, serif;
-  font-size: 1.42rem;
-  font-weight: 600;
-  margin: 2.1em 0 0.55em;
+.kitap div.body h2,
+.kitap-tam h2 {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: 2rem 0 0.5em;
+  padding: 0;
   border: 0;
   color: var(--murekkep);
 }
 
 .kitap .yazi-ozet {
+  font-family: var(--mono);
+  font-size: 13.5px;
+  line-height: 1.55;
   text-align: center;
-  font-style: italic;
+  text-indent: 0;
   color: var(--murekkep-soluk);
-  font-size: 1.05rem;
-  margin: 0 0 2.4em;
-  padding: 0 0 1.4em;
+  margin: 0 0 2.2rem;
+  padding: 0 0 1.3rem;
   border-bottom: 1px solid var(--cizgi);
+  font-style: normal;
 }
 
 .kitap div.body pre,
-.kitap div.body code {
-  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-  font-size: 0.86em;
-}
-
-.kitap div.body pre {
-  background: #f6f6f6;
+.kitap-tam pre {
+  font-family: var(--mono);
+  font-size: 0.82em;
+  line-height: 1.5;
+  background: #f7f7f7;
   border: 1px solid var(--cizgi);
   border-radius: 3px;
-  padding: 0.85em 1em;
-  line-height: 1.5;
+  padding: 0.8em 1em;
   overflow-x: auto;
 }
 
+.kitap div.body code,
+.kitap-tam code {
+  font-family: var(--mono);
+  font-size: 0.84em;
+}
+
 .kitap div.body blockquote {
-  border-left: 2px solid var(--cizgi);
-  margin: 1.6em 0;
+  border-left: 2px solid var(--cizgi-koyu);
+  margin: 1.5em 0;
   padding: 0 0 0 1.1em;
   color: var(--murekkep-soluk);
-  font-size: 0.97em;
+  font-size: 0.95em;
 }
 
-.kitap div.body a {
+.kitap div.body a,
+.kitap-tam a {
   color: var(--vurgu);
   text-decoration: none;
-  border-bottom: 1px solid #cbb6dd;
+  border-bottom: 1px solid #d4c1e2;
 }
 
-.kitap div.body a:hover {
+.kitap div.body a:hover,
+.kitap-tam a:hover {
   border-bottom-color: var(--vurgu);
+}
+
+/* --- sayfa içi içindekiler: kenar notu, kırmızı etiket değil ------------- */
+.kitap div.contents.local.topic {
+  margin: 0 0 2.2rem;
+  padding: 0 0 0 1rem;
+  border: 0;
+  border-left: 2px solid var(--cizgi);
+  background: none;
+}
+
+.kitap div.contents.local.topic > p.topic-title {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--murekkep-soluk);
+  margin: 0 0 0.4em;
+  border: 0;
+}
+
+.kitap div.contents.local.topic ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.kitap div.contents.local.topic li {
+  display: block;
+  margin: 0.15em 0;
+  text-indent: 0;
+}
+
+.kitap div.contents.local.topic li a {
+  display: inline;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--murekkep-soluk);
+  background: none;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  text-decoration: none;
+}
+
+.kitap div.contents.local.topic li a:hover,
+.kitap div.contents.local.topic li a.aktif {
+  background: none;
+  color: var(--vurgu);
 }
 
 /* --- solda duran müfredat ---------------------------------------------- */
@@ -140,31 +251,29 @@ body {
   align-self: start;
   max-height: 100vh;
   overflow-y: auto;
-  padding: 2.6em 1.6em 3em 0;
-  border-right: 1px solid var(--cizgi);
-  font-family: "CMU Serif", Georgia, serif;
-  font-size: 0.97rem;
-  line-height: 1.4;
+  padding: 2.5rem 0 3rem;
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.45;
 }
 
 .kenar-ust {
-  padding-bottom: 0.9em;
-  margin-bottom: 0.9em;
+  padding-bottom: 0.8rem;
+  margin-bottom: 0.9rem;
   border-bottom: 1px solid var(--cizgi);
 }
 
 .kenar-ad {
   display: block;
-  font-size: 1.06rem;
+  font-size: 14px;
   color: var(--murekkep);
   text-decoration: none;
-  margin-bottom: 0.55em;
+  margin-bottom: 0.5rem;
 }
 
 .kenar-cubuk {
-  height: 3px;
+  height: 2px;
   background: var(--cizgi);
-  border-radius: 2px;
   overflow: hidden;
 }
 
@@ -173,17 +282,17 @@ body {
   height: 100%;
   width: 0;
   background: var(--vurgu);
-  transition: width 220ms linear;
+  transition: width 200ms linear;
 }
 
 .kenar-sayi {
-  margin: 0.5em 0 0;
-  font-size: 0.87rem;
+  margin: 0.45rem 0 0;
+  font-size: 12px;
   color: var(--murekkep-soluk);
 }
 
 .kenar-sayi b {
-  font-weight: 600;
+  font-weight: 400;
   color: var(--murekkep);
 }
 
@@ -194,9 +303,9 @@ body {
 }
 
 .kenar-seviye {
-  margin: 1.35em 0 0.4em;
-  font-size: 0.78rem;
-  letter-spacing: 0.09em;
+  margin: 1.3rem 0 0.4rem;
+  font-size: 11px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--murekkep-soluk);
 }
@@ -208,16 +317,16 @@ body {
 .kenar-bolum {
   display: flex;
   align-items: baseline;
-  gap: 0.5em;
-  padding: 0.2em 0;
+  gap: 0.5rem;
+  padding: 0.16rem 0;
 }
 
 .kenar-bolum i {
   font-style: normal;
   font-variant-numeric: tabular-nums;
-  font-size: 0.78rem;
+  font-size: 11.5px;
   color: var(--murekkep-soluk);
-  min-width: 1.6em;
+  min-width: 1.5em;
 }
 
 .kenar-bolum a {
@@ -230,11 +339,7 @@ body {
   border-bottom-color: var(--vurgu);
 }
 
-.kenar-bolum.burada a {
-  color: var(--vurgu);
-  font-weight: 600;
-}
-
+.kenar-bolum.burada a,
 .kenar-bolum.burada i {
   color: var(--vurgu);
 }
@@ -251,87 +356,19 @@ body {
 }
 
 .kenar-bolum.kapali {
-  color: #b3aca2;
+  color: #b0b0b0;
 }
 
 .kenar-bolum.kapali em {
   font-style: normal;
   cursor: help;
+  opacity: 0.55;
 }
 
-/* --- dar ekran: müfredat üstte, açılır ---------------------------------- */
-@media screen and (max-width: 900px) {
-  .kitap {
-    display: block;
-    padding: 0 1.1em;
-  }
-
-  .kenar {
-    position: static;
-    max-height: none;
-    overflow: visible;
-    border-right: 0;
-    border-bottom: 1px solid var(--cizgi);
-    padding: 1.4em 0;
-    margin-bottom: 1.4em;
-  }
-
-  .kenar-liste {
-    columns: 2;
-    column-gap: 1.6em;
-  }
-
-  .kitap div.body {
-    font-size: 1.18rem;
-    padding-top: 0.5em;
-  }
-}
-
-@media screen and (max-width: 520px) {
-  .kenar-liste {
-    columns: 1;
-  }
-
-  .kitap div.body p {
-    text-align: left;
-  }
-}
-
-/* --- kitap: bütün bölümler tek sayfada --------------------------------- */
-/* Ekranda okunur, yazdırıldığında kitap olur: başlık sayfası, içindekiler,
- * her bölüm yeni sayfada, altta sayfa numarası. */
-
-.kitap-tam {
-  max-width: var(--olcu);
-  margin: 0 auto;
-  padding: 3em 0 5em;
-  font-family: "CMU Serif", Georgia, "Times New Roman", serif;
-  font-size: 1.32rem;
-  line-height: 1.62;
-}
-
-.kitap-tam > h1 {
-  font-size: 2.4rem;
-  font-weight: 600;
-  text-align: center;
-  border: 0;
-  margin: 0 0 0.2em;
-}
-
-.kitap-tam p {
-  margin: 0 0 1.05em;
-  text-align: justify;
-}
-
-.kitap-tam p + p {
-  text-indent: 1.3em;
-  margin-top: -0.35em;
-}
-
-/* İçindekiler: numara solda, başlık ortada, aralarında nokta. */
+/* --- kitap sayfası: bütün bölümler bir arada ---------------------------- */
 .kitap-tam #contents {
-  margin: 2.6em 0 3.4em;
-  padding: 1.4em 0;
+  margin: 2.2rem 0 3rem;
+  padding: 1.2rem 0;
   border-top: 1px solid var(--cizgi);
   border-bottom: 1px solid var(--cizgi);
 }
@@ -343,57 +380,195 @@ body {
 }
 
 .kitap-tam #contents li {
-  margin: 0.3em 0;
-  font-size: 1.06rem;
+  display: block;
+  margin: 0.28rem 0;
 }
 
-.kitap-tam #contents a {
+.kitap-tam #contents li a {
   display: flex;
   align-items: baseline;
-  gap: 0.6em;
+  gap: 0.55rem;
+  font-size: 1.02rem;
   color: var(--murekkep);
-  text-decoration: none;
   border: 0;
 }
 
-.kitap-tam #contents a::after {
+.kitap-tam #contents li a::after {
   content: "";
   flex: 1;
-  border-bottom: 1px dotted var(--cizgi);
+  border-bottom: 1px dotted var(--cizgi-koyu);
   transform: translateY(-0.25em);
 }
 
-.kitap-tam #contents a:hover {
+.kitap-tam #contents li a:hover {
   color: var(--vurgu);
 }
 
 .kitap-bolum {
-  margin: 3.4em 0 0;
-  padding-top: 2.4em;
+  margin: 3rem 0 0;
+  padding-top: 2.2rem;
   border-top: 1px solid var(--cizgi);
 }
 
 .kitap-bolum h1 {
-  font-size: 1.85rem;
-  font-weight: 600;
+  font-size: 1.75rem;
+  font-weight: 400;
   border: 0;
-  margin: 0 0 0.6em;
-  line-height: 1.24;
+  margin: 0 0 0.5em;
+  line-height: 1.22;
+  text-align: left;
 }
 
 .kitap-bolum h1 .no {
   display: block;
-  font-size: 0.82rem;
-  letter-spacing: 0.12em;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.14em;
   color: var(--murekkep-soluk);
-  margin-bottom: 0.35em;
+  margin-bottom: 0.4em;
 }
 
-.kitap-bolum h2 {
-  font-size: 1.34rem;
-  font-weight: 600;
+/* --- gezinti şeridi ve ayak: lulumelon'un ince monospace'i --------------- */
+.related {
+  font-family: var(--mono);
+  font-size: 13px;
   border: 0;
-  margin: 1.9em 0 0.5em;
+  background: none;
+  color: var(--murekkep-soluk);
+  max-width: var(--sayfa);
+  margin: 0 auto;
+  padding: 0.7rem 1.25rem;
+}
+
+.related a {
+  color: var(--murekkep-soluk);
+  text-decoration: none;
+}
+
+.related a:hover {
+  color: var(--vurgu);
+}
+
+div.footer {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--murekkep-soluk);
+  border: 0;
+  background: none;
+  padding: 2.5rem 1.25rem 3rem;
+  text-align: center;
+  font-style: normal;
+}
+
+div.footer a {
+  color: var(--murekkep-soluk);
+  text-decoration: underline;
+  text-decoration-color: var(--cizgi-koyu);
+  text-underline-offset: 4px;
+}
+
+div.footer a:hover {
+  text-decoration-color: var(--vurgu);
+}
+
+/* --- abone formu -------------------------------------------------------- */
+form.abone {
+  font-family: var(--mono);
+  font-size: 13px;
+  margin: 3rem auto 0;
+  padding: 1.3rem 0 0;
+  border-top: 1px solid var(--cizgi);
+  max-width: var(--olcu);
+}
+
+form.abone label {
+  display: block;
+  color: var(--murekkep);
+  margin-bottom: 0.6rem;
+}
+
+form.abone input[type="email"] {
+  font: inherit;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--cizgi-koyu);
+  border-radius: 3px;
+  background: var(--kagit);
+  color: var(--murekkep);
+  min-width: 15rem;
+}
+
+form.abone input[type="submit"] {
+  font: inherit;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--murekkep);
+  border-radius: 3px;
+  background: var(--murekkep);
+  color: var(--kagit);
+  cursor: pointer;
+}
+
+form.abone small {
+  display: block;
+  margin-top: 0.5rem;
+  color: var(--murekkep-soluk);
+}
+
+/* --- paylaş / iyileştir ------------------------------------------------- */
+.kitap p.paylas,
+.kitap p.iyilestir {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--murekkep-soluk);
+  text-indent: 0;
+  text-align: left;
+}
+
+.kitap p.paylas a,
+.kitap p.iyilestir a {
+  color: var(--murekkep-soluk);
+  border: 0;
+  text-decoration: underline;
+  text-decoration-color: var(--cizgi-koyu);
+  text-underline-offset: 3px;
+}
+
+/* --- dar ekran ---------------------------------------------------------- */
+@media screen and (max-width: 900px) {
+  .kitap {
+    display: block;
+    padding: 0 1.1rem 3rem;
+  }
+
+  .kenar {
+    position: static;
+    max-height: none;
+    overflow: visible;
+    padding: 1.3rem 0;
+    margin-bottom: 1.3rem;
+    border-bottom: 1px solid var(--cizgi);
+  }
+
+  .kenar-liste {
+    columns: 2;
+    column-gap: 1.6rem;
+  }
+
+  .kitap div.body,
+  .kitap-tam {
+    font-size: 1.14rem;
+    padding-top: 0.5rem;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .kenar-liste {
+    columns: 1;
+  }
+
+  .kitap div.body p,
+  .kitap-tam p {
+    text-align: left;
+  }
 }
 
 /* --- yazdırma: gerçek kitap -------------------------------------------- */
@@ -427,20 +602,23 @@ body {
     display: none !important;
   }
 
+  .kitap {
+    display: block;
+    padding: 0;
+  }
+
   .kitap-tam,
   .kitap div.body {
     max-width: none;
     padding: 0;
     font-size: 11pt;
-    line-height: 1.42;
+    line-height: 1.4;
   }
 
   .kitap-tam > h1 {
-    font-size: 26pt;
-    margin-bottom: 0.3em;
+    font-size: 25pt;
   }
 
-  /* Her bölüm yeni sayfadan başlar. */
   .kitap-bolum {
     break-before: page;
     page-break-before: always;
@@ -449,16 +627,20 @@ body {
     margin-top: 0;
   }
 
-  .kitap-bolum h1 {
-    font-size: 17pt;
+  .kitap-bolum h1,
+  .kitap-tam h2,
+  .kitap div.body h2 {
     break-after: avoid;
     page-break-after: avoid;
   }
 
-  .kitap-bolum h2 {
-    font-size: 12.5pt;
-    break-after: avoid;
-    page-break-after: avoid;
+  .kitap-bolum h1 {
+    font-size: 16pt;
+  }
+
+  .kitap-tam h2,
+  .kitap div.body h2 {
+    font-size: 12pt;
   }
 
   .kitap-tam #contents {
@@ -466,7 +648,6 @@ body {
     page-break-after: always;
   }
 
-  /* Tek satır başı ya da sonu yalnız kalmasın. */
   .kitap-tam p,
   .kitap div.body p {
     orphans: 3;
@@ -487,106 +668,42 @@ body {
   }
 }
 
-/* --- sayfa içi içindekiler: kitap kenar notu, yazbel'in kırmızı etiketi değil */
-.kitap div.contents.local.topic ,
-.kitap-tam div.contents.local.topic  {
-  margin: 0 0 2.6em;
-  padding: 0 0 0 1em;
-  border: 0;
-  border-left: 2px solid var(--cizgi);
-  background: none;
+/* Kilidin üstüne gelince ne zaman açılacağı görünür. Bir başlık kilitliyse
+ * okurun bilmek istediği tek şey odur. */
+.kenar-bolum.kapali em.kilit {
+  position: relative;
+  font-style: normal;
+  cursor: help;
+  opacity: 0.5;
+  outline: none;
 }
 
-.kitap div.contents.local.topic > p.topic-title ,
-.kitap-tam div.contents.local.topic > p.topic-title  {
-  font-family: "CMU Serif", Georgia, serif;
-  font-size: 0.8rem;
-  font-weight: 400;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--murekkep-soluk);
-  margin: 0 0 0.5em;
-  border: 0;
+.kenar-bolum.kapali em.kilit .gizli {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 6px);
+  transform: translateX(-50%);
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 120ms linear;
+  white-space: nowrap;
+  background: var(--murekkep);
+  color: var(--kagit);
+  font-size: 11px;
+  line-height: 1.3;
+  padding: 0.3em 0.55em;
+  border-radius: 3px;
+  z-index: 5;
+  pointer-events: none;
 }
 
-.kitap div.contents.local.topic ul ,
-.kitap-tam div.contents.local.topic ul  {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+.kenar-bolum.kapali em.kilit:hover,
+.kenar-bolum.kapali em.kilit:focus {
+  opacity: 1;
 }
 
-.kitap div.contents.local.topic li ,
-.kitap-tam div.contents.local.topic li  {
-  display: block;
-  margin: 0.18em 0;
-  text-indent: 0;
-}
-
-.kitap div.contents.local.topic li a ,
-.kitap-tam div.contents.local.topic li a  {
-  display: inline;
-  color: var(--murekkep-soluk);
-  background: none;
-  border: 0;
-  border-radius: 0;
-  padding: 0;
-  font-size: 0.98rem;
-  text-decoration: none;
-}
-
-.kitap div.contents.local.topic li a:hover ,
-.kitap-tam div.contents.local.topic li a:hover  {
-  color: var(--vurgu);
-}
-
-.kitap div.contents.local.topic li a.aktif ,
-.kitap-tam div.contents.local.topic li a.aktif  {
-  background: none;
-  color: var(--vurgu);
-}
-
-/* Kitap sayfasının içindekileri gerçek bir içindekilerdir: her satır kendi
- * satırında, numarası solda, noktalar boşluğu doldurur. */
-.kitap-tam #contents li {
-  display: block;
-  margin: 0.3em 0;
-}
-
-.kitap-tam #contents li a {
-  display: flex;
-  align-items: baseline;
-  gap: 0.6em;
-  font-size: 1.06rem;
-  color: var(--murekkep);
-}
-
-.kitap-tam #contents li a::after {
-  content: "";
-  flex: 1;
-  border-bottom: 1px dotted var(--cizgi);
-  transform: translateY(-0.25em);
-}
-
-/* Kitap sayfası da kenarla birlikte gelir, ama gövdesi sütunun ortasında. */
-.kitap .kitap-tam {
-  max-width: var(--olcu);
-  margin: 0 auto;
-}
-
-/* Tema div.body'yi float ve yüzde genişlikle konumluyor; grid sütununun
- * içinde ikisi de gövdeyi sütunun dışına taşırıyor. */
-.kitap .documentwrapper {
-  float: none;
-  width: auto;
-}
-
-.kitap div.body {
-  float: none;
-  width: auto;
-  min-width: 0;
-}
-
-.kitap .kitap-tam {
-  width: auto;
+.kenar-bolum.kapali em.kilit:hover .gizli,
+.kenar-bolum.kapali em.kilit:focus .gizli {
+  visibility: visible;
+  opacity: 1;
 }

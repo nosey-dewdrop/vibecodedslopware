@@ -743,7 +743,10 @@ def kenar(veri, m, dil, yukari, simdiki_slug):
             if not acik_mi(b):
                 acilir = t["acilir"].format(tarih=tarih_yaz(b["tarih"], dil))
                 p.append(f'    <li class="kenar-bolum kapali"><i>{no:02d}</i>'
-                         f'<span>{baslik}</span><em title="{kac(acilir)}">&#183;</em></li>')
+                         f'<span>{baslik}</span>'
+                         f'<em class="kilit" tabindex="0">'
+                         f'<span aria-hidden="true">&#128274;</span>'
+                         f'<span class="gizli">{kac(acilir)}</span></em></li>')
             else:
                 simdi = " burada" if slug == simdiki_slug else ""
                 p.append(f'    <li class="kenar-bolum{simdi}" data-bolum="{kimlik}">'
@@ -944,6 +947,8 @@ def mufredat_ana(veri, m, dil, onek):
     p = [kafa(veri, baslik, ozet, kanonik, yukari, dil, karsi),
          navbar(veri, yukari, dil, karsi),
          gezinti(yukari, dil, kirinti, None, son, kisayol=True, karsi_url=karsi),
+         '<div class="kitap">',
+         kenar(veri, m, dil, yukari, None),
          GOVDE_AC,
          f'  <section id="{kimlik}">',
          f'<h1>{kac(baslik)}<a class="headerlink" href="#{kimlik}" title="'
@@ -1002,6 +1007,7 @@ def mufredat_ana(veri, m, dil, onek):
 
     p.append("</section>")
     p.append(GOVDE_KAPA)
+    p.append("</div>")
     p.append(gezinti(yukari, dil, kirinti, None, son))
     p.append(ayak(yukari, dil))
 
