@@ -106,16 +106,21 @@
 (function () {
   "use strict";
 
+  /* Yön linkini accesskey ile ara. Şeritte accesskey taşıyan üç bağlantı var
+     (I arama, N sonraki, P önceki), o yüzden hangisini istediğimizi harfle
+     söylüyoruz: `a[accesskey]` ilk bulduğunu, yani aramayı getiriyordu. */
   function baglanti(yon) {
-    var a = document.querySelector('.related a[accesskey], .related .' + yon + ' a');
+    var harf = yon === "next" ? "N" : "P";
+    var a = document.querySelector('.related a[accesskey="' + harf + '"]');
     if (a) return a;
     var hepsi = document.querySelectorAll(".related a");
     for (var i = 0; i < hepsi.length; i++) {
-      var t = (hepsi[i].textContent || "").toLowerCase();
-      if (yon === "next" && t.indexOf("next") === 0) return hepsi[i];
-      if (yon === "prev" && t.indexOf("previous") === 0) return hepsi[i];
+      var t = (hepsi[i].textContent || "").trim().toLowerCase();
+      if (yon === "next" && t === "next") return hepsi[i];
+      if (yon === "prev" && t === "previous") return hepsi[i];
     }
-    return null;
+    /* Şerit yoksa bölüm sonundaki geçişe düş. */
+    return document.querySelector("nav.sonraki ." + (yon === "next" ? "ileri" : "geri"));
   }
 
   function yardim() {
@@ -159,30 +164,31 @@
   });
 })();
 
+
 /* ---------- 5 · kodu kopyala ----------
- * Bir ders kitabının yarısı komut. Okurun onu seçip kopyalaması gerekiyorsa
- * satır numarasını da alıyor. */
+ * Kopyalamanın kendisi site.js'te ve clipboard API'si yoksa yedeği var.
+ * Burada yapılan tek şey düğmeyi koymak: site.js onu `parentNode` içinde bir
+ * `pre` arayarak buluyor, o yüzden düğme `pre`'nin İÇİNE değil YANINA girer,
+ * ortak bir sarmalayıcının içine. */
 (function () {
   "use strict";
-  var bloklar = document.querySelectorAll(".kitap pre");
-  if (!bloklar.length || !navigator.clipboard) return;
+  var bloklar = document.querySelectorAll(".kitap div.body pre, .kitap-tam pre");
+  if (!bloklar.length) return;
 
   Array.prototype.forEach.call(bloklar, function (pre) {
+    if (pre.parentNode.classList.contains("kod")) return;
+
+    var kap = document.createElement("div");
+    kap.className = "kod";
+    pre.parentNode.insertBefore(kap, pre);
+    kap.appendChild(pre);
+
     var d = document.createElement("button");
     d.type = "button";
     d.className = "kopyala";
     d.textContent = "copy";
+    d.setAttribute("data-oldu", "copied");
     d.setAttribute("aria-label", "Copy this code");
-    pre.appendChild(d);
-
-    d.addEventListener("click", function () {
-      var metin = pre.cloneNode(true);
-      var b = metin.querySelector("button.kopyala");
-      if (b) b.remove();
-      navigator.clipboard.writeText(metin.textContent.replace(/\s+$/, "")).then(function () {
-        d.textContent = "copied";
-        setTimeout(function () { d.textContent = "copy"; }, 1400);
-      });
-    });
+    kap.appendChild(d);
   });
 })();

@@ -183,7 +183,9 @@
     var kenar = document.querySelector("nav.kenar");
     if (!kenar) return;
     var satirlar = kenar.querySelectorAll("li.kenar-bolum[data-bolum]");
-    var kapalilar = kenar.querySelectorAll("li.kenar-bolum.kapali");
+    // Önsözün işaretlenecek bir işi yok, o yüzden paydada da yok: yoksa
+    // kitap bittiğinde bile sayaç 54/55'te takılı kalırdı.
+    var kapalilar = kenar.querySelectorAll("li.kenar-bolum.kapali:not(.onsoz)");
     var toplam = satirlar.length + kapalilar.length;
     var gecilen = gecilenOku(), sayi = 0;
 
@@ -219,7 +221,8 @@
 
   function baslat() {
     linkKopyalaKur();
-    kopyalamayiKur();
+    // kitap.js düğmeleri koyduktan sonra bağlanır.
+    setTimeout(kopyalamayiKur, 0);
     icindekileriKur();
     vurgula();
     kontrolTikiKur();

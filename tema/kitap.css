@@ -1,3 +1,11 @@
+/* Yüzde genişlik + piksel iç boşluk, kutu modeli düzeltilmezse taşar:
+ * 390px'lik bir ekranda sayfa 435px oluyordu ve yana kayıyordu. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 /* kitap.css — lulumelon'un iskeleti, bir ders kitabına yorulmuş.
  *
  * lulumelon bir ürün sayfası ve bu bir kitap, o yüzden oradan alınan şey renk
@@ -20,12 +28,15 @@
   /* Ölçü, sayfanın %80'ini dolduracak şekilde: kenar + boşluk + yazı.
    * 62ch'lik dar bir sütun 1440'lık bir ekranda sayfanın %43'ünü kullanıyordu
    * ve sağda 256px ölü alan bırakıyordu. */
-  /* Ölçüler piksel/rem cinsinden, ch değil: Computer Modern'in karakteri dar,
-   * 72ch bile 1440'lık bir ekranda sayfanın yarısını boş bırakıyordu.
-   * Kâğıt ekranla büyür, kenar sabit kalır, yazı aradaki her şeyi alır. */
-  --olcu: 52rem;
+  /* Ölçü karakterle düşünülür, pikselle değil: 52rem satırı 94 karaktere
+   * çıkarmıştı, bir kitapta göz 65 karakterden sonra satır başını kaybediyor.
+   * Sayfayı dolduran şey artık geniş satır değil, üçüncü bir sütun: bölümün
+   * içindekileri ve paylaşma satırı sağa, kenar notu olarak geçti. */
+  --olcu: 36rem;
   --kenar-en: 15rem;
-  --bosluk: 4rem;
+  --not-en: 13rem;
+  --bosluk: 3.5rem;
+  --satir: 1.62rem;
   --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
   --serif: "CMU Serif", Georgia, "Times New Roman", serif;
 }
@@ -42,11 +53,17 @@ body {
   text-align: center;
 }
 
+/* Eski tema logoyu 60px'lik bir grunge daktilo fontunda, gri, gümüş gölgeli
+ * basıyordu: sayfanın en büyük öğesi başka bir tasarıma aitti. Kitabın adı
+ * kitabın kendi yüzünde durur. */
+div.header a,
 .header a {
-  font-family: var(--mono);
-  font-size: 15px;
-  letter-spacing: 0.02em;
+  font-family: var(--serif);
+  font-size: clamp(1.35rem, 5.5vw, 2rem);
+  font-weight: 400;
+  letter-spacing: 0.01em;
   color: var(--murekkep);
+  text-shadow: none;
   text-decoration: none;
 }
 
@@ -78,11 +95,12 @@ ul.navbar a:hover {
 /* --- iki sütun ---------------------------------------------------------- */
 .kitap {
   display: grid;
-  grid-template-columns: var(--kenar-en) minmax(0, 1fr);
+  grid-template-columns: var(--kenar-en) minmax(0, var(--olcu)) var(--not-en);
+  justify-content: center;
   gap: 0 var(--bosluk);
   align-items: start;
-  width: 88%;
-  max-width: 84rem;
+  width: 94%;
+  max-width: 78rem;
   margin: 0 auto;
   padding: 0 0 4rem;
 }
@@ -553,7 +571,7 @@ form.abone small {
 @media screen and (max-width: 1200px) {
   :root {
     --kenar-en: 13rem;
-    --olcu: 66ch;
+    --olcu: 32rem;
   }
 
   .kitap {
@@ -1100,11 +1118,11 @@ body {
 }
 
 /* --- kodu kopyala ------------------------------------------------------- */
-.kitap pre {
+.kitap .kod {
   position: relative;
 }
 
-.kitap pre .kopyala {
+.kitap .kod .kopyala {
   position: absolute;
   top: 0.4rem;
   right: 0.4rem;
@@ -1120,20 +1138,299 @@ body {
   transition: opacity 120ms linear;
 }
 
-.kitap pre:hover .kopyala,
-.kitap pre .kopyala:focus {
+.kitap .kod:hover .kopyala,
+.kitap .kod .kopyala:focus {
   opacity: 1;
 }
 
-.kitap pre .kopyala:hover {
+.kitap .kod .kopyala:hover {
   color: var(--vurgu);
   border-color: var(--vurgu);
 }
 
 /* Kopyala düğmesi yazdırmada yok. */
 @media print {
-  .kitap pre .kopyala,
+  .kitap .kod .kopyala,
   #tus-yardim {
     display: none !important;
   }
+}
+
+/* --- bölümün altında: sıradaki bölüm, adıyla --------------------------- */
+.kitap nav.sonraki {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 3rem 0 0;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--cizgi);
+}
+
+.kitap nav.sonraki a {
+  display: block;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--cizgi);
+  border-radius: 3px;
+  text-decoration: none;
+  color: var(--murekkep);
+}
+
+.kitap nav.sonraki a:hover {
+  border-color: var(--vurgu);
+}
+
+.kitap nav.sonraki a span {
+  display: block;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--murekkep-soluk);
+  margin-bottom: 0.35rem;
+}
+
+.kitap nav.sonraki a b {
+  font-family: var(--serif);
+  font-size: 1.06rem;
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+.kitap nav.sonraki a:hover b {
+  color: var(--vurgu);
+}
+
+/* Sıradaki bölüm sağa, ve yalnız o varsa sağda durur. */
+.kitap nav.sonraki .ileri {
+  text-align: right;
+  grid-column: 2;
+}
+
+@media screen and (max-width: 560px) {
+  .kitap nav.sonraki {
+    grid-template-columns: 1fr;
+  }
+
+  .kitap nav.sonraki .ileri {
+    grid-column: 1;
+    text-align: left;
+  }
+}
+
+@media print {
+  .kitap nav.sonraki { display: none !important; }
+}
+
+/* --- başlık bağlantıları ------------------------------------------------ */
+/* Her başlığın kendi adresi var, ama işaret sürekli durursa metnin içinde
+ * gürültü olur. Başlığın üstüne gelince çıkar. */
+.kitap a.headerlink {
+  margin-left: 0.35em;
+  font-family: var(--mono);
+  font-size: 0.62em;
+  font-weight: 400;
+  color: var(--murekkep-soluk);
+  border: 0;
+  opacity: 0;
+  transition: opacity 110ms linear;
+}
+
+.kitap h1:hover a.headerlink,
+.kitap h2:hover a.headerlink,
+.kitap a.headerlink:focus {
+  opacity: 1;
+}
+
+.kitap a.headerlink:hover {
+  color: var(--vurgu);
+}
+
+/* Önsöz numarasızdır ve işaretlenmez: bir bölüm değil. */
+.kenar-bolum.onsoz i {
+  opacity: 0.4;
+}
+
+/* Kopyalandı anı. */
+.kitap .kod .kopyala.oldu {
+  color: var(--vurgu);
+  border-color: var(--vurgu);
+  opacity: 1;
+}
+
+/* --- ek: bölümün uyandırdığı yan fikir --------------------------------- */
+/* Kanun: appendix ve dipnot sayfanın altındadır, bölümün içinde değil. */
+.kitap aside.ek {
+  position: relative;
+  margin: 3rem 0 0;
+  padding: 1.2rem 0 0 1.6rem;
+  border-top: 1px solid var(--cizgi);
+  font-family: var(--serif);
+  font-size: 1.02rem;
+  line-height: 1.5;
+  color: var(--murekkep-soluk);
+}
+
+.kitap aside.ek p {
+  text-indent: 0;
+  margin: 0 0 0.7em;
+  text-align: left;
+}
+
+.kitap aside.ek p:last-child {
+  margin-bottom: 0;
+}
+
+.kitap aside.ek .ek-geri {
+  position: absolute;
+  left: 0;
+  top: 1.2rem;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--murekkep-soluk);
+  border: 0;
+  text-decoration: none;
+}
+
+.kitap aside.ek .ek-geri:hover {
+  color: var(--vurgu);
+}
+
+.kitap sup.ek-ref a,
+.kitap sup.dipnot-ref a {
+  color: var(--vurgu);
+  border: 0;
+  text-decoration: none;
+}
+
+
+/* --- üçüncü sütun: kenar notları ---------------------------------------- */
+/* Bölümün kendi içindekileri ve paylaşma satırı metnin içinde değil, sağ
+ * kenarında durur. Kitapta bunun adı marginalia; bir docs sitesinde sayfanın
+ * başına konur ve okur her bölümde onu atlamayı öğrenir. */
+.kitap div.body {
+  grid-column: 2;
+}
+
+.kitap .kenar-not {
+  grid-column: 3;
+  position: sticky;
+  top: 2.5rem;
+  align-self: start;
+  padding-top: 2.5rem;
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--murekkep-soluk);
+}
+
+.kitap .kenar-not div.contents.local.topic {
+  margin: 0 0 1.6rem;
+  padding: 0;
+  border: 0;
+}
+
+.kitap .kenar-not p.paylas,
+.kitap .kenar-not p.iyilestir {
+  margin: 0 0 0.6rem;
+  font-size: 11.5px;
+  line-height: 1.55;
+}
+
+/* Kenar notu yalnız üç sütun varken sağda durur. */
+@media screen and (max-width: 1100px) {
+  .kitap {
+    grid-template-columns: var(--kenar-en) minmax(0, 1fr);
+  }
+
+  .kitap .kenar-not {
+    grid-column: 2;
+    position: static;
+    padding-top: 0;
+    margin-top: 2rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--cizgi);
+  }
+}
+
+/* --- dikey ritim: her boşluk satır yüksekliğinin katı -------------------- */
+/* Bir kitapta paragraflar arasında boşluk yoktur, girinti vardır. Önceki
+ * hâlde ikisi de yarım yamalak vardı: 1rem alt boşluk ve -0.3em geri alma,
+ * net 4.6px, yani ne boşluk ne girinti. */
+.kitap div.body p,
+.kitap-tam p {
+  margin: 0;
+}
+
+.kitap div.body p + p,
+.kitap-tam p + p {
+  text-indent: 1.3em;
+  margin-top: 0;
+}
+
+/* Bir bloktan sonra gelen paragraf yeniden başlar: girinti yok, boşluk var. */
+.kitap div.body pre + p,
+.kitap div.body blockquote + p,
+.kitap div.body .kod + p,
+.kitap-tam pre + p,
+.kitap-tam .kod + p {
+  text-indent: 0;
+  margin-top: var(--satir);
+}
+
+.kitap div.body h2,
+.kitap-tam h2 {
+  margin: calc(var(--satir) * 2) 0 var(--satir);
+}
+
+.kitap div.body .kod,
+.kitap-tam .kod {
+  margin: var(--satir) 0;
+}
+
+.kitap div.body pre,
+.kitap-tam pre {
+  margin: 0;
+}
+
+.kitap div.admonition.kontrol {
+  margin: calc(var(--satir) * 2) 0;
+}
+
+/* Uzun satır gitti, satır aralığı da kitaba döner. */
+.kitap div.body,
+.kitap-tam {
+  line-height: 1.6;
+}
+
+/* --- kod: kitap bloğu, docs kutusu değil -------------------------------- */
+/* Gri dolgulu yuvarlak köşeli kutu bir dokümantasyon sitesinin işareti.
+ * Kitapta kod, girintili ve ince bir çizgiyle ayrılmış bir bloktur. */
+.kitap div.body pre,
+.kitap-tam pre {
+  background: none;
+  border: 0;
+  border-left: 1px solid var(--cizgi-koyu);
+  border-radius: 0;
+  padding: 0.15em 0 0.15em 1.1em;
+}
+
+/* Kilit tek renk: sayfadaki en doygun şey bir emoji olamaz. */
+.kenar-bolum.kapali em.kilit {
+  font-size: 9px;
+  color: var(--murekkep-soluk);
+}
+
+/* Kopyala düğmesi dokunmatik ekranda da görünür: orada hover yok. */
+@media (hover: none) {
+  .kitap .kod .kopyala {
+    opacity: 0.55;
+  }
+}
+
+/* Ayaktaki ipucu: tuşlar ve ilerlemenin nerede durduğu bir yerde yazmalı. */
+.ayak-ipucu {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 11.5px;
+  opacity: 0.75;
 }

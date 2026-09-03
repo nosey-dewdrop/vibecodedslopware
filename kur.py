@@ -26,6 +26,9 @@ from pathlib import Path
 KOK = Path(__file__).parent
 YAZILAR = KOK / "yazilar"
 DILLER = ["en"]
+# Alanların yazıldığı dil: bir alanın yalnız bu dilde karşılığı varsa,
+# başka bir dilde basılmaz.
+VARSAYILAN_DIL = "tr"
 # Kilitler bu tarihe göre açılır. Test için: KUR_TARIH=2026-11-09 python3 kur.py
 BUGUN = dt.date.fromisoformat(os.environ.get("KUR_TARIH") or dt.date.today().isoformat())
 AYLAR = {"tr": ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz",
@@ -88,6 +91,7 @@ S = {
         "hazirlaniyor": "bu müfredat hazırlanıyor.",
         "olusturuldu": "elde yazılmış bir jeneratörle kuruldu",
         "gorunum": "yazbel okutmayı öğretti",
+        "ipucu": "tuşlar: n sonraki, p önceki, / arama, ? liste &#183; geçtiğin bölümler yalnız bu tarayıcıda kalır &#183; <a href=\"{kok}rss.xml\">rss</a>",
     },
     "en": {
         "bolumler": "chapters",
@@ -134,6 +138,7 @@ S = {
         "hazirlaniyor": "this curriculum is in progress.",
         "olusturuldu": "built with a hand-written generator",
         "gorunum": "yazbel taught me what teaching in writing looks like",
+        "ipucu": "keys: n next, p previous, / search, ? the list &#183; the chapters you pass live in this browser only &#183; <a href=\"{kok}rss.xml\">rss</a>",
     },
 }
 
@@ -151,8 +156,21 @@ def metin(alan, dil):
     return alan or ""
 
 
-def bolum_alan(b, ad, dil):
-    return metin(b.get(f"{ad}_{dil}") or b.get(ad), dil)
+def bolum_alan(b, ad, dil, zorunlu=True):
+    """Bölümün bir alanı, istenen dilde.
+
+    `zorunlu` False ise ve o dilde karşılığı yoksa boş döner. Başlık her zaman
+    lazım, o yüzden varsayılan hâlâ Türkçeye düşer; ama özet düşmez: İngilizce
+    bir sayfada Türkçe bir özet, özetsiz bir satırdan kötüdür."""
+    ozel = b.get(f"{ad}_{dil}")
+    if ozel:
+        return metin(ozel, dil)
+    temel = b.get(ad)
+    if isinstance(temel, dict):
+        return metin(temel, dil)
+    if not zorunlu and dil != VARSAYILAN_DIL:
+        return ""
+    return metin(temel, dil)
 
 
 def kac(s):
@@ -444,8 +462,10 @@ def satir_ici(s):
                    f'<a href="#dipnot-{m.group(1)}">{m.group(1)}</a></sup>'),
         s,
     )
+    # Yıldız, sayfanın altındaki eke bağlanır. Ek yoksa yıldız da basılmaz:
+    # kırık bir dipnot, dipnotsuz bir cümleden kötüdür.
     s = re.sub(r"(?<=[.!?,;:\w])\*(?![*\w])",
-               '<sup class="ek-ref"><a href="../../ek/">*</a></sup>', s)
+               '<sup class="ek-ref" id="ek-ref-1"><a href="#ek-1">*</a></sup>', s)
     return s
 
 
@@ -473,6 +493,23 @@ def markdown(kaynak, dil):
                           f'<aside class="dipnot" id="dipnot-{ad}">'
                           f'<a class="dipnot-geri" href="#dipnot-ref-{ad}">{ad}</a>'
                           f"<p>{satir_ici(' '.join(blok).strip())}</p></aside>"))
+            continue
+
+        if satir.strip() == "::ek":
+            # Bölümün uyandırdığı yan fikir. Kanun: appendix sayfanın altında
+            # durur, bölümün içinde değil. Yıldız buraya bağlanır.
+            i += 1
+            blok = []
+            while i < len(satirlar) and satirlar[i].strip() != "::":
+                blok.append(satirlar[i])
+                i += 1
+            i += 1
+            ic, _ = markdown("\n".join(blok), dil)
+            govde_ = "\n".join(p for _, p in ic if isinstance(p, str))
+            parca.append(("html",
+                          f'<aside class="ek" id="ek-1">'
+                          f'<a class="ek-geri" href="#ek-ref-1">*</a>'
+                          f"{govde_}</aside>"))
             continue
 
         if satir.strip() == "::kontrol":
@@ -674,15 +711,30 @@ def navbar(veri, yukari, dil, karsi_url):
 
 
 def abone_formu(veri, dil):
-    """Buttondown gömülü formu. site.buttondown boşsa form basılmaz."""
-    kullanici = veri["site"].get("buttondown", "")
-    if not kullanici:
+    """Bülten formu. Servisi mufredat.json söyler:
+
+        "bulten": {"servis": "buttondown", "kod": "kullanici-adi"}
+        "bulten": {"servis": "sender",     "kod": "https://.../form-eylemi"}
+        "bulten": {"servis": "ozel",       "kod": "https://tam/adres", "alan": "email"}
+
+    Kod boşsa form basılmaz: yarım bir form, formsuz bir sayfadan kötüdür.
+    Eski "buttondown" alanı hâlâ okunur, çünkü site onunla kuruldu."""
+    b = veri["site"].get("bulten") or {}
+    servis = b.get("servis") or ("buttondown" if veri["site"].get("buttondown") else "")
+    kod = b.get("kod") or veri["site"].get("buttondown", "")
+    if not kod:
         return ""
+
+    if servis == "buttondown":
+        eylem = f"https://buttondown.com/api/emails/embed-subscribe/{kod}"
+    else:
+        eylem = kod
+    alan = b.get("alan", "email")
+
     t = S[dil]
-    return f"""<form class="abone" action="https://buttondown.com/api/emails/embed-subscribe/{kullanici}"
-      method="post" target="_blank">
+    return f"""<form class="abone" action="{eylem}" method="post" target="_blank">
   <label for="abone-mail">{t["abone"]}</label>
-  <span class="abone-satir"><input type="email" id="abone-mail" name="email" required
+  <span class="abone-satir"><input type="email" id="abone-mail" name="{alan}" required
          placeholder="mail" autocomplete="email" />
   <input type="submit" value="{t["abone_dugme"]}" /></span>
   <input type="hidden" name="tag" value="{dil}" />
@@ -723,11 +775,31 @@ def gezinti(yukari, dil, kirinti, onceki=None, sonraki=None, kisayol=False, kars
 
 
 
+def bolum_sonu(yukari, dil, onceki, sonraki):
+    """Bölümün altında, adıyla birlikte sıradaki bölüm.
+
+    Üstteki şerit dar ve orada yalnızca "next" yazıyor; bir kitapta okurun
+    bilmek istediği şey yönü değil, nereye gittiğidir."""
+    if not onceki and not sonraki:
+        return ""
+    t = S[dil]
+    p = ['<nav class="sonraki" aria-label="' + kac(t["gezinti"]) + '">']
+    if onceki:
+        p.append(f'  <a class="geri" href="{onceki[0]}">'
+                 f'<span>{kac(t["onceki"])}</span><b>{kac(onceki[1])}</b></a>')
+    if sonraki:
+        p.append(f'  <a class="ileri" href="{sonraki[0]}">'
+                 f'<span>{kac(t["sonraki"])}</span><b>{kac(sonraki[1])}</b></a>')
+    p.append("</nav>")
+    return "\n".join(p)
+
+
 def kenar(veri, m, dil, yukari, simdiki_slug):
     """Her bölüm sayfasının solunda duran müfredat: hangi bölümdesin, kaçını
     geçtin, sırada ne var. Tikler bölüm sonundaki kontrolle aynı yerden okunur."""
     t = S[dil]
-    toplam = sum(len(sv["bolumler"]) for sv in m["seviyeler"])
+    # Önsöz bir bölüm değil: okurun yapacağı bir işi yok, o yüzden paydada da yok.
+    toplam = sum(1 for sv in m["seviyeler"] for b in sv["bolumler"] if not b.get("onsoz"))
     p = [f'<nav class="kenar" aria-label="{kac(m["ad"])}">',
          '  <div class="kenar-ust">',
          f'    <a class="kenar-ad" href="{yukari}{m["kod"]}/">{kac(m["ad"])}</a>',
@@ -749,13 +821,18 @@ def kenar(veri, m, dil, yukari, simdiki_slug):
                 p.append(f'    <li class="kenar-bolum kapali"><i>{no:02d}</i>'
                          f'<span>{baslik}</span>'
                          f'<em class="kilit" tabindex="0">'
-                         f'<span aria-hidden="true">&#128274;</span>'
+                         f'<span aria-hidden="true">&#9679;</span>'
                          f'<span class="gizli">{kac(acilir)}</span></em></li>')
             else:
                 simdi = " burada" if slug == simdiki_slug else ""
-                p.append(f'    <li class="kenar-bolum{simdi}" data-bolum="{kimlik}">'
-                         f'<i>{no:02d}</i>'
-                         f'<a href="{yukari}{m["kod"]}/{slug}/">{baslik}</a></li>')
+                if b.get("onsoz"):
+                    p.append(f'    <li class="kenar-bolum onsoz{simdi}">'
+                             f'<i>&#183;</i>'
+                             f'<a href="{yukari}{m["kod"]}/{slug}/">{baslik}</a></li>')
+                else:
+                    p.append(f'    <li class="kenar-bolum{simdi}" data-bolum="{kimlik}">'
+                             f'<i>{no:02d}</i>'
+                             f'<a href="{yukari}{m["kod"]}/{slug}/">{baslik}</a></li>')
     p += ["  </ol>", "</nav>"]
     return "\n".join(p)
 
@@ -783,6 +860,8 @@ def ayak(yukari, dil, ekstra=""):
 	{t["lisans"]}.
 <br>
 {t["olusturuldu"]} &#183; {t["gorunum"]}
+<br>
+<span class="ayak-ipucu">{t["ipucu"].format(kok=yukari)}</span>
 <br>
 <br>
 </div>
@@ -846,18 +925,19 @@ def mufredat_kur(veri, m, dil, onek, indeks):
     for idx, b in enumerate(acik):
         sv = seviye_of[b["slug"]]
         baslik = bolum_alan(b, "baslik", dil)
-        neden = bolum_alan(b, "neden", dil)
+        neden = bolum_alan(b, "neden", dil, zorunlu=False)
         kaynak = YAZILAR / dil / m["kod"] / f"{b['slug']}.md"
 
         if kaynak.exists():
             parca, basliklar = markdown(kaynak.read_text(encoding="utf-8"), dil)
             govde_ = bolumle(parca, dil)
-            icerik = icindekiler(basliklar, dil) + "\n" + govde_
+            ic_tablo = icindekiler(basliklar, dil)
+            icerik = govde_
             aranan = duz(govde_)
             b[f"govde_{dil}"] = govde_
         else:
             icerik = f'<p class="henuz">{t["henuz"]} {t["haftada"]}.</p>'
-            basliklar, aranan = [], ""
+            ic_tablo, basliklar, aranan = "", [], ""
         # Durum dile göre: mufredat.json'daki sözlük iki dilde de aynı nesne,
         # tek bir "durum" alanı yazarsak tr taraması en tarafını da yayında
         # sanıyor ve boş sayfalar aramaya giriyor.
@@ -901,10 +981,12 @@ def mufredat_kur(veri, m, dil, onek, indeks):
                  f"¶</a></h1>",
                  f'<div class="description yazi-ozet">{kac(neden)}</div>',
                  icerik,
-                 kuyruk,
+                 bolum_sonu(yukari, dil, onc, son),
                  abone_formu(veri, dil),
                  "</section>",
                  GOVDE_KAPA,
+                 (f'<div class="kenar-not">{ic_tablo}{kuyruk}</div>'
+                  if (ic_tablo or kuyruk) else ""),
                  '</div>',
                  gezinti(yukari, dil, kirinti, onc, son),
                  ayak(yukari, dil)]
@@ -969,11 +1051,11 @@ def mufredat_ana(veri, m, dil, onek):
                  f'{siradaki_satir(m, dil)}</p>')
         tek = len(m["seviyeler"]) == 1
         for sv in m["seviyeler"]:
-            sv_ad = f'{sv["kod"]} {metin(sv["ad"], dil)}'
+            sv_ad = f'{sv["kod"]} {sv.get(f"ad_{dil}") or metin(sv["ad"], dil)}'
             sv_id = slugla(sv_ad)
             p.append(f'<section id="{sv_id}">')
             if not tek:
-                p.append(f'<h2>{sv["kod"]} / {kac(metin(sv["ad"], dil))}'
+                p.append(f'<h2>{sv["kod"]} / {kac(sv.get(f"ad_{dil}") or metin(sv["ad"], dil))}'
                          f'<a class="headerlink" href="#{sv_id}" title="'
                          f'{"Bu başlığa bağlantı" if dil == "tr" else "Link to this heading"}">'
                          f'¶</a></h2>')
@@ -983,7 +1065,7 @@ def mufredat_ana(veri, m, dil, onek):
             for b in sv["bolumler"]:
                 durum = b[f"durum_{dil}"]
                 baslik_b = kac(bolum_alan(b, "baslik", dil))
-                neden_b = bolum_alan(b, "neden", dil)
+                neden_b = bolum_alan(b, "neden", dil, zorunlu=False)
                 neden_html = f'<p class="neden">{kac(neden_b)}</p>' if neden_b else ""
                 if durum == "kilitli":
                     # Link yok: tıklanmaz. Tarih hover'da (title) ve ekran okuyucuda.

@@ -47,3 +47,10 @@ Years ago the yazbel documentation made me interested in computer science, and I
 So when I am no longer a sweet student but a businesswoman, I hope this book will have enlightened somebody, entertained somebody, or made somebody think.
 
 Two heads are better than one, so whatever work you are in, try your own idea too. My endless respect to everyone who is dreaming and working for something.
+
+::ek
+Is CS dead? The claim is usually made about a language, not about the field.
+COBOL was going to be replaced by C++, C++ by Java, Java by Python, and every
+one of them is still running somewhere right now. What changed each time was
+the height of the language, not whether somebody had to decide what to build.
+::

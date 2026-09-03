@@ -10,6 +10,12 @@
   "takvim": {
    "aralik_gun": 3,
    "not": "bölüm tarihi geçmediyse ve md dosyası yoksa kilitli. tarihi değiştir, kur, push."
+  },
+  "bulten": {
+   "servis": "",
+   "kod": "",
+   "alan": "email",
+   "not": "servis: buttondown | sender | ozel. kod: buttondown kullanici adi, ya da formun tam adresi."
   }
  },
  "mufredatlar": [
@@ -41,8 +47,8 @@
        "baslik_en": "why does this book exist?",
        "tarih": "2026-08-19",
        "neden": "Herkes bu kelimeyi söylüyor ama kimse tanımını bilmiyor.",
-       "kontrol": "Elindeki şeyin demosu mu var, kendisi mi var?",
-       "neden_en": "Why this book exists, who is writing it, and how to read it."
+       "neden_en": "Why this book exists, who is writing it, and how to read it.",
+       "onsoz": true
       },
       {
        "no": 1,
