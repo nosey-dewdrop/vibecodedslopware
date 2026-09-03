@@ -707,3 +707,96 @@ form.abone small {
   visibility: visible;
   opacity: 1;
 }
+
+/* Kenarı olmayan sayfalar (ana sayfa, arama, 404) aynı kâğıdı kullanır ama
+ * tek sütundur. */
+.kitap.tek {
+  display: block;
+  max-width: var(--sayfa);
+}
+
+.kitap.tek div.body {
+  max-width: 64ch;
+}
+
+/* --- ana sayfa: müfredat listesi ---------------------------------------- */
+.dersler {
+  margin: 2.5rem 0 0;
+}
+
+.ders {
+  padding: 1.4rem 0;
+  border-top: 1px solid var(--cizgi);
+}
+
+.ders:last-child {
+  border-bottom: 1px solid var(--cizgi);
+}
+
+.ders h2,
+.kitap .ders h2 {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin: 0 0 0.4rem;
+  border: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.ders h2 a {
+  color: var(--murekkep);
+  border: 0;
+  text-decoration: none;
+}
+
+.ders h2 a:hover {
+  color: var(--vurgu);
+}
+
+.ders-sayi {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--murekkep-soluk);
+  letter-spacing: 0;
+}
+
+.ders-ozet,
+.kitap .ders-ozet {
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--murekkep-soluk);
+  margin: 0;
+  max-width: 64ch;
+  text-align: left;
+  text-indent: 0;
+}
+
+/* --- ana sayfa ---------------------------------------------------------- */
+/* Eski tasarım h1'i gizleyip yerine ayrı bir başlık basıyordu. Başlık artık
+ * tek, o yüzden görünür. */
+.kitap.tek #okul h1 {
+  display: block;
+  font-family: var(--serif);
+  font-size: 2.1rem;
+  font-weight: 400;
+  text-align: center;
+  margin: 0 0 0.3rem;
+  border: 0;
+}
+
+.kitap.tek div.body {
+  max-width: 64ch;
+  margin: 0 auto;
+  padding: 2.5rem 0 3rem;
+}
+
+.kitap.tek #okul .yazi-ozet {
+  border-bottom: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}

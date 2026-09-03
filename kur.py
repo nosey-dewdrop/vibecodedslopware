@@ -86,7 +86,7 @@ S = {
                        "bölümler listelenir.",
         "hazirlaniyor": "bu müfredat hazırlanıyor.",
         "olusturuldu": "elde yazılmış bir jeneratörle kuruldu",
-        "gorunum": "görünüm yazbel'in pyramid temasından",
+        "gorunum": "yazbel okutmayı öğretti",
     },
     "en": {
         "bolumler": "chapters",
@@ -131,7 +131,7 @@ S = {
                        "contain all of them.",
         "hazirlaniyor": "this curriculum is in progress.",
         "olusturuldu": "built with a hand-written generator",
-        "gorunum": "look borrowed from yazbel's pyramid theme",
+        "gorunum": "yazbel taught me what teaching in writing looks like",
     },
 }
 
@@ -1193,11 +1193,11 @@ def okul_sayfasi(veri, dil, onek):
          navbar(veri, yukari, dil, karsi),
          gezinti(yukari, dil, kirinti,
                  None, (f'{yukari}{ilk["kod"]}/', ilk["ad"]), kisayol=True, karsi_url=karsi),
+         '<div class="kitap tek">',
          GOVDE_AC,
          '  <section id="okul">',
          "<h1>vibecodedslopware</h1>",
-         '<div class="title">\n    vibecodedslopware\n</div>',
-         f'<div class="description">\n    {kac(aciklama)}\n</div>',
+         f'<div class="description yazi-ozet">{kac(aciklama)}</div>',
          '<div class="dersler">']
 
     for m in veri["mufredatlar"]:
@@ -1215,6 +1215,7 @@ def okul_sayfasi(veri, dil, onek):
 
     p.append("</div>\n</section>")
     p.append(GOVDE_KAPA)
+    p.append("</div>")
     p.append(gezinti(yukari, dil, kirinti, None, (f'{yukari}{ilk["kod"]}/', ilk["ad"])))
     p.append(ayak(yukari, dil))
 
@@ -1234,6 +1235,7 @@ def arama_sayfasi(veri, dil, onek):
               indeksle=False),
          navbar(veri, yukari, dil, karsi),
          gezinti(yukari, dil, kirinti, kisayol=True, karsi_url=karsi),
+         '<div class="kitap tek">',
          GOVDE_AC,
          f'  <h1 id="arama-basligi">{t["arama"]}</h1>',
          "  <noscript>\n  <div class=\"admonition warning\">"
@@ -1247,6 +1249,7 @@ def arama_sayfasi(veri, dil, onek):
   <p class="arama-durum" id="arama-durum"></p>
   <div id="arama-sonuc"></div>""",
          GOVDE_KAPA,
+         '</div>',
          gezinti(yukari, dil, kirinti),
          ayak(yukari, dil,
               ekstra=f'\n<script src="{yukari}tema/ara.js"></script>')]
@@ -1333,6 +1336,7 @@ def dort_yuz_dort(veri):
               site["url"], indeksle=False),
          navbar(veri, kok, dil, site["url"]),
          gezinti(kok, dil, [("", "404")]),
+         '<div class="kitap tek">',
          GOVDE_AC,
          '  <section id="kayip">',
          '<h1>404<a class="headerlink" href="#kayip">¶</a></h1>',
@@ -1340,7 +1344,7 @@ def dort_yuz_dort(veri):
          f'<p><a href="{kok}">{t["ev"]}</a> &#183; <a href="{kok}slopware/">slopware</a>'
          f' &#183; <a href="{kok}kitap/">{t["kitap"]}</a>'
          f' &#183; <a href="{kok}ara/">{t["ara"]}</a></p>',
-         "</section>", GOVDE_KAPA,
+         "</section>", GOVDE_KAPA, "</div>",
          gezinti(kok, dil, [("", "404")]), ayak(kok, dil)]
     (KOK / "404.html").write_text("\n".join(p), encoding="utf-8")
 
