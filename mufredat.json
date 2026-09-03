@@ -16,6 +16,11 @@
    "kod": "",
    "alan": "email",
    "not": "servis: buttondown | sender | ozel. kod: buttondown kullanici adi, ya da formun tam adresi."
+  },
+  "kahve": "",
+  "gorus": {
+   "adres": "",
+   "not": "send to damla buraya POST atar. tek uclu bir form servisi (formspree/netlify) adresi. bos ise dugme 'soon' der."
   }
  },
  "mufredatlar": [
@@ -606,6 +611,20 @@
    "ozet": {
     "tr": "inşaat mühendisi tuğla taşımıyor. ilk kitap bitince başlıyor.",
     "en": "a civil engineer does not carry bricks. it starts when the first book is done."
+   },
+   "seviyeler": []
+  },
+  {
+   "kod": "product",
+   "ad": "product engineering",
+   "durum": "yakinda",
+   "baslik": {
+    "tr": "ürün mühendisliği",
+    "en": "product engineering"
+   },
+   "ozet": {
+    "tr": "çalışan bir şeyi insanların kullandığı bir şeye çeviren iş. ikinci kitap bittikten sonra başlar.",
+    "en": "the work that turns a thing that runs into a thing people use. it starts after the second book is done."
    },
    "seviyeler": []
   }

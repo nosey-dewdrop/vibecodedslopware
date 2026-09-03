@@ -1,0 +1,243 @@
+/* gece.css — ikinci renk dünyası.
+ *
+ * Renkler uydurulmadı: portfolyonun (nosey-dewdrop.github.io) `body.pal-a`
+ * paletinden birebir alındı. Orada da burada da aynı gece.
+ *
+ * Tek kural: KÂĞIT KÂĞITTIR. Sayfanın çevresi kararır, yazının durduğu blok
+ * beyaz kalır. Karanlıkta açık duran bir kitap sayfası; bir "dark mode
+ * makalesi" değil. O yüzden aşağıda .kitap div.body ve .kitap-tam hiç
+ * dokunulmadan bırakılır.
+ */
+:root[data-tema="gece"] {
+  --bg: #171221;
+  --bg-soft: #1f1930;
+  --ink: #efe8f7;
+  --ink-dim: #9d92b5;
+  --pembe: #ff8fb3;
+  --mor: #c9a6ff;
+  --yesil: #b8e39a;
+  --sari: #ffd479;
+  --mavi: #8fc7ff;
+
+  /* Kabuk bu ikisini okuyor; kâğıdınkiler aşağıda geri veriliyor. */
+  --murekkep: var(--ink);
+  --murekkep-soluk: var(--ink-dim);
+  --cizgi: #2b2340;
+  --cizgi-koyu: #3a3050;
+  --vurgu: var(--pembe);
+  --gecti: #6f6488;
+}
+
+:root[data-tema="gece"] body {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+/* --- kâğıt: gecede bile beyaz ------------------------------------------ */
+/* Gövde kendi değişkenlerini yeniden kurar, yani içindeki her şey (kod
+   blokları, kontrol kutusu, dipnot, kenar notu) açık temanın renklerini
+   kullanmaya devam eder. Kâğıdın içi ayrı bir dünyadır. */
+:root[data-tema="gece"] .kitap div.body,
+:root[data-tema="gece"] .kitap-tam {
+  --kagit: #ffffff;
+  --murekkep: #111111;
+  --murekkep-soluk: #6b6b6b;
+  --cizgi: #e4e4e4;
+  --cizgi-koyu: #cfcfcf;
+  --vurgu: #7b3fa8;
+  --gecti: #a0a0a0;
+
+  background: #ffffff;
+  color: #111111;
+  border-radius: 3px;
+  padding: 2.5rem 2.6rem 3rem;
+}
+
+:root[data-tema="gece"] .kitap.tek div.body {
+  padding: 2.5rem 2.6rem 3rem;
+}
+
+/* Kâğıdın içindeki başlık ve linkler kâğıdın rengiyle kalır. */
+:root[data-tema="gece"] .kitap div.body h1,
+:root[data-tema="gece"] .kitap div.body h2,
+:root[data-tema="gece"] .kitap-tam h1,
+:root[data-tema="gece"] .kitap-tam h2 {
+  color: #111111;
+}
+
+:root[data-tema="gece"] .kitap div.body a,
+:root[data-tema="gece"] .kitap-tam a {
+  color: #7b3fa8;
+}
+
+/* --- kabuk: üst bar, gezinti, ayak ------------------------------------- */
+:root[data-tema="gece"] div.header a,
+:root[data-tema="gece"] .header a {
+  color: var(--ink);
+}
+
+:root[data-tema="gece"] ul.navbar,
+:root[data-tema="gece"] ul.navbar a,
+:root[data-tema="gece"] .related,
+:root[data-tema="gece"] .related a,
+:root[data-tema="gece"] div.footer,
+:root[data-tema="gece"] div.footer a {
+  color: var(--ink-dim);
+}
+
+:root[data-tema="gece"] ul.navbar a:hover,
+:root[data-tema="gece"] .related a:hover,
+:root[data-tema="gece"] div.footer a:hover {
+  color: var(--pembe);
+}
+
+:root[data-tema="gece"] ul.navbar input[type="text"] {
+  background: var(--bg-soft);
+  border-color: var(--cizgi-koyu);
+  color: var(--ink);
+}
+
+/* --- sol kolon: bölüm listesi ------------------------------------------ */
+:root[data-tema="gece"] .kenar-ad,
+:root[data-tema="gece"] .kenar-bolum a,
+:root[data-tema="gece"] .kenar-sayi b {
+  color: var(--ink);
+}
+
+:root[data-tema="gece"] .kenar-seviye,
+:root[data-tema="gece"] .kenar-sayi,
+:root[data-tema="gece"] .kenar-bolum i {
+  color: var(--ink-dim);
+}
+
+:root[data-tema="gece"] .kenar-bolum.burada a,
+:root[data-tema="gece"] .kenar-bolum.burada i,
+:root[data-tema="gece"] .kenar-bolum a:hover {
+  color: var(--pembe);
+}
+
+:root[data-tema="gece"] .kenar-bolum.gecti a,
+:root[data-tema="gece"] .kenar-bolum.gecti i {
+  color: var(--gecti);
+}
+
+:root[data-tema="gece"] .kenar-ust,
+:root[data-tema="gece"] .kenar-cubuk {
+  border-color: var(--cizgi);
+  background-color: var(--cizgi);
+}
+
+:root[data-tema="gece"] .kenar-cubuk {
+  background: var(--cizgi);
+}
+
+:root[data-tema="gece"] .kenar-dolu {
+  background: var(--pembe);
+}
+
+/* --- ana sayfa: müfredat listesi --------------------------------------- */
+:root[data-tema="gece"] .ders {
+  border-color: var(--cizgi);
+}
+
+:root[data-tema="gece"] .ders:last-child {
+  border-bottom-color: var(--cizgi);
+}
+
+:root[data-tema="gece"] .ders-ad,
+:root[data-tema="gece"] .ders h2 a {
+  color: var(--ink);
+}
+
+:root[data-tema="gece"] .ders-ad:hover,
+:root[data-tema="gece"] .ders h2 a:hover {
+  color: var(--pembe);
+}
+
+:root[data-tema="gece"] .ders-sayi,
+:root[data-tema="gece"] .ders-ozet,
+:root[data-tema="gece"] .kitap.tek .yazi-ozet {
+  color: var(--ink-dim);
+}
+
+:root[data-tema="gece"] .kitap.tek #okul h1,
+:root[data-tema="gece"] .kitap.tek div.body h1 {
+  color: var(--ink);
+}
+
+/* Ana sayfa, arama ve 404'te gövde bir "yazı" değil, bir liste. Orada kâğıt
+   basılmaz: sayfa gecenin kendisidir. */
+:root[data-tema="gece"] .kitap.tek div.body {
+  --kagit: var(--bg);
+  --murekkep: var(--ink);
+  --murekkep-soluk: var(--ink-dim);
+  --cizgi: #2b2340;
+  --cizgi-koyu: #3a3050;
+  --vurgu: var(--pembe);
+  background: transparent;
+  color: var(--ink);
+  padding: 2.5rem 0 3rem;
+}
+
+:root[data-tema="gece"] .kitap.tek div.body a {
+  color: var(--pembe);
+}
+
+/* --- seçim ve yıldızlar ------------------------------------------------ */
+:root[data-tema="gece"] ::selection {
+  background: var(--pembe);
+  color: var(--bg);
+}
+
+/* Yıldız alanı yalnız gecede. Portfolyodaki `#stars` ve `.star`, aynı
+   süreyle, aynı opaklıkla. */
+#yildizlar {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  display: none;
+}
+
+:root[data-tema="gece"] #yildizlar {
+  display: block;
+}
+
+.yildiz {
+  position: absolute;
+  font-size: 11px;
+  color: var(--ink-dim);
+  opacity: 0.32;
+  animation: parla 3.4s ease-in-out infinite;
+}
+
+@keyframes parla {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.65; }
+}
+
+:root[data-tema="gece"] .iz {
+  color: var(--pembe);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .yildiz { animation: none; }
+}
+
+/* --- tema düğmesi ------------------------------------------------------- */
+.tema-dugme {
+  font: inherit;
+  font-family: var(--mono);
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.tema-dugme:hover {
+  color: var(--vurgu);
+}

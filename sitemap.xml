@@ -1,15 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/</loc></url>
-<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/slopware/</loc></url>
-<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/systems/</loc></url>
-<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/en/</loc></url>
-<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/</loc></url>
-<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/slopware-nedir/</loc></url>
-<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/ekranindaki-sey/</loc></url>
-<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/terminal-ve-klasor/</loc></url>
-<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/localhost/</loc></url>
-<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/dev-ve-build/</loc></url>
-<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/en/slopware/vitrin-ve-kasa/</loc></url>
-<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/en/systems/</loc></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/</loc>
+  <xhtml:link rel="alternate" hreflang="en" href="https://nosey-dewdrop.github.io/vibecodedslopware/" />
+  <xhtml:link rel="alternate" hreflang="tr" href="https://nosey-dewdrop.github.io/vibecodedslopware/tr/" />
+</url>
+<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/tr/</loc>
+  <xhtml:link rel="alternate" hreflang="en" href="https://nosey-dewdrop.github.io/vibecodedslopware/" />
+  <xhtml:link rel="alternate" hreflang="tr" href="https://nosey-dewdrop.github.io/vibecodedslopware/tr/" />
+</url>
+<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/slopware/</loc>
+  <xhtml:link rel="alternate" hreflang="en" href="https://nosey-dewdrop.github.io/vibecodedslopware/slopware/" />
+  <xhtml:link rel="alternate" hreflang="tr" href="https://nosey-dewdrop.github.io/vibecodedslopware/tr/slopware/" />
+</url>
+<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/tr/slopware/</loc>
+  <xhtml:link rel="alternate" hreflang="en" href="https://nosey-dewdrop.github.io/vibecodedslopware/slopware/" />
+  <xhtml:link rel="alternate" hreflang="tr" href="https://nosey-dewdrop.github.io/vibecodedslopware/tr/slopware/" />
+</url>
+<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/slopware/slopware-nedir/</loc>
+  <xhtml:link rel="alternate" hreflang="en" href="https://nosey-dewdrop.github.io/vibecodedslopware/slopware/slopware-nedir/" />
+  <xhtml:link rel="alternate" hreflang="tr" href="https://nosey-dewdrop.github.io/vibecodedslopware/tr/slopware/slopware-nedir/" />
+</url>
+<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/tr/slopware/slopware-nedir/</loc>
+  <xhtml:link rel="alternate" hreflang="en" href="https://nosey-dewdrop.github.io/vibecodedslopware/slopware/slopware-nedir/" />
+  <xhtml:link rel="alternate" hreflang="tr" href="https://nosey-dewdrop.github.io/vibecodedslopware/tr/slopware/slopware-nedir/" />
+</url>
+<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/slopware/ekranindaki-sey/</loc>
+  <xhtml:link rel="alternate" hreflang="en" href="https://nosey-dewdrop.github.io/vibecodedslopware/slopware/ekranindaki-sey/" />
+</url>
+<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/slopware/terminal-ve-klasor/</loc>
+  <xhtml:link rel="alternate" hreflang="en" href="https://nosey-dewdrop.github.io/vibecodedslopware/slopware/terminal-ve-klasor/" />
+</url>
+<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/slopware/localhost/</loc>
+  <xhtml:link rel="alternate" hreflang="en" href="https://nosey-dewdrop.github.io/vibecodedslopware/slopware/localhost/" />
+  <xhtml:link rel="alternate" hreflang="tr" href="https://nosey-dewdrop.github.io/vibecodedslopware/tr/slopware/localhost/" />
+</url>
+<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/tr/slopware/localhost/</loc>
+  <xhtml:link rel="alternate" hreflang="en" href="https://nosey-dewdrop.github.io/vibecodedslopware/slopware/localhost/" />
+  <xhtml:link rel="alternate" hreflang="tr" href="https://nosey-dewdrop.github.io/vibecodedslopware/tr/slopware/localhost/" />
+</url>
+<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/slopware/dev-ve-build/</loc>
+  <xhtml:link rel="alternate" hreflang="en" href="https://nosey-dewdrop.github.io/vibecodedslopware/slopware/dev-ve-build/" />
+</url>
+<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/slopware/vitrin-ve-kasa/</loc>
+  <xhtml:link rel="alternate" hreflang="en" href="https://nosey-dewdrop.github.io/vibecodedslopware/slopware/vitrin-ve-kasa/" />
+</url>
+<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/systems/</loc>
+  <xhtml:link rel="alternate" hreflang="en" href="https://nosey-dewdrop.github.io/vibecodedslopware/systems/" />
+  <xhtml:link rel="alternate" hreflang="tr" href="https://nosey-dewdrop.github.io/vibecodedslopware/tr/systems/" />
+</url>
+<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/tr/systems/</loc>
+  <xhtml:link rel="alternate" hreflang="en" href="https://nosey-dewdrop.github.io/vibecodedslopware/systems/" />
+  <xhtml:link rel="alternate" hreflang="tr" href="https://nosey-dewdrop.github.io/vibecodedslopware/tr/systems/" />
+</url>
+<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/product/</loc>
+  <xhtml:link rel="alternate" hreflang="en" href="https://nosey-dewdrop.github.io/vibecodedslopware/product/" />
+  <xhtml:link rel="alternate" hreflang="tr" href="https://nosey-dewdrop.github.io/vibecodedslopware/tr/product/" />
+</url>
+<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/tr/product/</loc>
+  <xhtml:link rel="alternate" hreflang="en" href="https://nosey-dewdrop.github.io/vibecodedslopware/product/" />
+  <xhtml:link rel="alternate" hreflang="tr" href="https://nosey-dewdrop.github.io/vibecodedslopware/tr/product/" />
+</url>
+<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/forum/</loc>
+  <xhtml:link rel="alternate" hreflang="en" href="https://nosey-dewdrop.github.io/vibecodedslopware/forum/" />
+  <xhtml:link rel="alternate" hreflang="tr" href="https://nosey-dewdrop.github.io/vibecodedslopware/tr/forum/" />
+</url>
+<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/tr/forum/</loc>
+  <xhtml:link rel="alternate" hreflang="en" href="https://nosey-dewdrop.github.io/vibecodedslopware/forum/" />
+  <xhtml:link rel="alternate" hreflang="tr" href="https://nosey-dewdrop.github.io/vibecodedslopware/tr/forum/" />
+</url>
+<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/kitap/</loc>
+  <xhtml:link rel="alternate" hreflang="en" href="https://nosey-dewdrop.github.io/vibecodedslopware/kitap/" />
+  <xhtml:link rel="alternate" hreflang="tr" href="https://nosey-dewdrop.github.io/vibecodedslopware/tr/kitap/" />
+</url>
+<url><loc>https://nosey-dewdrop.github.io/vibecodedslopware/tr/kitap/</loc>
+  <xhtml:link rel="alternate" hreflang="en" href="https://nosey-dewdrop.github.io/vibecodedslopware/kitap/" />
+  <xhtml:link rel="alternate" hreflang="tr" href="https://nosey-dewdrop.github.io/vibecodedslopware/tr/kitap/" />
+</url>
 </urlset>

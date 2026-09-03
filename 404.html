@@ -15,6 +15,8 @@
     <link rel="stylesheet" type="text/css" href="/vibecodedslopware/tema/pyramid.css" />
     <link rel="stylesheet" type="text/css" href="/vibecodedslopware/tema/cmu.css" />
     <link rel="stylesheet" type="text/css" href="/vibecodedslopware/tema/kitap.css" />
+    <link rel="stylesheet" type="text/css" href="/vibecodedslopware/tema/kabuk.css" />
+    <link rel="stylesheet" type="text/css" href="/vibecodedslopware/tema/gece.css" />
     <link rel="canonical" href="https://nosey-dewdrop.github.io/vibecodedslopware/404" />
     <link rel="alternate" hreflang="en" href="https://nosey-dewdrop.github.io/vibecodedslopware/404" />
     <link rel="alternate" hreflang="tr" href="https://nosey-dewdrop.github.io/vibecodedslopware/" />
@@ -31,16 +33,32 @@
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#ffffff" />
-    <script>window.KOK = "/vibecodedslopware/"; window.DIL = "en"; window.BOLUM = "";</script>
+    <script>
+      /* Tema, stil dosyalarindan once. Bu satirlar gecikirse sayfa bir kare
+         beyaz parlayip karariyor; okurun gordugu ilk sey bir flas oluyor. */
+      try {
+        var _t = localStorage.getItem("vibecodedslopware.tema");
+        if (_t === "gece" || _t === "kagit")
+          document.documentElement.setAttribute("data-tema", _t);
+      } catch (e) {}
+    </script>
+    <script>window.KOK = "/vibecodedslopware/"; window.DIL = "en"; window.BOLUM = ""; window.GORUS_ADRES = "";</script>
   </head><body>
 <div class='header'><a href='/vibecodedslopware/'>vibecodedslopware</a></div>
 
 <ul class='navbar'>
     <li><a href="/vibecodedslopware/slopware/">slopware</a></li>
-    <li><a href="/vibecodedslopware/systems/">systems engineering</a></li>
-    <li><a href="/vibecodedslopware/kitap/">html</a></li>
+    <li><span class="yakinda" tabindex="0" role="note" aria-disabled="true">systems engineering<span class="isaret" aria-hidden="true">&#10023;</span><span class="balon">soon</span></span></li>
+    <li><span class="yakinda" tabindex="0" role="note" aria-disabled="true">product engineering<span class="isaret" aria-hidden="true">&#10023;</span><span class="balon">soon</span></span></li>
+    <li class="navbar-ayrac" aria-hidden="true">&#183;</li>
+    <li><a href="/vibecodedslopware/kitap/">book</a></li>
     <li><a href="/vibecodedslopware/kitap/slopware-en.pdf">pdf</a></li>
-    <li><a href="https://github.com/nosey-dewdrop/vibecodedslopware">github</a></li>
+    <li><a href="/vibecodedslopware/forum/">forum</a></li>
+    <li class="navbar-ayrac" aria-hidden="true">&#183;</li>
+    <li><button type="button" class="mail-ac">[join the mail list!]</button></li>
+    <li><a href="https://nosey-dewdrop.github.io/vibecodedslopware/" hreflang="tr">tr</a></li>
+    <li><button type="button" class="tema-dugme" aria-label="theme">&#9680;</button></li>
+    <li><span class="yakinda" tabindex="0" role="note" aria-disabled="true">log in<span class="isaret" aria-hidden="true">&#10023;</span><span class="balon">soon — right now it is the mail list</span></span></li>
     <li class="ara"><form action="/vibecodedslopware/ara/" method="get" role="search">
       <input type="text" name="q" placeholder="search…" aria-label="search"
              autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
@@ -86,6 +104,7 @@
     </div>
 
 <div class="footer">
+<p class="ayak-sevgi">love, damla<span class="yildizcik"> &#8902;&#729;&#10209;</span></p>
 	&copy; 2026, Damla Su Bilge | <a href="https://github.com/nosey-dewdrop/vibecodedslopware">source is here</a>, if I go down, fork it.
 	text cc by-nc, code mit.
 <br>
@@ -95,8 +114,44 @@ built with a hand-written generator &#183; yazbel taught me what teaching in wri
 <br>
 <br>
 </div>
+
+<dialog class="kutu" id="ad-kutu" aria-labelledby="ad-baslik">
+  <button type="button" class="kapat" aria-label="close">&#215;</button>
+  <h2 id="ad-baslik">what should I call you?</h2>
+  <form method="dialog">
+    <span class="satir"><input type="text" maxlength="40" autocomplete="off"
+           aria-label="what should I call you?" />
+    <button type="submit" class="onay">ok</button></span>
+  </form>
+  <p>this name stays in this browser. it is not sent anywhere.</p>
+</dialog>
+
+<dialog class="kutu" id="mail-kutu" aria-labelledby="mail-baslik">
+  <button type="button" class="kapat" aria-label="close">&#215;</button>
+  <h2 id="mail-baslik">email me when a new chapter is out</h2>
+  <p>soon.</p>
+</dialog>
+
+<dialog class="kutu not-kutu" id="not-kutu" aria-labelledby="not-baslik">
+  <button type="button" class="kapat" aria-label="close">&#215;</button>
+  <h2 id="not-baslik">note</h2>
+  <blockquote class="alinti"></blockquote>
+  <form method="dialog">
+    <textarea aria-label="note"></textarea>
+    <p><button type="submit" class="onay">save</button></p>
+  </form>
+</dialog>
+
+<div id="arac-cubuk" role="toolbar" aria-label="notes">
+  <button type="button" data-arac="hl">highlight</button>
+  <button type="button" data-arac="st">strike</button>
+  <button type="button" data-arac="not">note</button>
+</div>
+<div id="yildizlar" aria-hidden="true"></div>
+
 <script src="/vibecodedslopware/tema/stem.js"></script>
 <script src="/vibecodedslopware/tema/site.js"></script>
 <script src="/vibecodedslopware/tema/kitap.js"></script>
+<script src="/vibecodedslopware/tema/kabuk.js"></script>
   </body>
 </html>

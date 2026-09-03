@@ -25,7 +25,9 @@ from pathlib import Path
 
 KOK = Path(__file__).parent
 YAZILAR = KOK / "yazilar"
-DILLER = ["en"]
+# EN kökte kalır: bütün paylaşılmış linkler ona gidiyor. TR `tr/` altında.
+DILLER = ["en", "tr"]
+ONEK = {"en": "", "tr": "tr/"}
 # Alanların yazıldığı dil: bir alanın yalnız bu dilde karşılığı varsa,
 # başka bir dilde basılmaz.
 VARSAYILAN_DIL = "tr"
@@ -35,6 +37,19 @@ AYLAR = {"tr": ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz"
                 "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"],
          "en": ["January", "February", "March", "April", "May", "June", "July",
                 "August", "September", "October", "November", "December"]}
+
+
+def karsi_dil(dil):
+    return "tr" if dil == "en" else "en"
+
+
+def karsi_adres(site, dil, yol=""):
+    """Aynı sayfanın öbür dildeki adresi.
+
+    EN kökte, TR `tr/` altında. Bir bölümün öbür dilde karşılığı yoksa
+    çağıran taraf bunu o dilin kök sayfasına düşürür: var olmayan bir
+    sayfaya hreflang vermek, hreflang vermemekten kötüdür."""
+    return f'{site["url"]}{ONEK[karsi_dil(dil)]}{yol}'
 
 
 def tarih_yaz(iso, dil):
@@ -92,6 +107,32 @@ S = {
         "olusturuldu": "elde yazılmış bir jeneratörle kuruldu",
         "gorunum": "yazbel okutmayı öğretti",
         "ipucu": "tuşlar: n sonraki, p önceki, / arama, ? liste &#183; geçtiğin bölümler yalnız bu tarayıcıda kalır &#183; <a href=\"{kok}rss.xml\">rss</a>",
+        "sevgi": "damla'dan sevgiler",
+        "kahve": "bana bir kahve ısmarla",
+        "giris": "giriş yap",
+        "giris_yakinda": "yakında — şimdilik mail listesi var",
+        "mail_ac": "mail listesine kaydol!",
+        "yakinda_balon": "yakında",
+        "ad_sor": "sana ne diyeyim?",
+        "ad_not": "bu isim bu tarayıcıda kalır, hiçbir yere gönderilmez.",
+        "ad_tamam": "tamam",
+        "kapat": "kapat",
+        "not_baslik": "not",
+        "not_kaydet": "kaydet",
+        "notlar": "notlar",
+        "arac_hl": "işaretle",
+        "arac_st": "üstünü çiz",
+        "arac_not": "not",
+        "forum": "forum",
+        "forum_ozet": "okurlardan gelen notlar ve Damla'nın cevapları.",
+        "forum_bos": "henüz cevaplanmış bir soru yok. bir bölümde cümle seç, not al, gönder.",
+        "forum_bolum": "bu bölüm hakkında {n} soru",
+        "seo_sozluk": "sözlük",
+        "seo_kontrol": "kontroller",
+        "seo_belirti": "belirtiler",
+        "seo_arac": "araçlar",
+        "seo_gecti": "geçtiği bölümler",
+        "seo_ilgili": "ilgili",
     },
     "en": {
         "bolumler": "chapters",
@@ -139,6 +180,32 @@ S = {
         "olusturuldu": "built with a hand-written generator",
         "gorunum": "yazbel taught me what teaching in writing looks like",
         "ipucu": "keys: n next, p previous, / search, ? the list &#183; the chapters you pass live in this browser only &#183; <a href=\"{kok}rss.xml\">rss</a>",
+        "sevgi": "love, damla",
+        "kahve": "buy me a coffee",
+        "giris": "log in",
+        "giris_yakinda": "soon — right now it is the mail list",
+        "mail_ac": "join the mail list!",
+        "yakinda_balon": "soon",
+        "ad_sor": "what should I call you?",
+        "ad_not": "this name stays in this browser. it is not sent anywhere.",
+        "ad_tamam": "ok",
+        "kapat": "close",
+        "not_baslik": "note",
+        "not_kaydet": "save",
+        "notlar": "notes",
+        "arac_hl": "highlight",
+        "arac_st": "strike",
+        "arac_not": "note",
+        "forum": "forum",
+        "forum_ozet": "notes readers sent, and Damla's answers.",
+        "forum_bos": "no answered question yet. pick a sentence in a chapter, write a note, send it.",
+        "forum_bolum": "{n} questions about this chapter",
+        "seo_sozluk": "glossary",
+        "seo_kontrol": "checks",
+        "seo_belirti": "symptoms",
+        "seo_arac": "tools",
+        "seo_gecti": "chapters it appears in",
+        "seo_ilgili": "related",
     },
 }
 
@@ -653,6 +720,9 @@ def kafa(veri, baslik, aciklama, kanonik, yukari, dil, karsi_url, indeksle=True,
     obur = "en" if dil == "tr" else "tr"
     t = S[dil]
     robot = "index,follow" if indeksle else "noindex"
+    # "send to damla" bu adrese POST atar. Boşsa düğme "soon" der ve hiçbir
+    # şey gönderilmez; yarım bir uç, uçsuzluktan kötüdür.
+    gorus = html.escape((veri["site"].get("gorus") or {}).get("adres", ""), quote=True)
     return f"""<!DOCTYPE html>
 <html lang="{dil}">
   <head>
@@ -670,6 +740,8 @@ def kafa(veri, baslik, aciklama, kanonik, yukari, dil, karsi_url, indeksle=True,
     <link rel="stylesheet" type="text/css" href="{yukari}tema/pyramid.css" />
     <link rel="stylesheet" type="text/css" href="{yukari}tema/cmu.css" />
     <link rel="stylesheet" type="text/css" href="{yukari}tema/kitap.css" />
+    <link rel="stylesheet" type="text/css" href="{yukari}tema/kabuk.css" />
+    <link rel="stylesheet" type="text/css" href="{yukari}tema/gece.css" />
     <link rel="canonical" href="{kanonik}" />
     <link rel="alternate" hreflang="{dil}" href="{kanonik}" />
     <link rel="alternate" hreflang="{obur}" href="{karsi_url}" />
@@ -686,28 +758,137 @@ def kafa(veri, baslik, aciklama, kanonik, yukari, dil, karsi_url, indeksle=True,
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#ffffff" />
-    <script>window.KOK = "{yukari}"; window.DIL = "{dil}"; window.BOLUM = "{bolum}";</script>
+    <script>
+      /* Tema, stil dosyalarindan once. Bu satirlar gecikirse sayfa bir kare
+         beyaz parlayip karariyor; okurun gordugu ilk sey bir flas oluyor. */
+      try {{
+        var _t = localStorage.getItem("vibecodedslopware.tema");
+        if (_t === "gece" || _t === "kagit")
+          document.documentElement.setAttribute("data-tema", _t);
+      }} catch (e) {{}}
+    </script>
+    <script>window.KOK = "{yukari}"; window.DIL = "{dil}"; window.BOLUM = "{bolum}"; window.GORUS_ADRES = "{gorus}";</script>
   </head><body>
 <div class='header'><a href='{yukari}'>vibecodedslopware</a></div>
 """
 
 
 def navbar(veri, yukari, dil, karsi_url):
+    """Üst şerit: yayındaki kitaplar, yakında olanlar, ve kabuğun düğmeleri.
+
+    Yakında olan bir kitap link değil: tıklanamayan bir şey, tıklanıp
+    hiçbir yere gitmeyen bir şeyden dürüsttür. Hover'da ne zaman geleceğini
+    söyleyen bir balon var, o kadar."""
     t = S[dil]
     p = ["<ul class='navbar'>"]
+
     for m in veri["mufredatlar"]:
-        p.append(f'    <li><a href="{yukari}{m["kod"]}/">{m["ad"]}</a></li>')
-    p.append(f'    <li><a href="{yukari}kitap/">html</a></li>')
+        if m.get("durum") == "yakinda":
+            p.append(f'    <li><span class="yakinda" tabindex="0" role="note" '
+                     f'aria-disabled="true">{kac(m["ad"])}'
+                     f'<span class="isaret" aria-hidden="true">&#10023;</span>'
+                     f'<span class="balon">{kac(t["yakinda_balon"])}</span></span></li>')
+        else:
+            p.append(f'    <li><a href="{yukari}{m["kod"]}/">{kac(m["ad"])}</a></li>')
+
+    p.append('    <li class="navbar-ayrac" aria-hidden="true">&#183;</li>')
+    p.append(f'    <li><a href="{yukari}kitap/">{t["kitap"]}</a></li>')
     p.append(f'    <li><a href="{yukari}kitap/slopware-{dil}.pdf">pdf</a></li>')
-    p.append('    <li><a href="https://github.com/nosey-dewdrop/vibecodedslopware">github</a></li>')
+    p.append(f'    <li><a href="{yukari}forum/">{kac(t["forum"])}</a></li>')
+    p.append('    <li class="navbar-ayrac" aria-hidden="true">&#183;</li>')
+
+    # Mail listesi: form sayfası yok, sayfanın ortasında bir dialog açılır.
+    p.append(f'    <li><button type="button" class="mail-ac">'
+             f'[{kac(t["mail_ac"])}]</button></li>')
+
     if len(DILLER) > 1:
-        p.append(f'    <li><a href="{karsi_url}">{"en" if dil == "tr" else "tr"}</a></li>')
+        obur = "en" if dil == "tr" else "tr"
+        p.append(f'    <li><a href="{karsi_url}" hreflang="{obur}">{obur}</a></li>')
+
+    p.append('    <li><button type="button" class="tema-dugme" '
+             'aria-label="theme">&#9680;</button></li>')
+
+    # Üyelik yakında. Tıklanmaz, hover'da söyler.
+    p.append(f'    <li><span class="yakinda" tabindex="0" role="note" '
+             f'aria-disabled="true">{kac(t["giris"])}'
+             f'<span class="isaret" aria-hidden="true">&#10023;</span>'
+             f'<span class="balon">{kac(t["giris_yakinda"])}</span></span></li>')
+
     p.append(f"""    <li class="ara"><form action="{yukari}ara/" method="get" role="search">
       <input type="text" name="q" placeholder="{t["arama_kutusu"]}" aria-label="{t["ara"]}"
              autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
     </form></li>""")
     p.append("</ul>\n")
     return "\n".join(p)
+
+
+def bulten_eylemi(veri):
+    """Bülten formunun gideceği adres. Boşsa form basılmaz."""
+    b = veri["site"].get("bulten") or {}
+    servis = b.get("servis") or ("buttondown" if veri["site"].get("buttondown") else "")
+    kod = b.get("kod") or veri["site"].get("buttondown", "")
+    if not kod:
+        return None, None
+    if servis == "buttondown":
+        return f"https://buttondown.com/api/emails/embed-subscribe/{kod}", b.get("alan", "email")
+    return kod, b.get("alan", "email")
+
+
+def dialoglar(veri, dil):
+    """Sayfanın altında duran üç dialog: isim, mail listesi, not.
+
+    Hepsi native <dialog>: Esc kapatır, focus içeride kalır, arka plan
+    kararır. Elde yazılmış bir modal bunların hiçbirini bedava vermiyor."""
+    t = S[dil]
+    eylem, alan = bulten_eylemi(veri)
+
+    if eylem:
+        mail_ic = (f'  <form action="{eylem}" method="post" target="_blank">\n'
+                   f'    <span class="satir"><input type="email" name="{alan}" required\n'
+                   f'           placeholder="mail" autocomplete="email" aria-label="mail" />\n'
+                   f'    <input type="submit" value="{kac(t["abone_dugme"])}" /></span>\n'
+                   f'    <input type="hidden" name="tag" value="{dil}" />\n'
+                   f'  </form>\n'
+                   f'  <p>{kac(t["abone_not"])}</p>')
+    else:
+        # Hesap yok: yarım bir form, formsuz bir kutudan kötüdür.
+        mail_ic = f'  <p>{kac(t["yakinda_balon"])}.</p>'
+
+    return f"""
+<dialog class="kutu" id="ad-kutu" aria-labelledby="ad-baslik">
+  <button type="button" class="kapat" aria-label="{kac(t["kapat"])}">&#215;</button>
+  <h2 id="ad-baslik">{kac(t["ad_sor"])}</h2>
+  <form method="dialog">
+    <span class="satir"><input type="text" maxlength="40" autocomplete="off"
+           aria-label="{kac(t["ad_sor"])}" />
+    <button type="submit" class="onay">{kac(t["ad_tamam"])}</button></span>
+  </form>
+  <p>{kac(t["ad_not"])}</p>
+</dialog>
+
+<dialog class="kutu" id="mail-kutu" aria-labelledby="mail-baslik">
+  <button type="button" class="kapat" aria-label="{kac(t["kapat"])}">&#215;</button>
+  <h2 id="mail-baslik">{kac(t["abone"])}</h2>
+{mail_ic}
+</dialog>
+
+<dialog class="kutu not-kutu" id="not-kutu" aria-labelledby="not-baslik">
+  <button type="button" class="kapat" aria-label="{kac(t["kapat"])}">&#215;</button>
+  <h2 id="not-baslik">{kac(t["not_baslik"])}</h2>
+  <blockquote class="alinti"></blockquote>
+  <form method="dialog">
+    <textarea aria-label="{kac(t["not_baslik"])}"></textarea>
+    <p><button type="submit" class="onay">{kac(t["not_kaydet"])}</button></p>
+  </form>
+</dialog>
+
+<div id="arac-cubuk" role="toolbar" aria-label="{kac(t["notlar"])}">
+  <button type="button" data-arac="hl">{kac(t["arac_hl"])}</button>
+  <button type="button" data-arac="st">{kac(t["arac_st"])}</button>
+  <button type="button" data-arac="not">{kac(t["arac_not"])}</button>
+</div>
+<div id="yildizlar" aria-hidden="true"></div>
+"""
 
 
 def abone_formu(veri, dil):
@@ -740,6 +921,17 @@ def abone_formu(veri, dil):
   <input type="hidden" name="tag" value="{dil}" />
   <small>{t["abone_not"]}</small>
 </form>"""
+
+
+def notlar_bolumu(dil):
+    """Kâğıdın altında, o bölümde alınan notlar.
+
+    Boşken gizli: hiç not almamış bir okura boş bir bölüm göstermenin
+    anlamı yok. kabuk.js `hidden`'ı ilk not gelince kaldırır."""
+    t = S[dil]
+    return (f'<details class="notlar" hidden>'
+            f'<summary>{kac(t["notlar"])} (<span class="not-sayi">0</span>)</summary>'
+            f'<div class="not-liste"></div></details>')
 
 
 def gezinti(yukari, dil, kirinti, onceki=None, sonraki=None, kisayol=False, karsi_url=None):
@@ -800,11 +992,17 @@ def kenar(veri, m, dil, yukari, simdiki_slug):
     t = S[dil]
     # Önsöz bir bölüm değil: okurun yapacağı bir işi yok, o yüzden paydada da yok.
     toplam = sum(1 for sv in m["seviyeler"] for b in sv["bolumler"] if not b.get("onsoz"))
-    p = [f'<nav class="kenar" aria-label="{kac(m["ad"])}">',
+    p = [f'<nav class="kenar" aria-label="{kac(m["ad"])}" data-toplam="{toplam}">',
          '  <div class="kenar-ust">',
+         # Karsilama pop-up'i kapansa da isim burada kalir: her giriste
+         # okuru adiyla karsilayan tek yer burasi. Tiklaninca isim degisir.
+         '    <button type="button" class="selam">hello<span class="yildizcik">'
+         ' &#8902;&#729;&#10209;</span></button>',
          f'    <a class="kenar-ad" href="{yukari}{m["kod"]}/">{kac(m["ad"])}</a>',
          '    <div class="kenar-cubuk"><span class="kenar-dolu"></span></div>',
-         f'    <p class="kenar-sayi"><b>0</b> / {toplam} {kac(t["gecilen"])}</p>',
+         f'    <p class="kenar-sayi"><b>0</b> / {toplam} {kac(t["gecilen"])}'
+         f' <span class="kenar-yuzde"></span></p>',
+
          f'    <button type="button" class="kenar-ac" aria-expanded="false">'
          f'{kac(t["butun_bolumler"])}</button>',
          '  </div>',
@@ -852,11 +1050,22 @@ GOVDE_KAPA = """
 """
 
 
-def ayak(yukari, dil, ekstra=""):
+def ayak(yukari, dil, ekstra="", veri=None):
+    """Ayak: önce Damla'nın imzası, sonra siteyi ayakta tutan satırlar.
+
+    buy me a coffee kullanıcı adı mufredat.json'da. Boşsa düğme basılmaz —
+    bir yere gitmeyen bir bağış düğmesi, düğmesizlikten kötüdür."""
     t = S[dil]
+    kahve = (veri or {}).get("site", {}).get("kahve", "")
+    kahve_html = ""
+    if kahve:
+        kahve_html = (f'<a class="kahve" href="https://buymeacoffee.com/{kac(kahve)}" '
+                      f'target="_blank" rel="noopener">{kac(t["kahve"])}</a>\n<br>\n<br>\n')
+    dia = dialoglar(veri, dil) if veri else ""
     return f"""
 <div class="footer">
-	&copy; 2026, Damla Su Bilge | <a href="https://github.com/nosey-dewdrop/vibecodedslopware">{t["kaynak"]}</a>, {t["fork"]}.
+<p class="ayak-sevgi">{kac(t["sevgi"])}<span class="yildizcik"> &#8902;&#729;&#10209;</span></p>
+{kahve_html}	&copy; 2026, Damla Su Bilge | <a href="https://github.com/nosey-dewdrop/vibecodedslopware">{t["kaynak"]}</a>, {t["fork"]}.
 	{t["lisans"]}.
 <br>
 {t["olusturuldu"]} &#183; {t["gorunum"]}
@@ -865,9 +1074,11 @@ def ayak(yukari, dil, ekstra=""):
 <br>
 <br>
 </div>
+{dia}
 <script src="{yukari}tema/stem.js"></script>
 <script src="{yukari}tema/site.js"></script>
-<script src="{yukari}tema/kitap.js"></script>{ekstra}
+<script src="{yukari}tema/kitap.js"></script>
+<script src="{yukari}tema/kabuk.js"></script>{ekstra}
   </body>
 </html>
 """
@@ -882,7 +1093,8 @@ def kur():
             shutil.rmtree(KOK / m["kod"])
     en_pdf = KOK / "kitap" / "slopware-en.pdf"
     en_pdf_yedek = en_pdf.read_bytes() if en_pdf.exists() else None
-    for eski in ("en", "ara", "bolum"):
+    for eski in ("en", "tr", "ara", "bolum", "forum", "sozluk", "kontrol",
+                 "belirti", "arac", "seviye"):
         if (KOK / eski).exists():
             shutil.rmtree(KOK / eski)
     if en_pdf_yedek:
@@ -893,7 +1105,7 @@ def kur():
 
     toplam = 0
     for dil in DILLER:
-        onek = ""
+        onek = ONEK[dil]
         indeks = []
         for m in veri["mufredatlar"]:
             toplam += mufredat_kur(veri, m, dil, onek, indeks)
@@ -901,11 +1113,11 @@ def kur():
         arama_sayfasi(veri, dil, onek)
         arama_indeksi(indeks, dil)
         rss_yaz(veri, dil, onek)
-        toplam += 2
+        forum_sayfasi(veri, dil, onek)
+        toplam += 3
 
     site_haritasi(veri)
     dort_yuz_dort(veri)
-    eski_en_yonlendir(veri)
     (KOK / "robots.txt").write_text(
         f"User-agent: *\nAllow: /\nSitemap: {veri['site']['url']}sitemap.xml\n", encoding="utf-8")
     print(f"{toplam} sayfa kuruldu ({len(veri['mufredatlar'])} müfredat × {len(DILLER)} dil).")
@@ -915,7 +1127,8 @@ def mufredat_kur(veri, m, dil, onek, indeks):
     site, t = veri["site"], S[dil]
     duzlem = [b for sv in m["seviyeler"] for b in sv["bolumler"]]
     seviye_of = {b["slug"]: sv for sv in m["seviyeler"] for b in sv["bolumler"]}
-    yukari = "../../"
+    # tr/ bir kademe daha derinde: tr/slopware/localhost/ -> ../../../
+    yukari = "../../" + ("../" * onek.count("/"))
     sayac = 0
 
     # Tarihi gelmemiş bölüm kilitli: sayfası kurulmaz, listede tıklanmaz.
@@ -945,7 +1158,13 @@ def mufredat_kur(veri, m, dil, onek, indeks):
         b[f"ozet_{dil}"] = neden or " ".join(aranan.split()[:60])
 
         kanonik = f'{site["url"]}{onek}{m["kod"]}/{b["slug"]}/'
-        karsi = kanonik
+        # Öbür dilde bu bölümün yazısı var mı? Yoksa okuru o dilin
+        # müfredatına bırak, olmayan bir sayfaya değil.
+        obur = karsi_dil(dil)
+        if (YAZILAR / obur / m["kod"] / f'{b["slug"]}.md').exists():
+            karsi = karsi_adres(site, dil, f'{m["kod"]}/{b["slug"]}/')
+        else:
+            karsi = karsi_adres(site, dil, f'{m["kod"]}/')
         onceki = acik[idx - 1] if idx > 0 else None
         sonraki = acik[idx + 1] if idx < len(acik) - 1 else None
         onc = ((f'{yukari}{m["kod"]}/{onceki["slug"]}/',
@@ -981,6 +1200,8 @@ def mufredat_kur(veri, m, dil, onek, indeks):
                  f"¶</a></h1>",
                  f'<div class="description yazi-ozet">{kac(neden)}</div>',
                  icerik,
+                 notlar_bolumu(dil),
+                 bolum_forum_satiri(dil, yukari, f'{m["kod"]}/{b["slug"]}'),
                  bolum_sonu(yukari, dil, onc, son),
                  abone_formu(veri, dil),
                  "</section>",
@@ -989,7 +1210,7 @@ def mufredat_kur(veri, m, dil, onek, indeks):
                   if (ic_tablo or kuyruk) else ""),
                  '</div>',
                  gezinti(yukari, dil, kirinti, onc, son),
-                 ayak(yukari, dil)]
+                 ayak(yukari, dil, veri=veri)]
         sayfa = "\n".join(sayfa)
 
         klasor = (KOK / onek.rstrip("/") / m["kod"] / b["slug"] if onek
@@ -1019,9 +1240,9 @@ def mufredat_ana(veri, m, dil, onek):
     site, t = veri["site"], S[dil]
     duzlem = [b for sv in m["seviyeler"] for b in sv["bolumler"]]
     yazilan = sum(1 for b in duzlem if b.get(f"durum_{dil}") == "yazildi")
-    yukari = "../"
+    yukari = "../" + ("../" * onek.count("/"))
     kanonik = f'{site["url"]}{onek}{m["kod"]}/'
-    karsi = kanonik
+    karsi = karsi_adres(site, dil, f'{m["kod"]}/')
     baslik = metin(m["baslik"], dil)
     ozet = metin(m["ozet"], dil)
     kimlik = slugla(m["kod"])
@@ -1096,7 +1317,7 @@ def mufredat_ana(veri, m, dil, onek):
     p.append(GOVDE_KAPA)
     p.append("</div>")
     p.append(gezinti(yukari, dil, kirinti, None, son))
-    p.append(ayak(yukari, dil))
+    p.append(ayak(yukari, dil, veri=veri))
 
     klasor = KOK / onek.rstrip("/") / m["kod"] if onek else KOK / m["kod"]
     klasor.mkdir(parents=True, exist_ok=True)
@@ -1111,9 +1332,9 @@ def kitap_kur(veri, m, dil, onek):
         return 0
     duzlem = [b for sv in m["seviyeler"] for b in sv["bolumler"]]
     yayinda = [b for b in duzlem if b.get(f"durum_{dil}") == "yazildi"]
-    yukari = "../"
+    yukari = "../" + ("../" * onek.count("/"))
     kanonik = f'{site["url"]}{onek}kitap/'
-    karsi = kanonik
+    karsi = karsi_adres(site, dil, "kitap/")
     baslik = metin(m["baslik"], dil)
     kirinti = [("", t["kitap"])]
 
@@ -1146,7 +1367,7 @@ def kitap_kur(veri, m, dil, onek):
     p.append(GOVDE_KAPA)
     p.append("</div>")
     p.append(gezinti(yukari, dil, kirinti))
-    p.append(ayak(yukari, dil))
+    p.append(ayak(yukari, dil, veri=veri))
 
     klasor = KOK / onek.rstrip("/") / "kitap" if onek else KOK / "kitap"
     klasor.mkdir(parents=True, exist_ok=True)
@@ -1271,9 +1492,9 @@ def okul_sayfasi(veri, dil, onek):
     # Ana sayfa kökte duruyor, o yüzden tema yanı başında. Bu satır EN'in
     # `en/` altında olduğu zamandan kalmıştı ve site kökte yayına geçince
     # bütün stil dosyalarını bir üst dizinde aramaya başladı.
-    yukari = ""
+    yukari = "../" * onek.count("/")
     kanonik = f'{site["url"]}{onek}'
-    karsi = kanonik
+    karsi = karsi_adres(site, dil)
     aciklama = metin(site["aciklama"], dil)
 
     ilk = veri["mufredatlar"][0]
@@ -1307,18 +1528,91 @@ def okul_sayfasi(veri, dil, onek):
     p.append(GOVDE_KAPA)
     p.append("</div>")
     p.append(gezinti(yukari, dil, kirinti, None, (f'{yukari}{ilk["kod"]}/', ilk["ad"])))
-    p.append(ayak(yukari, dil))
+    p.append(ayak(yukari, dil, veri=veri))
 
     hedef = KOK / onek.rstrip("/") if onek else KOK
     hedef.mkdir(parents=True, exist_ok=True)
     (hedef / "index.html").write_text("\n".join(p), encoding="utf-8")
 
 
+def forum_oku():
+    """forum.json: okurdan gelmiş, Damla'nın cevapladığı sorular.
+
+    Şekil hesap geldiğinde bir tabloya dönecek olan şekil:
+        {"id", "bolum", "dil", "alinti", "soru", "cevap", "tarih"}
+    Cevabı olmayan kalem basılmaz — bir soruyu ortada bırakmak, onu hiç
+    göstermemekten kötüdür."""
+    yol = KOK / "forum.json"
+    if not yol.exists():
+        return []
+    try:
+        kalemler = json.loads(yol.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, ValueError):
+        print("  forum.json okunamadı, forum boş kuruluyor")
+        return []
+    if not isinstance(kalemler, list):
+        return []
+    return [k for k in kalemler if k.get("cevap") and k.get("soru")]
+
+
+def forum_sayfasi(veri, dil, onek):
+    site, t = veri["site"], S[dil]
+    yukari = "../" + ("../" * onek.count("/"))
+    kanonik = f'{site["url"]}{onek}forum/'
+    karsi = karsi_adres(site, dil, "forum/")
+    kirinti = [("", t["forum"])]
+    kalemler = [k for k in forum_oku() if k.get("dil", dil) == dil]
+
+    p = [kafa(veri, t["forum"], t["forum_ozet"], kanonik, yukari, dil, karsi),
+         navbar(veri, yukari, dil, karsi),
+         gezinti(yukari, dil, kirinti, kisayol=True, karsi_url=karsi),
+         '<div class="kitap tek">',
+         GOVDE_AC,
+         '  <section id="forum">',
+         f'<h1>{kac(t["forum"])}<a class="headerlink" href="#forum">&#182;</a></h1>',
+         f'<div class="description yazi-ozet">{kac(t["forum_ozet"])}</div>']
+
+    if not kalemler:
+        p.append(f'<p class="forum-bos">{kac(t["forum_bos"])}</p>')
+    else:
+        for k in kalemler:
+            capa = slugla(str(k.get("id") or k["soru"][:40]))
+            bolum = k.get("bolum", "")
+            nerede = kac(bolum.replace("/", " · ")) if bolum else ""
+            p.append(f'<article class="forum-kalem" id="{capa}">')
+            if nerede:
+                yol_b = f'{yukari}{bolum}/'
+                p.append(f'<p class="nerede"><a href="{yol_b}">{nerede}</a></p>')
+            p.append(f'<p class="soru">{kac(k["soru"])}</p>')
+            if k.get("alinti"):
+                p.append(f'<blockquote>{kac(k["alinti"])}</blockquote>')
+            p.append(f'<div class="cevap">{kac(k["cevap"])}</div>')
+            p.append("</article>")
+
+    p += ["</section>", GOVDE_KAPA, "</div>",
+          gezinti(yukari, dil, kirinti), ayak(yukari, dil, veri=veri)]
+
+    hedef = (KOK / onek.rstrip("/") / "forum") if onek else (KOK / "forum")
+    hedef.mkdir(parents=True, exist_ok=True)
+    (hedef / "index.html").write_text("\n".join(p), encoding="utf-8")
+
+
+def bolum_forum_satiri(dil, yukari, bolum_kimlik):
+    """Bölümün altında: bu bölüm hakkında kaç soru cevaplanmış."""
+    n = sum(1 for k in forum_oku()
+            if k.get("bolum") == bolum_kimlik and k.get("dil", dil) == dil)
+    if not n:
+        return ""
+    t = S[dil]
+    return (f'<p class="bolum-forum"><a href="{yukari}forum/">'
+            f'{kac(t["forum_bolum"].format(n=n))} &#8594;</a></p>')
+
+
 def arama_sayfasi(veri, dil, onek):
     site, t = veri["site"], S[dil]
-    yukari = "../"
+    yukari = "../" + ("../" * onek.count("/"))
     kanonik = f'{site["url"]}{onek}ara/'
-    karsi = kanonik
+    karsi = karsi_adres(site, dil, "ara/")
     kirinti = [("", t["arama"])]
 
     p = [kafa(veri, t["arama"], t["arama_ipucu"], kanonik, yukari, dil, karsi,
@@ -1341,7 +1635,7 @@ def arama_sayfasi(veri, dil, onek):
          GOVDE_KAPA,
          '</div>',
          gezinti(yukari, dil, kirinti),
-         ayak(yukari, dil,
+         ayak(yukari, dil, veri=veri,
               ekstra=f'\n<script src="{yukari}tema/ara.js"></script>')]
 
     hedef = (KOK / onek.rstrip("/") / "ara") if onek else (KOK / "ara")
@@ -1435,7 +1729,7 @@ def dort_yuz_dort(veri):
          f' &#183; <a href="{kok}kitap/">{t["kitap"]}</a>'
          f' &#183; <a href="{kok}ara/">{t["ara"]}</a></p>',
          "</section>", GOVDE_KAPA, "</div>",
-         gezinti(kok, dil, [("", "404")]), ayak(kok, dil)]
+         gezinti(kok, dil, [("", "404")]), ayak(kok, dil, veri=veri)]
     (KOK / "404.html").write_text("\n".join(p), encoding="utf-8")
 
 
@@ -1464,18 +1758,48 @@ def eski_en_yonlendir(veri):
             encoding="utf-8")
 
 
-def site_haritasi(veri):
+def site_haritasi(veri, ekstra=None):
+    """Her dilin her yayındaki sayfası, karşı diliyle birlikte.
+
+    Bir sayfanın öbür dilde karşılığı yoksa ona hreflang verilmez: var
+    olmayan bir adresi göstermek, göstermemekten kötüdür."""
     u = veri["site"]["url"]
     p = ['<?xml version="1.0" encoding="UTF-8"?>',
-         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    for dil, onek in (("tr", ""), ("en", "en/")):
-        p.append(f"<url><loc>{u}{onek}</loc></url>")
-        for m in veri["mufredatlar"]:
-            p.append(f'<url><loc>{u}{onek}{m["kod"]}/</loc></url>')
-            for sv in m["seviyeler"]:
-                for b in sv["bolumler"]:
-                    if b.get(f"durum_{dil}") == "yazildi":
-                        p.append(f'<url><loc>{u}{onek}{m["kod"]}/{b["slug"]}/</loc></url>')
+         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"',
+         '        xmlns:xhtml="http://www.w3.org/1999/xhtml">']
+
+    def kalem(yol_tr, yol_en):
+        """yol_* None ise o dilde yok."""
+        for dil, yol in (("en", yol_en), ("tr", yol_tr)):
+            if yol is None:
+                continue
+            p.append(f"<url><loc>{u}{ONEK[dil]}{yol}</loc>")
+            if yol_en is not None:
+                p.append(f'  <xhtml:link rel="alternate" hreflang="en" '
+                         f'href="{u}{ONEK["en"]}{yol_en}" />')
+            if yol_tr is not None:
+                p.append(f'  <xhtml:link rel="alternate" hreflang="tr" '
+                         f'href="{u}{ONEK["tr"]}{yol_tr}" />')
+            p.append("</url>")
+
+    kalem("", "")
+    for m in veri["mufredatlar"]:
+        kalem(f'{m["kod"]}/', f'{m["kod"]}/')
+        for sv in m["seviyeler"]:
+            for b in sv["bolumler"]:
+                var_tr = b.get("durum_tr") == "yazildi"
+                var_en = b.get("durum_en") == "yazildi"
+                if not (var_tr or var_en):
+                    continue
+                yol = f'{m["kod"]}/{b["slug"]}/'
+                kalem(yol if var_tr else None, yol if var_en else None)
+    kalem("forum/", "forum/")
+    kalem("kitap/", "kitap/")
+
+    # Programatik sayfalar: her biri (yol, dil) çifti olarak gelir.
+    for yol, dil in (ekstra or []):
+        p.append(f"<url><loc>{u}{ONEK[dil]}{yol}</loc></url>")
+
     p.append("</urlset>")
     (KOK / "sitemap.xml").write_text("\n".join(p), encoding="utf-8")
 
