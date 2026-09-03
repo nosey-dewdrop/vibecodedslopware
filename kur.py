@@ -1268,7 +1268,10 @@ def rss_yaz(veri, dil, onek):
 
 def okul_sayfasi(veri, dil, onek):
     site, t = veri["site"], S[dil]
-    yukari = "" if dil == "tr" else "../"
+    # Ana sayfa kökte duruyor, o yüzden tema yanı başında. Bu satır EN'in
+    # `en/` altında olduğu zamandan kalmıştı ve site kökte yayına geçince
+    # bütün stil dosyalarını bir üst dizinde aramaya başladı.
+    yukari = ""
     kanonik = f'{site["url"]}{onek}'
     karsi = kanonik
     aciklama = metin(site["aciklama"], dil)

@@ -6,3 +6,7 @@ CLAUDE.context.md
 
 .rabadon/state.json
 __pycache__/
+
+# rabadon calisma dosyalari alt klasorlere sizmasin
+tema/.rabadon/
+yazilar/**/.rabadon/
