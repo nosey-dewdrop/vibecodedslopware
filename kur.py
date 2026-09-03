@@ -884,8 +884,8 @@ def navbar(veri, yukari, dil, karsi_url, simdiki=None):
         obur = "en" if dil == "tr" else "tr"
         p.append(f'    <a href="{karsi_url}" hreflang="{obur}" '
                  f'class="dil-bag">[{obur}]</a>')
-    p.append('    <button type="button" class="tema-dugme" '
-             'aria-label="{kac(t["tema"])}">[&#183;]</button>')
+    p.append(f'    <button type="button" class="tema-dugme" '
+             f'aria-label="{kac(t["tema"])}">[&#183;]</button>')
     p.append(f'    <span class="yakinda" tabindex="0" role="note" '
              f'aria-disabled="true">[{kac(t["giris"])}]'
              f'<span class="balon">{kac(t["giris_yakinda"])}</span></span>')
@@ -1070,7 +1070,7 @@ def kenar(veri, m, dil, yukari, simdiki_slug):
          f'    <a class="kenar-ad" href="{yerel(yukari, dil, m["kod"] + "/")}">'
          f'{kac(m["ad"])}</a>',
          '    <div class="kenar-cubuk"><span class="kenar-dolu"></span></div>',
-         f'    <p class="kenar-sayi"><span class="sayi">0</span> / {toplam} {kac(t["gecilen"])}'
+         f'    <p class="kenar-sayi"><b>0</b> / {toplam} {kac(t["gecilen"])}'
          f' <span class="kenar-yuzde"></span></p>',
 
          f'    <button type="button" class="kenar-ac" aria-expanded="false">'
@@ -1392,7 +1392,7 @@ def mufredat_ana(veri, m, dil, onek):
     else:
         p.append(f'<p class="henuz">{len(duzlem)} {t["bolumler"]} &#183; '
                  f'{yazilan} {t["yayinda"]} &#183; {t["haftada"]}'
-                 f'<span class="gecilen" hidden> &#183; <span class="sayi">0</span> {t["gecilen"]}</span>.'
+                 f'<span class="gecilen" hidden> &#183; <b>0</b> {t["gecilen"]}</span>.'
                  f'{siradaki_satir(m, dil)}</p>')
         tek = len(m["seviyeler"]) == 1
         for sv in m["seviyeler"]:

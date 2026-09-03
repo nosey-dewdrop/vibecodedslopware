@@ -346,6 +346,29 @@ def _():
     return "[hidden] {\n  display: none !important;\n}" in oku("tema/kabuk.css")
 
 
+@kural("X13", "kod sayfaya sızmaz", "f-string eksik değil")
+def _():
+    # Bir f öneki unutulunca Python ifadesi ham metin olarak basıldı ve
+    # 44 sayfada göründü. Sayfada süslü parantezli bir ifade kalıntısı
+    # varsa bir yerde f eksiktir.
+    for y in (BOLUM, ANA, FORUM):
+        if re.search(r'\{(kac|f?['"'"'"]|t\[|yukari|dil)', oku(y)):
+            return False
+    return True
+
+
+@kural("X14", "sayaç gerçekten güncellenir", "JS'in aradığı işaretleyici var")
+def _():
+    # site.js `.kenar-sayi b` arıyor. Üretici başka bir şey basarsa sayaç
+    # sessizce 0'da donuyor ve yanındaki yüzde tırmanıyor: aynı satırda
+    # iki çelişen sayı.
+    js = oku("tema/site.js")
+    m = re.search(r'querySelector\("\.kenar-sayi ([a-z]+)"\)', js)
+    if not m:
+        return False
+    return f'<p class="kenar-sayi"><{m.group(1)}>' in oku(BOLUM)
+
+
 @kural("S3", "ince sayfa basılmaz", "kelime eşiği")
 def _():
     return "SEO_EN_AZ_KELIME" in oku("kur.py")

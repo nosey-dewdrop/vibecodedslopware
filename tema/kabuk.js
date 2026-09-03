@@ -154,7 +154,28 @@
     if (yer) yer.addEventListener("click", function () { adSor(true); });
 
     selamCiz();
-    if (oku(AD_ANAHTAR, null) === null) setTimeout(function () { adSor(false); }, 420);
+
+    /* İsim, okur bir şey okumadan sorulmaz.
+     *
+     * Bir sayfaya yeni gelmiş birinin karşısına çıkan boş bir metin
+     * kutusu bir kayıt formu gibi duruyor ve okurun ilk hamlesi geri
+     * tuşu oluyor. Selamlama bir hediye; hediye kapıda istenmez.
+     *
+     * Üç koşul birden: yalnızca bir bölüm sayfasında, okur gerçekten
+     * aşağı indikten sonra, ve yalnızca bir kez. Arama ya da forumda
+     * hiç sorulmaz; oraya gelen kişinin bir işi var. */
+    if (oku(AD_ANAHTAR, null) !== null) return;
+    if (!window.BOLUM) return;
+
+    var soruldu = false;
+    function belkiSor() {
+      if (soruldu) return;
+      if (window.scrollY < 400) return;
+      soruldu = true;
+      removeEventListener("scroll", belkiSor);
+      adSor(false);
+    }
+    addEventListener("scroll", belkiSor, { passive: true });
   }
 
   /* İlerleme yüzdesi site.js'te, sayacın yanında hesaplanıyor. */

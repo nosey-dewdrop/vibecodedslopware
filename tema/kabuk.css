@@ -2334,3 +2334,120 @@ ul.navbar a[aria-current="page"] {
   color: var(--murekkep-soluk);
   cursor: default;
 }
+
+/* ============================== ŞERİT: ORTA GERÇEKTEN ORTADA
+ * `space-between` üç grubu iki uca yaslıyordu ve sol grup geniş olduğu
+ * için orta grup onun yanına düşüyordu. Ortada durmasının tek yolu üç
+ * eşit kolon: yanlar ne kadar genişlerse genişlesin, orta ekranın
+ * ortasında kalır. */
+ul.navbar {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 0 1.5rem;
+}
+
+ul.navbar li.grup.sol {
+  justify-self: start;
+}
+
+ul.navbar li.grup.orta {
+  justify-self: center;
+}
+
+ul.navbar li.grup.sag {
+  justify-self: end;
+  margin-left: 0;
+}
+
+/* Dar ekranda üç kolon sığmıyor: alt alta, hepsi sola. */
+@media screen and (max-width: 1200px) {
+  ul.navbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 0.4rem 1.1rem;
+  }
+
+  ul.navbar li.grup.sol,
+  ul.navbar li.grup.orta,
+  ul.navbar li.grup.sag {
+    justify-self: auto;
+  }
+}
+
+/* ============================== ana sayfa: ad ile sayı arasında boşluk
+ * "slopware55 chapters" yapışıktı: ad bir bağlantı, sayı bir span, ikisi
+ * arasında hiçbir şey yoktu. */
+.ders-ad {
+  display: inline;
+  margin-right: 0.7rem;
+}
+
+.ders-sayi {
+  display: inline;
+}
+
+.ders-ad + .ders-sayi::before {
+  content: "";
+}
+
+/* Kitabın adı ile özeti arasında bir satır: üç kitap üç blok gibi dursun. */
+.ders {
+  padding: 1.6rem 0;
+}
+
+.ders-ozet {
+  margin-top: 0.5rem;
+}
+
+/* ============================== prev / next: ad butonun ALTINDA
+ * Etiket ve bölüm adı tek satırda yapışıktı: "[< previous]why can your
+ * deploy not find your files?" tek bir kelime gibi okunuyordu. Etiket
+ * üstte, gideceğin bölümün adı altında. */
+.kitap nav.sonraki a {
+  display: block;
+  white-space: normal;
+  max-width: 46%;
+}
+
+.kitap nav.sonraki a span {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--murekkep-soluk);
+  margin-bottom: 0.3rem;
+}
+
+.kitap nav.sonraki a i {
+  display: block;
+  font-style: normal;
+  font-family: var(--serif);
+  font-size: 1rem;
+  line-height: 1.35;
+  color: var(--murekkep);
+}
+
+.kitap nav.sonraki a:hover i {
+  color: var(--vurgu);
+}
+
+.kitap nav.sonraki .ileri {
+  text-align: right;
+}
+
+/* Sayaçtaki sayı kalın değil: kanun her şeyin 400 olması. */
+.kenar-sayi b,
+p.henuz b {
+  font-weight: 400;
+  color: var(--murekkep);
+}
+
+:root[data-tema="gece"] .kenar-sayi b,
+:root[data-tema="gece"] p.henuz b {
+  color: var(--ink);
+}
+
+:root[data-tema="gece"] .kitap nav.sonraki a i {
+  color: var(--ink);
+}
