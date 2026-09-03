@@ -33,41 +33,60 @@
   color: var(--ink);
 }
 
-/* --- kâğıt: gecede bile beyaz ------------------------------------------ */
-/* Gövde kendi değişkenlerini yeniden kurar, yani içindeki her şey (kod
-   blokları, kontrol kutusu, dipnot, kenar notu) açık temanın renklerini
-   kullanmaya devam eder. Kâğıdın içi ayrı bir dünyadır. */
+/* --- kâğıt: gecede koyu, ama gövdeden ayrı bir yüzey ----------------- */
+/* Beyaz bir blok karanlık bir sayfada göz yakıyor ve uzun metni okunmaz
+ * hâle getiriyor. Kâğıt hissi rengin beyazlığından değil, yazının kendi
+ * yüzeyinde durmasından geliyor: gövdeden bir ton açık, kendi kenarı olan
+ * bir alan. */
 :root[data-tema="gece"] .kitap div.body,
 :root[data-tema="gece"] .kitap-tam {
-  --kagit: #ffffff;
-  --murekkep: #111111;
-  --murekkep-soluk: #6b6b6b;
-  --cizgi: #e4e4e4;
-  --cizgi-koyu: #cfcfcf;
-  --vurgu: #7b3fa8;
-  --gecti: #a0a0a0;
-
-  background: #ffffff;
-  color: #111111;
+  background: var(--bg-soft);
+  color: var(--ink);
   border-radius: 3px;
-  padding: 2.5rem 2.6rem 3rem;
+  padding: 2.4rem 2.6rem 3rem;
 }
 
-:root[data-tema="gece"] .kitap.tek div.body {
-  padding: 2.5rem 2.6rem 3rem;
-}
-
-/* Kâğıdın içindeki başlık ve linkler kâğıdın rengiyle kalır. */
 :root[data-tema="gece"] .kitap div.body h1,
 :root[data-tema="gece"] .kitap div.body h2,
 :root[data-tema="gece"] .kitap-tam h1,
 :root[data-tema="gece"] .kitap-tam h2 {
-  color: #111111;
+  color: var(--ink);
 }
 
 :root[data-tema="gece"] .kitap div.body a,
 :root[data-tema="gece"] .kitap-tam a {
-  color: #7b3fa8;
+  color: var(--pembe);
+  border-bottom-color: rgba(255, 143, 179, 0.35);
+}
+
+/* Kod blokları da gövdeyle aynı dünyada kalır. */
+:root[data-tema="gece"] .kitap div.body pre,
+:root[data-tema="gece"] .kitap-tam pre {
+  background: var(--bg);
+  border-color: var(--cizgi-koyu);
+  color: var(--ink);
+}
+
+:root[data-tema="gece"] .kitap div.body blockquote {
+  border-left-color: var(--cizgi-koyu);
+  color: var(--ink-dim);
+}
+
+:root[data-tema="gece"] .kitap div.admonition.kontrol {
+  background: var(--bg);
+  border-color: var(--cizgi-koyu);
+  border-left-color: var(--pembe);
+}
+
+:root[data-tema="gece"] .kitap .yazi-ozet {
+  color: var(--ink-dim);
+  border-bottom-color: var(--cizgi);
+}
+
+:root[data-tema="gece"] .kitap .kod .kopyala {
+  background: var(--bg-soft);
+  border-color: var(--cizgi-koyu);
+  color: var(--ink-dim);
 }
 
 /* --- kabuk: üst bar, gezinti, ayak ------------------------------------- */

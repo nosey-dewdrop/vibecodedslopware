@@ -1328,3 +1328,66 @@ div.footer {
     position: static;
   }
 }
+
+/* ==================================================== kenar payı */
+/* Sıfır boşluk yoruyor: içerik ekranın kenarına yapışınca göz satır başını
+ * kaybediyor. Az ama gerçek bir pay. */
+.header,
+ul.navbar,
+.related,
+div.footer,
+.kitap {
+  padding-left: 3.5rem;
+  padding-right: 3.5rem;
+}
+
+/* ==================================================== gezinti şeridi sırası */
+/* Kırıntı (slopware · bölüm adı) SOLDA, yön bağlantıları SAĞDA. `li.right`
+ * öğeleri kaynakta önce geliyordu ve flex onları önce diziyordu; sıra
+ * görsel olarak düzeltilir, kaynak dokunulmadan kalır. */
+.related ul {
+  display: flex;
+  align-items: baseline;
+  gap: 0 0.55rem;
+}
+
+.related li.nav-item {
+  order: 1;
+}
+
+.related li.right {
+  order: 2;
+}
+
+/* İlk sağ öğe boşluğu yer: kırıntı solda kalır, yön sağa itilir. */
+.related li.right:first-of-type {
+  margin-left: auto;
+}
+
+.related li.nav-item + li.nav-item::before {
+  content: "·";
+  color: var(--cizgi-koyu);
+  margin-right: 0.55rem;
+}
+
+@media screen and (max-width: 1250px) {
+  .header,
+  ul.navbar,
+  .related,
+  div.footer,
+  .kitap {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .header,
+  ul.navbar,
+  .related,
+  div.footer,
+  .kitap {
+    padding-left: 1.3rem;
+    padding-right: 1.3rem;
+  }
+}
