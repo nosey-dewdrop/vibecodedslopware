@@ -1391,3 +1391,120 @@ div.footer,
     padding-right: 1.3rem;
   }
 }
+
+/* ==================================================== üst: boşluk ve renk */
+/* Sayfanın üstünde yarım ekran boşluk vardı: ad, şerit ve gövde arasındaki
+ * paylar üst üste binmişti. Üçü tek bir blok. */
+.header {
+  padding-top: 1.1rem !important;
+  padding-bottom: 0 !important;
+}
+
+div.header a,
+.header a {
+  font-size: clamp(1.25rem, 4vw, 1.7rem);
+}
+
+ul.navbar {
+  padding-top: 0.55rem !important;
+  padding-bottom: 0.7rem !important;
+}
+
+.related {
+  padding-top: 0.35rem !important;
+  padding-bottom: 0.5rem !important;
+}
+
+.kitap .kenar,
+.kitap div.body,
+.kitap .kenar-not {
+  padding-top: 1rem;
+}
+
+/* --- renk: portfolyoda renk anlam taşır, burada da taşısın -------------- */
+/* Şerit baştan sona griydi. Her öğe ne olduğunu rengiyle söyler:
+ *   yayındaki kitap   yeşil     okunacak şey burada
+ *   yakında olan      soluk     henüz yok
+ *   kitap / pdf       mavi      indirilecek, okunacak
+ *   forum             mor       insanların olduğu yer
+ *   mail listesi      pembe     tek çağrı
+ *   dil / tema        sarı      ayar
+ */
+:root {
+  --n-yesil: #357422;
+  --n-mavi: #1f5c9e;
+  --n-mor: #5f35a8;
+  --n-sari: #8a5f00;
+}
+
+:root[data-tema="gece"] {
+  --n-yesil: #b8e39a;
+  --n-mavi: #8fc7ff;
+  --n-mor: #c9a6ff;
+  --n-sari: #ffd479;
+}
+
+ul.navbar a[href$="slopware/"] {
+  color: var(--n-yesil);
+}
+
+ul.navbar a[href$="kitap/"],
+ul.navbar a[href$=".pdf"] {
+  color: var(--n-mavi);
+}
+
+ul.navbar a[href$="forum/"] {
+  color: var(--n-mor);
+}
+
+ul.navbar a[hreflang],
+.tema-dugme {
+  color: var(--n-sari);
+}
+
+.mail-ac {
+  color: var(--vurgu);
+}
+
+ul.navbar a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Gezinti şeridi: kırıntı solda ve renkli, yön sağda ve soluk. */
+.related .nav-item a {
+  color: var(--n-yesil);
+}
+
+.related li.right a {
+  color: var(--murekkep-soluk);
+}
+
+.related li.right a:hover {
+  color: var(--vurgu);
+}
+
+/* Şeridi kaynak sırasından bağımsız diz: kırıntı sola, yön sağa. */
+.related ul {
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 0.55rem;
+  width: 100%;
+}
+
+.related li.nav-item {
+  order: 0;
+}
+
+.related li.right {
+  order: 5;
+}
+
+.related li.right:first-of-type {
+  margin-left: auto !important;
+}
+
+.related li.right ~ li.right {
+  margin-left: 0 !important;
+}
