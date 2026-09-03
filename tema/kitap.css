@@ -94,15 +94,7 @@ ul.navbar a:hover {
 
 /* --- iki sütun ---------------------------------------------------------- */
 .kitap {
-  display: grid;
-  grid-template-columns: var(--kenar-en) minmax(0, var(--olcu)) var(--not-en);
-  justify-content: center;
-  gap: 0 var(--bosluk);
   align-items: start;
-  width: 94%;
-  max-width: 78rem;
-  margin: 0 auto;
-  padding: 0 0 4rem;
 }
 
 .kitap .document,
@@ -1120,11 +1112,13 @@ body {
 }
 
 /* --- kodu kopyala ------------------------------------------------------- */
-.kitap .kod {
+.kitap .kod,
+.kitap div.highlight {
   position: relative;
 }
 
-.kitap .kod .kopyala {
+.kitap .kod .kopyala,
+.kitap div.highlight .kopyala {
   position: absolute;
   top: 0.4rem;
   right: 0.4rem;
@@ -1141,11 +1135,14 @@ body {
 }
 
 .kitap .kod:hover .kopyala,
-.kitap .kod .kopyala:focus {
+.kitap div.highlight:hover .kopyala,
+.kitap .kod .kopyala,
+.kitap div.highlight .kopyala:focus {
   opacity: 1;
 }
 
-.kitap .kod .kopyala:hover {
+.kitap .kod .kopyala,
+.kitap div.highlight .kopyala:hover {
   color: var(--vurgu);
   border-color: var(--vurgu);
 }
@@ -1153,20 +1150,13 @@ body {
 /* Kopyala düğmesi yazdırmada yok. */
 @media print {
   .kitap .kod .kopyala,
+.kitap div.highlight .kopyala,
   #tus-yardim {
     display: none !important;
   }
 }
 
 /* --- bölümün altında: sıradaki bölüm, adıyla --------------------------- */
-.kitap nav.sonraki {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  margin: 3rem 0 0;
-  padding-top: 1.4rem;
-  border-top: 1px solid var(--cizgi);
-}
 
 .kitap nav.sonraki a {
   display: block;
@@ -1209,9 +1199,6 @@ body {
 }
 
 @media screen and (max-width: 560px) {
-  .kitap nav.sonraki {
-    grid-template-columns: 1fr;
-  }
 
   .kitap nav.sonraki .ileri {
     grid-column: 1;
@@ -1253,7 +1240,8 @@ body {
 }
 
 /* Kopyalandı anı. */
-.kitap .kod .kopyala.oldu {
+.kitap .kod .kopyala,
+.kitap div.highlight .kopyala.oldu {
   color: var(--vurgu);
   border-color: var(--vurgu);
   opacity: 1;
@@ -1340,9 +1328,6 @@ body {
 
 /* Kenar notu yalnız üç sütun varken sağda durur. */
 @media screen and (max-width: 1100px) {
-  .kitap {
-    grid-template-columns: var(--kenar-en) minmax(0, 1fr);
-  }
 
   .kitap .kenar-not {
     grid-column: 2;
@@ -1424,7 +1409,8 @@ body {
 
 /* Kopyala düğmesi dokunmatik ekranda da görünür: orada hover yok. */
 @media (hover: none) {
-  .kitap .kod .kopyala {
+  .kitap .kod .kopyala,
+.kitap div.highlight .kopyala {
     opacity: 0.55;
   }
 }

@@ -700,9 +700,6 @@ dialog.kutu blockquote.alinti {
 }
 
 @media screen and (max-width: 560px) {
-  .kitap nav.sonraki {
-    grid-template-columns: 1fr;
-  }
 
   .kitap nav.sonraki > .ileri:first-child {
     grid-column: 1;
@@ -988,9 +985,6 @@ ul.navbar {
 }
 
 @media screen and (max-width: 1250px) {
-  .kitap {
-    grid-template-columns: 22fr 56fr;
-  }
 
   .kitap .kenar-not {
     grid-column: 2;
@@ -1152,9 +1146,6 @@ form.arama input[type="submit"]:hover {
 }
 
 @media screen and (max-width: 1250px) {
-  .kitap {
-    grid-template-columns: minmax(14rem, 22fr) minmax(0, 60fr);
-  }
 }
 
 @media screen and (max-width: 1100px) {
@@ -1202,15 +1193,6 @@ div.footer {
       [< previous]            [next >]
    Bölümün adı butonun içinde değil, title'ında: bir kitapta sayfa çevirmek
    iki kelimelik bir iştir, iki paragraflık bir kutu değil. */
-.kitap nav.sonraki {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  margin: 2.4rem 0 0;
-  padding-top: 1.2rem;
-  border-top: 1px solid var(--cizgi);
-}
 
 .kitap nav.sonraki a {
   display: inline-block;
@@ -1275,9 +1257,6 @@ div.footer {
 }
 
 @media screen and (max-width: 1250px) {
-  .kitap {
-    grid-template-columns: minmax(13rem, 21fr) minmax(0, 60fr);
-  }
 
   .kitap .kenar-not {
     grid-column: 2;
@@ -1387,37 +1366,11 @@ ul.navbar {
  *   mail listesi      pembe     tek çağrı
  *   dil / tema        sarı      ayar
  */
-:root {
-  --n-yesil: #357422;
-  --n-mavi: #1f5c9e;
-  --n-mor: #5f35a8;
-  --n-sari: #8a5f00;
-}
 
-:root[data-tema="gece"] {
-  --n-yesil: #b8e39a;
-  --n-mavi: #8fc7ff;
-  --n-mor: #c9a6ff;
-  --n-sari: #ffd479;
-}
 
-ul.navbar a[href$="slopware/"] {
-  color: var(--n-yesil);
-}
 
-ul.navbar a[href$="kitap/"],
-ul.navbar a[href$=".pdf"] {
-  color: var(--n-mavi);
-}
 
-ul.navbar a[href$="forum/"] {
-  color: var(--n-mor);
-}
 
-ul.navbar a[hreflang],
-.tema-dugme {
-  color: var(--n-sari);
-}
 
 .mail-ac {
   color: var(--vurgu);
@@ -1429,9 +1382,6 @@ ul.navbar a:hover {
 }
 
 /* Gezinti şeridi: kırıntı solda ve renkli, yön sağda ve soluk. */
-.related .nav-item a {
-  color: var(--n-yesil);
-}
 
 .related li.right a {
   color: var(--murekkep-soluk);
@@ -1498,12 +1448,6 @@ ul.navbar li.grup.sag {
 }
 
 /* Renk anlam taşır. */
-.kitap-bag { color: var(--n-yesil); }
-.oku-bag   { color: var(--n-mavi); }
-.forum-bag { color: var(--n-mor); }
-.dil-bag   { color: var(--n-sari); }
-.tema-dugme { color: var(--n-sari); }
-.mail-ac   { color: var(--vurgu); }
 
 ul.navbar a:hover,
 ul.navbar button:hover {
@@ -1578,9 +1522,6 @@ ul.navbar form.ara::before {
   line-height: 1.5;
 }
 
-.related .nav-item a {
-  color: var(--n-yesil);
-}
 
 .related li.nav-item-this {
   color: var(--murekkep-soluk);
@@ -2101,4 +2042,295 @@ ul.navbar a[aria-current="page"] {
 .kahve:hover {
   color: var(--vurgu);
   text-decoration-color: var(--vurgu);
+}
+
+/* ============================== kod bloğu ve kopyala düğmesi
+ * Düğme `.kod` sarmalayıcısı içinde değil, doğrudan `.highlight` içinde
+ * basılıyor; eski seçici hiçbir şeye uymuyordu ve düğme tarayıcının kendi
+ * gri Arial düğmesi olarak çiziliyordu. */
+.kitap div.highlight {
+  position: relative;
+  background: var(--kod-zemin);
+  border: 1px solid var(--cizgi);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.kitap div.highlight pre {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.kitap div.highlight .kopyala {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--murekkep-soluk);
+  background: var(--kod-zemin);
+  border: 1px solid var(--cizgi);
+  border-radius: 3px;
+  padding: 0.15rem 0.45rem;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 120ms linear;
+}
+
+.kitap div.highlight:hover .kopyala,
+.kitap div.highlight .kopyala:focus-visible {
+  opacity: 1;
+}
+
+.kitap div.highlight .kopyala:hover {
+  color: var(--vurgu);
+  border-color: var(--vurgu);
+}
+
+:root[data-tema="gece"] .kitap div.highlight {
+  border-color: var(--cizgi-koyu);
+}
+
+:root[data-tema="gece"] .kitap div.highlight .kopyala {
+  color: var(--ink-dim);
+  border-color: var(--cizgi-koyu);
+}
+
+@media print {
+  .kitap div.highlight .kopyala {
+    display: none !important;
+  }
+}
+
+/* ============================== dar ekran: taşma yok
+ * Telefonda sayfa 947px genişliyordu, ekran 390. Suçlu prev/next: iki uca
+ * yaslı + `nowrap` ile satır ekranı zorluyordu. Dar ekranda alt alta. */
+@media screen and (max-width: 560px) {
+  .kitap nav.sonraki {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .kitap nav.sonraki a {
+    white-space: normal;
+  }
+
+  .kitap nav.sonraki > .ileri:only-child {
+    margin-left: 0;
+  }
+}
+
+/* Hiçbir öğe ekranı zorlamasın: uzun bir sözcük satırı taşırmaktansa
+   bölünür. */
+body {
+  overflow-x: hidden;
+}
+
+.kitap,
+.kitap div.body,
+.kitap .kenar,
+.kitap .kenar-not,
+ul.navbar,
+div.footer {
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+/* Arama kutusu dar ekranda kalan yeri alır, sabit 11rem değil. */
+@media screen and (max-width: 560px) {
+  ul.navbar li.grup.sag {
+    width: 100%;
+  }
+
+  ul.navbar form.ara {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  ul.navbar input[type="text"] {
+    width: 100%;
+    min-width: 0;
+  }
+
+  ul.navbar input[type="text"]:focus {
+    width: 100%;
+  }
+}
+
+
+/* ============================== ŞERİDİN RENGİ — TEK SİSTEM
+ * Burada bir zamanlar dört renk vardı: [slopware] yeşil, [book] mavi,
+ * [forum] mor, [tr] sarı. Hiçbiri bir şey söylemiyordu; [slopware]
+ * [forum]'dan daha yeşil değil. Aynı satırda anlamlı bir sistem (soluk =
+ * tıklanamaz) ile rastgele bir gökkuşağı yan yana duruyordu.
+ *
+ * Üç durum, üç renk:
+ *   mürekkep   gidilebilir bir yer
+ *   vurgu      tek eylem: kaydol
+ *   soluk      henüz yok
+ */
+ul.navbar a,
+.tema-dugme {
+  color: var(--murekkep);
+}
+
+ul.navbar .mail-ac {
+  color: var(--vurgu);
+}
+
+ul.navbar .yakinda {
+  color: var(--murekkep-soluk);
+  opacity: 1;
+}
+
+ul.navbar a:hover,
+ul.navbar button:hover {
+  color: var(--vurgu);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+:root[data-tema="gece"] ul.navbar a,
+:root[data-tema="gece"] .tema-dugme {
+  color: var(--ink);
+}
+
+:root[data-tema="gece"] ul.navbar .yakinda {
+  color: var(--ink-dim);
+}
+
+:root[data-tema="gece"] ul.navbar a:hover,
+:root[data-tema="gece"] ul.navbar button:hover {
+  color: var(--pembe);
+}
+
+/* Bulunduğun kitap rengiyle söyler: şeritteki tek renkli bağlantı odur.
+ * Damla'nın iki kuralı burada birlikte duruyor: "üstte bir şey renkli
+ * olsun" ve "renk anlam taşır". Rengin taşıdığı anlam: buradasın. */
+ul.navbar a[aria-current="page"] {
+  color: var(--vurgu);
+}
+
+:root[data-tema="gece"] ul.navbar a[aria-current="page"] {
+  color: var(--pembe);
+}
+
+/* ============================== pyramid.css'ten yetim kalanlar
+ * Dosya kalktığında bu sınıflar stilsiz kaldı ve tarayıcı varsayılanına
+ * düştü: "Warning" başlığı kalın bir paragraf, kopyala düğmesi gri bir
+ * işletim sistemi düğmesi oldu. */
+.kitap .admonition.warning,
+.kitap .admonition:not(.kontrol) {
+  margin: 1.8rem 0;
+  padding: 1rem 1.2rem;
+  background: var(--kod-zemin);
+  border: 1px solid var(--cizgi);
+  border-radius: 3px;
+  font-size: 0.95em;
+}
+
+.kitap .admonition:not(.kontrol) p.admonition-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--murekkep-soluk);
+  margin: 0 0 0.6em;
+  text-indent: 0;
+}
+
+.kitap .admonition:not(.kontrol) p {
+  margin: 0;
+  text-indent: 0;
+}
+
+/* Linki kopyala: metin gibi görünür, düğme gibi değil. */
+.link-kopyala {
+  font: inherit;
+  font-family: var(--mono);
+  font-size: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  color: var(--murekkep-soluk);
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: var(--cizgi-koyu);
+  text-underline-offset: 3px;
+}
+
+.link-kopyala:hover {
+  color: var(--vurgu);
+}
+
+/* Arama durumu satırı. */
+.arama-durum {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--murekkep-soluk);
+  margin: 1rem 0 0;
+}
+
+/* Yazılmamış bölüm: kilitliyle aynı soluk, çünkü aynı şey. */
+.toctree-wrapper li.yazilmadi > a,
+.toctree-wrapper li.yazilmadi::marker {
+  color: var(--gecti);
+}
+
+/* Satır içi kod. */
+.kitap code.docutils,
+.kitap code.literal {
+  font-family: var(--mono);
+  font-size: 0.84em;
+  background: var(--kod-zemin);
+  padding: 0.1em 0.3em;
+  border-radius: 2px;
+}
+
+/* Bölüm prozundaki sıralı listeler müfredat listesi değil. */
+.kitap div.body ol:not(.toctree-wrapper ol),
+.kitap-tam ol {
+  padding-left: 1.6em;
+  margin: 0 0 1rem;
+}
+
+.kitap div.body ol li,
+.kitap-tam ol li {
+  margin: 0.2em 0;
+}
+
+/* Dipnot ve ek: kitabın altındaki iki blok. */
+.kitap .dipnot,
+.kitap .ek {
+  margin: 1.6rem 0 0;
+  padding: 0.9rem 0 0;
+  border-top: 1px solid var(--cizgi);
+  font-size: 0.9em;
+  color: var(--murekkep-soluk);
+}
+
+.kitap .dipnot p,
+.kitap .ek p {
+  text-indent: 0;
+  margin: 0 0 0.5em;
+}
+
+.kitap .dipnot-geri,
+.kitap .ek-geri {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--vurgu);
+  text-decoration: none;
+  margin-right: 0.5em;
+}
+
+/* Sayfası olmayan kitabın adı: bağlantı gibi görünmez. */
+.ders-ad.yakinda-ad {
+  color: var(--murekkep-soluk);
+  cursor: default;
 }

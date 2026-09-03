@@ -57,7 +57,7 @@
 
     function ciz() {
       var simdi = document.documentElement.getAttribute("data-tema") || "kagit";
-      dugme.textContent = simdi === "gece" ? "◑" : "◐";
+      dugme.textContent = simdi === "gece" ? "[+]" : "[\u00b7]";
       dugme.setAttribute("aria-label",
         simdi === "gece" ? "switch to paper" : "switch to night");
       dugme.title = simdi === "gece" ? "paper" : "night";
@@ -100,6 +100,7 @@
   function adSor(zorla) {
     var d = document.getElementById("ad-kutu");
     if (!d) return;
+    d._geri = document.activeElement;
     var giris = d.querySelector("input");
     giris.value = oku(AD_ANAHTAR, "") || "";
     if (typeof d.showModal === "function") d.showModal();
@@ -144,6 +145,9 @@
     d.addEventListener("close", function () {
       if (oku(AD_ANAHTAR, null) === null) yaz(AD_ANAHTAR, "");
       selamCiz();
+      // Odak açan öğeye döner: klavyeyle gezen okur sayfanın başına
+      // atılmaz.
+      if (d._geri && d._geri.focus) d._geri.focus();
     });
 
     var yer = document.querySelector(".selam");

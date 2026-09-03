@@ -110,7 +110,12 @@ def _():
 
 @kural("N10", "NEDEN ÜSTTE HİÇBİR ŞEY RENKLİ DEĞİL", "şeritte renk")
 def _():
-    return "ul.navbar a[href$=" in oku("tema/kabuk.css")
+    # Şeritte renk var ama ANLAMLI: bulunduğun kitap vurguyla, mail
+    # listesi vurguyla, gerisi mürekkep. Gökkuşağı değil.
+    c = oku("tema/kabuk.css")
+    return ('ul.navbar a[aria-current="page"]' in c
+            and "ul.navbar .mail-ac" in c
+            and "--n-yesil" not in c)
 
 
 @kural("N11", "logo ile navbar arasında üst yerleşimlere çalış", "dar aralık")
@@ -327,10 +332,13 @@ def _():
 
 @kural("X11", "tek ızgara tanımı", "kitap ızgarası bir yerde")
 def _():
-    c = oku("tema/kabuk.css")
-    # `.kitap {` blogu icinde grid-template-columns kac kere geciyor
-    n = len(re.findall(r"\n\.kitap \{[^}]*grid-template-columns", c))
-    return n <= 1
+    # Medya sorgusu içindeki kırılımlar meşru; sayılan yalnızca en üst
+    # düzeydeki tanım. İkisi varsa biri diğerini eziyor demektir.
+    for f in ("tema/kabuk.css", "tema/kitap.css"):
+        n = len(re.findall(r"\n\.kitap \{[^}]*?grid-template-columns", oku(f)))
+        if n > 1:
+            return False
+    return True
 
 
 @kural("X12", "gizli olan görünmez", "hidden özniteliği CSS ile ezilmez")
