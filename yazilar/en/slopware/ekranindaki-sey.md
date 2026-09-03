@@ -53,8 +53,7 @@ At the bottom of the panel there is a total size. Every visitor downloads that m
 
 That leaves one question for the rest of the book. Some program on some machine sent those files. On the hello page you know which one, because you started it yourself and it is still sitting in your terminal. On your real project you have probably never thought about it.
 
-## What is in your own list?
-
+::kontrol
 Open the Network panel on the project you are proudest of and refresh it.
 
 How many files arrived?
@@ -64,5 +63,6 @@ How many kilobytes did they come to?
 Which file in that list can you not account for? There is nearly always one. Usually a font you stopped using months ago or a library that arrived attached to something else. Nothing announced it, because it was mentioned by a file that was itself mentioned by a file.
 
 Nothing needs removing today. It has been going out to every visitor since the day it appeared.
+::
 
 You just started a server inside a folder without my having said what a folder is, and that gap has to close before we can ask whose machine your files come from. So the terminal and the folder come next.

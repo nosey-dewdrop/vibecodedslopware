@@ -17,9 +17,15 @@
   --gecti: #a0a0a0;
 
   /* lulumelon'un ölçüleri. */
-  --olcu: 62ch;
-  --kenar-en: 16rem;
-  --sayfa: 82rem;
+  /* Ölçü, sayfanın %80'ini dolduracak şekilde: kenar + boşluk + yazı.
+   * 62ch'lik dar bir sütun 1440'lık bir ekranda sayfanın %43'ünü kullanıyordu
+   * ve sağda 256px ölü alan bırakıyordu. */
+  /* Ölçüler piksel/rem cinsinden, ch değil: Computer Modern'in karakteri dar,
+   * 72ch bile 1440'lık bir ekranda sayfanın yarısını boş bırakıyordu.
+   * Kâğıt ekranla büyür, kenar sabit kalır, yazı aradaki her şeyi alır. */
+  --olcu: 52rem;
+  --kenar-en: 15rem;
+  --bosluk: 4rem;
   --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
   --serif: "CMU Serif", Georgia, "Times New Roman", serif;
 }
@@ -73,11 +79,12 @@ ul.navbar a:hover {
 .kitap {
   display: grid;
   grid-template-columns: var(--kenar-en) minmax(0, 1fr);
-  gap: 0 3.5rem;
+  gap: 0 var(--bosluk);
   align-items: start;
-  max-width: var(--sayfa);
+  width: 88%;
+  max-width: 84rem;
   margin: 0 auto;
-  padding: 0 1.25rem 4rem;
+  padding: 0 0 4rem;
 }
 
 .kitap .document,
@@ -98,7 +105,7 @@ ul.navbar a:hover {
 .kitap div.body,
 .kitap-tam {
   max-width: var(--olcu);
-  margin: 0 auto;
+  margin: 0;
   padding: 2.5rem 0 3rem;
   font-family: var(--serif);
   font-size: 1.24rem;
@@ -435,9 +442,10 @@ ul.navbar a:hover {
   border: 0;
   background: none;
   color: var(--murekkep-soluk);
-  max-width: var(--sayfa);
+  width: 88%;
+  max-width: 84rem;
   margin: 0 auto;
-  padding: 0.7rem 1.25rem;
+  padding: 0.7rem 0;
 }
 
 .related a {
@@ -532,43 +540,174 @@ form.abone small {
   text-underline-offset: 3px;
 }
 
-/* --- dar ekran ---------------------------------------------------------- */
+/* --- dar ekran ----------------------------------------------------------
+ * Telefonda 55 bölümlük bir liste yazının önünde duramaz, ama okurun nerede
+ * olduğunu görmesi hâlâ gerekiyor. Üç kademe:
+ *
+ *   1200px altı  iki sütun kalır, kenar daralır
+ *   900px altı   kenar katlanır: açık olan bölümler ve bulunduğun yer görünür,
+ *                gerisi bir düğmenin arkasında
+ *   560px altı   tek sütun, gövde ekranın kenarına kadar
+ */
+
+@media screen and (max-width: 1200px) {
+  :root {
+    --kenar-en: 13rem;
+    --olcu: 66ch;
+  }
+
+  .kitap {
+    gap: 0 3rem;
+  }
+}
+
 @media screen and (max-width: 900px) {
   .kitap {
     display: block;
-    padding: 0 1.1rem 3rem;
+    padding: 0 1.4rem 3rem;
   }
 
+  /* Kenar sayfanın başına geçer ve kendini toplar: burada olduğun bölüm ve
+     ilerleme görünür kalır, listenin tamamı istek üzerine açılır. */
   .kenar {
     position: static;
     max-height: none;
     overflow: visible;
-    padding: 1.3rem 0;
-    margin-bottom: 1.3rem;
+    padding: 1.2rem 0 0;
+    margin: 0 0 1.6rem;
     border-bottom: 1px solid var(--cizgi);
   }
 
+  .kenar-ust {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    border-bottom: 0;
+    padding-bottom: 0.6rem;
+    margin-bottom: 0;
+  }
+
+  .kenar-ad {
+    margin-bottom: 0;
+  }
+
+  .kenar-cubuk {
+    order: 3;
+    flex-basis: 100%;
+  }
+
+  .kenar-sayi {
+    margin: 0;
+  }
+
   .kenar-liste {
+    display: none;
+    padding-bottom: 1rem;
+  }
+
+  .kenar.acik .kenar-liste {
+    display: block;
     columns: 2;
-    column-gap: 1.6rem;
+    column-gap: 1.8rem;
+  }
+
+  .kenar-ac {
+    display: block;
   }
 
   .kitap div.body,
   .kitap-tam {
-    font-size: 1.14rem;
+    font-size: 1.16rem;
+    line-height: 1.55;
     padding-top: 0.5rem;
+    max-width: none;
+  }
+
+  .kitap div.body h1,
+  .kitap-tam > h1 {
+    font-size: 1.7rem;
+  }
+
+  .related {
+    padding: 0.6rem 1.4rem;
   }
 }
 
-@media screen and (max-width: 520px) {
-  .kenar-liste {
+@media screen and (max-width: 560px) {
+  .kitap {
+    padding: 0 1.1rem 2.5rem;
+  }
+
+  .kenar.acik .kenar-liste {
     columns: 1;
   }
 
+  /* Telefonda iki yana yaslamak kelime aralarını açıyor, satır kısa olduğu
+     için delikler görünür hale geliyor. Sola dayalı okunur. */
   .kitap div.body p,
   .kitap-tam p {
     text-align: left;
+    hyphens: none;
   }
+
+  .kitap div.body,
+  .kitap-tam {
+    font-size: 1.1rem;
+  }
+
+  .kitap div.body h1,
+  .kitap-tam > h1 {
+    font-size: 1.5rem;
+  }
+
+  .kitap div.body h2,
+  .kitap-tam h2 {
+    font-size: 1.2rem;
+  }
+
+  /* Kod telefonda okunmaz hale gelmesin: kendi içinde kayar. */
+  .kitap div.body pre,
+  .kitap-tam pre {
+    font-size: 0.76em;
+    padding: 0.7em 0.8em;
+  }
+
+  .header {
+    padding-top: 1.6rem;
+  }
+
+  ul.navbar {
+    padding-bottom: 1.1rem;
+  }
+
+  ul.navbar li {
+    margin: 0 0.4rem;
+  }
+
+  .kitap div.admonition.kontrol {
+    padding: 1rem;
+  }
+}
+
+/* Listeyi açan düğme yalnız dar ekranda görünür. */
+.kenar-ac {
+  display: none;
+  font: inherit;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--murekkep-soluk);
+  background: none;
+  border: 1px solid var(--cizgi);
+  border-radius: 3px;
+  padding: 0.25rem 0.6rem;
+  cursor: pointer;
+}
+
+.kenar-ac:hover {
+  color: var(--vurgu);
+  border-color: var(--vurgu);
 }
 
 /* --- yazdırma: gerçek kitap -------------------------------------------- */
@@ -712,11 +851,11 @@ form.abone small {
  * tek sütundur. */
 .kitap.tek {
   display: block;
-  max-width: var(--sayfa);
+  width: min(94%, calc(var(--olcu) + 6rem));
 }
 
 .kitap.tek div.body {
-  max-width: 64ch;
+  max-width: none;
 }
 
 /* --- ana sayfa: müfredat listesi ---------------------------------------- */
@@ -790,7 +929,7 @@ form.abone small {
 }
 
 .kitap.tek div.body {
-  max-width: 64ch;
+  max-width: none;
   margin: 0 auto;
   padding: 2.5rem 0 3rem;
 }
@@ -799,4 +938,202 @@ form.abone small {
   border-bottom: 0;
   margin-bottom: 0;
   padding-bottom: 0;
+}
+
+/* --- bölüm sonundaki kontrol -------------------------------------------- */
+/* Her bölüm okurun kendi projesinde yapacağı bir işle biter. İşaretlendiğinde
+ * yandaki müfredatta o bölümün üstü çizilir, o yüzden kutu bölümün sonunda
+ * durur ve sayfadan ayrı görünür. */
+.kitap div.admonition.kontrol {
+  margin: 2.5rem 0 0;
+  padding: 1.2rem 1.3rem;
+  background: #fafafa;
+  border: 1px solid var(--cizgi);
+  border-left: 2px solid var(--murekkep);
+  border-radius: 0;
+}
+
+.kitap div.admonition.kontrol p.admonition-title {
+  display: block;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--murekkep-soluk);
+  margin: 0 0 0.7em;
+  background: none;
+  padding: 0;
+}
+
+.kitap div.admonition.kontrol p.admonition-title::after {
+  content: none;
+}
+
+.kitap div.admonition.kontrol p {
+  text-indent: 0;
+  margin: 0 0 0.8em;
+  font-size: 1.06rem;
+  text-align: left;
+}
+
+.kitap div.admonition.kontrol p:last-of-type {
+  margin-bottom: 0;
+}
+
+.kitap div.admonition.kontrol label.gec {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5em;
+  margin-top: 1.1em;
+  padding-top: 0.8em;
+  border-top: 1px solid var(--cizgi);
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--murekkep-soluk);
+}
+
+.kitap div.admonition.kontrol label.gec input {
+  margin: 0;
+  accent-color: var(--vurgu);
+}
+
+.kitap div.admonition.kontrol label.gec.oldu {
+  color: var(--vurgu);
+}
+
+.kitap div.admonition.kontrol pre {
+  margin: 0.8em 0;
+}
+
+/* --- başlık kendini yazarken ------------------------------------------- */
+.yazim-imlec {
+  animation: yazim 1s steps(1) infinite;
+}
+
+@keyframes yazim {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* --- imlecin izi -------------------------------------------------------- */
+/* Kâğıdın üstünde değil altında: yazıyı örtmez, tıklamayı yakalamaz. */
+.iz {
+  position: fixed;
+  z-index: 0;
+  pointer-events: none;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--vurgu);
+  opacity: 0.5;
+  animation: iz-dus 900ms linear forwards;
+}
+
+@keyframes iz-dus {
+  from { transform: translateY(0); opacity: 0.5; }
+  to { transform: translateY(26px); opacity: 0; }
+}
+
+/* Gövde izin üstünde kalır. */
+.kitap,
+.related,
+div.footer,
+.header,
+ul.navbar {
+  position: relative;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .iz { display: none; }
+  .yazim-imlec { animation: none; }
+}
+
+/* --- gövde tavanı ------------------------------------------------------- */
+/* Eski tema body'yi %70'e sıkıştırıyordu, o yüzden kâğıt ne kadar geniş
+ * istenirse istensin sayfanın %70'inin içinde kalıyordu ve iki yanda ölü
+ * alan oluyordu. Genişliği artık kâğıdın kendisi belirler. */
+body {
+  width: auto;
+  max-width: none;
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 14px;
+}
+
+/* --- klavye yardımı ----------------------------------------------------- */
+#tus-yardim {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 50;
+  background: var(--kagit);
+  border: 1px solid var(--murekkep);
+  border-radius: 3px;
+  padding: 1rem 1.2rem;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.09);
+}
+
+#tus-yardim dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.35rem 1rem;
+  margin: 0;
+}
+
+#tus-yardim dt {
+  font-weight: 400;
+  color: var(--murekkep);
+  border: 1px solid var(--cizgi-koyu);
+  border-radius: 2px;
+  padding: 0 0.35em;
+  justify-self: start;
+}
+
+#tus-yardim dd {
+  margin: 0;
+  color: var(--murekkep-soluk);
+}
+
+/* --- kodu kopyala ------------------------------------------------------- */
+.kitap pre {
+  position: relative;
+}
+
+.kitap pre .kopyala {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--murekkep-soluk);
+  background: var(--kagit);
+  border: 1px solid var(--cizgi);
+  border-radius: 3px;
+  padding: 0.15rem 0.45rem;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 120ms linear;
+}
+
+.kitap pre:hover .kopyala,
+.kitap pre .kopyala:focus {
+  opacity: 1;
+}
+
+.kitap pre .kopyala:hover {
+  color: var(--vurgu);
+  border-color: var(--vurgu);
+}
+
+/* Kopyala düğmesi yazdırmada yok. */
+@media print {
+  .kitap pre .kopyala,
+  #tus-yardim {
+    display: none !important;
+  }
 }

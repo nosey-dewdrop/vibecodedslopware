@@ -67,6 +67,7 @@
     <a class="kenar-ad" href="../../slopware/">slopware</a>
     <div class="kenar-cubuk"><span class="kenar-dolu"></span></div>
     <p class="kenar-sayi"><b>0</b> / 55 passed</p>
+    <button type="button" class="kenar-ac" aria-expanded="false">all chapters</button>
   </div>
   <ol class="kenar-liste">
     <li class="kenar-seviye">101 &#183; what is this thing you built?</li>
@@ -145,7 +146,6 @@
 <li><a class="reference internal" href="#what-does-localhost-mean">What does localhost mean?</a></li>
 <li><a class="reference internal" href="#can-your-own-phone-open-it">Can your own phone open it?</a></li>
 <li><a class="reference internal" href="#how-far-does-the-local-network-reach">How far does the local network reach?</a></li>
-<li><a class="reference internal" href="#can-anyone-else-open-your-project">Can anyone else open your project?</a></li>
 </ul></div>
 <p>This chapter is about famous localhost:3000. Jokes about it have been going around the internet for a long time. Many people believe CS is dead because they built a website hosting on local. You click your own link and it opens. Your friend clicks it and it does not. Why does it happen, what is localhost:3000, and how to fix this issue?</p>
 <section id="what-does-localhost-mean">
@@ -169,10 +169,7 @@
 <h2>How far does the local network reach?<a class="headerlink" href="#how-far-does-the-local-network-reach" title="Link to this heading">¶</a></h2>
 <p>'So I drop the flag and I am live,' you may be thinking. What you have is a server reachable from the same wifi. 192.168.1.24 is an address inside your home network and means nothing outside it, so a friend in a cafe or a customer on mobile data cannot reach it. And when the laptop lid closes, nothing is running anywhere.</p>
 <p>A product has to answer while you are asleep, so the program has to run on a machine that stays on and has an address the internet can route to. Putting it there is called deploying, and that is chapter 16. ir-globe answers at three in the morning because it is not on my laptop.</p>
-</section>
-<section id="can-anyone-else-open-your-project">
-<h2>Can anyone else open your project?<a class="headerlink" href="#can-anyone-else-open-your-project" title="Link to this heading">¶</a></h2>
-<p>Look at the address bar of the project you are proudest of. If it begins with localhost or 127.0.0.1, the number of people who can open it is 1. Then close the laptop. Turn off wifi on your phone so you are on mobile data and try to open the project. Whatever comes back is the answer to whether it exists yet.</p>
+<div class="admonition note kontrol"><p class="admonition-title">check</p><p>Look at the address bar of the project you are proudest of. If it begins with localhost or 127.0.0.1, the number of people who can open it is 1. Then close the laptop. Turn off wifi on your phone so you are on mobile data and try to open the project. Whatever comes back is the answer to whether it exists yet.</p><label class="gec"><input type="checkbox" class="gec-kutu"> my project passes this check</label></div>
 <p>After that come the two commands you run without reading them. Only one of npm run dev and npm run build makes a thing you can deploy.</p>
 </section>
 <p class="paylas"><span>share:</span> <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://nosey-dewdrop.github.io/vibecodedslopware/slopware/localhost/" target="_blank" rel="noopener">linkedin</a> &#183; <a href="https://x.com/intent/post?url=https://nosey-dewdrop.github.io/vibecodedslopware/slopware/localhost/" target="_blank" rel="noopener">x</a> &#183; <button type="button" class="link-kopyala" data-link="https://nosey-dewdrop.github.io/vibecodedslopware/slopware/localhost/" data-oldu="copied">copy link</button></p><p class="iyilestir"><a href="https://github.com/nosey-dewdrop/vibecodedslopware/edit/main/yazilar/en/slopware/localhost.md">improve this page</a> &#183; the source is on GitHub, fix what you see wrong.</p>
@@ -211,5 +208,6 @@ built with a hand-written generator &#183; yazbel taught me what teaching in wri
 </div>
 <script src="../../tema/stem.js"></script>
 <script src="../../tema/site.js"></script>
+<script src="../../tema/kitap.js"></script>
   </body>
 </html>

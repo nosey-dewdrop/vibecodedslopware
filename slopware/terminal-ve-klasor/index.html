@@ -67,6 +67,7 @@
     <a class="kenar-ad" href="../../slopware/">slopware</a>
     <div class="kenar-cubuk"><span class="kenar-dolu"></span></div>
     <p class="kenar-sayi"><b>0</b> / 55 passed</p>
+    <button type="button" class="kenar-ac" aria-expanded="false">all chapters</button>
   </div>
   <ol class="kenar-liste">
     <li class="kenar-seviye">101 &#183; what is this thing you built?</li>
@@ -147,7 +148,6 @@
 <li><a class="reference internal" href="#what-is-a-path">What is a path?</a></li>
 <li><a class="reference internal" href="#why-is-this-so-hard-to-learn">Why is this so hard to learn?</a></li>
 <li><a class="reference internal" href="#why-does-this-decide-whether-things-work">Why does this decide whether things work?</a></li>
-<li><a class="reference internal" href="#what-is-in-your-project-folder">What is in your project folder?</a></li>
 </ul></div>
 <p>You ran a command inside a folder a moment ago and a server appeared, and I never said which folder it was reading or why that mattered. The same command run from one step higher up would have served nothing.</p>
 <p>A whole family of failures comes out of that. The build that works on your machine and returns file not found on the deploy is one, the image that loads locally and 404s in production is another. In every one of them a program is standing somewhere you did not expect, reading a path that means something different from there.</p>
@@ -205,13 +205,10 @@ style.css                          relative
 <p>File does not exist almost always means a relative path was read from a folder you were not expecting. The file was there all along, and the program was standing somewhere else when it went looking for it. You saw exactly that a minute ago with a server one level too high.</p>
 <p>Something works on your machine and dies on the deploy for the same reason. You typed the command while standing inside the project folder. The other machine runs it while standing wherever it happens to start, so the relative path points at a place that does not exist. Chapter 16 is where this bites hardest.</p>
 <p>MIT teaches a free course for exactly this gap called The Missing Semester of Your CS Education. Julia Evans draws comics about the shell that are the friendliest thing on the subject.</p>
-</section>
-<section id="what-is-in-your-project-folder">
-<h2>What is in your project folder?<a class="headerlink" href="#what-is-in-your-project-folder" title="Link to this heading">¶</a></h2>
-<p>Open a terminal and leave your editor closed.</p>
+<div class="admonition note kontrol"><p class="admonition-title">check</p><p>Open a terminal and leave your editor closed.</p>
 <p>Get to your project folder using only pwd, ls -F and cd. Read what comes back after each step instead of typing the whole path from memory.</p>
 <p>When you arrive, which folder in that list can you not describe the contents of? There will be one, usually node_modules or dist or .next.</p>
-<p>Go into it and look, changing nothing. The next time something breaks that folder is going to appear in the error message (which should not be the first time you see the name).</p>
+<p>Go into it and look, changing nothing. The next time something breaks that folder is going to appear in the error message (which should not be the first time you see the name).</p><label class="gec"><input type="checkbox" class="gec-kutu"> my project passes this check</label></div>
 <p>Next comes localhost, and the reason a link that opens instantly for you does not open for your friend.</p>
 </section>
 <p class="paylas"><span>share:</span> <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://nosey-dewdrop.github.io/vibecodedslopware/slopware/terminal-ve-klasor/" target="_blank" rel="noopener">linkedin</a> &#183; <a href="https://x.com/intent/post?url=https://nosey-dewdrop.github.io/vibecodedslopware/slopware/terminal-ve-klasor/" target="_blank" rel="noopener">x</a> &#183; <button type="button" class="link-kopyala" data-link="https://nosey-dewdrop.github.io/vibecodedslopware/slopware/terminal-ve-klasor/" data-oldu="copied">copy link</button></p><p class="iyilestir"><a href="https://github.com/nosey-dewdrop/vibecodedslopware/edit/main/yazilar/en/slopware/terminal-ve-klasor.md">improve this page</a> &#183; the source is on GitHub, fix what you see wrong.</p>
@@ -250,5 +247,6 @@ built with a hand-written generator &#183; yazbel taught me what teaching in wri
 </div>
 <script src="../../tema/stem.js"></script>
 <script src="../../tema/site.js"></script>
+<script src="../../tema/kitap.js"></script>
   </body>
 </html>

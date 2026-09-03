@@ -56,8 +56,7 @@ So a project can run beautifully for weeks and fall over on the first deploy wit
 
 Before you deploy, run the build and serve the output locally the way you just did, then click around your own site. Anything broken in that folder is broken in production, and you get to find it while you are sitting in front of it.
 
-## What comes out of your own build?
-
+::kontrol
 Run npm run build on your own project and let it finish.
 
 How long did it take? Whatever that number is, it happens again on every deploy.
@@ -65,5 +64,6 @@ How long did it take? Whatever that number is, it happens again on every deploy.
 What is inside the folder? Go in with cd dist or cd .next and run ls -F, then find the HTML your source never contained.
 
 Then serve it with python3 -m http.server 8000 and use your own site coming out of a file server that knows nothing about your framework. If something works under npm run dev and not in there, you have found a real bug months before a stranger would have found it for you.
+::
 
 Chapter 5 goes to the shop front and the till. What a backend is, and why some things can never live in the files you just looked at however well you hide them.

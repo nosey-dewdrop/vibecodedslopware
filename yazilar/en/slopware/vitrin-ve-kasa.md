@@ -53,8 +53,7 @@ stitchu sends a photograph to a vision model and that model charges per call. Th
 
 The wrong version is one line of difference. The browser calls the model directly with the key attached to the request. It works on the first try (which is the trouble) because from behind the counter both versions look the same to you. Every visitor now holds a working key billed to your account, and chapter 31 is about the size of that bill.
 
-## Where is your own till standing?
-
+::kontrol
 Open your own project with the Network panel open and use it until requests start appearing.
 
 Where is each request going? Read the address of each one. If it goes straight to somebody else's service then your browser is talking to that service directly and everything in that request is public.
@@ -62,5 +61,6 @@ Where is each request going? Read the address of each one. If it goes straight t
 What in your code costs money or grants access? An API key, a database URL, an admin token. Where does it live right now?
 
 If it reached the browser then it is public, and the next two chapters are about moving it.
+::
 
 Chapter 6 goes to where data lives, and why a file works perfectly until two people use your project at the same time.

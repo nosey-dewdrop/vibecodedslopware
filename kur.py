@@ -72,6 +72,7 @@ S = {
         "kaynak": "kaynağı burada",
         "fork": "ben düşersem sen fork'la",
         "gezinti": "Gezinti",
+        "butun_bolumler": "bütün bölümler",
         "ev": "ana sayfa",
         "onceki": "önceki",
         "sonraki": "sonraki",
@@ -117,6 +118,7 @@ S = {
         "kaynak": "source is here",
         "fork": "if I go down, fork it",
         "gezinti": "Navigation",
+        "butun_bolumler": "all chapters",
         "ev": "home",
         "onceki": "previous",
         "sonraki": "next",
@@ -731,6 +733,8 @@ def kenar(veri, m, dil, yukari, simdiki_slug):
          f'    <a class="kenar-ad" href="{yukari}{m["kod"]}/">{kac(m["ad"])}</a>',
          '    <div class="kenar-cubuk"><span class="kenar-dolu"></span></div>',
          f'    <p class="kenar-sayi"><b>0</b> / {toplam} {kac(t["gecilen"])}</p>',
+         f'    <button type="button" class="kenar-ac" aria-expanded="false">'
+         f'{kac(t["butun_bolumler"])}</button>',
          '  </div>',
          '  <ol class="kenar-liste">']
     for sv in m["seviyeler"]:
@@ -783,7 +787,8 @@ def ayak(yukari, dil, ekstra=""):
 <br>
 </div>
 <script src="{yukari}tema/stem.js"></script>
-<script src="{yukari}tema/site.js"></script>{ekstra}
+<script src="{yukari}tema/site.js"></script>
+<script src="{yukari}tema/kitap.js"></script>{ekstra}
   </body>
 </html>
 """

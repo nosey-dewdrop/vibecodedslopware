@@ -65,6 +65,7 @@
     <a class="kenar-ad" href="../../slopware/">slopware</a>
     <div class="kenar-cubuk"><span class="kenar-dolu"></span></div>
     <p class="kenar-sayi"><b>0</b> / 55 passed</p>
+    <button type="button" class="kenar-ac" aria-expanded="false">all chapters</button>
   </div>
   <ol class="kenar-liste">
     <li class="kenar-seviye">101 &#183; what is this thing you built?</li>
@@ -146,7 +147,6 @@
 <li><a class="reference internal" href="#what-do-the-numbers-mean">What do the numbers mean?</a></li>
 <li><a class="reference internal" href="#can-you-break-your-own-rule">Can you break your own rule?</a></li>
 <li><a class="reference internal" href="#where-does-the-key-go">Where does the key go?</a></li>
-<li><a class="reference internal" href="#where-is-your-own-till-standing">Where is your own till standing?</a></li>
 </ul></div>
 <p>Everything so far has happened in one room. Files arrive and the browser draws them. You have now read your own project the way a visitor reads it. A shop has a second room behind the counter where the till and the keys are, and nobody has to be told why. In a project both rooms look like folders sitting next to each other in the same editor, so the till ends up out on the shop floor.</p>
 <section id="which-room-is-the-browser">
@@ -186,13 +186,10 @@ document.querySelector("input[maxlength]").maxLength = 9999
 <p>Into the kitchen and never into a request the customer can read.</p>
 <p>stitchu sends a photograph to a vision model and that model charges per call. The key that pays for it belongs in the till, so the browser never holds it. The photograph goes to a Cloudflare Worker, the Worker holds the key and calls the model, and the answer comes back. Anyone can open the Network panel on stitchu and read every request that leaves their machine and find nothing in them to take.</p>
 <p>The wrong version is one line of difference. The browser calls the model directly with the key attached to the request. It works on the first try (which is the trouble) because from behind the counter both versions look the same to you. Every visitor now holds a working key billed to your account, and chapter 31 is about the size of that bill.</p>
-</section>
-<section id="where-is-your-own-till-standing">
-<h2>Where is your own till standing?<a class="headerlink" href="#where-is-your-own-till-standing" title="Link to this heading">¶</a></h2>
-<p>Open your own project with the Network panel open and use it until requests start appearing.</p>
+<div class="admonition note kontrol"><p class="admonition-title">check</p><p>Open your own project with the Network panel open and use it until requests start appearing.</p>
 <p>Where is each request going? Read the address of each one. If it goes straight to somebody else's service then your browser is talking to that service directly and everything in that request is public.</p>
 <p>What in your code costs money or grants access? An API key, a database URL, an admin token. Where does it live right now?</p>
-<p>If it reached the browser then it is public, and the next two chapters are about moving it.</p>
+<p>If it reached the browser then it is public, and the next two chapters are about moving it.</p><label class="gec"><input type="checkbox" class="gec-kutu"> my project passes this check</label></div>
 <p>Chapter 6 goes to where data lives, and why a file works perfectly until two people use your project at the same time.</p>
 </section>
 <p class="paylas"><span>share:</span> <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://nosey-dewdrop.github.io/vibecodedslopware/slopware/vitrin-ve-kasa/" target="_blank" rel="noopener">linkedin</a> &#183; <a href="https://x.com/intent/post?url=https://nosey-dewdrop.github.io/vibecodedslopware/slopware/vitrin-ve-kasa/" target="_blank" rel="noopener">x</a> &#183; <button type="button" class="link-kopyala" data-link="https://nosey-dewdrop.github.io/vibecodedslopware/slopware/vitrin-ve-kasa/" data-oldu="copied">copy link</button></p><p class="iyilestir"><a href="https://github.com/nosey-dewdrop/vibecodedslopware/edit/main/yazilar/en/slopware/vitrin-ve-kasa.md">improve this page</a> &#183; the source is on GitHub, fix what you see wrong.</p>
@@ -229,5 +226,6 @@ built with a hand-written generator &#183; yazbel taught me what teaching in wri
 </div>
 <script src="../../tema/stem.js"></script>
 <script src="../../tema/site.js"></script>
+<script src="../../tema/kitap.js"></script>
   </body>
 </html>

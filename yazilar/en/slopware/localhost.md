@@ -34,8 +34,8 @@ Now find the laptop's address on the local network. On a Mac that is ipconfig ge
 
 A product has to answer while you are asleep, so the program has to run on a machine that stays on and has an address the internet can route to. Putting it there is called deploying, and that is chapter 16. ir-globe answers at three in the morning because it is not on my laptop.
 
-## Can anyone else open your project?
-
+::kontrol
 Look at the address bar of the project you are proudest of. If it begins with localhost or 127.0.0.1, the number of people who can open it is 1. Then close the laptop. Turn off wifi on your phone so you are on mobile data and try to open the project. Whatever comes back is the answer to whether it exists yet.
+::
 
 After that come the two commands you run without reading them. Only one of npm run dev and npm run build makes a thing you can deploy.

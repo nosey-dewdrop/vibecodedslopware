@@ -62,6 +62,7 @@
     <a class="kenar-ad" href="../slopware/">slopware</a>
     <div class="kenar-cubuk"><span class="kenar-dolu"></span></div>
     <p class="kenar-sayi"><b>0</b> / 55 passed</p>
+    <button type="button" class="kenar-ac" aria-expanded="false">all chapters</button>
   </div>
   <ol class="kenar-liste">
     <li class="kenar-seviye">101 &#183; what is this thing you built?</li>
@@ -216,14 +217,11 @@
 <p>Open the project you have been working on and refresh it with the panel open. The same list appears, only far longer. The document sits at the top. Everything the document mentioned sits under it, and under those sits everything they mentioned in turn.</p>
 <p>At the bottom of the panel there is a total size. Every visitor downloads that much before they see anything at all, out of their connection and their phone plan.</p>
 <p>That leaves one question for the rest of the book. Some program on some machine sent those files. On the hello page you know which one, because you started it yourself and it is still sitting in your terminal. On your real project you have probably never thought about it.</p>
-</section>
-<section id="what-is-in-your-own-list">
-<h2>What is in your own list?<a class="headerlink" href="#what-is-in-your-own-list" title="Link to this heading">¶</a></h2>
-<p>Open the Network panel on the project you are proudest of and refresh it.</p>
+<div class="admonition note kontrol"><p class="admonition-title">check</p><p>Open the Network panel on the project you are proudest of and refresh it.</p>
 <p>How many files arrived?</p>
 <p>How many kilobytes did they come to?</p>
 <p>Which file in that list can you not account for? There is nearly always one. Usually a font you stopped using months ago or a library that arrived attached to something else. Nothing announced it, because it was mentioned by a file that was itself mentioned by a file.</p>
-<p>Nothing needs removing today. It has been going out to every visitor since the day it appeared.</p>
+<p>Nothing needs removing today. It has been going out to every visitor since the day it appeared.</p><label class="gec"><input type="checkbox" class="gec-kutu"> my project passes this check</label></div>
 <p>You just started a server inside a folder without my having said what a folder is, and that gap has to close before we can ask whose machine your files come from. So the terminal and the folder come next.</p>
 </section>
 </section>
@@ -286,13 +284,10 @@ style.css                          relative
 <p>File does not exist almost always means a relative path was read from a folder you were not expecting. The file was there all along, and the program was standing somewhere else when it went looking for it. You saw exactly that a minute ago with a server one level too high.</p>
 <p>Something works on your machine and dies on the deploy for the same reason. You typed the command while standing inside the project folder. The other machine runs it while standing wherever it happens to start, so the relative path points at a place that does not exist. Chapter 16 is where this bites hardest.</p>
 <p>MIT teaches a free course for exactly this gap called The Missing Semester of Your CS Education. Julia Evans draws comics about the shell that are the friendliest thing on the subject.</p>
-</section>
-<section id="what-is-in-your-project-folder">
-<h2>What is in your project folder?<a class="headerlink" href="#what-is-in-your-project-folder" title="Link to this heading">¶</a></h2>
-<p>Open a terminal and leave your editor closed.</p>
+<div class="admonition note kontrol"><p class="admonition-title">check</p><p>Open a terminal and leave your editor closed.</p>
 <p>Get to your project folder using only pwd, ls -F and cd. Read what comes back after each step instead of typing the whole path from memory.</p>
 <p>When you arrive, which folder in that list can you not describe the contents of? There will be one, usually node_modules or dist or .next.</p>
-<p>Go into it and look, changing nothing. The next time something breaks that folder is going to appear in the error message (which should not be the first time you see the name).</p>
+<p>Go into it and look, changing nothing. The next time something breaks that folder is going to appear in the error message (which should not be the first time you see the name).</p><label class="gec"><input type="checkbox" class="gec-kutu"> my project passes this check</label></div>
 <p>Next comes localhost, and the reason a link that opens instantly for you does not open for your friend.</p>
 </section>
 </section>
@@ -321,10 +316,7 @@ style.css                          relative
 <h2>How far does the local network reach?<a class="headerlink" href="#how-far-does-the-local-network-reach" title="Link to this heading">¶</a></h2>
 <p>'So I drop the flag and I am live,' you may be thinking. What you have is a server reachable from the same wifi. 192.168.1.24 is an address inside your home network and means nothing outside it, so a friend in a cafe or a customer on mobile data cannot reach it. And when the laptop lid closes, nothing is running anywhere.</p>
 <p>A product has to answer while you are asleep, so the program has to run on a machine that stays on and has an address the internet can route to. Putting it there is called deploying, and that is chapter 16. ir-globe answers at three in the morning because it is not on my laptop.</p>
-</section>
-<section id="can-anyone-else-open-your-project">
-<h2>Can anyone else open your project?<a class="headerlink" href="#can-anyone-else-open-your-project" title="Link to this heading">¶</a></h2>
-<p>Look at the address bar of the project you are proudest of. If it begins with localhost or 127.0.0.1, the number of people who can open it is 1. Then close the laptop. Turn off wifi on your phone so you are on mobile data and try to open the project. Whatever comes back is the answer to whether it exists yet.</p>
+<div class="admonition note kontrol"><p class="admonition-title">check</p><p>Look at the address bar of the project you are proudest of. If it begins with localhost or 127.0.0.1, the number of people who can open it is 1. Then close the laptop. Turn off wifi on your phone so you are on mobile data and try to open the project. Whatever comes back is the answer to whether it exists yet.</p><label class="gec"><input type="checkbox" class="gec-kutu"> my project passes this check</label></div>
 <p>After that come the two commands you run without reading them. Only one of npm run dev and npm run build makes a thing you can deploy.</p>
 </section>
 </section>
@@ -367,13 +359,10 @@ style.css                          relative
 <p>Squashing changes behaviour. Code that quietly relied on a function still having its own name breaks, because the name is gone and you just read the file where it went missing. A value read while the build is running gets frozen into the file, so changing it on the server afterwards changes nothing until you build again, and chapter 13 is about the trouble that causes. A file the dev server found by walking your folder is missing from the output entirely if nothing imported it properly.</p>
 <p>So a project can run beautifully for weeks and fall over on the first deploy without a line of source having changed. When somebody says it works on my machine they are usually telling the truth, because their machine was running the friendly version.</p>
 <p>Before you deploy, run the build and serve the output locally the way you just did, then click around your own site. Anything broken in that folder is broken in production, and you get to find it while you are sitting in front of it.</p>
-</section>
-<section id="what-comes-out-of-your-own-build">
-<h2>What comes out of your own build?<a class="headerlink" href="#what-comes-out-of-your-own-build" title="Link to this heading">¶</a></h2>
-<p>Run npm run build on your own project and let it finish.</p>
+<div class="admonition note kontrol"><p class="admonition-title">check</p><p>Run npm run build on your own project and let it finish.</p>
 <p>How long did it take? Whatever that number is, it happens again on every deploy.</p>
 <p>What is inside the folder? Go in with cd dist or cd .next and run ls -F, then find the HTML your source never contained.</p>
-<p>Then serve it with python3 -m http.server 8000 and use your own site coming out of a file server that knows nothing about your framework. If something works under npm run dev and not in there, you have found a real bug months before a stranger would have found it for you.</p>
+<p>Then serve it with python3 -m http.server 8000 and use your own site coming out of a file server that knows nothing about your framework. If something works under npm run dev and not in there, you have found a real bug months before a stranger would have found it for you.</p><label class="gec"><input type="checkbox" class="gec-kutu"> my project passes this check</label></div>
 <p>Chapter 5 goes to the shop front and the till. What a backend is, and why some things can never live in the files you just looked at however well you hide them.</p>
 </section>
 </section>
@@ -418,13 +407,10 @@ document.querySelector("input[maxlength]").maxLength = 9999
 <p>Into the kitchen and never into a request the customer can read.</p>
 <p>stitchu sends a photograph to a vision model and that model charges per call. The key that pays for it belongs in the till, so the browser never holds it. The photograph goes to a Cloudflare Worker, the Worker holds the key and calls the model, and the answer comes back. Anyone can open the Network panel on stitchu and read every request that leaves their machine and find nothing in them to take.</p>
 <p>The wrong version is one line of difference. The browser calls the model directly with the key attached to the request. It works on the first try (which is the trouble) because from behind the counter both versions look the same to you. Every visitor now holds a working key billed to your account, and chapter 31 is about the size of that bill.</p>
-</section>
-<section id="where-is-your-own-till-standing">
-<h2>Where is your own till standing?<a class="headerlink" href="#where-is-your-own-till-standing" title="Link to this heading">¶</a></h2>
-<p>Open your own project with the Network panel open and use it until requests start appearing.</p>
+<div class="admonition note kontrol"><p class="admonition-title">check</p><p>Open your own project with the Network panel open and use it until requests start appearing.</p>
 <p>Where is each request going? Read the address of each one. If it goes straight to somebody else's service then your browser is talking to that service directly and everything in that request is public.</p>
 <p>What in your code costs money or grants access? An API key, a database URL, an admin token. Where does it live right now?</p>
-<p>If it reached the browser then it is public, and the next two chapters are about moving it.</p>
+<p>If it reached the browser then it is public, and the next two chapters are about moving it.</p><label class="gec"><input type="checkbox" class="gec-kutu"> my project passes this check</label></div>
 <p>Chapter 6 goes to where data lives, and why a file works perfectly until two people use your project at the same time.</p>
 </section>
 </section>
@@ -457,5 +443,6 @@ built with a hand-written generator &#183; yazbel taught me what teaching in wri
 </div>
 <script src="../tema/stem.js"></script>
 <script src="../tema/site.js"></script>
+<script src="../tema/kitap.js"></script>
   </body>
 </html>

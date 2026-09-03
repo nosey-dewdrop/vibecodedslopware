@@ -92,8 +92,7 @@ Something works on your machine and dies on the deploy for the same reason. You 
 
 MIT teaches a free course for exactly this gap called The Missing Semester of Your CS Education. Julia Evans draws comics about the shell that are the friendliest thing on the subject.
 
-## What is in your project folder?
-
+::kontrol
 Open a terminal and leave your editor closed.
 
 Get to your project folder using only pwd, ls -F and cd. Read what comes back after each step instead of typing the whole path from memory.
@@ -101,5 +100,6 @@ Get to your project folder using only pwd, ls -F and cd. Read what comes back af
 When you arrive, which folder in that list can you not describe the contents of? There will be one, usually node_modules or dist or .next.
 
 Go into it and look, changing nothing. The next time something breaks that folder is going to appear in the error message (which should not be the first time you see the name).
+::
 
 Next comes localhost, and the reason a link that opens instantly for you does not open for your friend.
