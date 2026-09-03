@@ -811,7 +811,8 @@ def navbar(veri, yukari, dil, karsi_url):
             p.append(f'    <li><a href="{yukari}{m["kod"]}/">[{kac(m["ad"])}]</a></li>')
 
     p.append(f'    <li><a href="{yukari}kitap/">[{t["kitap"]}]</a></li>')
-    p.append(f'    <li><a href="{yukari}kitap/slopware-{dil}.pdf">[pdf]</a></li>')
+    if (KOK / "kitap" / f"slopware-{dil}.pdf").exists():
+        p.append(f'    <li><a href="{yukari}kitap/slopware-{dil}.pdf">[pdf]</a></li>')
     p.append(f'    <li><a href="{yukari}forum/">[{kac(t["forum"])}]</a></li>')
 
     # Mail listesi: form sayfası yok, sayfanın ortasında bir dialog açılır.
@@ -978,8 +979,8 @@ def gezinti(yukari, dil, kirinti, onceki=None, sonraki=None, kisayol=False, kars
     for n, (url, ad) in enumerate(kirinti[:-1], start=1):
         p.append(f'          <li class="nav-item nav-item-{n}">'
                  f'<a href="{url}" >{html.escape(ad)}</a></li>')
-    p.append(f'        <li class="nav-item nav-item-this"><a href="">'
-             f'{html.escape(kirinti[-1][1])}</a></li>')
+    p.append(f'        <li class="nav-item nav-item-this">'
+             f'{html.escape(kirinti[-1][1])}</li>')
     p.append("      </ul>\n    </div>")
     return "\n".join(p)
 
@@ -1179,6 +1180,12 @@ def mufredat_kur(veri, m, dil, onek, indeks):
         baslik = bolum_alan(b, "baslik", dil)
         neden = bolum_alan(b, "neden", dil, zorunlu=False)
         kaynak = YAZILAR / dil / m["kod"] / f"{b['slug']}.md"
+
+        # Yazısı olmayan bölümün sayfası kurulmaz. Damla'nın kuralı: boş
+        # sayfa yazı sanılmasın. Listede adı görünür, tıklanmaz.
+        if not kaynak.exists():
+            b[f"durum_{dil}"] = "bos"
+            continue
 
         if kaynak.exists():
             parca, basliklar = markdown(kaynak.read_text(encoding="utf-8"), dil)
@@ -1384,8 +1391,11 @@ def kitap_kur(veri, m, dil, onek):
          '  <section id="kitap" class="kitap-tam">',
          f'<h1>{kac(baslik)}<a class="headerlink" href="#kitap">¶</a></h1>',
          f'<div class="description yazi-ozet">{kac(metin(m["ozet"], dil))}</div>',
-         f'<p class="henuz">{len(yayinda)} / {len(duzlem)} {t["bolumler"]} &#183; '
-         f'<a href="{yukari}kitap/slopware-{dil}.pdf">pdf</a> &#183; {kac(t["kitap_ozet"])}</p>',
+         (f'<p class="henuz">{len(yayinda)} / {len(duzlem)} {t["bolumler"]} &#183; '
+          f'<a href="{yukari}kitap/slopware-{dil}.pdf">pdf</a> &#183; {kac(t["kitap_ozet"])}</p>'
+          if (KOK / "kitap" / f"slopware-{dil}.pdf").exists() else
+          f'<p class="henuz">{len(yayinda)} / {len(duzlem)} {t["bolumler"]} &#183; '
+          f'{kac(t["kitap_ozet"])}</p>'),
          '<div class="contents local topic" id="contents"><ul class="simple">']
     for b in yayinda:
         p.append(f'<li><a class="reference internal" href="#{b["slug"]}">'

@@ -121,10 +121,9 @@
   color: var(--gecti);
 }
 
-:root[data-tema="gece"] .kenar-ust,
-:root[data-tema="gece"] .kenar-cubuk {
+:root[data-tema="gece"] .kenar-ust {
   border-color: var(--cizgi);
-  background-color: var(--cizgi);
+  background: none;
 }
 
 :root[data-tema="gece"] .kenar-cubuk {

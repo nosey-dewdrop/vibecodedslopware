@@ -1195,3 +1195,136 @@ form.arama input[type="submit"]:hover {
     display: block;
   }
 }
+
+/* ==================================================== son düzen */
+/* 1 · Selamlama bir kutu değil, bir satır. Zemin, kenarlık, iç boşluk yok. */
+.kenar-ust {
+  background: none !important;
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
+  padding: 0 0 0.7rem;
+}
+
+.selam {
+  padding: 0 0 0.5rem;
+  background: none;
+}
+
+/* 2 · Sağ ve sol boşluk yok. Izgara ekranın kenarından kenarına. */
+.kitap {
+  grid-template-columns: minmax(14rem, 19fr) minmax(0, 57fr) minmax(12rem, 18fr);
+  gap: 0 2rem;
+  padding-left: 1.2rem;
+  padding-right: 1.2rem;
+  max-width: none;
+  width: 100%;
+}
+
+.header,
+ul.navbar,
+.related,
+div.footer {
+  padding-left: 1.2rem;
+  padding-right: 1.2rem;
+  max-width: none;
+}
+
+/* 3 · CONTENTS kâğıdın sağında, kendi kolonunda, yapışkan. */
+.kitap .kenar-not {
+  grid-column: 3;
+  grid-row: 1;
+  position: sticky;
+  top: 1.4rem;
+  align-self: start;
+  padding: 1.6rem 0 0;
+  margin: 0;
+}
+
+/* 4 · prev / next: iki buton. Kart değil.
+      [< previous]            [next >]
+   Bölümün adı butonun içinde değil, title'ında: bir kitapta sayfa çevirmek
+   iki kelimelik bir iştir, iki paragraflık bir kutu değil. */
+.kitap nav.sonraki {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin: 2.4rem 0 0;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--cizgi);
+}
+
+.kitap nav.sonraki a {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--cizgi-koyu);
+  border-radius: 3px;
+  color: var(--murekkep-soluk);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.kitap nav.sonraki a:hover {
+  color: var(--vurgu);
+  border-color: var(--vurgu);
+}
+
+/* Etiket butonun kendisi; bölüm adı gizlenir. */
+.kitap nav.sonraki a span {
+  display: inline;
+  font-size: inherit;
+  letter-spacing: 0;
+  text-transform: lowercase;
+  color: inherit;
+  margin: 0;
+}
+
+.kitap nav.sonraki a b {
+  display: none;
+}
+
+.kitap nav.sonraki .geri span::before {
+  content: "[< ";
+}
+
+.kitap nav.sonraki .geri span::after {
+  content: "]";
+}
+
+.kitap nav.sonraki .ileri span::before {
+  content: "[";
+}
+
+.kitap nav.sonraki .ileri span::after {
+  content: " >]";
+}
+
+/* Butonun kendisi çerçevesiz: köşeli parantez zaten sınırı çiziyor. */
+.kitap nav.sonraki a {
+  border: 0;
+  padding: 0.35rem 0;
+}
+
+/* "previous" yokken "next" sağda kalır. */
+.kitap nav.sonraki > .ileri:only-child {
+  margin-left: auto;
+}
+
+:root[data-tema="gece"] .kitap nav.sonraki a {
+  color: var(--murekkep-soluk);
+}
+
+@media screen and (max-width: 1250px) {
+  .kitap {
+    grid-template-columns: minmax(13rem, 21fr) minmax(0, 60fr);
+  }
+
+  .kitap .kenar-not {
+    grid-column: 2;
+    grid-row: auto;
+    position: static;
+  }
+}
