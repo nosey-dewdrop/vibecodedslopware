@@ -21,7 +21,7 @@
     <link rel="alternate" hreflang="tr" href="https://nosey-dewdrop.github.io/vibecodedslopware/tr/ara/" />
     <link rel="search" title="search" href="../ara/" />
     <link rel="alternate" type="application/rss+xml" title="vibecodedslopware" href="../rss.xml" />
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='white'/%3E%3Crect x='6' y='6' width='6' height='20' fill='%23808080'/%3E%3Crect x='20' y='6' width='6' height='20' fill='%23808080'/%3E%3C/svg%3E" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='6' y='6' width='6' height='20' fill='%23808080'/%3E%3Crect x='20' y='6' width='6' height='20' fill='%23808080'/%3E%3C/svg%3E" />
     <meta property="og:type" content="article" />
     <meta property="og:site_name" content="vibecodedslopware" />
     <meta property="og:title" content="Search" />
@@ -41,7 +41,7 @@
           document.documentElement.setAttribute("data-tema", _t);
       } catch (e) {}
     </script>
-    <script>window.KOK = "../"; window.DIL = "en"; window.BOLUM = ""; window.GORUS_ADRES = "";</script>
+    <script>window.KOK = "../"; window.DIL = "en"; window.BOLUM = ""; window.GORUS = null; window.BULTEN = null; window.YAZI = {"not_gonder": "send to damla", "not_gitti": "sent to damla", "not_gonderiliyor": "sending…", "not_gitmedi": "did not go, try again", "not_sil": "delete", "not_ipucu": "highlight a sentence and pick note to write one.", "tamamdir": "done", "abone_zaten": "this address is already on the list.", "kopyala": "copy", "kopyalandi": "copied", "kopyala_etiket": "copy this code", "tema_kagida": "switch to paper", "tema_geceye": "switch to night", "tema_kagit": "paper", "tema_gece": "night", "ad_degistir": "change the name"};</script>
   </head><body>
 <div class='header'><a href='../'>vibecodedslopware</a></div>
 
@@ -57,7 +57,7 @@
     <a href="../forum/" class="forum-bag">[forum]</a>
   </li>
   <li class="grup sag">
-    <button type="button" class="mail-ac">[join the mail list!]</button>
+    <span class="yakinda" tabindex="0" role="note" aria-disabled="true">[join the mail list!]<span class="balon">coming soon</span></span>
     <a href="https://nosey-dewdrop.github.io/vibecodedslopware/tr/ara/" hreflang="tr" class="dil-bag">[tr]</a>
     <button type="button" class="tema-dugme" aria-label="theme">[&#183;]</button>
     <span class="yakinda" tabindex="0" role="note" aria-disabled="true">[log in]<span class="balon">coming soon</span></span>
@@ -106,7 +106,7 @@
 <br>
 built with a hand-written generator &#183; yazbel taught me what teaching in writing looks like
 <br>
-<span class="ayak-ipucu">keys: n next, p previous, / search, ? the list &#183; the chapters you pass live in this browser only &#183; <a href="../rss.xml">rss</a></span>
+<span class="ayak-ipucu">keys: [n] next, [p] previous, [/] search, [?] the list &#183; the chapters you pass live in this browser only &#183; <a href="../rss.xml">rss</a></span>
 <br>
 <br>
 </div>
@@ -122,11 +122,7 @@ built with a hand-written generator &#183; yazbel taught me what teaching in wri
   <p>this name stays in this browser. it is not sent anywhere.</p>
 </dialog>
 
-<dialog class="kutu" id="mail-kutu" aria-labelledby="mail-baslik">
-  <button type="button" class="kapat" aria-label="close">&#215;</button>
-  <h2 id="mail-baslik">email me when a new chapter is out</h2>
-  <p>coming soon.</p>
-</dialog>
+
 
 <dialog class="kutu not-kutu" id="not-kutu" aria-labelledby="not-baslik">
   <button type="button" class="kapat" aria-label="close">&#215;</button>
