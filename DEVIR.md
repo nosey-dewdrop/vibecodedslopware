@@ -244,6 +244,24 @@ Ajanlara verilecek değişmez bağlam:
 
 ---
 
+## 4.5 SOHBET TARAMASI — 4 Eylül, madde madde
+
+Damla'nın bu oturumda söylediği her cümle, kurulmuş siteye tek tek
+uygulandı. İlk mesajından 30 madde, sonraki mesajlarından 29 madde.
+
+**59/59 yerinde.** Tek şüpheli em dash çıktı ve o da yanlış alarmdı:
+kalan üç em dash `/* */` blok yorumlarında, okurun ekranına basılan
+hiçbir metinde yok (sekiz sayfa tarandı: kök, slopware, bölüm, forum,
+ara, soru, kontrol, tr).
+
+Bu tarama artık `kontrol.py` X1 kuralının içinde. Kural önce yalnızca
+statik HTML'e bakıyordu ve JS'in çalışma anında yazdığı dizeleri
+kaçırıyordu (`ara.js` arama sonuçlarına bir em dash basıyordu ve grep
+onu görmüyordu). Şimdi hem HTML gövdesine hem JS'in kod kısmına bakıyor,
+yorumları eleyerek.
+
+---
+
 ## 5. DURUM ÖLÇÜMÜ  (4 Eylül 2026, ölçülmüş)
 
     kontrol.py            46/46 geçti

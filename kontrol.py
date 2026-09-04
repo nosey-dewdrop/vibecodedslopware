@@ -252,13 +252,26 @@ def _():
 
 
 # ------------------------------------------------------------------ yasaklar
-@kural("X1", "neden em dash var nefret ederim", "görünür metinde — yok")
+@kural("X1", "neden em dash var nefret ederim", "ekrana basılan metinde yok")
 def _():
-    for y in (BOLUM, ANA, FORUM):
+    # Kod yorumundaki em dash'i kimse görmüyor; sayılan yalnızca okurun
+    # ekranında beliren metin. JS'in çalışma anında yazdığı dizeler de
+    # sayılır: statik HTML'i grep'lemek onları kaçırıyordu.
+    for y in (BOLUM, ANA, FORUM, "soru/index.html", "kontrol/index.html",
+              "ara/index.html", "tr/index.html"):
         h = oku(y)
+        if not h:
+            continue
         govde = re.sub(r"<script.*?</script>", "", h, flags=re.S)
         govde = re.sub(r"<style.*?</style>", "", govde, flags=re.S)
-        if "—" in govde or "&#8212;" in govde:
+        govde = re.sub(r"<[^>]+>", " ", govde)
+        if "—" in govde or "–" in govde or "&#8212;" in govde:
+            return False
+    # JS'in ekrana yazdığı dizeler. Yorumlar elenir: hem `//` hem `/* */`.
+    for f in ("tema/kabuk.js", "tema/ara.js", "tema/site.js", "tema/kitap.js"):
+        kod = re.sub(r"/\*.*?\*/", "", oku(f), flags=re.S)
+        kod = re.sub(r"//[^\n]*", "", kod)
+        if "—" in kod or "–" in kod:
             return False
     return True
 
