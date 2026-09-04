@@ -170,6 +170,13 @@
   var bloklar = document.querySelectorAll(".kitap div.body pre, .kitap-tam pre");
   if (!bloklar.length) return;
 
+  /* Dizeler kur.py'den geliyor (window.YAZI). Burada İngilizce sabitler
+     vardı ve Türkçe sayfada kod bloğunun düğmesi "copy" diyordu. */
+  function yz(a, v) {
+    var y = window.YAZI || {};
+    return (typeof y[a] === "string" && y[a]) ? y[a] : v;
+  }
+
   Array.prototype.forEach.call(bloklar, function (pre) {
     if (pre.parentNode.classList.contains("kod")) return;
 
@@ -178,12 +185,16 @@
     pre.parentNode.insertBefore(kap, pre);
     kap.appendChild(pre);
 
+    /* kur.py çoğu bloğa düğmeyi zaten basıyor. İkincisini koymak, aynı
+       işi yapan iki düğme demek. */
+    if (kap.querySelector(".kopyala")) return;
+
     var d = document.createElement("button");
     d.type = "button";
     d.className = "kopyala";
-    d.textContent = "copy";
-    d.setAttribute("data-oldu", "copied");
-    d.setAttribute("aria-label", "Copy this code");
+    d.textContent = yz("kopyala", "copy");
+    d.setAttribute("data-oldu", yz("kopyalandi", "copied"));
+    d.setAttribute("aria-label", yz("kopyala_etiket", "Copy this code"));
     kap.appendChild(d);
   });
 })();

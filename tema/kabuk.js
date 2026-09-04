@@ -12,6 +12,36 @@
 (function () {
   "use strict";
 
+  /* Arayuz dizeleri. Bir zamanlar dokuzu bu dosyada Ingilizce sabitti:
+     Turkce sayfada arac cubugu Turkceydi ama eylemler Ingilizce cikiyordu.
+     Simdi kur.py bunlari window.YAZI'ya basiyor, tek kaynak S[dil]. */
+  function yz(anahtar, varsayilan) {
+    var y = window.YAZI || {};
+    return (typeof y[anahtar] === "string" && y[anahtar]) ? y[anahtar] : varsayilan;
+  }
+
+  /* Gorus ucu: {tur:"supabase", adres, tablo, anahtar} ya da {tur:"form", adres}.
+     Yoksa null; o zaman dugme hic basilmamis olur. */
+  function gorusUcu() {
+    var g = window.GORUS;
+    return (g && g.adres) ? g : null;
+  }
+
+  /* Supabase'e bir satir yazar. anon anahtar public; tablonun RLS kurali
+     anon'a yalnizca insert veriyor, select vermiyor. */
+  function sbYaz(uc, satir) {
+    return fetch(uc.adres + "/rest/v1/" + uc.tablo, {
+      method: "POST",
+      headers: {
+        "apikey": uc.anahtar,
+        "Authorization": "Bearer " + uc.anahtar,
+        "Content-Type": "application/json",
+        "Prefer": "return=minimal"
+      },
+      body: JSON.stringify(satir)
+    });
+  }
+
   var AD_ANAHTAR = "vibecodedslopware.ad";
   var TEMA_ANAHTAR = "vibecodedslopware.tema";
   var GECILEN_ANAHTAR = "vibecodedslopware.gecilen";
@@ -59,8 +89,10 @@
       var simdi = document.documentElement.getAttribute("data-tema") || "kagit";
       dugme.textContent = simdi === "gece" ? "[+]" : "[\u00b7]";
       dugme.setAttribute("aria-label",
-        simdi === "gece" ? "switch to paper" : "switch to night");
-      dugme.title = simdi === "gece" ? "paper" : "night";
+        simdi === "gece" ? yz("tema_kagida", "switch to paper")
+                         : yz("tema_geceye", "switch to night"));
+      dugme.title = simdi === "gece" ? yz("tema_kagit", "paper")
+                                     : yz("tema_gece", "night");
     }
 
     dugme.addEventListener("click", function () {
@@ -120,7 +152,7 @@
     yer.appendChild(el("span", "selam-kod", "print("));
     yer.appendChild(el("span", "selam-ad", ic));
     yer.appendChild(el("span", "selam-kod", ")"));
-    yer.title = "change the name";
+    yer.title = yz("ad_degistir", "change the name");
   }
 
   function adKur() {
@@ -196,7 +228,6 @@
 
   /* Bir düğümün düz metni — işaretler eklendikten sonra da aynı kalsın diye
      her zaman textContent üstünden ölçülür. */
-  function paragrafMetni(d) { return d.textContent || ""; }
 
   function paragraflariTopla() {
     if (!govde) return;
@@ -419,7 +450,7 @@
 
     if (!notlar.length) {
       var bos = el("p", "forum-bos",
-        "highlight a sentence and pick note to write one.");
+        yz("not_ipucu", "highlight a sentence and pick note to write one."));
       liste.appendChild(bos);
       return;
     }
@@ -431,12 +462,13 @@
       var islem = el("div", "islem");
 
       var gonder = el("button", null,
-        m.gonderildi ? "sent to damla" : "send to damla");
+        m.gonderildi ? yz("not_gitti", "sent to damla")
+                     : yz("not_gonder", "send to damla"));
       gonder.type = "button";
       if (m.gonderildi) { gonder.disabled = true; gonder.className = "gitti"; }
       gonder.addEventListener("click", function () { gonderNot(m, gonder); });
 
-      var sil = el("button", null, "delete");
+      var sil = el("button", null, yz("not_sil", "delete"));
       sil.type = "button";
       sil.addEventListener("click", function () {
         var i = imler.indexOf(m);
@@ -457,50 +489,118 @@
     });
   }
 
-  /* Sunucu yok. Adres mufredat.json'dan geliyor; boşsa düğme "soon" der ve
-     hiçbir şey gönderilmez. Mail adresi İSTENMEZ: toplamadığın veriyi
-     korumak zorunda değilsin. */
+  /* Sunucu yok, uc mufredat.json'dan geliyor. Uc yoksa bu dugme zaten
+     basilmamistir (kur.py bakiyor); yine de savunma olarak sessiz cikiyoruz.
+     Eskiden burada 1.6 saniye "soon" deyip eski haline donen bir dugme
+     vardi: okur notunu yaziyor, basiyor, hicbir yere gitmiyordu.
+     Mail adresi ISTENMEZ: toplamadigin veriyi korumak zorunda degilsin. */
   function gonderNot(m, dugme) {
-    var adres = window.GORUS_ADRES || "";
-    if (!adres) {
-      dugme.textContent = "soon";
-      setTimeout(function () { dugme.textContent = "send to damla"; }, 1600);
-      return;
-    }
+    var uc = gorusUcu();
+    if (!uc) return;
+
     dugme.disabled = true;
-    dugme.textContent = "sending…";
+    dugme.textContent = yz("not_gonderiliyor", "sending…");
 
-    var paket = {
-      bolum: window.BOLUM || "",
-      dil: window.DIL || "en",
-      alinti: m.alinti || "",
-      not: m.not || "",
-      ad: oku(AD_ANAHTAR, "") || "",
-      tarih: new Date().toISOString()
-    };
+    var istek;
+    if (uc.tur === "supabase") {
+      istek = sbYaz(uc, {
+        tur: "not",
+        bolum: window.BOLUM || "",
+        dil: window.DIL || "en",
+        alinti: m.alinti || "",
+        govde: m.not || "",
+        ad: oku(AD_ANAHTAR, "") || ""
+      });
+    } else {
+      istek = fetch(uc.adres, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({
+          bolum: window.BOLUM || "", dil: window.DIL || "en",
+          alinti: m.alinti || "", not: m.not || "",
+          ad: oku(AD_ANAHTAR, "") || "", tarih: new Date().toISOString()
+        })
+      });
+    }
 
-    fetch(adres, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "Accept": "application/json" },
-      body: JSON.stringify(paket)
-    }).then(function (c) {
+    istek.then(function (c) {
       if (!c.ok) throw new Error(String(c.status));
       m.gonderildi = true;
       imleriYaz();
-      dugme.textContent = "sent to damla";
+      dugme.textContent = yz("not_gitti", "sent to damla");
       dugme.className = "gitti";
     }).catch(function () {
       dugme.disabled = false;
-      dugme.textContent = "did not go, try again";
+      dugme.textContent = yz("not_gitmedi", "did not go, try again");
     });
   }
 
   /* ---------- 7 · mail listesi ---------- */
-  /* Mail listesi. Kaydolma GERCEKTEN olur: form kendi servisine POST atar.
-     Sayfadan ayrilmadan, kutunun icinde sonucu soyler. Servis fetch'e
-     kapaliysa (CORS) form yine de gitmis olur; o yuzden hata halinde de
-     "gitti" demiyoruz, ne oldugunu soyluyoruz. */
+  /* Bülten kaydı. İKİ form var ve ikisi de buradan geçer: kutudaki
+     (mail-kutu) ve bölümün altındaki (form.abone). Bir zamanlar yalnız
+     kutudaki bağlanmıştı; alttaki `target="_blank"` ile proje köküne POST
+     atıyor ve okura yeni bir sekmede ham JSON hatası açıyordu. */
+  function bultenGonder(form, durum, bitince) {
+    var giris = form.querySelector("input[type=email]");
+    if (!giris || !giris.value.trim()) return false;
+
+    var dugme = form.querySelector("input[type=submit], button[type=submit]");
+    if (dugme) dugme.disabled = true;
+    if (durum) durum.textContent = "\u2026";
+
+    var sb = form.getAttribute("data-sb") === "1";
+    var istek;
+    if (sb) {
+      istek = sbYaz(window.BULTEN,
+                    {email: giris.value.trim(), dil: window.DIL || "en"});
+    } else {
+      istek = fetch(form.action, {
+        method: "POST", body: new FormData(form),
+        headers: { "Accept": "application/json" }, mode: "cors"
+      });
+    }
+
+    istek.then(function (c) {
+      if (c.ok) {
+        if (durum) durum.textContent = form.getAttribute("data-oldu") || yz("tamamdir", "done");
+        giris.value = "";
+        if (bitince) bitince();
+        return;
+      }
+      /* 409: bu adres zaten listede. Bu bir hata degil, okurun bilmesi
+         gereken bir durum; "gitmedi" demek yalan olurdu. */
+      if (c.status === 409) {
+        if (durum) durum.textContent = yz("abone_zaten", "you are already on the list.");
+        return;
+      }
+      throw new Error(String(c.status));
+    }).catch(function () {
+      if (sb) {
+        /* Supabase'de sessiz dusme yok: istek gitmediyse satir yazilmadi.
+           Yalan soylemek yerine ne oldugunu soyle. */
+        if (durum) durum.textContent = yz("not_gitmedi", "did not go, try again");
+        return;
+      }
+      /* Form servisi tarayiciya cevap vermiyor olabilir ve kayit yine de
+         dusmus olabilir. Yalan soylemeden ikinci yolu ac. */
+      form.target = "_blank";
+      form.submit();
+      if (durum) durum.textContent = form.getAttribute("data-oldu") || yz("tamamdir", "done");
+    }).then(function () {
+      if (dugme) dugme.disabled = false;
+    });
+    return true;
+  }
+
   function mailKur() {
+    /* Bölümün altındaki form: kutu yok, sayfadan ayrilmadan sonucu soyler. */
+    Array.prototype.forEach.call(document.querySelectorAll("form.abone"),
+      function (f) {
+        f.addEventListener("submit", function (e) {
+          if (bultenGonder(f, f.querySelector(".mail-durum"))) e.preventDefault();
+        });
+      });
+
     var ac = document.querySelector(".mail-ac");
     var d = document.getElementById("mail-kutu");
     if (!ac || !d) return;
@@ -520,35 +620,9 @@
     var durum = d.querySelector(".mail-durum");
 
     form.addEventListener("submit", function (e) {
-      var giris = form.querySelector("input[type=email]");
-      if (!giris || !giris.value.trim()) return;
-      e.preventDefault();
-
-      var dugme = form.querySelector("input[type=submit], button[type=submit]");
-      if (dugme) dugme.disabled = true;
-      if (durum) durum.textContent = "…";
-
-      var veri = new FormData(form);
-      fetch(form.action, {
-        method: "POST",
-        body: veri,
-        headers: { "Accept": "application/json" },
-        mode: "cors"
-      }).then(function (c) {
-        if (!c.ok) throw new Error(String(c.status));
-        if (durum) durum.textContent = form.getAttribute("data-oldu") || "done";
-        giris.value = "";
-        setTimeout(function () { d.close(); }, 1200);
-      }).catch(function () {
-        /* Servis tarayiciya cevap vermiyor olabilir ve kayit yine de
-           dusmus olabilir. Yalan soylemeden ikinci yolu ac: formu kendi
-           hedefine, yeni sekmede gonder. */
-        form.target = "_blank";
-        form.submit();
-        if (durum) durum.textContent = form.getAttribute("data-oldu") || "done";
-      }).then(function () {
-        if (dugme) dugme.disabled = false;
-      });
+      if (bultenGonder(form, durum, function () {
+            setTimeout(function () { d.close(); }, 1200);
+          })) e.preventDefault();
     });
   }
 
@@ -583,23 +657,40 @@
       if (dugme) dugme.disabled = true;
       if (durum) durum.textContent = "…";
 
-      var paket = new FormData(form);
-      paket.append("ad", oku(AD_ANAHTAR, "") || "");
-      paket.append("tarih", new Date().toISOString());
+      var sb = form.getAttribute("data-sb") === "1";
+      var uc = gorusUcu();
+      var istek;
+      if (sb && uc) {
+        istek = sbYaz(uc, {
+          tur: "forum",
+          bolum: "",
+          dil: window.DIL || "en",
+          alinti: "",
+          govde: alan.value.trim(),
+          ad: oku(AD_ANAHTAR, "") || ""
+        });
+      } else {
+        var paket = new FormData(form);
+        paket.append("ad", oku(AD_ANAHTAR, "") || "");
+        paket.append("tarih", new Date().toISOString());
+        istek = fetch(form.action, {
+          method: "POST", body: paket,
+          headers: { "Accept": "application/json" }, mode: "cors"
+        });
+      }
 
-      fetch(form.action, {
-        method: "POST",
-        body: paket,
-        headers: { "Accept": "application/json" },
-        mode: "cors"
-      }).then(function (c) {
+      istek.then(function (c) {
         if (!c.ok) throw new Error(String(c.status));
-        if (durum) durum.textContent = form.getAttribute("data-oldu") || "sent";
+        if (durum) durum.textContent = form.getAttribute("data-oldu") || yz("tamamdir", "done");
         alan.value = "";
       }).catch(function () {
+        if (sb) {
+          if (durum) durum.textContent = yz("not_gitmedi", "did not go, try again");
+          return;
+        }
         form.target = "_blank";
         form.submit();
-        if (durum) durum.textContent = form.getAttribute("data-oldu") || "sent";
+        if (durum) durum.textContent = form.getAttribute("data-oldu") || yz("tamamdir", "done");
       }).then(function () {
         if (dugme) dugme.disabled = false;
       });
