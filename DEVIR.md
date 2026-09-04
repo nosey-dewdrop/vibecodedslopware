@@ -87,6 +87,8 @@ site kendini kapatmış durumda: `[join the mail list!]` ve `[send to damla]`
 şu an tıklanmıyor, hover'da "coming soon" diyorlar. Bu doğru davranış,
 ama düğmeler kapalı.
 
+**5 Eylül 01:40'ta yeniden ölçüldü: iki uç da hâlâ 404. Tablolar açılmadı.**
+
 1. Aç: https://supabase.com/dashboard/project/xjtmqncfhuidctxgthhv/sql/new
 2. Yapıştır: `_kurulum/supabase.sql` (61 satır, iki tablo + RLS)
 3. Run
@@ -364,7 +366,7 @@ Damla'ya soruldu: **"İkisi de kalsın."** Navbar her sayfada, bölüm
 altındaki okuma bitince yakalar; tekrar değil, iki farklı an.
 Dokunulmadı.
 
-### C · CSS çakışmaları — kabuk.css'te BİTTİ, kitap.css'te 3 kaldı
+### C · CSS çakışmaları — KAPANDI, üç dosyada da 0
 
     python3 css-harita.py
 
@@ -380,8 +382,17 @@ Ayrıca ölü çıktı: `--sayfa-en` / `--sayfa-kenar` değişkenleri. Onları
 okuyan tek kural sabit `3rem`'e geçmiş, dolayısıyla dar ekran için
 yazılan `@media (max-width:1100px)` bloğu **hiçbir şey yapmıyordu.**
 
-**Kalan 3 çakışma `tema/kitap.css`'te** (h2 margin, p+p margin-top,
-body line-height). Bu turda o dosyaya dokunulmadı.
+**5 Eylül turu: kalan 3 çakışma da kapandı.** `tema/kitap.css`'te aynı
+desen çıktı — dosyanın DİBİNE ikinci bir "satır ızgarası" düzeni yazılmış,
+üstteki tanımları sessizce yeniyordu:
+
+    line-height   1.58  yeniliyordu  1.6
+    p + p         -0.3em            0
+    h2 margin     2rem 0 0.5em      calc(var(--satir) * 2) 0 var(--satir)
+
+Üç kaybeden de ölü metindi. Kazanan değer asıl tanıma taşındı, yinelenen
+blok silindi. `tema/kitap.css` 1388 → 1371 satır. `css-harita.py`: **3 → 0**,
+üç CSS dosyasında da çakışma yok.
 
 `.yakinda .balon` artık listede değil — otomatik araç onu bozmuştu, elle
 birleştirmeye gerek kalmadı.
@@ -415,9 +426,19 @@ CSS tek özellik animasyonu (`opacity`) ve `prefers-reduced-motion` zaten var.
 - **PDF'ler her kurulumda değişiyor** ama sadece zaman damgası: 346224 bayt,
   10 bayt fark, hepsi `CreationDate`/`ModDate`. Commit'e alma, gürültü.
 
-### F · YENİ — ölçülmemiş kalanlar (denetçi işaretledi)
-- **6 bölüm sayfasının yalnız 1'i ölçüldü** (`slopware/localhost/`).
-  Diğer 5'i hiçbir genişlikte ölçülmedi.
+### F · Ölçülmemiş kalanlar — 6/6 ÖLÇÜLDÜ
+- `olc-gorunum.sh` artık ikinci argüman olarak sayfa yolu alıyor
+  (`./olc-gorunum.sh cikti.json slopware/dev-ve-build/`). Yol verilmezse
+  eski davranış: `slopware/localhost/`.
+- **Altı bölüm sayfasının altısı da** CSS değişikliğinden önce ve sonra
+  ölçüldü, hepsinde **0 fark**:
+
+      localhost           0 / 3040
+      slopware-nedir      0 / 2522
+      ekranindaki-sey     0 / 3040
+      terminal-ve-klasor  0 / 3040
+      dev-ve-build        0 / 3040
+      vitrin-ve-kasa      0 / 2892
 - Görünüm ölçümünde **5 seçici hâlâ kör**, ama beşi de o sayfada
   gerçekten yok (gövde içi blockquote/code, kâğıtta yıldız).
 
@@ -467,15 +488,15 @@ CSS tek özellik animasyonu (`opacity`) ve `prefers-reduced-motion` zaten var.
     kontrol.py              46/46 geçti
     olcum.js masaüstü       TEMIZ  (ustPay 18px · adSeritArasi 0px)
     olcum.js dar ekran      TEMIZ  (390px, yatay taşma yok, tek kolon)
-    gorunum-fark.py         0 / 3040   (eski CSS ↔ yeni CSS, iki tema)
-    css-harita.py           kabuk.css 0 · kitap.css 3 (dokunulmadı)
+    gorunum-fark.py         0 fark — 6 bölüm sayfasının 6'sında da
+    css-harita.py           0 — kabuk.css 0 · kitap.css 0 · gece.css 0
     kurulan sayfa           44
     sitemap URL             46
     yazı                    6 EN, 2 TR (55 bölümlük müfredatın)
     soru sayfası            15 EN + 1 TR   FAQ cevapları 16/16 tam cümle
     kontrol sayfası         5 EN + 1 TR    6 bölümden bağ var
     kırık link              0
-    tema/kabuk.css          2185 → 2088 satır  (bu tur)
+    tema/kitap.css          1388 → 1371 satır  (bu tur)
     !important              2 tanesi kalktı (.header, ul.navbar)
     gece kontrast           gövde 14.2 · navbar 6.3 · kod 15.3 · mavi 10.29
     kâğıt mavi kontrast     7.44
