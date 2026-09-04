@@ -12,21 +12,28 @@
    "not": "bölüm tarihi geçmediyse ve md dosyası yoksa kilitli. tarihi değiştir, kur, push."
   },
   "bulten": {
-   "servis": "",
-   "kod": "",
+   "servis": "supabase",
+   "kod": "https://xjtmqncfhuidctxgthhv.supabase.co",
+   "tablo": "slopware_subscribers",
+   "anahtar": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhqdG1xbmNmaHVpZGN0eGd0aGh2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM4OTQ5NTcsImV4cCI6MjA5OTQ3MDk1N30.xQ2-SY7gT1BsI7isodRgKtaqyDSIzjDbgHyjOYMt_8g",
    "alan": "email",
-   "not": "servis: buttondown | sender | ozel. kod: buttondown kullanici adi, ya da formun tam adresi."
+   "not": "servis: supabase | buttondown | sender | ozel. supabase icin kod=proje adresi, tablo=hedef tablo, anahtar=anon key (public, yalnizca insert yetkisi var)."
   },
   "kahve": "damlahelloworld",
   "gorus": {
-   "adres": "",
-   "not": "send to damla buraya POST atar. tek uclu bir form servisi (formspree/netlify) adresi. bos ise dugme 'soon' der."
+   "adres": "https://xjtmqncfhuidctxgthhv.supabase.co",
+   "tablo": "slopware_gorus",
+   "anahtar": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhqdG1xbmNmaHVpZGN0eGd0aGh2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM4OTQ5NTcsImV4cCI6MjA5OTQ3MDk1N30.xQ2-SY7gT1BsI7isodRgKtaqyDSIzjDbgHyjOYMt_8g",
+   "not": "supabase: okur notu ve forum sorusu slopware_gorus tablosuna dusuyor, panelden okunur. bos birakilirsa iki dugme de tiklanmaz olur."
   }
  },
  "mufredatlar": [
   {
    "kod": "slopware",
-   "ad": "slopware",
+   "ad": {
+    "tr": "slopware",
+    "en": "slopware"
+   },
    "durum": "yayinda",
    "baslik": {
     "tr": "slopware nedir, nasıl fark edilir, ne yapmalı?",
@@ -78,7 +85,7 @@
       {
        "no": 3,
        "slug": "localhost",
-       "baslik": "guys, I am on localhost",
+       "baslik": "kanka ben localhost'undayım",
        "baslik_en": "why does your link only open for you?",
        "tarih": "2026-08-28",
        "neden": "npm run dev bir program başlatıyor, o program bir portu dinliyor, 127.0.0.1 senin makinen. Terminal ve klasör burada öğrenilir. Okurun ilk duvarı.",
@@ -117,8 +124,8 @@
       {
        "no": 7,
        "slug": "veri-nerede-yasar",
-       "baslik": "veri nerede yaşar",
-       "baslik_en": "where your data actually lives",
+       "baslik": "veri nerede yaşar?",
+       "baslik_en": "where does your data actually live?",
        "tarih": "2026-09-09",
        "neden": "Tarayıcı depolaması, sonra veritabanı. Yenileyince gidiyorsa hiç yazılmamış demektir.",
        "kontrol": "Sayfayı yenile. Veri duruyor mu? Başka tarayıcıda aç. Duruyor mu?"
@@ -126,8 +133,8 @@
       {
        "no": 8,
        "slug": "sir-nedir",
-       "baslik": "sır nedir",
-       "baslik_en": "what a secret is",
+       "baslik": "sır nedir?",
+       "baslik_en": "what is a secret?",
        "tarih": "2026-09-12",
        "neden": "Anahtar, parola, token. Neden tarayıcıya konmaz.",
        "kontrol": "Build çıktısında anahtarını ara. Bulursan herkes buldu."
@@ -191,8 +198,8 @@
       {
        "no": 14,
        "slug": "npm-install",
-       "baslik": "npm install ne indiriyor",
-       "baslik_en": "what npm install actually downloads",
+       "baslik": "npm install ne indiriyor?",
+       "baslik_en": "what does npm install actually download?",
        "tarih": "2026-09-30",
        "neden": "node_modules'e senin yazmadığın binlerce satır iniyor. Lokalde çalışıp deploy'da patlamanın bir numaralı sebebi.",
        "kontrol": "node_modules'te kaç paket var? package.json'da kaç tane yazıyor?"
@@ -200,8 +207,8 @@
       {
        "no": 15,
        "slug": "build",
-       "baslik": "build ne yapıyor",
-       "baslik_en": "what the build step does",
+       "baslik": "build ne yapıyor?",
+       "baslik_en": "what does the build step do?",
        "tarih": "2026-10-03",
        "neden": "npm run dev senin siten değil. Build çıktısı senin siten.",
        "kontrol": "npm run build koş, dist klasörüne bak, source map'i aç."
@@ -400,8 +407,8 @@
       {
        "no": 36,
        "slug": "webhook",
-       "baslik": "başkası seni arıyor: webhook",
-       "baslik_en": "when someone else calls you: webhooks",
+       "baslik": "başkası seni arıyor: webhook nedir?",
+       "baslik_en": "what happens when someone else calls you: webhooks?",
        "tarih": "2026-12-05",
        "neden": "Şimdiye kadar hep sen istek attın. Bu bunun tersi ve endpoint'in herkese açık.",
        "kontrol": "Webhook adresine imzasız bir istek at. Kabul ediyor mu?"
@@ -602,7 +609,10 @@
   },
   {
    "kod": "systems",
-   "ad": "systems engineering",
+   "ad": {
+    "tr": "sistem mühendisliği",
+    "en": "systems engineering"
+   },
    "durum": "yakinda",
    "baslik": {
     "tr": "sistem tasarımı: kod yazan kişiden sistem kuran kişiye",
@@ -616,7 +626,10 @@
   },
   {
    "kod": "product",
-   "ad": "product engineering",
+   "ad": {
+    "tr": "ürün mühendisliği",
+    "en": "product engineering"
+   },
    "durum": "yakinda",
    "baslik": {
     "tr": "ürün mühendisliği",
