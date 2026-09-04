@@ -24,6 +24,15 @@
   --vurgu: #7b3fa8;
   --gecti: #a0a0a0;
 
+  /* İki renk, iki soru.
+   *   --vurgu (mor/pembe) : SEN NE YAPTIN. tik, ilerleme, kaydolma,
+   *                         bulunduğun kitap. Senin bıraktığın iz.
+   *   --yon   (mavi)      : NEREYE GİDİYORSUN. prev/next, kontrol bağı.
+   *                         Gezinme, ilerleme değil.
+   * Ölçüldü: #15588f beyaz üstünde 7.44, gecedeki #8fc7ff koyu üstünde
+   * 10.29. Eşik 4.5. */
+  --yon: #15588f;
+
   /* lulumelon'un ölçüleri. */
   /* Ölçü, sayfanın %80'ini dolduracak şekilde: kenar + boşluk + yazı.
    * 62ch'lik dar bir sütun 1440'lık bir ekranda sayfanın %43'ünü kullanıyordu
@@ -1156,55 +1165,10 @@ body {
   }
 }
 
-/* --- bölümün altında: sıradaki bölüm, adıyla --------------------------- */
-
-.kitap nav.sonraki a {
-  display: block;
-  padding: 0.9rem 1rem;
-  border: 1px solid var(--cizgi);
-  border-radius: 3px;
-  text-decoration: none;
-  color: var(--murekkep);
-}
-
-.kitap nav.sonraki a:hover {
-  border-color: var(--vurgu);
-}
-
-.kitap nav.sonraki a span {
-  display: block;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--murekkep-soluk);
-  margin-bottom: 0.35rem;
-}
-
-.kitap nav.sonraki a b {
-  font-family: var(--serif);
-  font-size: 1.06rem;
-  font-weight: 400;
-  line-height: 1.3;
-}
-
-.kitap nav.sonraki a:hover b {
-  color: var(--vurgu);
-}
-
-/* Sıradaki bölüm sağa, ve yalnız o varsa sağda durur. */
-.kitap nav.sonraki .ileri {
-  text-align: right;
-  grid-column: 2;
-}
-
-@media screen and (max-width: 560px) {
-
-  .kitap nav.sonraki .ileri {
-    grid-column: 1;
-    text-align: left;
-  }
-}
+/* --- bölümün altında: sıradaki bölüm ------------------------------------
+ * Tek tanım kabuk.css'te, "prev / next" başlığı altında. Burada üç ayrı
+ * rakip tanım vardı (kart görünümü, buton görünümü, flex görünümü) ve
+ * hangisinin kazandığı yükleme sırasına kalmıştı. Silindi. */
 
 @media print {
   .kitap nav.sonraki { display: none !important; }

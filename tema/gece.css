@@ -25,6 +25,7 @@
   --cizgi: #2b2340;
   --cizgi-koyu: #3a3050;
   --vurgu: var(--pembe);
+  --yon: var(--mavi);
   --gecti: #6f6488;
 }
 
@@ -57,6 +58,14 @@
 :root[data-tema="gece"] .kitap-tam a {
   color: var(--pembe);
   border-bottom-color: rgba(255, 143, 179, 0.35);
+}
+
+/* Kontrol bağı gövdenin içinde ama gövde metni değil: gidilecek yer.
+   Rengi yön mavisi, altı çizgisiz. */
+:root[data-tema="gece"] .kitap div.body p.kontrol-bag a,
+:root[data-tema="gece"] .kitap-tam p.kontrol-bag a {
+  color: var(--yon);
+  border-bottom: 0;
 }
 
 /* Kod blokları da gövdeyle aynı dünyada kalır. */
@@ -261,3 +270,43 @@
 .tema-dugme:hover {
   color: var(--vurgu);
 }
+
+/* --- bülten formu ------------------------------------------------------
+ * Gece bu formu hiç görmemişti: `--kagit` yalnız `.kitap.tek` içinde
+ * geceye eşleniyor, bölüm sayfası `.kitap`. Sonuç, karanlık bir sayfada
+ * beyaz bir girdi kutusu ve soluk mor bir düğmeydi. */
+:root[data-tema="gece"] form.abone {
+  border-top-color: var(--cizgi);
+}
+
+:root[data-tema="gece"] form.abone label {
+  color: var(--ink);
+}
+
+:root[data-tema="gece"] form.abone input[type="email"] {
+  background: var(--bg);
+  color: var(--ink);
+  border-color: var(--cizgi-koyu);
+}
+
+:root[data-tema="gece"] form.abone input[type="email"]::placeholder {
+  color: var(--ink-dim);
+}
+
+/* Düğme zeminden ayrılır ama göz yakmaz: gecede beyaz bir blok değil,
+   kendi kenarı olan bir alan. */
+:root[data-tema="gece"] form.abone input[type="submit"] {
+  background: var(--bg-soft);
+  color: var(--ink);
+  border-color: var(--cizgi-koyu);
+}
+
+:root[data-tema="gece"] form.abone input[type="submit"]:hover {
+  border-color: var(--vurgu);
+  color: var(--vurgu);
+}
+
+:root[data-tema="gece"] form.abone small {
+  color: var(--ink-dim);
+}
+

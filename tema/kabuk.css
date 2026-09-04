@@ -30,10 +30,6 @@ ul.navbar li {
 }
 
 /* Şeridin bölümleri arasında ayraç. Terminal karakteri, süs değil. */
-li.navbar-ayrac {
-  color: var(--cizgi-koyu);
-  user-select: none;
-}
 
 /* --- yakında: tıklanmaz, hover'da söyler ------------------------------- */
 /* systems engineering, product engineering ve log in. Üçü de gerçek bir yere
@@ -595,6 +591,38 @@ dialog.kutu blockquote.alinti {
   color: var(--murekkep-soluk);
 }
 
+/* Bölümün altındaki kontrol bağı: kitabın "oku değil, çalıştır" vaadi
+ * okurun bölümü bitirdiği yerde duruyor. Köşeli parantez, mono, sıfır bold.
+ *
+ * Seçiciler `.kitap div.body` ile başlıyor çünkü gövde metninin kendi
+ * bağlantı ve paragraf kuralları daha spesifik ve tek başına `.kontrol-bag`
+ * yazınca onları ezemiyor: link pembe kalıyor, üst boşluk sıfırlanıyordu. */
+.kitap div.body p.kontrol-bag,
+.kitap-tam p.kontrol-bag {
+  margin: 2.4rem 0 0;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+/* Yön rengi: gidilecek yer. İlerlemenin pembesinden ayrı. */
+.kitap div.body p.kontrol-bag a,
+.kitap-tam p.kontrol-bag a {
+  color: var(--yon);
+  border-bottom: 0;
+}
+
+.kitap div.body p.kontrol-bag a:hover,
+.kitap-tam p.kontrol-bag a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  border-bottom: 0;
+}
+
+.kontrol-bag-not {
+  color: var(--murekkep-soluk);
+}
+
 /* ============================================================== SEO sayfaları */
 .seo-liste {
   list-style: none;
@@ -616,24 +644,6 @@ dialog.kutu blockquote.alinti {
   font-size: 12.5px;
   color: var(--murekkep-soluk);
   margin: 1.6rem 0 0;
-}
-
-.seo-baglar {
-  margin: 2.4rem 0 0;
-  padding-top: 1.2rem;
-  border-top: 1px solid var(--cizgi);
-  font-family: var(--mono);
-  font-size: 12.5px;
-}
-
-.seo-baglar h2 {
-  font-family: var(--mono) !important;
-  font-size: 11px !important;
-  font-weight: 400 !important;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--murekkep-soluk);
-  margin: 0 0 0.6rem !important;
 }
 
 /* ============================================================== dar ekran */
@@ -687,29 +697,8 @@ dialog.kutu blockquote.alinti {
 /* Izgara iki kolon. "Önceki" yokken "sonraki" ilk kolona düşüyordu ve tek
  * başına solda duruyordu: ileri giden bir bağlantı sola yaslanmaz. Tek
  * başınaysa ikinci kolona geçer ve metni sağa yaslanır. */
-.kitap nav.sonraki > .ileri:first-child {
-  grid-column: 2;
-}
-
-.kitap nav.sonraki .ileri {
-  text-align: right;
-}
-
-.kitap nav.sonraki .geri {
-  text-align: left;
-}
-
-@media screen and (max-width: 560px) {
-
-  .kitap nav.sonraki > .ileri:first-child {
-    grid-column: 1;
-  }
-
-  .kitap nav.sonraki .ileri,
-  .kitap nav.sonraki .geri {
-    text-align: left;
-  }
-}
+/* prev/next yerleşimi tek yerde: aşağıdaki "prev / next" bölümü.
+ * Burada grid-column varsayan bir tanım vardı, oysa nav flex. */
 
 /* ==================================================== düzen: tek bir ölçü */
 /* Üst bar, gezinti şeridi, gövde ve ayak aynı hizada başlayıp aynı hizada
@@ -727,7 +716,6 @@ dialog.kutu blockquote.alinti {
 
 .header,
 ul.navbar,
-.related,
 div.footer {
   width: 100%;
   max-width: var(--sayfa-en);
@@ -752,11 +740,6 @@ div.footer {
 ul.navbar {
   padding-top: 0.5rem;
   padding-bottom: 0.9rem;
-}
-
-.related {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
 }
 
 .kitap .kenar {
@@ -874,71 +857,16 @@ ul.navbar a,
 /* ============================== yazbel artıkları */
 /* Noktalı çizgiler, ⌂ ev ikonu ve » okları temanın kendi mirası. Bu bir
  * kitap, bir Sphinx dokümantasyonu değil. */
-.related {
-  border: 0 !important;
-  background: none !important;
-}
 
-div.related,
-div.related + div.related {
-  border-top: 0 !important;
-  border-bottom: 0 !important;
-}
 
 /* Ev ikonu ve ilk kırıntı: ikon gider, ad kalır. */
-.related .nav-item-0 {
-  display: none;
-}
 
 /* » ayracı: bir kitapta bölüm adı tek başına durur. */
-.related .nav-item a::after,
-.related .nav-item::after {
-  content: none !important;
-}
-
-.related .nav-item {
-  font-size: 13px;
-}
 
 /* Alt gezinti şeridi bir kere yeter: sayfanın dibinde tekrar eden aynı
    satır, okura yeni bir şey söylemiyor. */
-.kitap ~ .related {
-  display: none;
-}
 
 /* Üst şerit: kırıntı solda, yön bağlantıları sağda, aralarında çizgi yok. */
-.related ul {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 0 0.7rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.related li {
-  display: inline-flex;
-  margin: 0;
-  padding: 0;
-}
-
-.related li.right {
-  margin-left: auto;
-}
-
-.related li.right ~ li.right {
-  margin-left: 0;
-}
-
-.related h3 {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
 
 /* ============================== logo ve şerit aralığı */
 /* Ad ile şerit arasında bir kitabın künyesi kadar boşluk: ikisi tek bir
@@ -1012,7 +940,6 @@ ul.navbar {
 
 .header,
 ul.navbar,
-.related,
 div.footer,
 .kitap,
 .kitap.tek {
@@ -1173,7 +1100,6 @@ form.arama input[type="submit"]:hover {
 
 .header,
 ul.navbar,
-.related,
 div.footer {
   max-width: none;
 }
@@ -1189,72 +1115,9 @@ div.footer {
   margin: 0;
 }
 
-/* 4 · prev / next: iki buton. Kart değil.
-      [< previous]            [next >]
-   Bölümün adı butonun içinde değil, title'ında: bir kitapta sayfa çevirmek
-   iki kelimelik bir iştir, iki paragraflık bir kutu değil. */
-
-.kitap nav.sonraki a {
-  display: inline-block;
-  font-family: var(--mono);
-  font-size: 12.5px;
-  padding: 0.35rem 0.75rem;
-  border: 1px solid var(--cizgi-koyu);
-  border-radius: 3px;
-  color: var(--murekkep-soluk);
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.kitap nav.sonraki a:hover {
-  color: var(--vurgu);
-  border-color: var(--vurgu);
-}
-
-/* Etiket butonun kendisi; bölüm adı gizlenir. */
-.kitap nav.sonraki a span {
-  display: inline;
-  font-size: inherit;
-  letter-spacing: 0;
-  text-transform: lowercase;
-  color: inherit;
-  margin: 0;
-}
-
-.kitap nav.sonraki a b {
-  display: none;
-}
-
-.kitap nav.sonraki .geri span::before {
-  content: "[< ";
-}
-
-.kitap nav.sonraki .geri span::after {
-  content: "]";
-}
-
-.kitap nav.sonraki .ileri span::before {
-  content: "[";
-}
-
-.kitap nav.sonraki .ileri span::after {
-  content: " >]";
-}
-
-/* Butonun kendisi çerçevesiz: köşeli parantez zaten sınırı çiziyor. */
-.kitap nav.sonraki a {
-  border: 0;
-  padding: 0.35rem 0;
-}
-
-/* "previous" yokken "next" sağda kalır. */
-.kitap nav.sonraki > .ileri:only-child {
-  margin-left: auto;
-}
-
-:root[data-tema="gece"] .kitap nav.sonraki a {
-  color: var(--murekkep-soluk);
-}
+/* 4 · prev / next: tek tanım aşağıda, "prev / next" başlığı altında.
+ * Burada ikinci bir tam tanım daha vardı ve kendi içinde de kendini iki
+ * kere yazıyordu (önce çerçeveli, sonra "çerçevesiz" diye tekrar). */
 
 @media screen and (max-width: 1250px) {
 
@@ -1270,7 +1133,6 @@ div.footer {
  * kaybediyor. Az ama gerçek bir pay. */
 .header,
 ul.navbar,
-.related,
 div.footer,
 .kitap {
   padding-left: 3.5rem;
@@ -1281,35 +1143,12 @@ div.footer,
 /* Kırıntı (slopware · bölüm adı) SOLDA, yön bağlantıları SAĞDA. `li.right`
  * öğeleri kaynakta önce geliyordu ve flex onları önce diziyordu; sıra
  * görsel olarak düzeltilir, kaynak dokunulmadan kalır. */
-.related ul {
-  display: flex;
-  align-items: baseline;
-  gap: 0 0.55rem;
-}
-
-.related li.nav-item {
-  order: 1;
-}
-
-.related li.right {
-  order: 2;
-}
 
 /* İlk sağ öğe boşluğu yer: kırıntı solda kalır, yön sağa itilir. */
-.related li.right:first-of-type {
-  margin-left: auto;
-}
-
-.related li.nav-item + li.nav-item::before {
-  content: "·";
-  color: var(--cizgi-koyu);
-  margin-right: 0.55rem;
-}
 
 @media screen and (max-width: 1250px) {
   .header,
   ul.navbar,
-  .related,
   div.footer,
   .kitap {
     padding-left: 2rem;
@@ -1320,7 +1159,6 @@ div.footer,
 @media screen and (max-width: 1100px) {
   .header,
   ul.navbar,
-  .related,
   div.footer,
   .kitap {
     padding-left: 1.3rem;
@@ -1346,11 +1184,6 @@ ul.navbar {
   padding-bottom: 0.7rem !important;
 }
 
-.related {
-  padding-top: 0.35rem !important;
-  padding-bottom: 0.5rem !important;
-}
-
 .kitap .kenar,
 .kitap div.body,
 .kitap .kenar-not {
@@ -1368,10 +1201,6 @@ ul.navbar {
  */
 
 
-
-
-
-
 .mail-ac {
   color: var(--vurgu);
 }
@@ -1383,38 +1212,7 @@ ul.navbar a:hover {
 
 /* Gezinti şeridi: kırıntı solda ve renkli, yön sağda ve soluk. */
 
-.related li.right a {
-  color: var(--murekkep-soluk);
-}
-
-.related li.right a:hover {
-  color: var(--vurgu);
-}
-
 /* Şeridi kaynak sırasından bağımsız diz: kırıntı sola, yön sağa. */
-.related ul {
-  display: flex !important;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0 0.55rem;
-  width: 100%;
-}
-
-.related li.nav-item {
-  order: 0;
-}
-
-.related li.right {
-  order: 5;
-}
-
-.related li.right:first-of-type {
-  margin-left: auto !important;
-}
-
-.related li.right ~ li.right {
-  margin-left: 0 !important;
-}
 
 /* ==================================================== navbar: üç grup */
 /* Sol kitaplar, orta okuma, sağ ayarlar. Bir şerit değil, üç öbek. */
@@ -1475,29 +1273,6 @@ ul.navbar form.ara::before {
 
 /* ==================================================== gezinti şeridi */
 /* Kırıntı solda, yön sağda. Navbarda olan hiçbir şey burada tekrar etmez. */
-.related ul {
-  display: flex;
-  align-items: baseline;
-  gap: 0 0.55rem;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.related li.yon:first-of-type {
-  margin-left: auto;
-}
-
-.related li.yon a {
-  font-family: var(--mono);
-  font-size: 12.5px;
-  color: var(--murekkep-soluk);
-}
-
-.related li.yon a:hover {
-  color: var(--vurgu);
-}
 
 @media screen and (max-width: 1100px) {
   ul.navbar {
@@ -1512,61 +1287,48 @@ ul.navbar form.ara::before {
 /* ==================================================== kırıntı: tek boy tek font */
 /* İki parça iki ayrı tasarımdan geliyordu: biri serif 1.7rem, diğeri mono
  * 13px. Aynı satırdaki iki şey aynı görünür. */
-.related .nav-item,
-.related .nav-item a,
-.related li.nav-item-this {
-  font-family: var(--mono) !important;
-  font-size: 13px !important;
-  font-weight: 400 !important;
-  letter-spacing: 0;
-  line-height: 1.5;
-}
-
-
-.related li.nav-item-this {
-  color: var(--murekkep-soluk);
-}
 
 /* ==================================================== prev / next */
 /* Bir zamanlar yazının solunda ve sağında dikey duruyorlardı: dar
  * ekranda sütunun üstüne biniyor ve okunmuyorlardı. Yazının altında,
  * iki uca yaslı, köşeli parantezli iki buton. */
+/* İki eşit kutu, ikisi de sola yaslı, ikisi de mono.
+ *
+ * Burada dört rakip tanım vardı ve kazananı yükleme sırası seçiyordu:
+ * biri kart çiziyordu, biri `a b { display: none }` ile bölüm adını
+ * gizliyordu (ama HTML `<i>` basıyor, `<b>` değil, yani o kural hiçbir
+ * şeyi gizlemedi), biri grid-column veriyordu (nav flex), biri de
+ * `max-width: 46%` + sağa yaslama ile sağ tarafı sardırıyordu.
+ *
+ * Serif olan bölüm adı gövde metniyle karışıyordu. Bu okunacak metin
+ * değil, gidilecek yer: arayüz, yani mono. */
 .kitap nav.sonraki {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
   margin: 2.6rem 0 0;
   padding-top: 1.3rem;
   border-top: 1px solid var(--cizgi);
 }
 
 .kitap nav.sonraki a {
-  display: inline-block;
+  display: block;
   font-family: var(--mono);
-  font-size: 12.5px;
-  color: var(--murekkep-soluk);
   text-decoration: none;
   border: 0;
   padding: 0;
-  white-space: nowrap;
+  min-width: 0;
 }
 
-.kitap nav.sonraki a:hover {
-  color: var(--vurgu);
-}
-
-.kitap nav.sonraki a b {
-  display: none;
-}
-
+/* Etiket üstte, köşeli parantez içinde: sitenin geri kalanı gibi.
+ * Damla'nın kuralı (kontrol.py P10): prev/next sadece [< prev] [next >]
+ * butonları, kart yok. */
 .kitap nav.sonraki a span {
-  display: inline;
-  font-size: inherit;
-  letter-spacing: 0;
-  text-transform: lowercase;
-  color: inherit;
-  margin: 0;
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--murekkep-soluk);
+  margin-bottom: 0.35rem;
 }
 
 .kitap nav.sonraki .geri span::before { content: "[< "; }
@@ -1574,9 +1336,36 @@ ul.navbar form.ara::before {
 .kitap nav.sonraki .ileri span::before { content: "["; }
 .kitap nav.sonraki .ileri span::after  { content: " >]"; }
 
-/* Tek başınaysa sağda kalır: ileri giden bağlantı sola yaslanmaz. */
+/* HTML bir zamanlar bölüm adını <b> ile basıyordu ve bu kural onu
+ * gizliyordu. Şimdi <i> ile basıyor ve ad görünüyor -- gideceğin yerin
+ * adını görmek, bir kitapta sayfa çevirmenin yarısı. Kural duruyor:
+ * <b> geri gelirse yine gizlenir. */
+.kitap nav.sonraki a b {
+  display: none;
+}
+
+/* Gideceğin bölümün adı. HTML bunu `<i>` ile basıyor; italik değil.
+ *
+ * Yön rengi (mavi) durağan halde de burada: bunlar gidilecek yerler ve
+ * rengi hover'a saklamak, rengin anlamını gizlemek olurdu. Pembe "sen ne
+ * yaptın" (tik, ilerleme), mavi "nereye gidiyorsun". */
+.kitap nav.sonraki a i {
+  display: block;
+  font-style: normal;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--yon);
+}
+
+.kitap nav.sonraki a:hover i {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* "previous" yoksa "next" kendi kolonunda kalır: sola kaymaz. */
 .kitap nav.sonraki > .ileri:only-child {
-  margin-left: auto;
+  grid-column: 2;
 }
 
 /* ==================================================== forum: soru kutusu */
@@ -1670,13 +1459,6 @@ ul.navbar form.ara::before {
 }
 
 /* Klavye kısayolunun çıpası: görünmez ama erişilebilir. */
-.related .gizli-yon {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-}
 
 
 /* ==================================================== IZGARA — TEK TANIM
@@ -2000,22 +1782,10 @@ body > div.footer {
   color: var(--vurgu);
 }
 
-.yakinda {
-  color: var(--murekkep-soluk);
-  opacity: 1;
-}
-
-ul.navbar a:hover,
-ul.navbar button:hover {
-  color: var(--vurgu);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-/* Bulunduğun kitap: rengiyle değil, altındaki çizgiyle. */
-ul.navbar a[aria-current="page"] {
-  border-bottom: 1px solid var(--vurgu);
-}
+/* Şeridin hover ve "yakında" kuralları tek yerde: aşağıdaki
+ * "ul.navbar .yakinda" bloğu. Burada birebir aynısı bir kere daha
+ * yazılmıştı ve aria-current'a çizgi veriyordu; aşağıdaki blok ona
+ * renk veriyor, ikisi çakışıyordu. */
 
 :root[data-tema="gece"] .kitap-bag,
 :root[data-tema="gece"] .oku-bag,
@@ -2401,41 +2171,6 @@ ul.navbar li.grup.sag {
   margin-top: 0.5rem;
 }
 
-/* ============================== prev / next: ad butonun ALTINDA
- * Etiket ve bölüm adı tek satırda yapışıktı: "[< previous]why can your
- * deploy not find your files?" tek bir kelime gibi okunuyordu. Etiket
- * üstte, gideceğin bölümün adı altında. */
-.kitap nav.sonraki a {
-  display: block;
-  white-space: normal;
-  max-width: 46%;
-}
-
-.kitap nav.sonraki a span {
-  display: block;
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  color: var(--murekkep-soluk);
-  margin-bottom: 0.3rem;
-}
-
-.kitap nav.sonraki a i {
-  display: block;
-  font-style: normal;
-  font-family: var(--serif);
-  font-size: 1rem;
-  line-height: 1.35;
-  color: var(--murekkep);
-}
-
-.kitap nav.sonraki a:hover i {
-  color: var(--vurgu);
-}
-
-.kitap nav.sonraki .ileri {
-  text-align: right;
-}
-
 /* Sayaçtaki sayı kalın değil: kanun her şeyin 400 olması. */
 .kenar-sayi b,
 p.henuz b {
@@ -2448,6 +2183,3 @@ p.henuz b {
   color: var(--ink);
 }
 
-:root[data-tema="gece"] .kitap nav.sonraki a i {
-  color: var(--ink);
-}
