@@ -30,6 +30,17 @@ BOLUM = "slopware/localhost/index.html"
 ANA = "index.html"
 FORUM = "forum/index.html"
 
+def bulten_acik():
+    """Bülten ucu gerçekten çalışıyor mu?
+
+    kur.py kurarken ucu ölçüyor: tablo yoksa düğmeyi kapatıyor ve o zaman
+    sayfada bir <button> değil, [giriş yap] gibi tıklanmaz bir <span>
+    duruyor. Damla'nın kuralı "kaydol düğmesi köşeli parantez içinde
+    olsun"; ama gitmeyen bir düğme, düğmesizlikten kötü. İki kural aynı
+    anda geçerli, o yüzden hangisinin arandığı uca bakıyor."""
+    return 'id="mail-kutu"' in oku(BOLUM)
+
+
 KURALLAR = []
 
 
@@ -48,12 +59,22 @@ def _():
 
 @kural("N2", "cv yerine [mail liste kaydol!]", "köşeli parantez içinde düğme")
 def _():
-    return re.search(r'class="mail-ac">\[[^\]]+\]</button>', oku(BOLUM)) is not None
+    h = oku(BOLUM)
+    if bulten_acik():
+        return re.search(r'class="mail-ac">\[[^\]]+\]</button>', h) is not None
+    # Uç kapalı: düğme yerine tıklanmaz etiket, ama HÂLÂ köşeli parantezli
+    # ve hâlâ kaydolmaktan söz ediyor. [giriş yap] ile aynı desen.
+    return re.search(r'class="yakinda"[^>]*>\[[^\]]*(kaydol|mail list)[^\]]*\]', h) is not None
 
 
 @kural("N3", "form sitesi olsun istemiyorum, pop up olabilir", "<dialog>")
 def _():
-    return '<dialog class="kutu" id="mail-kutu"' in oku(BOLUM)
+    h = oku(BOLUM)
+    if bulten_acik():
+        return '<dialog class="kutu" id="mail-kutu"' in h
+    # Uç kapalıyken kutu hiç kurulmuyor; açılıp içinde "yakında" diyen bir
+    # kutu, açılmış ve boş çıkmış bir kapıdır. Diğer kutular duruyor.
+    return '<dialog class="kutu" id="ad-kutu"' in h
 
 
 @kural("N4", "mail liste tıklayınca cidden kaydolunsun", "gerçek POST")
@@ -197,9 +218,17 @@ def _():
 
 @kural("P12", "gezinti: kırıntı solda, yön sağda", "sıra doğru")
 def _():
-    c = oku("tema/kabuk.css")
-    return ".related li.nav-item {\n  order: 0" in c and \
-           ".related li.right {\n  order: 5" in c
+    """Bu iş artık `.related` şeridinde değil.
+
+    Şerit kaldırıldı (kırıntı ve arama navbara, yön bölümün altına geçti)
+    ve geriye 34 yetim CSS kuralı kalmıştı; onlar da silindi. Kural aynı
+    şeye bakıyor ama bugünkü yerinde: navbarın solunda kitaplar, sağında
+    okurun ayarları, bölümün altında önceki/sonraki."""
+    h = oku(BOLUM)
+    sol = h.find('<li class="grup sol">')
+    sag = h.find('<li class="grup sag">')
+    nav = h.find('<nav class="sonraki"')
+    return 0 <= sol < sag and nav > sag
 
 
 # ------------------------------------------------------------------ yazı
@@ -283,8 +312,7 @@ def _():
     # Geriye yalnızca n/p tuşlarının tutunduğu görünmez çıpa kaldı.
     return ("&#x2302;" not in h and "&#187;" not in h
             and 'class="related"' not in h
-            and "&#128274;" not in oku("slopware/index.html")
-            and "pyramid.css" not in h)
+            and "&#128274;" not in oku("slopware/index.html"))
 
 
 @kural("X3", "SORU OLAN HER ŞEY ? İLE BİTER", "soru başlıkları")

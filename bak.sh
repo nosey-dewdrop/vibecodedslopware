@@ -39,6 +39,19 @@ node $KOK/cdp.js 9222 $KOK/olcum.js || true
 
 pkill -9 -f "Google Chrome" 2>/dev/null || true
 sleep 2
+
+# Dar ekran: telefonda sayfa bir kere 947px genişlemişti, ekran 390.
+# mobil.js repoda duruyordu ama hiçbir yerden koşulmuyordu.
+echo "· dar ekran (390px)"
+rm -rf $CIKTI/prof-mobil
+"$CH" --headless=new --disable-gpu --remote-debugging-port=9222 \
+      --user-data-dir=$CIKTI/prof-mobil --window-size=390,844 \
+      "http://localhost:8901/slopware/localhost/" >/dev/null 2>&1 &
+sleep 5
+node $KOK/cdp.js 9222 $KOK/mobil.js || true
+pkill -9 -f "Google Chrome" 2>/dev/null || true
+sleep 2
+
 echo "· ekran görüntüsü"
 for yol in "slopware/localhost" "" "slopware" "forum" "soru" "ara"; do
   ad=$(echo "${yol:-ana}" | tr '/' '-')

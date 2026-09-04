@@ -10,3 +10,7 @@ __pycache__/
 # rabadon calisma dosyalari alt klasorlere sizmasin
 tema/.rabadon/
 yazilar/**/.rabadon/
+
+# rabadon oturum dosyalari: her kosuda degisiyor, git gurultusu
+.rabadon/sessions/
+.rabadon/handoff.md

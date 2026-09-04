@@ -13,7 +13,16 @@
   de("gövde yok", !!govde);
   de("araç çubuğu yok", !!document.getElementById("arac-cubuk"));
   de("isim dialogu yok", !!document.getElementById("ad-kutu"));
-  de("mail dialogu yok", !!document.getElementById("mail-kutu"));
+  // Bülten ucu kapalıyken (tablo yok) kutu kurulmuyor ve düğme [log in]
+  // gibi tıklanmaz duruyor. O hâlde aranan şey kutu değil, dürüst kapalılık:
+  // köşeli parantezli ama tıklanmaz bir etiket.
+  const mailKutu = document.getElementById("mail-kutu");
+  const mailKapali = document.querySelector('.yakinda[aria-disabled="true"]');
+  de("mail ne kutu ne kapalı etiket", !!mailKutu || !!mailKapali);
+  if (!mailKutu && mailKapali) {
+    de("kapalı mail düğmesi tıklanabilir görünüyor",
+       mailKapali.tagName !== "BUTTON" && !mailKapali.querySelector("button"));
+  }
   de("selamlama yok", !!document.querySelector(".selam"));
 
   // --- kontrol tiki gercekten calisiyor mu ---
