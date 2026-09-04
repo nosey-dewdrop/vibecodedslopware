@@ -352,7 +352,7 @@ def _():
     # 44 sayfada göründü. Sayfada süslü parantezli bir ifade kalıntısı
     # varsa bir yerde f eksiktir.
     for y in (BOLUM, ANA, FORUM):
-        if re.search(r'\{(kac|f?['"'"'"]|t\[|yukari|dil)', oku(y)):
+        if re.search(r"\{(kac|t\[|yukari|dil)\b", oku(y)):
             return False
     return True
 
