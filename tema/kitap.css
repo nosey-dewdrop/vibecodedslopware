@@ -128,7 +128,7 @@ ul.navbar a:hover {
   padding: 2.5rem 0 3rem;
   font-family: var(--serif);
   font-size: 1.24rem;
-  line-height: 1.58;
+  line-height: 1.6;
   color: var(--murekkep);
   hyphens: auto;
 }
@@ -142,7 +142,7 @@ ul.navbar a:hover {
 .kitap div.body p + p,
 .kitap-tam p + p {
   text-indent: 1.3em;
-  margin-top: -0.3em;
+  margin-top: 0;
 }
 
 .kitap div.body h1,
@@ -165,7 +165,7 @@ ul.navbar a:hover {
   /* Kanun: her şey 400. Bir başlığı ayıran şey kalınlığı değil, boyu ve
      üstündeki boşluk. */
   font-weight: 400;
-  margin: 2rem 0 0.5em;
+  margin: calc(var(--satir) * 2) 0 var(--satir);
   padding: 0;
   border: 0;
   color: var(--murekkep);
@@ -1312,12 +1312,6 @@ body {
   margin: 0;
 }
 
-.kitap div.body p + p,
-.kitap-tam p + p {
-  text-indent: 1.3em;
-  margin-top: 0;
-}
-
 /* Bir bloktan sonra gelen paragraf yeniden başlar: girinti yok, boşluk var. */
 .kitap div.body pre + p,
 .kitap div.body blockquote + p,
@@ -1326,11 +1320,6 @@ body {
 .kitap-tam .kod + p {
   text-indent: 0;
   margin-top: var(--satir);
-}
-
-.kitap div.body h2,
-.kitap-tam h2 {
-  margin: calc(var(--satir) * 2) 0 var(--satir);
 }
 
 .kitap div.body .kod,
@@ -1345,12 +1334,6 @@ body {
 
 .kitap div.admonition.kontrol {
   margin: calc(var(--satir) * 2) 0;
-}
-
-/* Uzun satır gitti, satır aralığı da kitaba döner. */
-.kitap div.body,
-.kitap-tam {
-  line-height: 1.6;
 }
 
 /* --- kod: kitap bloğu, docs kutusu değil -------------------------------- */
