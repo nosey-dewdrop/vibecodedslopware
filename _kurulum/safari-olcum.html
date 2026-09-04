@@ -1,0 +1,69 @@
+<!doctype html><html lang="tr"><head><meta charset="utf-8">
+<title>Safari kare ölçümü</title>
+<style>
+ body{font:15px ui-monospace,Menlo,monospace;max-width:44rem;margin:3rem auto;
+      padding:0 1.5rem;background:#171221;color:#e8e2f0;line-height:1.6}
+ h1{font-size:1.2rem}
+ button{font:inherit;background:none;color:#8fc7ff;border:1px solid #8fc7ff;
+        padding:.5rem 1rem;cursor:pointer}
+ button[disabled]{opacity:.4;cursor:default}
+ #cikti{white-space:pre-wrap;margin-top:1.5rem;border-top:1px solid #443a55;padding-top:1rem}
+ .kap{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+ .yildiz{position:absolute;font-size:11px;color:#9a8fb0;opacity:.32;
+         animation:parla 3.4s ease-in-out infinite}
+ @keyframes parla{0%,100%{opacity:.15}50%{opacity:.65}}
+ main{position:relative;z-index:1}
+</style></head><body>
+<div class="kap" id="yildizlar"></div>
+<main>
+<h1>Safari kare ölçümü — yıldızlar gerçekten kasıyor mu?</h1>
+<p>Sitedeki yıldız alanının aynısı bu sayfada çalışıyor: 70 element, aynı
+CSS, aynı animasyon. Düğmeye bas, 6 saniye bekle, çıkan sayıyı Claude'a
+yapıştır.</p>
+<p><button id="olc">ölç (6 sn)</button></p>
+<div id="cikti">henüz ölçülmedi.</div>
+</main>
+<script>
+(function(){
+ var G=["*","+","·","⋆","."], kap=document.getElementById("yildizlar");
+ var kac=Math.min(70,Math.round(window.innerWidth/22));
+ for(var i=0;i<kac;i++){
+   var s=document.createElement("span");
+   s.className="yildiz"; s.textContent=G[i%G.length];
+   s.style.left=(Math.random()*100).toFixed(2)+"%";
+   s.style.top=(Math.random()*100).toFixed(2)+"%";
+   s.style.animationDelay=(Math.random()*3.4).toFixed(2)+"s";
+   kap.appendChild(s);
+ }
+ var c=document.getElementById("cikti"), d=document.getElementById("olc");
+ d.onclick=function(){
+   d.disabled=true; c.textContent="ölçülüyor…";
+   var kare=[], onceki=performance.now(), bas=onceki;
+   (function tur(t){
+     kare.push(t-onceki); onceki=t;
+     // olculurken sayfa kayiyormus gibi davransin: gercek okuma boyle
+     window.scrollBy(0, (kare.length%2)?1:-1);
+     if(t-bas<6000) requestAnimationFrame(tur);
+     else bit(kare.slice(1));
+   })(performance.now());
+ };
+ function bit(k){
+   k.sort(function(a,b){return a-b;});
+   var top=0; for(var i=0;i<k.length;i++) top+=k[i];
+   var ort=top/k.length, p95=k[Math.floor(k.length*0.95)], en=k[k.length-1];
+   var dusuk=k.filter(function(x){return x>20;}).length;
+   c.textContent=
+     "tarayıcı   : "+navigator.userAgent.replace(/^.*Version/,"Version")+"\n"+
+     "yıldız     : "+document.querySelectorAll(".yildiz").length+"\n"+
+     "kare sayısı: "+k.length+"\n"+
+     "ortalama   : "+ort.toFixed(1)+" ms\n"+
+     "p95        : "+p95.toFixed(1)+" ms\n"+
+     "en yavaş   : "+en.toFixed(1)+" ms\n"+
+     "20 ms üstü : "+dusuk+" kare  ("+(100*dusuk/k.length).toFixed(1)+"%)\n"+
+     "\nHÜKÜM: "+(dusuk/k.length>0.05||ort>20
+       ? "KASIYOR — yıldız sayısı düşürülmeli."
+       : "kasma yok — 60 fps tutuyor.");
+   d.disabled=false;
+ }
+})();
+</script></body></html>
