@@ -141,8 +141,15 @@ def _():
 
 @kural("N11", "logo ile navbar arasında üst yerleşimlere çalış", "dar aralık")
 def _():
-    c = oku("tema/kabuk.css")
-    return "padding-top: 1.1rem !important" in c
+    # Bu kural iki kere metin aradi ve iki kere yaniltti: once
+    # `padding-top: 1.1rem !important` dizesini aradi (yama silinince kirmizi
+    # yandi, oysa aralik degismemisti), sonra bir regex oldu (gruplu secici,
+    # `padding` kisayolu ve `px` birimi ondan kaciyordu). Aranan sey bir yazim
+    # degil, EKRANDAKI BOSLUK. Olcum artik olcum.js'te, calisan sayfada:
+    # `ustPay` ve `adSeritArasi`. Burada kalan is, o olcumun DURDUGUNU
+    # garanti etmek — kapi sessizce kaybolmasin diye.
+    o = oku("olcum.js")
+    return "adSeritArasi" in o and "logo ile şerit arası geniş" in o
 
 
 # ------------------------------------------------------------------ panel

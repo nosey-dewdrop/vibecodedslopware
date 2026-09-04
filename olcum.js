@@ -103,6 +103,25 @@
   r.yon = document.querySelectorAll("nav.sonraki a").length;
   de("prev/next çift basılmış", r.yon <= 2, "adet=" + r.yon);
 
+  // --- N11 · logo ile şerit arasında dar aralık ---
+  // Bu kural kontrol.py'deydi ve CSS metnini ("padding-top: 1.1rem !important")
+  // ariyordu. Metin aramak yaniltiyor: yama silininde kural kirmizi yandi, ama
+  // aralik hic degismemisti. Sonra regex'e cevirdim, o da metindi: gruplu
+  // secici, `padding` kisayolu ve `px` birimi kaciyordu. Aranan sey bir yazim
+  // degil, EKRANDAKI BOSLUK; o yalniz burada, calisan sayfada olculur.
+  const bas = document.querySelector(".header");
+  const ser = document.querySelector("ul.navbar");
+  if (bas && ser) {
+    const bk = bas.getBoundingClientRect(), sk = ser.getBoundingClientRect();
+    // Ad blogunun tepesindeki bosluk + ad ile serit arasindaki bosluk.
+    r.ustPay = Math.round(parseFloat(getComputedStyle(bas).paddingTop));
+    r.adSeritArasi = Math.round(sk.top - bk.bottom);
+    de("logo ile şerit arası geniş", r.ustPay <= 20, r.ustPay + "px üst pay");
+    de("ad ile şerit arası geniş", r.adSeritArasi <= 24, r.adSeritArasi + "px");
+  } else {
+    de("üst blok ölçülemedi", false, "header/navbar yok");
+  }
+
   r.sonuc = r.hata.length ? "KALDI" : "TEMIZ";
   return JSON.stringify(r, null, 1);
   }
