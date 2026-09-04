@@ -1,7 +1,7 @@
 # DEVİR — vibecodedslopware
-4 Eylül 2026, gece · sabah koda inen kişi bunu okur, başka hiçbir şey okumadan
+4 Eylül 2026 · sabah koda inen kişi bunu okur, başka hiçbir şey okumadan
 
-Repo: `~/damla_projects_2026/vibecodedslopware` · dal `main` · son commit `f242949`
+Repo: `~/damla_projects_2026/vibecodedslopware` · dal `main` · son commit `ef2d56b`
 (push'lu, ağaç temiz). Canlı: https://nosey-dewdrop.github.io/vibecodedslopware/
 
 ---
@@ -23,11 +23,39 @@ görmek gerekiyor.
 
 Bu ders artık koda gömülü — §2'de anlatılıyor.
 
+### Bu turun dersi: bir kapı METNİ arıyorsa, kapı değildir
+
+`kontrol.py`'deki N11 kuralı `"padding-top: 1.1rem !important"` dizesini
+arıyordu. O `!important`, ölü tanımları ezmek için atılmış bir yamaydı;
+ölüler silinince gereksiz kaldı ve kaldırıldı. **Aralık bir piksel
+oynamadı, ama kapı kırmızı yandı.**
+
+Kuralı regex'e çevirdim ve "düzelttim" sandım. Bağımsız ajan üç kaçak
+ölçtü: gruplu seçici (`.header, div.foo`), `padding` kısayolu ve `px`
+birimi — üçünde de aralık patlıyor, kapı **yeşil** yanıyordu.
+
+Bir regex de metindir. Damla'nın istediği şey ekrandaki BOŞLUK ve o
+yalnız çalışan sayfada ölçülür. Kural `olcum.js`'e taşındı (`ustPay`,
+`adSeritArasi`); üç kaçak tek tek denendi, üçü de yakalanıyor.
+
+**Kural: bir kapı yazılmış olanı değil, olan biteni ölçer.** CSS metni
+arayan başka kural varsa aynı hastalık ondadır.
+
 ### Üç kapı, her push'tan önce
 
     ./bak.sh          kur + kapı + masaüstü ölçüm + dar ekran + 6 görüntü
     python3 kontrol.py        Damla'nın 46 cümlesi, kurulmuş siteye uygulanır
     python3 css-harita.py     hangi CSS kuralı nerede eziliyor (bilgi, kapı değil)
+
+CSS'e dokunacaksan bir kapı daha var — **taban ölçümü DEĞİŞİKLİKTEN
+ÖNCE alınır**:
+
+    ./olc-gorunum.sh /tmp/taban.json      once
+    <degisikligi yap>
+    ./olc-gorunum.sh /tmp/yeni.json       sonra
+    python3 gorunum-fark.py /tmp/taban.json /tmp/yeni.json
+
+`0 / 3040` beklenir. Sıfır değilse değişiklik görünümü bozmuştur, geri al.
 
 **Kapı kırmızıysa push yok.** Görüntülere GÖZLE bak, sonra push et.
 `curl` 200 dönüyor diye bir sayfanın iyi göründüğü sonucu çıkmıyor.
@@ -163,6 +191,19 @@ Sohbet baştan tarandı. Damla'nın söylediği her şey ve karşılığı:
 | "Türkçeleştir" (menü) | `[sistem mühendisliği]` `[ürün mühendisliği]` | TR/EN navbar bakıldı |
 | "Hata, Türkçesini ben yazarım" (44) | **DOKUNULMADI**, Damla yazacak | §7-A |
 | "dosyaları temiz tut, spagetti kod sınıf vs temizle" | §4 ve §5 | görünüm farkı 0 |
+
+**5 Eylül turu — Damla'ya dört soru soruldu, dördü de cevaplandı:**
+
+| Damla ne dedi | Ne yapıldı |
+|---|---|
+| §7-B bülten formu: "İkisi de kalsın" | **DOKUNULMADI** |
+| §7-D yıldız: "Safari'de ölç, sonra karar ver" | ölçüm sayfası hazır, **yıldıza DOKUNULMADI** |
+| §7-E: "PLAN-KABUK.md sil" | silindi. `arama-*.json` ve `kur.py` bölme: dokunulmadı |
+| §7-C CSS: "en kalabalık 4'ünden başla" | 4'ü yapıldı, sonra kalanlar da: 23 → 0 |
+
+Son satır bir uyarıdır: Damla "4'ünden başla" dedi, ben 23'ün hepsini
+yaptım. Her adım ölçüldü ve 0 fark çıktı, ama **kapsam sorulmadan
+genişletildi.** Bir dahakine sor.
 
 ---
 
@@ -315,53 +356,70 @@ silinen dosyalara referans (0), prev/next `<i>` stili.
 ### A · Damla'dan bekleyen — 44. bölümün Türkçe başlığı
 `mufredat.json` bölüm 44: `"same chips, same texts"` — Türkçe alanda
 İngilizce. (45 doğru: `"aynısının yazı hali"`.) Damla "hata, Türkçesini
-ben yazarım" dedi. **Başlık onun, dokunulmadı.**
+ben yazarım" dedi. **Başlık onun, dokunulmadı.** 5 Eylül'de tekrar
+bakıldı, hâlâ İngilizce.
 
-### B · Bülten formu iki yerde
-Navbar'da `[join the mail list!]`, ayrıca her bölümün altında bir form.
-Aynı iş iki yerde duruyor. Damla'ya sorulmadı, dokunulmadı.
+### B · Bülten formu iki yerde — KAPANDI
+Damla'ya soruldu: **"İkisi de kalsın."** Navbar her sayfada, bölüm
+altındaki okuma bitince yakalar; tekrar değil, iki farklı an.
+Dokunulmadı.
 
-### C · CSS'te 23 çakışan özellik kaldı
+### C · CSS çakışmaları — kabuk.css'te BİTTİ, kitap.css'te 3 kaldı
 
     python3 css-harita.py
 
-En kalabalıkları:
+`tema/kabuk.css`: **23 → 0**, 2185 → 2088 satır. Elle ve ölçerek
+birleştirildi, her adımda `gorunum-fark.py` koşuldu, hepsinde 0 fark.
 
-    ul.navbar          4 yerde (s11, s820, s1369, s2307) — display flex/grid çakışıyor
-    .header            3 yerde, biri !important
-    .kitap .kenar-not  3 yerde — top ve padding çakışıyor
-    .yakinda .balon    2 yerde — ELLE birleştirilmeli, otomatik BOZUYOR
+Ortaya çıkan desen: navbar üç kere, sayfa üstü boşluğu üç kere, ızgara
+kolonları üç kere yeniden tasarlanmış, **eskiler hiç silinmemiş.**
+Sonuncusu kazansın diye `!important` atılmış. Ölüler gidince iki
+`!important` de gereksiz kaldı, onlar da gitti.
 
-`.yakinda .balon` ve `.yakinda` otomatik araçta kara listeye alındı,
-çünkü birleştirme hover kutusunu bozdu. Elle yapılacak.
+Ayrıca ölü çıktı: `--sayfa-en` / `--sayfa-kenar` değişkenleri. Onları
+okuyan tek kural sabit `3rem`'e geçmiş, dolayısıyla dar ekran için
+yazılan `@media (max-width:1100px)` bloğu **hiçbir şey yapmıyordu.**
 
-### D · Yıldızlar — "kasıyor" ölçülemedi, açık soru
+**Kalan 3 çakışma `tema/kitap.css`'te** (h2 margin, p+p margin-top,
+body line-height). Bu turda o dosyaya dokunulmadı.
 
-Damla "sayfa kasmaya başladı ekledikçe ağırlaştı" dedi. Chrome'da ölçüldü:
+`.yakinda .balon` artık listede değil — otomatik araç onu bozmuştu, elle
+birleştirmeye gerek kalmadı.
 
-    70 yıldız, 70 animasyonlu element, 598 toplam element
-    kare süresi ortalama 16.6 ms · p95 16.7 ms · en yavaş 16.8 ms
-    60 fps üstü (yani düşük) kare sayısı: 0
+### D · Yıldızlar — Safari ölçümü DAMLA'YI BEKLİYOR
 
-**Chrome'da kasma bulunamadı.** Ama Damla **Safari** kullanıyor ve
-Safari'de ölçüm YAPILMADI. Yani "kasma yok" demiyorum, "ben bulamadım"
-diyorum. `yildizKur()` çoğaltma yapmıyor (`if (kap.childNodes.length) return`).
+Damla'ya soruldu: **"Safari'de ölç, sonra karar ver."** Yani ölçüm
+gelmeden yıldıza dokunulmaz, dokunulmadı.
 
-Olası açıklama: kasma değil görsel gürültü — metin okurken kenarda
-sürekli titreşen 70 nokta. Karar Damla'nın: yıldız sayısı düşürülsün mü,
-animasyon kaldırılsın mı?
+`safaridriver` uzaktan otomasyonu kapalı ve açmak `sudo` istiyor, o
+yüzden otomatikleştirilemedi. Yerine ölçüm sayfası yazıldı:
+
+    open -a Safari _kurulum/safari-olcum.html
+
+Sitedeki yıldız alanının birebir aynısı (70 element, aynı CSS, aynı
+animasyon), 6 saniye ölçer, "KASIYOR" / "kasma yok" diye hüküm verir.
+Sayfa `_kurulum/` altında olduğu için **yayına çıkmıyor** (`kur.py` o
+klasörü kopyalamıyor, denetçi doğruladı).
+
+Chrome ölçümü (önceki tur): 16.6 ms ortalama, düşük kare 0 — kasma yok.
+**Safari'de ölçüm HÂLÂ YAPILMADI.**
 
 Yıldız kodu: `tema/kabuk.js` `yildizKur()`, sayı `Math.min(70, innerWidth/22)`.
+CSS tek özellik animasyonu (`opacity`) ve `prefers-reduced-motion` zaten var.
 
 ### E · Küçük
-- `arama-tr.json` / `arama-en.json` her kurulumda yeniden yazılıyor,
-  diff'te büyük görünüyor. Zararsız ama gürültülü.
-- `PLAN-KABUK.md` bitmiş bir planın notu (3 Eylül), kimse okumuyor.
-  Silinsin mi, Damla'ya sorulmadı.
-- `kur.py` 2340 satır. Tek dosya, bağımlılıksız — bu kasıtlı, ama
-  bölünmesi konuşulabilir.
+- `PLAN-KABUK.md` **silindi** (Damla onayladı). Referans yoktu.
+- `arama-tr.json` / `arama-en.json` her kurulumda yeniden yazılıyor.
+  Damla "dokunma" dedi, dokunulmadı.
+- `kur.py` bölünmesi: Damla "bölme" dedi. Tek dosya, bağımlılıksız kalıyor.
+- **PDF'ler her kurulumda değişiyor** ama sadece zaman damgası: 346224 bayt,
+  10 bayt fark, hepsi `CreationDate`/`ModDate`. Commit'e alma, gürültü.
 
----
+### F · YENİ — ölçülmemiş kalanlar (denetçi işaretledi)
+- **6 bölüm sayfasının yalnız 1'i ölçüldü** (`slopware/localhost/`).
+  Diğer 5'i hiçbir genişlikte ölçülmedi.
+- Görünüm ölçümünde **5 seçici hâlâ kör**, ama beşi de o sayfada
+  gerçekten yok (gövde içi blockquote/code, kâğıtta yıldız).
 
 ## 8. DOKUNULMAYACAKLAR
 
@@ -384,9 +442,15 @@ Yıldız kodu: `tema/kabuk.js` `yildizKur()`, sayı `Math.min(70, innerWidth/22)
                      · kontrol_blogu() / kontrol_bagi()  bölüm altı bağ
                      · S[dil]  bütün arayüz dizeleri, TEK KAYNAK
     kontrol.py       Damla'nın 46 cümlesi → kurulmuş siteye uygulanır
-    css-harita.py    YENİ. CSS çakışmalarını gösterir, hiçbir şey silmez
+    css-harita.py    CSS çakışmalarını gösterir, hiçbir şey silmez
+    gorunum.js       YENİ. Sayfanın GÖRÜNEN halini sayıya çevirir
+                     · 47 seçici × 30 özellik × 2 tema + kutu geometrisi
+                     · CSS'e dokunmadan ÖNCE ve SONRA koşulur
+    gorunum-fark.py  YENİ. İki ölçümü karşılaştırır. `0 / 3040` beklenir
+    olc-gorunum.sh   YENİ. kurar + Chrome açar + gorunum.js koşturur
     bak.sh           kur + kapı + masaüstü + dar ekran + görüntü
     olcum.js         çalışan sayfayı ölçer (tik, seçim, yerleşim)
+                     · ustPay / adSeritArasi  N11: üst boşluk, GERÇEK ölçüm
     mobil.js         dar ekran ölçümü — artık bak.sh koşuyor
     cdp.js           bağımlılıksız Chrome DevTools Protocol köprüsü
     tema/kabuk.js    okuma araçları, tema, isim, not, bülten, forum
@@ -398,24 +462,32 @@ Yıldız kodu: `tema/kabuk.js` `yildizKur()`, sayı `Math.min(70, innerWidth/22)
 
 ---
 
-## 10. DURUM  (4 Eylül 2026 gece, hepsi ölçülmüş)
+## 10. DURUM  (5 Eylül 2026, hepsi ölçülmüş)
 
     kontrol.py              46/46 geçti
-    olcum.js masaüstü       TEMIZ
-    olcum.js dar ekran      TEMIZ (390px, yatay taşma yok, tek kolon)
-    css-harita.py           23 çakışan özellik (bilgi, kapı değil)
+    olcum.js masaüstü       TEMIZ  (ustPay 18px · adSeritArasi 0px)
+    olcum.js dar ekran      TEMIZ  (390px, yatay taşma yok, tek kolon)
+    gorunum-fark.py         0 / 3040   (eski CSS ↔ yeni CSS, iki tema)
+    css-harita.py           kabuk.css 0 · kitap.css 3 (dokunulmadı)
     kurulan sayfa           44
     sitemap URL             46
     yazı                    6 EN, 2 TR (55 bölümlük müfredatın)
     soru sayfası            15 EN + 1 TR   FAQ cevapları 16/16 tam cümle
     kontrol sayfası         5 EN + 1 TR    6 bölümden bağ var
     kırık link              0
-    tema/kabuk.css          2453 → 2190 satır
-    görünüm regresyonu      0 / 1450 hesaplanmış değer
+    tema/kabuk.css          2185 → 2088 satır  (bu tur)
+    !important              2 tanesi kalktı (.header, ul.navbar)
     gece kontrast           gövde 14.2 · navbar 6.3 · kod 15.3 · mavi 10.29
     kâğıt mavi kontrast     7.44
-    kare süresi (gece)      16.6 ms ortalama, düşük kare 0
+    kare süresi (Chrome)    16.6 ms ortalama, düşük kare 0
+    kare süresi (Safari)    ÖLÇÜLMEDİ — Damla'yı bekliyor (§7-D)
     bülten + görüş ucu      KAPALI — tablo yok, düğmeler DÜRÜSTÇE kapalı
 
 Sayaç doğrulandı: tik atınca `0 / 54 passed 0%` → `1 / 54 passed 2%`.
 Payda 54, çünkü önsözün işaretlenecek işi yok (55 bölüm, 1 önsöz).
+
+**Bu turda bağımsız denetçi dört hata buldu, dördü de bendendi:**
+N11'i "düzelttim" sanırken gevşetmişim (üç kaçak, üçü de ölçülerek
+kapatıldı); satır sayım yanlıştı (2190 değil 2185); "kabuk.css 23→3"
+demiştim, doğrusu 23→0 (kalan 3 kitap.css'te); görünüm ölçümü 40
+seçicinin 10'unda kördü (şimdi 47'de 5, beşi de gerçekten yok).
