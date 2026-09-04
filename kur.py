@@ -28,6 +28,15 @@ YAZILAR = KOK / "yazilar"
 # EN kökte kalır: bütün paylaşılmış linkler ona gidiyor. TR `tr/` altında.
 DILLER = ["en", "tr"]
 ONEK = {"en": "", "tr": "tr/"}
+
+# Arama motoruna kim yazdi, hangi dilde. Bu iki sabit yapisal veriye ve
+# og:locale'e gider; ikisi de sayfada GORUNEN seyin kopyasi, uydurma yok.
+YAZAR = {
+    "@type": "Person",
+    "name": "Damla Su Bilge",
+    "url": "https://github.com/nosey-dewdrop",
+}
+OG_YEREL = {"en": "en_US", "tr": "tr_TR"}
 # Alanların yazıldığı dil: bir alanın yalnız bu dilde karşılığı varsa,
 # başka bir dilde basılmaz.
 VARSAYILAN_DIL = "tr"
@@ -808,7 +817,7 @@ def duz(h):
 
 
 # ---------------------------------------------------------------- iskelet
-def kafa(veri, baslik, aciklama, kanonik, yukari, dil, karsi_url, indeksle=True, bolum="", og=None, og_tur="article"):
+def kafa(veri, baslik, aciklama, kanonik, yukari, dil, karsi_url, indeksle=True, bolum="", og=None, og_tur="article", ldjson=None):
     og = og or f'{veri["site"]["url"]}tema/og-{dil}.png'
     obur = "en" if dil == "tr" else "tr"
     t = S[dil]
@@ -829,6 +838,27 @@ def kafa(veri, baslik, aciklama, kanonik, yukari, dil, karsi_url, indeksle=True,
     # göstermek, hiç göstermemekten kötüdür ve Google ikisini de atar.
     obur_satir = (f'\n    <link rel="alternate" hreflang="{obur}" href="{karsi_url}" />'
                   if karsi_url else "")
+    # x-default: dili tutmayan arayana Google hangisini gostersin? Ingilizce,
+    # cunku kitabin tamami once orada yaziliyor. Karsi dil yoksa basilmaz.
+    varsayilan = kanonik if dil == "en" else (karsi_url or kanonik)
+    obur_satir += f'\n    <link rel="alternate" hreflang="x-default" href="{varsayilan}" />'
+    # Yapisal veri. Google'in arama sonucunda kirinti yolu ve yazar
+    # gosterebilmesi icin gereken tek sey bu; uydurma alan yazilmaz,
+    # hepsi sayfada GORUNEN seyin ayni kopyasi.
+    ld = ldjson if ldjson is not None else {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": baslik,
+        "description": aciklama,
+        "url": kanonik,
+        "inLanguage": dil,
+        "isPartOf": {"@type": "WebSite", "name": "vibecodedslopware",
+                     "url": veri["site"]["url"]},
+        "author": YAZAR,
+    }
+    ld_satir = ('\n    <script type="application/ld+json">'
+                + json.dumps(ld, ensure_ascii=False, separators=(",", ":"))
+                + "</script>")
     return f"""<!DOCTYPE html>
 <html lang="{dil}">
   <head>
@@ -860,8 +890,9 @@ def kafa(veri, baslik, aciklama, kanonik, yukari, dil, karsi_url, indeksle=True,
     <meta property="og:image" content="{og}" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="{OG_YEREL[dil]}" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#ffffff" />{ld_satir}
     <script>
       /* Tema, stil dosyalarindan once. Bu satirlar gecikirse sayfa bir kare
          beyaz parlayip karariyor; okurun gordugu ilk sey bir flas oluyor. */
@@ -1452,8 +1483,40 @@ def mufredat_kur(veri, m, dil, onek, indeks):
                       f'data-oldu="{t["kopyalandi_link"]}">{t["linki_kopyala"]}</button></p>'
                       f'<p class="iyilestir"><a href="{kaynak_url}">{t["iyilestir"]}</a> '
                       f'&#183; {t["iyilestir_not"]}</p>')
+        # Yapisal veri: bir bolum bir yazidir. Kirinti yolu da buradan
+        # cikiyor -- arama sonucunda "vibecodedslopware > slopware > bolum"
+        # gorunsun diye. Tarih mufredattaki yayin tarihi, uydurma degil.
+        bolum_ld = {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": baslik,
+            "description": neden,
+            "url": kanonik,
+            "inLanguage": dil,
+            "datePublished": b.get("tarih", ""),
+            "author": YAZAR,
+            "publisher": {"@type": "Organization", "name": "vibecodedslopware",
+                          "url": site["url"]},
+            "isPartOf": {"@type": "Course", "name": metin(m["baslik"], dil),
+                         "url": f'{site["url"]}{ONEK[dil]}{m["kod"]}/'},
+            "mainEntityOfPage": {"@type": "WebPage", "@id": kanonik},
+        }
+        if og:
+            bolum_ld["image"] = og
+        yol_ld = {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": "vibecodedslopware",
+                 "item": f'{site["url"]}{ONEK[dil]}'},
+                {"@type": "ListItem", "position": 2, "name": metin(m["ad"], dil),
+                 "item": f'{site["url"]}{ONEK[dil]}{m["kod"]}/'},
+                {"@type": "ListItem", "position": 3, "name": baslik, "item": kanonik},
+            ],
+        }
         sayfa = [kafa(veri, baslik, neden, kanonik, yukari, dil, karsi,
-                      bolum=f'{m["kod"]}/{b["slug"]}', og=og),
+                      bolum=f'{m["kod"]}/{b["slug"]}', og=og,
+                      ldjson=[bolum_ld, yol_ld]),
                  navbar(veri, yukari, dil, karsi, m["kod"]),
                  gezinti(yukari, dil, kirinti, onc, son, kisayol=True, karsi_url=karsi),
                  '<div class="kitap">',
@@ -2366,16 +2429,33 @@ def site_haritasi(veri, ekstra=None):
             if yol is None:
                 continue
             p.append(f"<url><loc>{u}{ONEK[dil]}{yol}</loc>")
+            # lastmod kurulan dosyanin GERCEK tarihinden okunur. Her sayfaya
+            # bugunu yazmak Google'a yalan soylemektir ve bir sure sonra
+            # lastmod'a hic bakmaz olur.
+            d = KOK / ONEK[dil] / yol / "index.html" if yol else KOK / ONEK[dil] / "index.html"
+            if d.exists():
+                g = dt.date.fromtimestamp(d.stat().st_mtime).isoformat()
+                p.append(f"  <lastmod>{g}</lastmod>")
             if yol_en is not None:
                 p.append(f'  <xhtml:link rel="alternate" hreflang="en" '
                          f'href="{u}{ONEK["en"]}{yol_en}" />')
             if yol_tr is not None:
                 p.append(f'  <xhtml:link rel="alternate" hreflang="tr" '
                          f'href="{u}{ONEK["tr"]}{yol_tr}" />')
+            # Dili tutmayan arayan icin varsayilan: Ingilizce varsa o.
+            vars_yol = yol_en if yol_en is not None else yol_tr
+            vars_dil = "en" if yol_en is not None else "tr"
+            p.append(f'  <xhtml:link rel="alternate" hreflang="x-default" '
+                     f'href="{u}{ONEK[vars_dil]}{vars_yol}" />')
             p.append("</url>")
 
     kalem("", "")
     for m in veri["mufredatlar"]:
+        # Yayina girmemis mufredatin sayfasi KURULMUYOR. Onu site
+        # haritasina yazmak Google'a 404 gostermektir; haritasi yalan
+        # soyleyen siteye bir daha az guvenilir.
+        if m.get("durum") != "yayinda":
+            continue
         kalem(f'{m["kod"]}/', f'{m["kod"]}/')
         for sv in m["seviyeler"]:
             for b in sv["bolumler"]:
@@ -2390,7 +2470,11 @@ def site_haritasi(veri, ekstra=None):
 
     # Programatik sayfalar: her biri (yol, dil) çifti olarak gelir.
     for yol, dil in (ekstra or []):
-        p.append(f"<url><loc>{u}{ONEK[dil]}{yol}</loc></url>")
+        p.append(f"<url><loc>{u}{ONEK[dil]}{yol}</loc>")
+        d = KOK / ONEK[dil] / yol / "index.html"
+        if d.exists():
+            p.append(f"  <lastmod>{dt.date.fromtimestamp(d.stat().st_mtime).isoformat()}</lastmod>")
+        p.append("</url>")
 
     p.append("</urlset>")
     (KOK / "sitemap.xml").write_text("\n".join(p), encoding="utf-8")
